@@ -1,14 +1,11 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { CodeBracketIcon, RocketLaunchIcon, AcademicCapIcon } from '@heroicons/react/24/solid'
+import TechStack from '../ui/TechStack'
+import { programmingLanguages } from '../../data/techStack'
 
 function AboutSection() {
   const { t } = useTranslation()
-
-  const skills = [
-    'React', 'TypeScript', 'Node.js', 'Python', 'PostgreSQL', 'MongoDB',
-    'Tailwind CSS', 'Next.js', 'Docker', 'AWS', 'Git', 'Figma'
-  ]
 
   return (
     <section className="py-16 bg-white dark:bg-secondary-900/50">
@@ -56,17 +53,32 @@ function AboutSection() {
               <p className="text-lg text-secondary-700 dark:text-secondary-300 leading-relaxed">
                 {t('home.about.bio')}
               </p>
-              <div className="flex flex-wrap gap-3">
-                {skills.map((skill, index) => (
-                  <span
-                    key={index}
-                    className="px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium"
-                  >
-                    {skill}
-                  </span>
-                ))}
+              
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+                  {t('home.about.skills')}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {programmingLanguages.slice(0, 6).map((lang, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium"
+                    >
+                      {lang.name}
+                    </span>
+                  ))}
+                </div>
               </div>
             </motion.div>
+          </div>
+
+          {/* Technologies principales */}
+          <div className="space-y-8 mb-12">
+            <TechStack
+              title="Langages de programmation"
+              items={programmingLanguages}
+              columns={5}
+            />
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -125,4 +137,3 @@ function AboutSection() {
 }
 
 export default AboutSection
-
