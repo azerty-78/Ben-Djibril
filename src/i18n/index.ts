@@ -18,7 +18,7 @@ export const resources = {
       home: {
         title: 'DevOps Engineer',
         subtitle: 'I help companies build performant, international digital products with a focus on backend, mobile, and DevOps.',
-        card1: { title: 'Business websites', desc: 'Fast, modern, SEO‑friendly.' },
+        card1: { title: 'Mobile Applications', desc: 'Cross-platform apps with Kotlin Multiplatform.' },
         card2: { title: 'Web apps', desc: 'Scalable, secure, business‑oriented.' },
         card3: { title: 'E‑commerce', desc: 'Conversion, performance, internationalization.' },
         ctaPrimary: 'Get Started', ctaSecondary: 'View Projects',
@@ -48,10 +48,16 @@ export const resources = {
         subtitle: 'Tailored solutions for your digital needs',
         packageStarter: 'Starter', packagePro: 'Professional', packageEnterprise: 'Enterprise',
         features: 'Features', getStarted: 'Get Started', mostPopular: 'Most Popular',
-        serviceWeb: { title: 'Web Development', desc: 'Modern, responsive websites' },
-        serviceEcom: { title: 'E-commerce', desc: 'Online stores that convert' },
-        serviceApp: { title: 'Web Applications', desc: 'Custom business solutions' },
-        serviceConsult: { title: 'Consulting', desc: 'Expert advice and audits' }
+        serviceWebDev: { title: 'Web Development', desc: 'Modern, responsive websites', feature1: 'Responsive design', feature2: 'SEO optimization', feature3: 'Fast loading', feature4: 'Modern frameworks' },
+        serviceShowcase: { title: 'Showcase Websites', desc: 'Professional showcase sites', feature1: 'Custom design', feature2: 'SEO optimized', feature3: 'Contact forms', feature4: 'Fast performance' },
+        servicePortfolio: { title: 'Portfolio', desc: 'Personal or professional portfolios', feature1: 'Creative design', feature2: 'Project showcase', feature3: 'CV integration', feature4: 'Social media links' },
+        serviceEcom: { title: 'E-commerce', desc: 'Online stores that convert', feature1: 'Payment integration', feature2: 'Inventory management', feature3: 'Shopping cart', feature4: 'Admin dashboard' },
+        serviceApp: { title: 'Web Applications', desc: 'Custom business solutions', feature1: 'Custom features', feature2: 'User authentication', feature3: 'Database integration', feature4: 'API development' },
+        serviceMobile: { title: 'Mobile Applications', desc: 'Cross-platform mobile apps', feature1: 'iOS & Android', feature2: 'Kotlin Multiplatform', feature3: 'Native performance', feature4: 'Offline support' },
+        serviceDesktop: { title: 'Desktop Applications', desc: 'Native desktop applications', feature1: 'Cross-platform', feature2: 'Native UI', feature3: 'System integration', feature4: 'Offline mode' },
+        serviceAPI: { title: 'API Development', desc: 'RESTful and GraphQL APIs', feature1: 'REST API', feature2: 'GraphQL', feature3: 'Documentation', feature4: 'Security & Auth' },
+        serviceDevOps: { title: 'DevOps & Cloud', desc: 'Infrastructure and deployment', feature1: 'CI/CD pipelines', feature2: 'Docker & Kubernetes', feature3: 'Cloud deployment', feature4: 'Monitoring & Logs' },
+        serviceConsult: { title: 'Consulting', desc: 'Expert advice and audits', feature1: 'Code review', feature2: 'Architecture audit', feature3: 'Performance optimization', feature4: 'Technical consulting' }
       },
       projects: {
         title: 'Projects',
@@ -91,7 +97,7 @@ export const resources = {
       home: {
         title: 'Ingénieur DevOps',
         subtitle: 'J\'aide les entreprises à concevoir des produits digitaux performants et internationaux. Spécialisé en DevOps, backend et mobile, je maîtrise également le frontend pour une approche full-stack complète.',
-        card1: { title: 'Sites vitrines', desc: 'Rapides, modernes, SEO‑friendly.' },
+        card1: { title: 'Applications Mobile', desc: 'Applications cross-platform avec Kotlin Multiplatform.' },
         card2: { title: 'Apps web', desc: 'Scalables, sécurisées, orientées business.' },
         card3: { title: 'E‑commerce', desc: 'Conversion, performance, internationalisation.' },
         ctaPrimary: 'Commencer', ctaSecondary: 'Voir les projets',
@@ -121,10 +127,16 @@ export const resources = {
         subtitle: 'Solutions sur mesure pour vos besoins digitaux',
         packageStarter: 'Starter', packagePro: 'Professionnel', packageEnterprise: 'Enterprise',
         features: 'Fonctionnalités', getStarted: 'Commencer', mostPopular: 'Le plus populaire',
-        serviceWeb: { title: 'Développement Web', desc: 'Sites web modernes et responsives' },
-        serviceEcom: { title: 'E-commerce', desc: 'Boutiques en ligne qui convertissent' },
-        serviceApp: { title: 'Applications Web', desc: 'Solutions métier sur mesure' },
-        serviceConsult: { title: 'Conseil', desc: 'Conseil expert et audits' }
+        serviceWebDev: { title: 'Développement Web', desc: 'Sites web modernes et responsives', feature1: 'Design responsive', feature2: 'Optimisation SEO', feature3: 'Chargement rapide', feature4: 'Frameworks modernes' },
+        serviceShowcase: { title: 'Sites Vitrines', desc: 'Sites vitrines professionnels', feature1: 'Design sur mesure', feature2: 'SEO optimisé', feature3: 'Formulaires de contact', feature4: 'Performance optimale' },
+        servicePortfolio: { title: 'Portfolio', desc: 'Portfolios personnels ou professionnels', feature1: 'Design créatif', feature2: 'Présentation de projets', feature3: 'Intégration CV', feature4: 'Liens réseaux sociaux' },
+        serviceEcom: { title: 'E-commerce', desc: 'Boutiques en ligne qui convertissent', feature1: 'Intégration paiement', feature2: 'Gestion des stocks', feature3: 'Panier d\'achat', feature4: 'Tableau de bord admin' },
+        serviceApp: { title: 'Applications Web', desc: 'Solutions métier sur mesure', feature1: 'Fonctionnalités personnalisées', feature2: 'Authentification utilisateur', feature3: 'Intégration base de données', feature4: 'Développement API' },
+        serviceMobile: { title: 'Applications Mobile', desc: 'Apps mobiles cross-platform', feature1: 'iOS & Android', feature2: 'Kotlin Multiplatform', feature3: 'Performance native', feature4: 'Support hors ligne' },
+        serviceDesktop: { title: 'Applications Desktop', desc: 'Applications desktop natives', feature1: 'Cross-platform', feature2: 'Interface native', feature3: 'Intégration système', feature4: 'Mode hors ligne' },
+        serviceAPI: { title: 'Développement API', desc: 'APIs RESTful et GraphQL', feature1: 'API REST', feature2: 'GraphQL', feature3: 'Documentation', feature4: 'Sécurité & Auth' },
+        serviceDevOps: { title: 'DevOps & Cloud', desc: 'Infrastructure et déploiement', feature1: 'Pipelines CI/CD', feature2: 'Docker & Kubernetes', feature3: 'Déploiement cloud', feature4: 'Monitoring & Logs' },
+        serviceConsult: { title: 'Conseil', desc: 'Conseil expert et audits', feature1: 'Revue de code', feature2: 'Audit architecture', feature3: 'Optimisation performance', feature4: 'Conseil technique' }
       },
       projects: {
         title: 'Projets',

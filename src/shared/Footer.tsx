@@ -6,6 +6,19 @@ import { FaGithub, FaLinkedin, FaXTwitter, FaInstagram } from 'react-icons/fa6'
 function Footer() {
   const { t } = useTranslation()
   
+  const services = [
+    { name: 'Développement Web', link: '/services?type=web-dev' },
+    { name: 'Sites Vitrines', link: '/services?type=showcase' },
+    { name: 'Portfolio', link: '/services?type=portfolio' },
+    { name: 'E-commerce', link: '/services?type=ecommerce' },
+    { name: 'Applications Web', link: '/services?type=web-app' },
+    { name: 'Applications Mobile', link: '/services?type=mobile' },
+    { name: 'Applications Desktop', link: '/services?type=desktop' },
+    { name: 'API Development', link: '/services?type=api' },
+    { name: 'DevOps & Cloud', link: '/services?type=devops' },
+    { name: 'Consulting', link: '/services?type=consulting' },
+  ]
+  
   return (
     <footer className="mt-auto border-t border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-900 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-12 md:py-16">
@@ -70,29 +83,23 @@ function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-4 text-secondary-900 dark:text-secondary-100">Services</h4>
             <ul className="space-y-2.5">
-              <li>
-                <Link to="/services?type=web" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
-                  Développement Web
-                </Link>
-              </li>
-              <li>
-                <Link to="/services?type=ecom" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
-                  E-commerce
-                </Link>
-              </li>
-              <li>
-                <Link to="/services?type=app" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
-                  Applications Web
-                </Link>
-              </li>
-              <li>
-                <Link to="/services?type=consult" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
-                  Conseil & Audit
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium">
-                  Voir tous les services →
+              {services.map((service, index) => (
+                <li key={index}>
+                  <Link 
+                    to={service.link} 
+                    className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors"
+                  >
+                    {service.name}
+                  </Link>
+                </li>
+              ))}
+              <li className="pt-2">
+                <Link 
+                  to="/services" 
+                  className="text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium inline-flex items-center gap-1"
+                >
+                  Voir tous les services
+                  <span>→</span>
                 </Link>
               </li>
             </ul>
@@ -115,6 +122,11 @@ function Footer() {
               <li>
                 <Link to="/projects" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
                   Projets
+                </Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
+                  Services
                 </Link>
               </li>
               <li>
