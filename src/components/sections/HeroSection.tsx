@@ -58,9 +58,9 @@ function HeroSection() {
 
           <div className="mt-16">
             <p className="text-sm text-secondary-500 dark:text-secondary-400 mb-6">Trusted by companies worldwide</p>
-            <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
+            <div className="flex flex-wrap items-center justify-center gap-8 opacity-60 dark:opacity-70">
               {['Company 1', 'Company 2', 'Company 3', 'Company 4'].map((company, i) => (
-                <div key={i} className="h-8 w-24 bg-secondary-200 dark:bg-secondary-700 rounded flex items-center justify-center text-xs text-secondary-500">
+                <div key={i} className="h-8 w-24 bg-secondary-200 dark:bg-secondary-700 rounded flex items-center justify-center text-xs text-secondary-500 dark:text-secondary-400">
                   {company}
                 </div>
               ))}

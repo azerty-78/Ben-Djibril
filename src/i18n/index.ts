@@ -22,7 +22,15 @@ export const resources = {
         card2: { title: 'Web apps', desc: 'Scalable, secure, business‑oriented.' },
         card3: { title: 'E‑commerce', desc: 'Conversion, performance, internationalization.' },
         ctaPrimary: 'Get Started', ctaSecondary: 'View Projects',
-        metrics: { clients: 'Clients', projects: 'Projects', satisfaction: 'Satisfaction', delivery: 'Avg Delivery' }
+        metrics: { clients: 'Clients', projects: 'Projects', satisfaction: 'Satisfaction', delivery: 'Avg Delivery' },
+        about: {
+          title: 'About Me',
+          subtitle: 'Passionate developer creating digital solutions',
+          bio: 'I am a full-stack developer with expertise in modern web technologies. I help businesses transform their ideas into powerful digital products.',
+          skills: 'Skills & Technologies',
+          experience: 'Experience',
+          education: 'Education'
+        }
       },
       services: {
         title: 'Services',
@@ -76,7 +84,15 @@ export const resources = {
         card2: { title: 'Apps web', desc: 'Scalables, sécurisées, orientées business.' },
         card3: { title: 'E‑commerce', desc: 'Conversion, performance, internationalisation.' },
         ctaPrimary: 'Commencer', ctaSecondary: 'Voir les projets',
-        metrics: { clients: 'Clients', projects: 'Projets', satisfaction: 'Satisfaction', delivery: 'Délai moyen' }
+        metrics: { clients: 'Clients', projects: 'Projets', satisfaction: 'Satisfaction', delivery: 'Délai moyen' },
+        about: {
+          title: 'À propos de moi',
+          subtitle: 'Développeur passionné créant des solutions digitales',
+          bio: 'Je suis un développeur full-stack avec une expertise dans les technologies web modernes. J\'aide les entreprises à transformer leurs idées en produits digitaux performants.',
+          skills: 'Compétences & Technologies',
+          experience: 'Expérience',
+          education: 'Formation'
+        }
       },
       services: {
         title: 'Services',
