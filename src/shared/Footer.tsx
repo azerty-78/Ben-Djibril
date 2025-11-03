@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid'
+import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6'
 
 function Footer() {
   const { t } = useTranslation()
@@ -53,9 +54,9 @@ function Footer() {
         <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-secondary-600 dark:text-secondary-300">
           <p>© {new Date().getFullYear()} BenDev. {t('footer.rights')}</p>
           <div className="flex items-center gap-3">
-            <a href="#" aria-label="Twitter" className="h-9 w-9 rounded-full bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center hover:opacity-80">𝕏</a>
-            <a href="#" aria-label="LinkedIn" className="h-9 w-9 rounded-full bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center hover:opacity-80">in</a>
-            <a href="#" aria-label="GitHub" className="h-9 w-9 rounded-full bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center hover:opacity-80">GH</a>
+            <a href="#" aria-label="Twitter" className="h-9 w-9 rounded-full bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center hover:opacity-80"><FaXTwitter /></a>
+            <a href="#" aria-label="LinkedIn" className="h-9 w-9 rounded-full bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center hover:opacity-80"><FaLinkedin /></a>
+            <a href="#" aria-label="GitHub" className="h-9 w-9 rounded-full bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center hover:opacity-80"><FaGithub /></a>
           </div>
         </div>
       </div>
