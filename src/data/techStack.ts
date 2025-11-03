@@ -2,7 +2,7 @@
 
 export const programmingLanguages = [
   { name: 'Kotlin', slug: 'kotlin' },
-  { name: 'Java', slug: 'openjdk' },
+  { name: 'Java', slug: 'oracle' },
   { name: 'HTML', slug: 'html5' },
   { name: 'CSS', slug: 'css3' },
   { name: 'JavaScript', slug: 'javascript' },

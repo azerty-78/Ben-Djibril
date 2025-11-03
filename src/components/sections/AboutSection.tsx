@@ -2,7 +2,15 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { CodeBracketIcon, RocketLaunchIcon, AcademicCapIcon } from '@heroicons/react/24/solid'
 import TechStack from '../ui/TechStack'
-import { programmingLanguages } from '../../data/techStack'
+import {
+  programmingLanguages,
+  frameworks,
+  databases,
+  technologies,
+  hosting,
+  design,
+  versioning,
+} from '../../data/techStack'
 
 function AboutSection() {
   const { t } = useTranslation()
@@ -72,12 +80,68 @@ function AboutSection() {
             </motion.div>
           </div>
 
-          {/* Technologies principales */}
+          {/* Technologies complètes */}
           <div className="space-y-8 mb-12">
             <TechStack
               title="Langages de programmation"
               items={programmingLanguages}
               columns={5}
+            />
+
+            <div className="card">
+              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-secondary-100">Frameworks</h3>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">Backend</h4>
+                  <TechStack items={frameworks.backend} title="" columns={3} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">Frontend</h4>
+                  <TechStack items={frameworks.frontend} title="" columns={3} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">Mobile</h4>
+                  <TechStack items={frameworks.mobile} title="" columns={3} />
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-secondary-100">Bases de données</h3>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">SQL</h4>
+                  <TechStack items={databases.sql} title="" columns={3} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">NoSQL</h4>
+                  <TechStack items={databases.nosql} title="" columns={3} />
+                </div>
+              </div>
+            </div>
+
+            <TechStack
+              title="Technologies DevOps"
+              items={technologies}
+              columns={3}
+            />
+
+            <TechStack
+              title="Hébergement & Cloud"
+              items={hosting}
+              columns={5}
+            />
+
+            <TechStack
+              title="Design"
+              items={design}
+              columns={2}
+            />
+
+            <TechStack
+              title="Versioning"
+              items={versioning}
+              columns={2}
             />
           </div>
 
