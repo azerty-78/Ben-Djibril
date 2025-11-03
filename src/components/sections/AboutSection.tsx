@@ -196,10 +196,21 @@ function AboutSection() {
               transition={{ duration: 0.5 }}
               className="card text-center"
             >
-              <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CodeBracketIcon className="w-8 h-8 text-primary-600 dark:text-primary-400" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">{t('home.about.specialties')}</h3>
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4"
+              >
+                <motion.div
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
+                >
+                  <CodeBracketIcon className="w-8 h-8 text-primary-600 dark:text-primary-400" />
+                </motion.div>
+              </motion.div>
+              <h3 className="text-xl font-semibold mb-2 text-secondary-900 dark:text-white">{t('home.about.specialties')}</h3>
               <p className="text-secondary-600 dark:text-secondary-300 text-sm">
                 Backend (Spring Boot), Mobile (Kotlin), DevOps & Full-Stack
               </p>
@@ -212,10 +223,21 @@ function AboutSection() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="card text-center"
             >
-              <div className="w-16 h-16 bg-accent-100 dark:bg-accent-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <RocketLaunchIcon className="w-8 h-8 text-accent-600 dark:text-accent-400" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">{t('home.about.experience')}</h3>
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="w-16 h-16 bg-accent-100 dark:bg-accent-900/30 rounded-full flex items-center justify-center mx-auto mb-4"
+              >
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                >
+                  <RocketLaunchIcon className="w-8 h-8 text-accent-600 dark:text-accent-400" />
+                </motion.div>
+              </motion.div>
+              <h3 className="text-xl font-semibold mb-2 text-secondary-900 dark:text-white">{t('home.about.experience')}</h3>
               <p className="text-secondary-600 dark:text-secondary-300 text-sm">
                 4 ans d'expérience en développement backend et mobile
               </p>
@@ -228,10 +250,21 @@ function AboutSection() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="card text-center"
             >
-              <div className="w-16 h-16 bg-success-100 dark:bg-success-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <AcademicCapIcon className="w-8 h-8 text-success-600 dark:text-success-400" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">{t('home.about.languages')}</h3>
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="w-16 h-16 bg-success-100 dark:bg-success-900/30 rounded-full flex items-center justify-center mx-auto mb-4"
+              >
+                <motion.div
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
+                >
+                  <AcademicCapIcon className="w-8 h-8 text-success-600 dark:text-success-400" />
+                </motion.div>
+              </motion.div>
+              <h3 className="text-xl font-semibold mb-2 text-secondary-900 dark:text-white">{t('home.about.languages')}</h3>
               <p className="text-secondary-600 dark:text-secondary-300 text-sm">
                 Français (Natif), Anglais (Intermédiaire)
               </p>

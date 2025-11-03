@@ -28,7 +28,7 @@ function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Mes Services</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-secondary-900 dark:text-white">Mes Services</h2>
             <p className="text-lg text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto">
               Solutions complètes pour vos besoins digitaux
             </p>
@@ -48,8 +48,22 @@ function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card hover:shadow-xl transition-shadow duration-300"
               >
-                <div className="text-4xl mb-4">{card.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
+                <motion.div
+                  initial={{ scale: 0, rotate: -180 }}
+                  whileInView={{ scale: 1, rotate: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ 
+                    duration: 0.6, 
+                    delay: index * 0.15,
+                    type: "spring",
+                    stiffness: 200
+                  }}
+                  whileHover={{ scale: 1.2, rotate: 10 }}
+                  className="text-4xl mb-4 inline-block"
+                >
+                  {card.icon}
+                </motion.div>
+                <h3 className="text-xl font-semibold mb-2 text-secondary-900 dark:text-white">{card.title}</h3>
                 <p className="text-secondary-600 dark:text-secondary-300 mb-4">{card.desc}</p>
                 <Link to="/services" className="text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium">
                   En savoir plus →
@@ -85,7 +99,7 @@ function Home() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Prêt à démarrer votre projet ?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-secondary-900 dark:text-white">Prêt à démarrer votre projet ?</h2>
             <p className="text-lg text-secondary-600 dark:text-secondary-300 mb-8">
               Discutons de votre projet et créons ensemble quelque chose d'extraordinaire
             </p>

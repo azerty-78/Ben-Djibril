@@ -16,7 +16,7 @@ function TestimonialsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold mb-4">{t('testimonials.title')}</h2>
+          <h2 className="text-4xl font-bold mb-4 text-secondary-900 dark:text-white">{t('testimonials.title')}</h2>
           <p className="text-lg text-secondary-600 dark:text-secondary-300">{t('testimonials.subtitle')}</p>
         </motion.div>
 

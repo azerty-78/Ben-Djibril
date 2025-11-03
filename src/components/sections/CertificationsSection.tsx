@@ -19,7 +19,7 @@ function CertificationsSection() {
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <AcademicCapIcon className="w-10 h-10 text-primary-600 dark:text-primary-400" />
-            <h2 className="text-4xl md:text-5xl font-bold">Certifications</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-white">Certifications</h2>
           </div>
           <p className="text-lg text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto">
             Certifications professionnelles en cours et obtenues
