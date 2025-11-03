@@ -4,6 +4,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 import ThemeToggle from './ThemeToggle'
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
+import MobileMenu from '../components/ui/MobileMenu'
 
 function Navbar() {
   const { t } = useTranslation()
@@ -46,15 +47,7 @@ function Navbar() {
             </div>
 
             <Disclosure.Panel className="md:hidden pb-4">
-              <nav className="grid gap-2 text-sm">
-                <NavLink to="/" className={({ isActive }) => linkClass(isActive)}>{t('nav.home')}</NavLink>
-                <NavLink to="/services" className={({ isActive }) => linkClass(isActive)}>{t('nav.services')}</NavLink>
-                <NavLink to="/projects" className={({ isActive }) => linkClass(isActive)}>{t('nav.projects')}</NavLink>
-                <NavLink to="/about" className={({ isActive }) => linkClass(isActive)}>{t('nav.about')}</NavLink>
-                <NavLink to="/blog" className={({ isActive }) => linkClass(isActive)}>{t('nav.blog')}</NavLink>
-                <NavLink to="/contact" className={({ isActive }) => linkClass(isActive)}>{t('nav.contact')}</NavLink>
-                <NavLink to="/contact" className="btn-primary w-full text-center mt-2">Contact</NavLink>
-              </nav>
+              <MobileMenu />
             </Disclosure.Panel>
           </div>
         )}
