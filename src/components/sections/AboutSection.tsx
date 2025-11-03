@@ -26,7 +26,7 @@ function AboutSection() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">{t('home.about.title')}</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-secondary-900 dark:text-secondary-100">{t('home.about.title')}</h2>
             <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto">
               {t('home.about.subtitle')}
             </p>
@@ -82,14 +82,17 @@ function AboutSection() {
 
           {/* Technologies complètes */}
           <div className="space-y-8 mb-12">
-            <TechStack
-              title="Langages de programmation"
-              items={programmingLanguages}
-              columns={5}
-            />
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Langages de programmation</h3>
+              <TechStack
+                title=""
+                items={programmingLanguages}
+                columns={5}
+              />
+            </div>
 
             <div className="card">
-              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-secondary-100">Frameworks</h3>
+              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Frameworks</h3>
               <div className="space-y-6">
                 <div>
                   <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">Backend</h4>
@@ -107,7 +110,7 @@ function AboutSection() {
             </div>
 
             <div className="card">
-              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-secondary-100">Bases de données</h3>
+              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Bases de données</h3>
               <div className="space-y-6">
                 <div>
                   <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">SQL</h4>
@@ -120,29 +123,41 @@ function AboutSection() {
               </div>
             </div>
 
-            <TechStack
-              title="Technologies DevOps"
-              items={technologies}
-              columns={3}
-            />
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Technologies DevOps</h3>
+              <TechStack
+                title=""
+                items={technologies}
+                columns={3}
+              />
+            </div>
 
-            <TechStack
-              title="Hébergement & Cloud"
-              items={hosting}
-              columns={5}
-            />
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Hébergement & Cloud</h3>
+              <TechStack
+                title=""
+                items={hosting}
+                columns={5}
+              />
+            </div>
 
-            <TechStack
-              title="Design"
-              items={design}
-              columns={2}
-            />
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Design</h3>
+              <TechStack
+                title=""
+                items={design}
+                columns={2}
+              />
+            </div>
 
-            <TechStack
-              title="Versioning"
-              items={versioning}
-              columns={2}
-            />
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Versioning</h3>
+              <TechStack
+                title=""
+                items={versioning}
+                columns={2}
+              />
+            </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">

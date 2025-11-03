@@ -16,8 +16,8 @@ export const resources = {
         legal: 'Legal notice', privacy: 'Privacy policy', rights: 'All rights reserved.'
       },
       home: {
-        title: 'Full‑Stack Developer',
-        subtitle: 'I help companies build performant, international digital products.',
+        title: 'DevOps Engineer',
+        subtitle: 'I help companies build performant, international digital products with a focus on backend, mobile, and DevOps.',
         card1: { title: 'Business websites', desc: 'Fast, modern, SEO‑friendly.' },
         card2: { title: 'Web apps', desc: 'Scalable, secure, business‑oriented.' },
         card3: { title: 'E‑commerce', desc: 'Conversion, performance, internationalization.' },
@@ -25,8 +25,8 @@ export const resources = {
         metrics: { clients: 'Clients', projects: 'Projects', satisfaction: 'Satisfaction', delivery: 'Avg Delivery' },
         about: {
           title: 'About Me',
-          subtitle: 'Passionate developer creating digital solutions',
-          bio: 'I am a full-stack developer with expertise in modern web technologies. I help businesses transform their ideas into powerful digital products.',
+          subtitle: 'DevOps Engineer passionate about creating digital solutions',
+          bio: 'I am a DevOps Engineer with strong expertise in backend and mobile development, complemented by frontend skills. I help businesses transform their ideas into powerful, scalable digital products.',
           skills: 'Skills & Technologies',
           experience: 'Experience',
           education: 'Education'
@@ -78,8 +78,8 @@ export const resources = {
         legal: 'Mentions légales', privacy: 'Politique de confidentialité', rights: 'Tous droits réservés.'
       },
       home: {
-        title: 'Développeur Full‑Stack',
-        subtitle: 'J\'aide les entreprises à concevoir des produits digitaux performants et internationaux.',
+        title: 'Ingénieur DevOps',
+        subtitle: 'J\'aide les entreprises à concevoir des produits digitaux performants et internationaux. Spécialisé en DevOps, backend et mobile, je maîtrise également le frontend pour une approche full-stack complète.',
         card1: { title: 'Sites vitrines', desc: 'Rapides, modernes, SEO‑friendly.' },
         card2: { title: 'Apps web', desc: 'Scalables, sécurisées, orientées business.' },
         card3: { title: 'E‑commerce', desc: 'Conversion, performance, internationalisation.' },
@@ -87,8 +87,8 @@ export const resources = {
         metrics: { clients: 'Clients', projects: 'Projets', satisfaction: 'Satisfaction', delivery: 'Délai moyen' },
         about: {
           title: 'À propos de moi',
-          subtitle: 'Développeur passionné créant des solutions digitales',
-          bio: 'Je suis un développeur full-stack avec une expertise dans les technologies web modernes. J\'aide les entreprises à transformer leurs idées en produits digitaux performants.',
+          subtitle: 'Ingénieur DevOps passionné créant des solutions digitales',
+          bio: 'Je suis un ingénieur DevOps avec une forte expertise en développement backend et mobile, complétée par des compétences frontend. J\'aide les entreprises à transformer leurs idées en produits digitaux performants et scalables.',
           skills: 'Compétences & Technologies',
           experience: 'Expérience',
           education: 'Formation'

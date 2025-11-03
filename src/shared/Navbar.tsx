@@ -19,7 +19,7 @@ function Navbar() {
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between py-3">
               <div className="flex items-center gap-3">
-                <NavLink to="/" className="text-xl font-bold gradient-text">BenDev</NavLink>
+                <NavLink to="/" className="text-xl font-bold gradient-text">Ben Djibril</NavLink>
               </div>
 
               <div className="hidden md:flex items-center gap-2 text-sm">

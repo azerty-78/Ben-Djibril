@@ -13,9 +13,9 @@ function Footer() {
           {/* Brand & Contact */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-2xl font-bold gradient-text mb-3">BenDev</h3>
+              <h3 className="text-2xl font-bold gradient-text mb-3">Ben Djibril</h3>
               <p className="text-secondary-600 dark:text-secondary-300 text-sm leading-relaxed">
-                Développeur Full-Stack passionné créant des solutions digitales performantes pour entreprises internationales.
+                Ingénieur DevOps spécialisé en backend et mobile, créant des solutions digitales performantes pour entreprises internationales.
               </p>
             </div>
             
@@ -171,7 +171,7 @@ function Footer() {
         <div className="pt-8 border-t border-secondary-200 dark:border-secondary-700">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
             <p className="text-secondary-600 dark:text-secondary-300">
-              © {new Date().getFullYear()} <span className="font-semibold">BenDev</span>. {t('footer.rights')}
+              © {new Date().getFullYear()} <span className="font-semibold">Ben Djibril</span>. {t('footer.rights')}
             </p>
             <p className="text-secondary-500 dark:text-secondary-400">
               Fait avec ❤️ par <span className="font-medium text-primary-600 dark:text-primary-400">Benjamin</span>
