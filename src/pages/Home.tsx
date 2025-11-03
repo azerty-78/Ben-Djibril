@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { lazy, Suspense } from 'react'
 import HeroSection from '../components/sections/HeroSection'
 import AboutSection from '../components/sections/AboutSection'
+import CertificationsSection from '../components/sections/CertificationsSection'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
@@ -15,6 +16,8 @@ function Home() {
       <HeroSection />
 
       <AboutSection />
+
+      <CertificationsSection />
 
       <section className="py-16 bg-secondary-50/50 dark:bg-secondary-900/30">
         <div className="container mx-auto px-4">

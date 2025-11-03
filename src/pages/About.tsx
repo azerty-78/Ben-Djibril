@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import TechStack from '../components/ui/TechStack'
+import CertificationsSection from '../components/sections/CertificationsSection'
 import {
   programmingLanguages,
   frameworks,
@@ -10,7 +11,7 @@ import {
   design,
   versioning,
 } from '../data/techStack'
-import { CodeBracketIcon, ServerIcon, DatabaseIcon, CloudIcon, PaintBrushIcon, CommandLineIcon } from '@heroicons/react/24/solid'
+import { CodeBracketIcon, ServerIcon, CircleStackIcon, CloudIcon, PaintBrushIcon, CommandLineIcon } from '@heroicons/react/24/solid'
 
 function About() {
   const { t } = useTranslation()
@@ -164,7 +165,7 @@ function About() {
             className="card"
           >
             <div className="flex items-center gap-3 mb-6">
-              <DatabaseIcon className="w-8 h-8 text-success-600 dark:text-success-400" />
+              <CircleStackIcon className="w-8 h-8 text-success-600 dark:text-success-400" />
               <h3 className="text-2xl font-bold">Bases de données</h3>
             </div>
             <div className="space-y-8">
@@ -240,6 +241,9 @@ function About() {
           </motion.div>
         </div>
       </section>
+
+      {/* Certifications */}
+      <CertificationsSection />
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-16">

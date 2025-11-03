@@ -2,7 +2,7 @@
 
 export const programmingLanguages = [
   { name: 'Kotlin', slug: 'kotlin' },
-  { name: 'Java', slug: 'oracle' },
+  { name: 'Java', slug: 'openjdk' },
   { name: 'HTML', slug: 'html5' },
   { name: 'CSS', slug: 'css3' },
   { name: 'JavaScript', slug: 'javascript' },
@@ -44,6 +44,7 @@ export const hosting = [
   { name: 'AWS', slug: 'amazonaws' },
   { name: 'Hostinger', slug: 'hostinger' },
   { name: 'Ngrok', slug: 'ngrok' },
+  { name: 'NS', slug: 'cloudflare' }, // NS - Cloudflare DNS ou autre service
   { name: 'Vercel', slug: 'vercel' },
 ]
 

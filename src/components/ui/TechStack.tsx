@@ -13,10 +13,11 @@ type TechStackProps = {
   columns?: 2 | 3 | 4 | 5 | 6
 }
 
-// Couleurs officielles des technologies
+// Couleurs officielles des technologies (couleurs de marque)
 const iconColors: Record<string, string> = {
+  // Langages
   kotlin: '#7F52FF',
-  oracle: '#ED8B00',
+  openjdk: '#ED8B00', // Java OpenJDK
   java: '#ED8B00',
   html5: '#E34F26',
   css3: '#1572B6',
@@ -25,20 +26,27 @@ const iconColors: Record<string, string> = {
   cplusplus: '#00599C',
   typescript: '#3178C6',
   python: '#3776AB',
+  // Frameworks
   spring: '#6DB33F',
   react: '#61DAFB',
+  // Bases de données
   mysql: '#4479A1',
-  postgresql: '#4169E1',
+  postgresql: '#336791',
   mongodb: '#47A248',
+  // Technologies
   docker: '#2496ED',
   kubernetes: '#326CE5',
   ansible: '#EE0000',
+  // Hébergement
   amazonaws: '#FF9900',
   hostinger: '#FF6C2C',
   ngrok: '#1F1E1E',
+  cloudflare: '#F38020',
   vercel: '#000000',
+  // Design
   figma: '#F24E1E',
   canva: '#00C4CC',
+  // Versioning
   git: '#F05032',
   github: '#181717',
 }
