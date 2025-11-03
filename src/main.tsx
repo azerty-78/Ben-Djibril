@@ -15,7 +15,7 @@ createRoot(document.getElementById('root')!).render(
       <ThemeProvider>
         <BrowserRouter>
           <ErrorBoundary>
-            <App />
+    <App />
           </ErrorBoundary>
         </BrowserRouter>
       </ThemeProvider>

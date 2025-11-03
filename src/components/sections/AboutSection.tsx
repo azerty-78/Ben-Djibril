@@ -26,7 +26,7 @@ function AboutSection() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-secondary-900 dark:text-secondary-100">{t('home.about.title')}</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-secondary-900 dark:text-white">{t('home.about.title')}</h2>
             <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto">
               {t('home.about.subtitle')}
             </p>
@@ -58,23 +58,51 @@ function AboutSection() {
               transition={{ duration: 0.6 }}
               className="space-y-6"
             >
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-sm font-semibold text-secondary-500 dark:text-secondary-400 mb-1">
+                    {t('home.about.realName')}
+                  </h3>
+                  <p className="text-base font-medium text-secondary-900 dark:text-secondary-100">
+                    Kone Djibril Benjamin
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-secondary-500 dark:text-secondary-400 mb-1">
+                    {t('home.about.publicName')}
+                  </h3>
+                  <p className="text-base font-medium text-primary-600 dark:text-primary-400">
+                    Ben Djibril
+                  </p>
+                </div>
+              </div>
+
               <p className="text-lg text-secondary-700 dark:text-secondary-300 leading-relaxed">
                 {t('home.about.bio')}
               </p>
               
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100">
-                  {t('home.about.skills')}
+              <div className="grid grid-cols-2 gap-4 pt-2">
+                <div className="bg-primary-50 dark:bg-primary-900/20 rounded-lg p-4">
+                  <div className="text-2xl font-bold gradient-text mb-1">4</div>
+                  <div className="text-sm text-secondary-600 dark:text-secondary-400">{t('home.about.experience')}</div>
+                </div>
+                <div className="bg-accent-50 dark:bg-accent-900/20 rounded-lg p-4">
+                  <div className="text-2xl font-bold gradient-text mb-1">{t('home.about.level')}</div>
+                  <div className="text-sm text-secondary-600 dark:text-secondary-400">Médior</div>
+                </div>
+              </div>
+
+              <div className="space-y-3 pt-2">
+                <h3 className="text-sm font-semibold text-secondary-500 dark:text-secondary-400">
+                  {t('home.about.languages')}
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {programmingLanguages.slice(0, 6).map((lang, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium"
-                    >
-                      {lang.name}
-                    </span>
-                  ))}
+                  <span className="px-3 py-1.5 bg-success-100 dark:bg-success-900/30 text-success-700 dark:text-success-300 rounded-lg text-sm font-medium">
+                    🇫🇷 Français (Natif)
+                  </span>
+                  <span className="px-3 py-1.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium">
+                    🇬🇧 Anglais (Intermédiaire)
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -171,9 +199,9 @@ function AboutSection() {
               <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CodeBracketIcon className="w-8 h-8 text-primary-600 dark:text-primary-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">{t('home.about.skills')}</h3>
+              <h3 className="text-xl font-semibold mb-2">{t('home.about.specialties')}</h3>
               <p className="text-secondary-600 dark:text-secondary-300 text-sm">
-                Expertise en développement web moderne et technologies cloud
+                Backend (Spring Boot), Mobile (Kotlin), DevOps & Full-Stack
               </p>
             </motion.div>
 
@@ -189,7 +217,7 @@ function AboutSection() {
               </div>
               <h3 className="text-xl font-semibold mb-2">{t('home.about.experience')}</h3>
               <p className="text-secondary-600 dark:text-secondary-300 text-sm">
-                5+ ans d'expérience dans le développement d'applications web et mobiles
+                4 ans d'expérience en développement backend et mobile
               </p>
             </motion.div>
 
@@ -203,9 +231,9 @@ function AboutSection() {
               <div className="w-16 h-16 bg-success-100 dark:bg-success-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                 <AcademicCapIcon className="w-8 h-8 text-success-600 dark:text-success-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">{t('home.about.education')}</h3>
+              <h3 className="text-xl font-semibold mb-2">{t('home.about.languages')}</h3>
               <p className="text-secondary-600 dark:text-secondary-300 text-sm">
-                Formation continue en développement logiciel et architecture cloud
+                Français (Natif), Anglais (Intermédiaire)
               </p>
             </motion.div>
           </div>

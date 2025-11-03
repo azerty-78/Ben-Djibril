@@ -6,15 +6,15 @@ export type Company = {
 
 export const companies: Company[] = [
   {
-    name: 'Université de Yaoundé 2 SOA',
+    name: 'UY2 SOA',
     website: 'https://www.univ-yaounde2.cm', // À confirmer
   },
   {
-    name: 'École Normale Supérieure',
+    name: 'ENS Y',
     website: 'https://www.ens-yaounde.cm', // À confirmer
   },
   {
-    name: 'Kobe Corporation',
+    name: 'Kobe Corp',
     website: 'https://www.kobecorporation.com', // À confirmer
   },
 ]

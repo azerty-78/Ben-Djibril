@@ -10,7 +10,7 @@ function ThemeToggle() {
       aria-label={theme === 'dark' ? 'Activer le thème clair' : 'Activer le thème sombre'}
       title={theme === 'dark' ? 'Thème clair' : 'Thème sombre'}
     >
-      {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+      {theme === 'dark' ? <SunIcon className="w-5 h-5 text-white" /> : <MoonIcon className="w-5 h-5" />}
     </button>
   )
 }

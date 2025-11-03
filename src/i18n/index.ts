@@ -25,11 +25,16 @@ export const resources = {
         metrics: { clients: 'Clients', projects: 'Projects', satisfaction: 'Satisfaction', delivery: 'Avg Delivery' },
         about: {
           title: 'About Me',
-          subtitle: 'DevOps Engineer passionate about creating digital solutions',
-          bio: 'I am a DevOps Engineer with strong expertise in backend and mobile development, complemented by frontend skills. I help businesses transform their ideas into powerful, scalable digital products.',
-          skills: 'Skills & Technologies',
+          subtitle: 'Medior Developer | 4 Years of Experience | DevOps Engineer',
+          bio: 'Hi, I\'m Kone Djibril Benjamin, but you can call me Ben Djibril. I\'m a Medior Developer with 4 years of experience, specializing in backend development with Spring Boot and mobile development with Kotlin (not just native). I\'m passionate about creating robust, scalable digital solutions that help businesses thrive in the digital age.',
+          bioExtended: 'As a DevOps Engineer, I excel in backend and mobile development, with solid frontend skills that make me a complete full-stack developer. My expertise spans from building RESTful APIs with Spring Boot to crafting cross-platform mobile applications with Kotlin Multiplatform. I work extensively with modern cloud technologies, containerization, and CI/CD pipelines to deliver high-quality solutions.',
+          languages: 'Languages',
+          languagesDesc: 'Native French speaker, intermediate English level',
+          realName: 'Full Name',
+          publicName: 'Public Name',
           experience: 'Experience',
-          education: 'Education'
+          level: 'Level',
+          specialties: 'Specialties'
         }
       },
       services: {
@@ -87,11 +92,16 @@ export const resources = {
         metrics: { clients: 'Clients', projects: 'Projets', satisfaction: 'Satisfaction', delivery: 'Délai moyen' },
         about: {
           title: 'À propos de moi',
-          subtitle: 'Ingénieur DevOps passionné créant des solutions digitales',
-          bio: 'Je suis un ingénieur DevOps avec une forte expertise en développement backend et mobile, complétée par des compétences frontend. J\'aide les entreprises à transformer leurs idées en produits digitaux performants et scalables.',
-          skills: 'Compétences & Technologies',
+          subtitle: 'Développeur Médior | 4 ans d\'expérience | Ingénieur DevOps',
+          bio: 'Bonjour, je suis Kone Djibril Benjamin, mais vous pouvez m\'appeler Ben Djibril. Je suis un développeur Médior avec 4 ans d\'expérience, spécialisé en développement backend avec Spring Boot et en développement mobile avec Kotlin (pas que du natif). Je suis passionné par la création de solutions digitales robustes et scalables qui aident les entreprises à prospérer à l\'ère du numérique.',
+          bioExtended: 'En tant qu\'ingénieur DevOps, j\'excelle en développement backend et mobile, avec des compétences frontend solides qui font de moi un développeur full-stack complet. Mon expertise s\'étend de la création d\'APIs RESTful avec Spring Boot au développement d\'applications mobiles cross-platform avec Kotlin Multiplatform. Je travaille beaucoup avec les technologies cloud modernes, la conteneurisation et les pipelines CI/CD pour livrer des solutions de haute qualité.',
+          languages: 'Langues',
+          languagesDesc: 'Français natif, anglais niveau intermédiaire',
+          realName: 'Nom complet',
+          publicName: 'Nom public',
           experience: 'Expérience',
-          education: 'Formation'
+          level: 'Niveau',
+          specialties: 'Spécialités'
         }
       },
       services: {

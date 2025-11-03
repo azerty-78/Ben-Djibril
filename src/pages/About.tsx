@@ -25,10 +25,13 @@ function About() {
         transition={{ duration: 0.6 }}
         className="text-center max-w-4xl mx-auto"
       >
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
+        <h1 className="text-4xl md:text-6xl font-bold mb-4 text-secondary-900 dark:text-white">
           {t('home.about.title')}
         </h1>
-        <p className="text-xl md:text-2xl text-secondary-600 dark:text-secondary-300 leading-relaxed">
+        <p className="text-lg md:text-xl text-secondary-600 dark:text-secondary-400 mb-4">
+          {t('home.about.subtitle')}
+        </p>
+        <p className="text-xl md:text-2xl text-secondary-700 dark:text-secondary-300 leading-relaxed max-w-3xl mx-auto">
           {t('home.about.bio')}
         </p>
       </motion.div>
@@ -63,30 +66,73 @@ function About() {
               className="space-y-6"
             >
               <div>
-                <h2 className="text-3xl font-bold mb-4">Qui suis-je ?</h2>
+                <h2 className="text-3xl font-bold mb-4 text-secondary-900 dark:text-secondary-100">
+                  {t('home.about.title')}
+                </h2>
+                
+                <div className="space-y-4 mb-6">
+                  <div>
+                    <h3 className="text-sm font-semibold text-secondary-500 dark:text-secondary-400 mb-1">
+                      {t('home.about.realName')}
+                    </h3>
+                    <p className="text-base font-medium text-secondary-900 dark:text-secondary-100">
+                      Kone Djibril Benjamin
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-secondary-500 dark:text-secondary-400 mb-1">
+                      {t('home.about.publicName')}
+                    </h3>
+                    <p className="text-base font-medium text-primary-600 dark:text-primary-400">
+                      Ben Djibril
+                    </p>
+                  </div>
+                </div>
+
                 <p className="text-lg text-secondary-700 dark:text-secondary-300 leading-relaxed mb-4">
-                  Développeur Full-Stack passionné, je me spécialise dans la création de solutions digitales performantes
-                  et scalables. Mon expertise couvre le développement web, mobile et cloud, avec une approche moderne
-                  et orientée résultats.
+                  {t('home.about.bio')}
                 </p>
                 <p className="text-lg text-secondary-700 dark:text-secondary-300 leading-relaxed">
-                  J'accompagne les entreprises dans leur transformation digitale, de la conception à la mise en production,
-                  en passant par l'architecture et le déploiement.
+                  {t('home.about.bioExtended')}
                 </p>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 pt-4">
-                <div className="text-center">
-                  <div className="text-3xl font-bold gradient-text">5+</div>
-                  <div className="text-sm text-secondary-600 dark:text-secondary-400">Ans d'expérience</div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
+                <div className="bg-primary-50 dark:bg-primary-900/20 rounded-lg p-4 text-center">
+                  <div className="text-3xl font-bold gradient-text mb-1">4</div>
+                  <div className="text-sm text-secondary-600 dark:text-secondary-400">{t('home.about.experience')}</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold gradient-text">50+</div>
-                  <div className="text-sm text-secondary-600 dark:text-secondary-400">Projets réalisés</div>
+                <div className="bg-accent-50 dark:bg-accent-900/20 rounded-lg p-4 text-center">
+                  <div className="text-lg font-bold gradient-text mb-1">{t('home.about.level')}</div>
+                  <div className="text-sm text-secondary-600 dark:text-secondary-400">Médior</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold gradient-text">98%</div>
-                  <div className="text-sm text-secondary-600 dark:text-secondary-400">Satisfaction client</div>
+                <div className="bg-success-50 dark:bg-success-900/20 rounded-lg p-4 text-center">
+                  <div className="text-lg font-bold gradient-text mb-1">🇫🇷</div>
+                  <div className="text-sm text-secondary-600 dark:text-secondary-400">Français (Natif)</div>
+                </div>
+                <div className="bg-primary-50 dark:bg-primary-900/20 rounded-lg p-4 text-center">
+                  <div className="text-lg font-bold gradient-text mb-1">🇬🇧</div>
+                  <div className="text-sm text-secondary-600 dark:text-secondary-400">Anglais (Intermédiaire)</div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-secondary-200 dark:border-secondary-700">
+                <h3 className="text-lg font-semibold mb-3 text-secondary-900 dark:text-secondary-100">
+                  {t('home.about.specialties')}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium">
+                    Backend (Spring Boot)
+                  </span>
+                  <span className="px-4 py-2 bg-accent-100 dark:bg-accent-900/30 text-accent-700 dark:text-accent-300 rounded-lg text-sm font-medium">
+                    Mobile (Kotlin Multiplatform)
+                  </span>
+                  <span className="px-4 py-2 bg-success-100 dark:bg-success-900/30 text-success-700 dark:text-success-300 rounded-lg text-sm font-medium">
+                    DevOps
+                  </span>
+                  <span className="px-4 py-2 bg-warning-100 dark:bg-warning-900/30 text-warning-700 dark:text-warning-300 rounded-lg text-sm font-medium">
+                    Full-Stack
+                  </span>
                 </div>
               </div>
             </motion.div>
