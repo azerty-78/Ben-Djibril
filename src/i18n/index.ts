@@ -34,7 +34,13 @@ export const resources = {
           publicName: 'Public Name',
           experience: 'Experience',
           level: 'Level',
-          specialties: 'Specialties'
+          specialties: 'Specialties',
+          techStack: 'Technology Stack',
+          techStackDesc: 'Technologies and tools I master and use daily',
+          certifications: 'Certifications',
+          contactMe: 'Interested in my profile?',
+          contactDesc: 'Let\'s discuss your project and see how I can help you',
+          contactBtn: 'Contact Me'
         }
       },
       services: {
@@ -101,7 +107,13 @@ export const resources = {
           publicName: 'Nom public',
           experience: 'Expérience',
           level: 'Niveau',
-          specialties: 'Spécialités'
+          specialties: 'Spécialités',
+          techStack: 'Stack Technologique',
+          techStackDesc: 'Technologies et outils que je maîtrise et utilise au quotidien',
+          certifications: 'Certifications',
+          contactMe: 'Intéressé par mon profil ?',
+          contactDesc: 'Discutons de votre projet et voyons comment je peux vous aider',
+          contactBtn: 'Me contacter'
         }
       },
       services: {
