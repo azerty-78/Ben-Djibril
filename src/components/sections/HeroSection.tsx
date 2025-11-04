@@ -16,7 +16,7 @@ function HeroSection() {
   ]
 
   return (
-    <section className="relative pt-8 sm:pt-12 md:pt-16 pb-16 md:pb-24 overflow-visible">
+    <section className="relative pt-4 sm:pt-6 md:pt-8 pb-16 md:pb-24 overflow-visible">
       <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-transparent to-accent-50/30 dark:from-primary-900/20 dark:via-transparent dark:to-accent-900/20" />
       
       <div className="relative container mx-auto px-4">
@@ -26,7 +26,7 @@ function HeroSection() {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <div className="pt-2 sm:pt-4 md:pt-6 pb-4 sm:pb-6 md:pb-8 mb-6 overflow-visible">
+          <div className="pt-0 sm:pt-2 md:pt-4 pb-4 sm:pb-6 md:pb-8 mb-6 overflow-visible">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold gradient-text leading-[1.4] sm:leading-[1.3] md:leading-[1.25] lg:leading-[1.2] md:whitespace-nowrap overflow-visible min-h-[1.2em]">
               {t('home.title')}
             </h1>
