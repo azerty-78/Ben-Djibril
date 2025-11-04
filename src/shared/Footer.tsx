@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid'
-import { FaGithub, FaLinkedin, FaXTwitter, FaInstagram } from 'react-icons/fa6'
+import { FaGithub, FaLinkedin, FaXTwitter, FaWhatsapp } from 'react-icons/fa6'
 
 function Footer() {
   const { t } = useTranslation()
@@ -33,48 +33,75 @@ function Footer() {
             </div>
             
             <div className="space-y-3">
-              <div className="flex items-start gap-3 text-secondary-600 dark:text-secondary-300">
-                <PhoneIcon className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                <span className="text-sm">+33 6 00 00 00 00</span>
+              <div className="flex items-center justify-between gap-2">
+                <a 
+                  href="tel:+237655938501" 
+                  className="flex items-start gap-3 text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex-1"
+                >
+                  <PhoneIcon className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">+237 655 938 501</span>
+                </a>
+                <a
+                  href="https://wa.me/237655938501"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Contactez-moi sur WhatsApp"
+                  className="h-8 w-8 rounded-full bg-success-500 hover:bg-success-600 text-white flex items-center justify-center transition-colors duration-200 shadow-md hover:shadow-lg flex-shrink-0"
+                  title="Contacter sur WhatsApp"
+                >
+                  <FaWhatsapp className="w-4 h-4" />
+                </a>
               </div>
-              <div className="flex items-start gap-3 text-secondary-600 dark:text-secondary-300">
+              <a 
+                href="mailto:contact@bendjibril.dev" 
+                className="flex items-start gap-3 text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
                 <EnvelopeIcon className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                <span className="text-sm">contact@bendev.dev</span>
-              </div>
+                <span className="text-sm">contact@bendjibril.dev</span>
+              </a>
               <div className="flex items-start gap-3 text-secondary-600 dark:text-secondary-300">
                 <MapPinIcon className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                <span className="text-sm">Remote · Worldwide</span>
+                <span className="text-sm">Yaoundé, Cameroun</span>
               </div>
             </div>
 
             <div className="flex items-center gap-3 pt-2">
               <a
-                href="#"
-                aria-label="Twitter"
+                href="https://wa.me/237655938501"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="h-10 w-10 rounded-full bg-success-500 hover:bg-success-600 text-white flex items-center justify-center transition-colors duration-200 shadow-md hover:shadow-lg"
+                title="Contacter sur WhatsApp"
+              >
+                <FaWhatsapp className="w-5 h-5" />
+              </a>
+              <a
+                href="https://x.com/le_bendji"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (Twitter)"
                 className="h-10 w-10 rounded-full bg-secondary-100 dark:bg-secondary-800 hover:bg-primary-600 dark:hover:bg-primary-600 hover:text-white text-secondary-700 dark:text-secondary-300 flex items-center justify-center transition-colors duration-200"
               >
                 <FaXTwitter className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/Ben-Djibril"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className="h-10 w-10 rounded-full bg-secondary-100 dark:bg-secondary-800 hover:bg-primary-600 dark:hover:bg-primary-600 hover:text-white text-secondary-700 dark:text-secondary-300 flex items-center justify-center transition-colors duration-200"
               >
                 <FaLinkedin className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://github.com/azerty-78"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="GitHub"
                 className="h-10 w-10 rounded-full bg-secondary-100 dark:bg-secondary-800 hover:bg-primary-600 dark:hover:bg-primary-600 hover:text-white text-secondary-700 dark:text-secondary-300 flex items-center justify-center transition-colors duration-200"
               >
                 <FaGithub className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="h-10 w-10 rounded-full bg-secondary-100 dark:bg-secondary-800 hover:bg-primary-600 dark:hover:bg-primary-600 hover:text-white text-secondary-700 dark:text-secondary-300 flex items-center justify-center transition-colors duration-200"
-              >
-                <FaInstagram className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -181,12 +208,9 @@ function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-secondary-200 dark:border-secondary-700">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
-            <p className="text-secondary-600 dark:text-secondary-300">
+          <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-4 text-sm">
+            <p className="text-secondary-600 dark:text-secondary-300 text-center md:text-left">
               © {new Date().getFullYear()} <span className="font-semibold">Ben Djibril</span>. {t('footer.rights')}
-            </p>
-            <p className="text-secondary-500 dark:text-secondary-400">
-              Fait avec ❤️ par <span className="font-medium text-primary-600 dark:text-primary-400">Benjamin</span>
             </p>
           </div>
         </div>
