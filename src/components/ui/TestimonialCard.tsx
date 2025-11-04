@@ -39,14 +39,14 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
         </div>
       </div>
 
-      <div className="relative p-6 md:p-8">
+      <div className="relative p-4 sm:p-5 md:p-6 lg:p-8">
         {/* Rating */}
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: index * 0.15 + 0.2, type: "spring" }}
-          className="flex items-center gap-1 mb-6"
+          className="flex items-center gap-0.5 sm:gap-1 mb-4 sm:mb-6"
         >
           {[...Array(5)].map((_, i) => (
             <motion.div
@@ -61,7 +61,7 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
               }}
             >
               <StarIcon
-                className={`w-5 h-5 transition-colors ${
+                className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
                   i < rating 
                     ? 'text-warning-500 fill-warning-500' 
                     : 'text-secondary-300 dark:text-secondary-700'
@@ -77,15 +77,15 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: index * 0.15 + 0.3 }}
-          className="text-secondary-700 dark:text-secondary-300 mb-8 leading-relaxed text-base md:text-lg relative z-10"
+          className="text-secondary-700 dark:text-secondary-300 mb-6 sm:mb-8 leading-relaxed text-sm sm:text-base md:text-lg relative z-10"
         >
-          <span className="text-primary-600 dark:text-primary-400 text-2xl font-bold leading-none">"</span>
+          <span className="text-primary-600 dark:text-primary-400 text-xl sm:text-2xl font-bold leading-none">"</span>
           {content}
-          <span className="text-primary-600 dark:text-primary-400 text-2xl font-bold leading-none">"</span>
+          <span className="text-primary-600 dark:text-primary-400 text-xl sm:text-2xl font-bold leading-none">"</span>
         </motion.p>
 
         {/* Author */}
-        <div className="flex items-center gap-4 relative z-10">
+        <div className="flex items-center gap-3 sm:gap-4 relative z-10">
           <motion.div
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
@@ -93,7 +93,7 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
             transition={{ delay: index * 0.15 + 0.4, type: "spring" }}
             className="relative flex-shrink-0"
           >
-            <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-primary-400 via-primary-500 to-accent-400 p-0.5 shadow-lg">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-primary-400 via-primary-500 to-accent-400 p-0.5 shadow-lg">
               <div className="w-full h-full rounded-full bg-white dark:bg-secondary-800 flex items-center justify-center">
                 {image ? (
                   <img 
@@ -102,7 +102,7 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
                     className="w-full h-full rounded-full object-cover" 
                   />
                 ) : (
-                  <div className="w-full h-full rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white text-xl md:text-2xl font-bold">
+                  <div className="w-full h-full rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white text-lg sm:text-xl md:text-2xl font-bold">
                     {name.charAt(0).toUpperCase()}
                   </div>
                 )}
@@ -128,7 +128,7 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15 + 0.5 }}
-              className="font-bold text-lg text-secondary-900 dark:text-white mb-1"
+              className="font-bold text-base sm:text-lg text-secondary-900 dark:text-white mb-1"
             >
               {name}
             </motion.h4>
@@ -137,12 +137,12 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15 + 0.6 }}
-              className="text-sm text-secondary-600 dark:text-secondary-400"
+              className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-400"
             >
               {role}
               {company && (
                 <span className="text-secondary-500 dark:text-secondary-500">
-                  {' '}· {company}
+                  {' '}· <span className="hidden sm:inline">{company}</span>
                 </span>
               )}
             </motion.p>

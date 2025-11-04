@@ -8,7 +8,10 @@ import { Link } from 'react-router-dom'
 import { 
   GlobeAltIcon, 
   DevicePhoneMobileIcon, 
-  ShoppingBagIcon 
+  ShoppingBagIcon,
+  RocketLaunchIcon,
+  ArrowRightIcon,
+  SparklesIcon
 } from '@heroicons/react/24/solid'
 
 const TestimonialsSection = lazy(() => import('../components/sections/TestimonialsSection'))

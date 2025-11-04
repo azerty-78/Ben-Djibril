@@ -38,7 +38,7 @@ function CertificationCard({ certification, index }: CertificationCardProps) {
           : 'from-warning-400/20 to-warning-500/10'
       } rounded-bl-full opacity-50`} />
       
-      <div className="relative flex flex-col md:flex-row items-start gap-4 md:gap-6 p-6">
+      <div className="relative flex flex-col sm:flex-row items-start gap-3 sm:gap-4 md:gap-6 p-4 sm:p-5 md:p-6">
         {/* Icon container */}
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
@@ -51,7 +51,7 @@ function CertificationCard({ certification, index }: CertificationCardProps) {
             stiffness: 200
           }}
           whileHover={{ scale: 1.1, rotate: 5 }}
-          className={`flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center shadow-lg ${
+          className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg ${
             isCompleted 
               ? 'bg-gradient-to-br from-success-500 to-success-600' 
               : 'bg-gradient-to-br from-warning-500 to-warning-600'
@@ -75,22 +75,22 @@ function CertificationCard({ certification, index }: CertificationCardProps) {
             }}
           >
             {isCompleted ? (
-              <CheckCircleIcon className="w-8 h-8 md:w-10 md:h-10 text-white" />
+              <CheckCircleIcon className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10 text-white" />
             ) : (
-              <ClockIcon className="w-8 h-8 md:w-10 md:h-10 text-white" />
+              <ClockIcon className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10 text-white" />
             )}
           </motion.div>
         </motion.div>
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <h3 className="text-lg md:text-xl font-bold text-secondary-900 dark:text-white leading-tight">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3 mb-3">
+            <h3 className="text-base sm:text-lg md:text-xl font-bold text-secondary-900 dark:text-white leading-tight">
               {certification.name}
             </h3>
             <motion.span
               whileHover={{ scale: 1.1 }}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap flex-shrink-0 ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold whitespace-nowrap flex-shrink-0 ${
                 isCompleted
                   ? 'bg-success-100 dark:bg-success-900/30 text-success-700 dark:text-success-300'
                   : 'bg-warning-100 dark:bg-warning-900/30 text-warning-700 dark:text-warning-300'
@@ -100,7 +100,7 @@ function CertificationCard({ certification, index }: CertificationCardProps) {
             </motion.span>
           </div>
           
-          <p className="text-sm md:text-base text-secondary-600 dark:text-secondary-300 mb-4 font-medium">
+          <p className="text-sm sm:text-base text-secondary-600 dark:text-secondary-300 mb-3 sm:mb-4 font-medium">
             {certification.issuer}
           </p>
 
