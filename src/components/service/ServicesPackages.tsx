@@ -38,18 +38,6 @@ function ServicesPackages() {
             <p className="text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
               {t('services.saasSubtitle')}
             </p>
-            <button
-              type="button"
-              onClick={() => setShowComparison((prev) => !prev)}
-              className="mt-5 inline-flex items-center gap-2 rounded-full border border-secondary-300 dark:border-secondary-600 px-4 py-1.5 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 hover:bg-secondary-50 dark:hover:bg-secondary-800 transition-colors"
-            >
-              <span>
-                {showComparison
-                  ? t('services.saasComparison.hide')
-                  : t('services.saasComparison.show')}
-              </span>
-              <span className="text-primary-500">↑↓</span>
-            </button>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto items-stretch">
@@ -105,6 +93,28 @@ function ServicesPackages() {
               onClick={() => setSelectedPlan('saas-premium')}
               className="md:translate-y-2"
             />
+          </div>
+
+          {/* Comparison button and table */}
+          <div className="mt-8 text-center">
+            <button
+              type="button"
+              onClick={() => setShowComparison((prev) => !prev)}
+              className="inline-flex items-center gap-2 rounded-xl border-2 border-primary-500 dark:border-primary-400 bg-primary-50 dark:bg-primary-900/30 px-6 py-3 text-sm font-semibold text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-all duration-200 shadow-md hover:shadow-lg"
+            >
+              <span>
+                {showComparison
+                  ? t('services.saasComparison.hide')
+                  : t('services.saasComparison.show')}
+              </span>
+              <motion.span
+                animate={{ rotate: showComparison ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+                className="text-primary-600 dark:text-primary-400"
+              >
+                ↓
+              </motion.span>
+            </button>
           </div>
           <SaaSComparisonTable open={showComparison} />
         </div>
