@@ -35,28 +35,28 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
     {
       id: 'goodDeal',
       name: t('services.saas.goodDeal.name'),
-      oldPrice: '18 000 F',
+      oldPrice: '18 500 F',
       currentPrice: t('services.saas.goodDeal.price'),
       description: t('services.saas.goodDeal.description'),
       planId: 'saas-goodDeal' as const,
       color: 'primary',
     },
     {
-      id: 'normal',
-      name: t('services.saas.normal.name'),
-      oldPrice: '30 000 F',
-      currentPrice: t('services.saas.normal.price'),
-      description: t('services.saas.normal.description'),
-      planId: 'saas-normal' as const,
+      id: 'pro',
+      name: t('services.saas.pro.name'),
+      oldPrice: '30 700 F',
+      currentPrice: t('services.saas.pro.price'),
+      description: t('services.saas.pro.description'),
+      planId: 'saas-pro' as const,
       color: 'secondary',
     },
     {
-      id: 'premium',
-      name: t('services.saas.premium.name'),
-      oldPrice: '50 000 F',
-      currentPrice: t('services.saas.premium.price'),
-      description: t('services.saas.premium.description'),
-      planId: 'saas-premium' as const,
+      id: 'ultra',
+      name: t('services.saas.ultra.name'),
+      oldPrice: '50 900 F',
+      currentPrice: t('services.saas.ultra.price'),
+      description: t('services.saas.ultra.description'),
+      planId: 'saas-ultra' as const,
       color: 'accent',
     },
   ]
@@ -67,8 +67,8 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       label: t('services.saasComparison.priceMonthly'),
       icon: ChartBarIcon,
       good: t('services.saas.goodDeal.price'),
-      normal: t('services.saas.normal.price'),
-      premium: t('services.saas.premium.price'),
+      pro: t('services.saas.pro.price'),
+      ultra: t('services.saas.ultra.price'),
       type: 'text' as const,
     },
     {
@@ -76,8 +76,8 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       label: t('services.saasComparison.priceYearly'),
       icon: ChartBarIcon,
       good: t('services.saas.goodDeal.annualPriceShort'),
-      normal: t('services.saas.normal.annualPriceShort'),
-      premium: t('services.saas.premium.annualPriceShort'),
+      pro: t('services.saas.pro.annualPriceShort'),
+      ultra: t('services.saas.ultra.annualPriceShort'),
       type: 'text' as const,
     },
     {
@@ -85,8 +85,8 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       label: t('services.saasComparison.saving'),
       icon: ChartBarIcon,
       good: t('services.saas.goodDeal.annualSavingShort'),
-      normal: t('services.saas.normal.annualSavingShort'),
-      premium: t('services.saas.premium.annualSavingShort'),
+      pro: t('services.saas.pro.annualSavingShort'),
+      ultra: t('services.saas.ultra.annualSavingShort'),
       type: 'text' as const,
     },
     {
@@ -94,8 +94,8 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       label: t('services.saasComparison.target'),
       icon: UserGroupIcon,
       good: t('services.saasComparison.targetGood'),
-      normal: t('services.saasComparison.targetNormal'),
-      premium: t('services.saasComparison.targetPremium'),
+      pro: t('services.saasComparison.targetPro'),
+      ultra: t('services.saasComparison.targetUltra'),
       type: 'text' as const,
     },
     {
@@ -103,8 +103,8 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       label: t('services.saasComparison.evolutions'),
       icon: WrenchScrewdriverIcon,
       good: t('services.saasComparison.evolutionsGood'),
-      normal: t('services.saasComparison.evolutionsNormal'),
-      premium: t('services.saasComparison.evolutionsPremium'),
+      pro: t('services.saasComparison.evolutionsPro'),
+      ultra: t('services.saasComparison.evolutionsUltra'),
       type: 'text' as const,
     },
     {
@@ -112,8 +112,8 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       label: t('services.saasComparison.support'),
       icon: ClockIcon,
       good: t('services.saasComparison.supportGood'),
-      normal: t('services.saasComparison.supportNormal'),
-      premium: t('services.saasComparison.supportPremium'),
+      pro: t('services.saasComparison.supportPro'),
+      ultra: t('services.saasComparison.supportUltra'),
       type: 'text' as const,
     },
     {
@@ -121,8 +121,8 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       label: t('services.saasComparison.infrastructure'),
       icon: ServerIcon,
       good: t('services.saasComparison.infrastructureGood'),
-      normal: t('services.saasComparison.infrastructureNormal'),
-      premium: t('services.saasComparison.infrastructurePremium'),
+      pro: t('services.saasComparison.infrastructurePro'),
+      ultra: t('services.saasComparison.infrastructureUltra'),
       type: 'text' as const,
     },
   ]
@@ -230,9 +230,9 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
 
               {/* Features Table Body */}
               <tbody className="divide-y divide-secondary-100 dark:divide-secondary-800">
-                {rows.map((row, rowIdx) => {
-                  const IconComponent = row.icon
-                  const values = [row.good, row.normal, row.premium]
+                  {rows.map((row, rowIdx) => {
+                    const IconComponent = row.icon
+                    const values = [row.good, row.pro, row.ultra]
 
                   return (
                     <tr

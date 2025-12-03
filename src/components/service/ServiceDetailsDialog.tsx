@@ -18,8 +18,8 @@ import {
 
 export type PlanId =
   | 'saas-goodDeal'
-  | 'saas-normal'
-  | 'saas-premium'
+  | 'saas-pro'
+  | 'saas-ultra'
   | 'full-ultraSpeed'
   | 'full-speed'
   | 'full-normal'
@@ -44,12 +44,12 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
       baseKey = 'services.saas.goodDeal'
       category = 'saas'
       break
-    case 'saas-normal':
-      baseKey = 'services.saas.normal'
+    case 'saas-pro':
+      baseKey = 'services.saas.pro'
       category = 'saas'
       break
-    case 'saas-premium':
-      baseKey = 'services.saas.premium'
+    case 'saas-ultra':
+      baseKey = 'services.saas.ultra'
       category = 'saas'
       break
     case 'full-ultraSpeed':

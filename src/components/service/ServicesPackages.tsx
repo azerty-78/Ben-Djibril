@@ -21,8 +21,8 @@ function ServicesPackages() {
     if (planParam) {
       const validPlans: PlanId[] = [
         'saas-goodDeal',
-        'saas-normal',
-        'saas-premium',
+        'saas-pro',
+        'saas-ultra',
         'full-ultraSpeed',
         'full-speed',
         'full-normal',
@@ -93,40 +93,40 @@ function ServicesPackages() {
 
               {/* Normal */}
               <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-1">
-                <PackageCard
-                  name={t('services.saas.normal.name')}
-                  price={t('services.saas.normal.price')}
-                  secondaryPrice={t('services.saas.normal.annualPrice')}
-                  savingLabel={t('services.saas.normal.annualSaving')}
-                  description={t('services.saas.normal.description')}
-                  features={[
-                    t('services.saas.normal.feature1'),
-                    t('services.saas.normal.feature2'),
-                    t('services.saas.normal.feature3'),
-                    t('services.saas.normal.feature4'),
-                  ]}
-                  cta={t('services.getStarted')}
-                  onClick={() => setSelectedPlan('saas-normal')}
-                />
+                    <PackageCard
+                      name={t('services.saas.pro.name')}
+                      price={t('services.saas.pro.price')}
+                      secondaryPrice={t('services.saas.pro.annualPrice')}
+                      savingLabel={t('services.saas.pro.annualSaving')}
+                      description={t('services.saas.pro.description')}
+                      features={[
+                        t('services.saas.pro.feature1'),
+                        t('services.saas.pro.feature2'),
+                        t('services.saas.pro.feature3'),
+                        t('services.saas.pro.feature4'),
+                      ]}
+                      cta={t('services.getStarted')}
+                      onClick={() => setSelectedPlan('saas-pro')}
+                    />
               </div>
 
               {/* Premium */}
               <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-3">
-                <PackageCard
-                  name={t('services.saas.premium.name')}
-                  price={t('services.saas.premium.price')}
-                  secondaryPrice={t('services.saas.premium.annualPrice')}
-                  savingLabel={t('services.saas.premium.annualSaving')}
-                  description={t('services.saas.premium.description')}
-                  features={[
-                    t('services.saas.premium.feature1'),
-                    t('services.saas.premium.feature2'),
-                    t('services.saas.premium.feature3'),
-                    t('services.saas.premium.feature4'),
-                  ]}
-                  cta={t('services.getStarted')}
-                  onClick={() => setSelectedPlan('saas-premium')}
-                />
+                    <PackageCard
+                      name={t('services.saas.ultra.name')}
+                      price={t('services.saas.ultra.price')}
+                      secondaryPrice={t('services.saas.ultra.annualPrice')}
+                      savingLabel={t('services.saas.ultra.annualSaving')}
+                      description={t('services.saas.ultra.description')}
+                      features={[
+                        t('services.saas.ultra.feature1'),
+                        t('services.saas.ultra.feature2'),
+                        t('services.saas.ultra.feature3'),
+                        t('services.saas.ultra.feature4'),
+                      ]}
+                      cta={t('services.getStarted')}
+                      onClick={() => setSelectedPlan('saas-ultra')}
+                    />
               </div>
             </div>
           </div>
