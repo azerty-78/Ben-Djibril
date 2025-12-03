@@ -44,24 +44,32 @@ const iconColors: Record<string, string> = {
   github: '#181717',
 }
 
+// Icônes qui n'existent pas dans simple-icons - utiliser directement le fallback
+const missingIcons = new Set(['hostinger'])
+
 function TechItemCard({ item, index }: { item: TechItem; index: number }) {
-  const [hasError, setHasError] = useState(false)
-  const [svgContent, setSvgContent] = useState<string | null>(null)
   const iconName = item.slug.toLowerCase().replace(/\s+/g, '')
-  // Utiliser la dernière version de simple-icons pour éviter les 404 sur certaines icônes (ex: Hostinger)
-  const iconUrl = `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${iconName}.svg`
   const iconColor = iconColors[iconName] || iconColors[item.slug.toLowerCase()] || '#6366f1'
+  const shouldUseFallback = missingIcons.has(iconName)
+  
+  const [hasError, setHasError] = useState(shouldUseFallback)
+  const [svgContent, setSvgContent] = useState<string | null>(null)
+  const iconUrl = `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${iconName}.svg`
 
   // Charger et colorer le SVG avec la couleur officielle
   useEffect(() => {
-    if (svgContent) return // Déjà chargé
+    if (svgContent || hasError || shouldUseFallback) return // Déjà chargé, erreur gérée, ou icône manquante
     
     fetch(iconUrl)
       .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch')
+        if (!res.ok) {
+          setHasError(true)
+          return
+        }
         return res.text()
       })
       .then(svg => {
+        if (!svg) return
         // Remplacer toutes les occurrences de fill par la couleur officielle
         let coloredSvg = svg
         // Remplacer fill="#000000", fill="#000", fill="currentColor", etc.
@@ -74,10 +82,10 @@ function TechItemCard({ item, index }: { item: TechItem; index: number }) {
         setSvgContent(coloredSvg)
       })
       .catch(() => {
-        // Si le fetch échoue, on essaie avec l'image directe
-        setHasError(false) // On garde hasError à false pour utiliser l'img fallback
+        // Si le fetch échoue, utiliser directement le fallback (initiales)
+        setHasError(true)
       })
-  }, [iconUrl, iconColor, svgContent])
+  }, [iconUrl, iconColor, svgContent, hasError, shouldUseFallback])
 
   return (
     <motion.div
