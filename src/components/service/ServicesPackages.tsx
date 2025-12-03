@@ -3,11 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import PackageCard from '../ui/PackageCard'
 import ServiceDetailsDialog from './ServiceDetailsDialog'
+import SaaSComparisonTable from './SaaSComparisonTable'
 import type { PlanId } from './ServiceDetailsDialog'
 
 function ServicesPackages() {
   const { t } = useTranslation()
   const [selectedPlan, setSelectedPlan] = useState<PlanId | null>(null)
+  const [showComparison, setShowComparison] = useState(false)
 
   return (
     <section className="py-16 md:py-20 bg-white dark:bg-secondary-900">
@@ -29,13 +31,25 @@ function ServicesPackages() {
 
         {/* SaaS category */}
         <div className="mb-16">
-          <div className="text-center mb-10">
+          <div className="text-center mb-8 md:mb-10">
             <h3 className="text-2xl md:text-3xl font-bold mb-3 text-secondary-900 dark:text-white">
               {t('services.saasTitle')}
             </h3>
             <p className="text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
               {t('services.saasSubtitle')}
             </p>
+            <button
+              type="button"
+              onClick={() => setShowComparison((prev) => !prev)}
+              className="mt-5 inline-flex items-center gap-2 rounded-full border border-secondary-300 dark:border-secondary-600 px-4 py-1.5 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 hover:bg-secondary-50 dark:hover:bg-secondary-800 transition-colors"
+            >
+              <span>
+                {showComparison
+                  ? t('services.saasComparison.hide')
+                  : t('services.saasComparison.show')}
+              </span>
+              <span className="text-primary-500">↑↓</span>
+            </button>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto items-stretch">
@@ -92,6 +106,7 @@ function ServicesPackages() {
               className="md:translate-y-2"
             />
           </div>
+          <SaaSComparisonTable open={showComparison} />
         </div>
 
         {/* Full Control category */}
