@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import PackageCard from '../ui/PackageCard'
 import ServiceDetailsDialog from './ServiceDetailsDialog'
@@ -8,10 +9,31 @@ import type { PlanId } from './ServiceDetailsDialog'
 
 function ServicesPackages() {
   const { t } = useTranslation()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [selectedPlan, setSelectedPlan] = useState<PlanId | null>(null)
   const [showComparison, setShowComparison] = useState(false)
   const saasScrollRef = useRef<HTMLDivElement | null>(null)
   const fullScrollRef = useRef<HTMLDivElement | null>(null)
+
+  // Détecter le paramètre plan dans l'URL et ouvrir le dialogue
+  useEffect(() => {
+    const planParam = searchParams.get('plan')
+    if (planParam) {
+      const validPlans: PlanId[] = [
+        'saas-goodDeal',
+        'saas-normal',
+        'saas-premium',
+        'full-ultraSpeed',
+        'full-speed',
+        'full-normal',
+      ]
+      if (validPlans.includes(planParam as PlanId)) {
+        setSelectedPlan(planParam as PlanId)
+        // Nettoyer l'URL après ouverture
+        setSearchParams({}, { replace: true })
+      }
+    }
+  }, [searchParams, setSearchParams])
 
   return (
     <section className="py-16 md:py-20 bg-white dark:bg-secondary-900">
