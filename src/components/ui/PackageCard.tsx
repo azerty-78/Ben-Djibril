@@ -56,21 +56,23 @@ function PackageCard({
           {description}
         </p>
 
-        <div className="flex items-end justify-between gap-2">
-          <div>
-            <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text leading-tight whitespace-nowrap mb-1">
-              {price}
-            </div>
-            {secondaryPrice && (
-              <p className="text-[0.7rem] sm:text-xs text-secondary-500 dark:text-secondary-400">
-                {secondaryPrice}
-              </p>
-            )}
+        <div className="space-y-1.5">
+          <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text leading-tight whitespace-nowrap">
+            {price}
           </div>
-
-          {savingLabel && (
-            <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200 text-[0.7rem] sm:text-xs font-semibold">
-              {savingLabel}
+          {(secondaryPrice || savingLabel) && (
+            <div className="flex flex-wrap items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight">
+              {secondaryPrice && (
+                <span className="whitespace-nowrap">{secondaryPrice}</span>
+              )}
+              {secondaryPrice && savingLabel && (
+                <span className="text-secondary-400 dark:text-secondary-500">•</span>
+              )}
+              {savingLabel && (
+                <span className="whitespace-nowrap font-semibold text-emerald-600 dark:text-emerald-400">
+                  {savingLabel}
+                </span>
+              )}
             </div>
           )}
         </div>
