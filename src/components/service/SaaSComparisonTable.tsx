@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   CheckIcon,
   XMarkIcon,
@@ -18,6 +18,18 @@ type SaaSComparisonTableProps = {
 
 function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+
+  const handleChooseService = () => {
+    navigate('/services')
+    // Scroll to services section after a short delay
+    setTimeout(() => {
+      const servicesSection = document.querySelector('[data-section="services"]')
+      if (servicesSection) {
+        servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)
+  }
 
   const plans = [
     {
@@ -150,125 +162,149 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
           className="mt-8 overflow-hidden"
         >
           <div className="overflow-x-auto rounded-2xl border-2 border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-900 shadow-2xl">
-            {/* Table Header with Plan Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-0 border-b-2 border-secondary-200 dark:border-secondary-700">
-              {/* First Column - Features Label */}
-              <div className="hidden md:flex items-center justify-center px-6 py-8 bg-gradient-to-br from-secondary-50 to-secondary-100/50 dark:from-secondary-800 dark:to-secondary-900 border-r-2 border-secondary-200 dark:border-secondary-700">
-                <h3 className="text-lg font-bold text-secondary-900 dark:text-white text-center">
-                  {t('services.saasComparison.whichPlan')}
-                </h3>
-              </div>
+            {/* Table with consistent column widths */}
+            <table className="min-w-full table-fixed">
+              <colgroup>
+                <col className="w-[30%] md:w-[25%]" />
+                <col className="w-[23.33%] md:w-[25%]" />
+                <col className="w-[23.33%] md:w-[25%]" />
+                <col className="w-[23.33%] md:w-[25%]" />
+              </colgroup>
 
-              {/* Plan Headers */}
-              {plans.map((plan, idx) => (
-                <div
-                  key={plan.id}
-                  className={`px-6 py-6 md:py-8 ${getColorClasses(plan.color, 'bg')} ${
-                    idx < plans.length - 1
-                      ? 'border-r-2 border-secondary-200 dark:border-secondary-700'
-                      : ''
-                  }`}
-                >
-                  <div className="text-center">
-                    {/* Old Price (Strikethrough) */}
-                    <div className="mb-2">
-                      <span className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 line-through">
-                        {plan.oldPrice}
-                      </span>
-                    </div>
+              {/* Header Row */}
+              <thead>
+                <tr className="border-b-2 border-secondary-200 dark:border-secondary-700">
+                  {/* First Column - Features Label */}
+                  <th className="hidden md:table-cell px-4 sm:px-6 py-6 md:py-8 bg-gradient-to-br from-secondary-50 to-secondary-100/50 dark:from-secondary-800 dark:to-secondary-900 border-r-2 border-secondary-200 dark:border-secondary-700">
+                    <h3 className="text-base sm:text-lg font-bold text-secondary-900 dark:text-white text-center">
+                      {t('services.saasComparison.whichPlan')}
+                    </h3>
+                  </th>
 
-                    {/* Current Price */}
-                    <div className="mb-4">
-                      <span className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white">
-                        {plan.currentPrice}
-                      </span>
-                    </div>
-
-                    {/* CTA Button */}
-                    <Link
-                      to={`/services?plan=${plan.planId}`}
-                      className={`inline-block w-full px-4 py-2.5 rounded-lg ${getColorClasses(
-                        plan.color,
-                        'button'
-                      )} text-white text-sm font-semibold hover:shadow-lg transition-all duration-200 mb-4`}
+                  {/* Plan Headers */}
+                  {plans.map((plan, idx) => (
+                    <th
+                      key={plan.id}
+                      className={`px-4 sm:px-6 py-6 md:py-8 ${getColorClasses(plan.color, 'bg')} ${
+                        idx < plans.length - 1
+                          ? 'border-r-2 border-secondary-200 dark:border-secondary-700'
+                          : ''
+                      } ${idx === 0 ? 'md:border-l-2 border-secondary-200 dark:border-secondary-700' : ''}`}
                     >
-                      {t('services.getStarted')} →
-                    </Link>
+                      <div className="text-center">
+                        {/* Old Price (Strikethrough) */}
+                        <div className="mb-2">
+                          <span className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 line-through">
+                            {plan.oldPrice}
+                          </span>
+                        </div>
 
-                    {/* Description */}
-                    <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 leading-relaxed text-left">
-                      {plan.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                        {/* Current Price */}
+                        <div className="mb-4">
+                          <span className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white">
+                            {plan.currentPrice}
+                          </span>
+                        </div>
 
-            {/* Features Table */}
-            <div className="overflow-x-auto">
-              <table className="min-w-full">
-                <tbody className="divide-y divide-secondary-100 dark:divide-secondary-800">
-                  {rows.map((row, rowIdx) => {
-                    const IconComponent = row.icon
-                    const values = [row.good, row.normal, row.premium]
+                        {/* CTA Button */}
+                        <button
+                          type="button"
+                          onClick={handleChooseService}
+                          className={`inline-block w-full px-4 py-2.5 rounded-lg ${getColorClasses(
+                            plan.color,
+                            'button'
+                          )} text-white text-sm font-semibold hover:shadow-lg transition-all duration-200 mb-4`}
+                        >
+                          {t('services.getStarted')} →
+                        </button>
 
-                    return (
-                      <tr
-                        key={row.key}
-                        className={`transition-colors ${
-                          rowIdx % 2 === 0
-                            ? 'bg-white dark:bg-secondary-900'
-                            : 'bg-secondary-50/30 dark:bg-secondary-800/20'
-                        } hover:bg-primary-50/30 dark:hover:bg-primary-900/10`}
-                      >
-                        {/* Feature Label Column */}
-                        <td className="px-4 sm:px-6 py-4 align-top">
-                          <div className="flex items-start gap-2 sm:gap-3">
-                            <div className="flex-shrink-0 mt-0.5">
-                              <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-primary-400" />
-                            </div>
-                            <div className="flex items-start gap-1.5 flex-1">
-                              <span className="text-xs sm:text-sm font-semibold text-secondary-800 dark:text-secondary-100">
-                                {row.label}
-                              </span>
-                              <InformationCircleIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-secondary-400 dark:text-secondary-500 flex-shrink-0 mt-0.5" />
-                            </div>
+                        {/* Description */}
+                        <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 leading-relaxed text-left">
+                          {plan.description}
+                        </p>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+
+              {/* Features Table Body */}
+              <tbody className="divide-y divide-secondary-100 dark:divide-secondary-800">
+                {rows.map((row, rowIdx) => {
+                  const IconComponent = row.icon
+                  const values = [row.good, row.normal, row.premium]
+
+                  return (
+                    <tr
+                      key={row.key}
+                      className={`transition-colors ${
+                        rowIdx % 2 === 0
+                          ? 'bg-white dark:bg-secondary-900'
+                          : 'bg-secondary-50/30 dark:bg-secondary-800/20'
+                      } hover:bg-primary-50/30 dark:hover:bg-primary-900/10`}
+                    >
+                      {/* Feature Label Column */}
+                      <td className="hidden md:table-cell px-4 sm:px-6 py-4 align-top border-r-2 border-secondary-200 dark:border-secondary-700 bg-gradient-to-br from-secondary-50/50 to-secondary-100/30 dark:from-secondary-800/50 dark:to-secondary-900/30">
+                        <div className="flex items-start gap-2 sm:gap-3">
+                          <div className="flex-shrink-0 mt-0.5">
+                            <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-primary-400" />
                           </div>
-                        </td>
+                          <div className="flex items-start gap-1.5 flex-1">
+                            <span className="text-xs sm:text-sm font-semibold text-secondary-800 dark:text-secondary-100">
+                              {row.label}
+                            </span>
+                            <InformationCircleIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-secondary-400 dark:text-secondary-500 flex-shrink-0 mt-0.5" />
+                          </div>
+                        </div>
+                      </td>
 
-                        {/* Plan Values */}
-                        {plans.map((plan, planIdx) => {
-                          const value = values[planIdx]
-                          return (
-                            <td
-                              key={plan.id}
-                              className={`px-4 sm:px-6 py-4 text-center align-top ${getColorClasses(
-                                plan.color,
-                                'bg'
-                              )} ${
-                                planIdx < plans.length - 1
-                                  ? 'border-r border-secondary-200 dark:border-secondary-700'
-                                  : ''
-                              }`}
-                            >
-                              {value === 'CHECK' ? (
-                                <CheckIcon className="w-5 h-5 mx-auto text-emerald-500 dark:text-emerald-400" />
-                              ) : value === 'NO' ? (
-                                <XMarkIcon className="w-5 h-5 mx-auto text-secondary-400 dark:text-secondary-500" />
-                              ) : (
-                                <span className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 font-medium">
-                                  {value}
-                                </span>
-                              )}
-                            </td>
-                          )
-                        })}
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
+                      {/* Mobile: Feature Label in first cell */}
+                      <td className="md:hidden px-4 sm:px-6 py-4 align-top border-r border-secondary-200 dark:border-secondary-700">
+                        <div className="flex items-start gap-2 sm:gap-3">
+                          <div className="flex-shrink-0 mt-0.5">
+                            <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-primary-400" />
+                          </div>
+                          <div className="flex items-start gap-1.5 flex-1">
+                            <span className="text-xs sm:text-sm font-semibold text-secondary-800 dark:text-secondary-100">
+                              {row.label}
+                            </span>
+                            <InformationCircleIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-secondary-400 dark:text-secondary-500 flex-shrink-0 mt-0.5" />
+                          </div>
+                        </div>
+                      </td>
+
+                      {/* Plan Values */}
+                      {plans.map((plan, planIdx) => {
+                        const value = values[planIdx]
+                        return (
+                          <td
+                            key={plan.id}
+                            className={`px-4 sm:px-6 py-4 text-center align-top ${getColorClasses(
+                              plan.color,
+                              'bg'
+                            )} ${
+                              planIdx < plans.length - 1
+                                ? 'border-r border-secondary-200 dark:border-secondary-700'
+                                : ''
+                            }`}
+                          >
+                            {value === 'CHECK' ? (
+                              <CheckIcon className="w-5 h-5 mx-auto text-emerald-500 dark:text-emerald-400" />
+                            ) : value === 'NO' ? (
+                              <XMarkIcon className="w-5 h-5 mx-auto text-secondary-400 dark:text-secondary-500" />
+                            ) : (
+                              <span className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 font-medium">
+                                {value}
+                              </span>
+                            )}
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
           </div>
         </motion.div>
       )}
