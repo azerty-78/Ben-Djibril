@@ -62,6 +62,9 @@ function ServicesPackages() {
             <p className="text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
               {t('services.saasSubtitle')}
             </p>
+            <p className="text-sm sm:text-base text-primary-600 dark:text-primary-400 font-medium mt-3 max-w-3xl mx-auto">
+              {t('services.saasDeliveryNote')}
+            </p>
           </div>
 
           <div className="max-w-6xl mx-auto mt-6 md:mt-8">
@@ -74,6 +77,7 @@ function ServicesPackages() {
                 <PackageCard
                   name={t('services.saas.goodDeal.name')}
                   price={t('services.saas.goodDeal.price')}
+                  oldPrice="18 500 F HT"
                   secondaryPrice={t('services.saas.goodDeal.annualPrice')}
                   savingLabel={t('services.saas.goodDeal.annualSaving')}
                   description={t('services.saas.goodDeal.description')}
@@ -96,6 +100,7 @@ function ServicesPackages() {
                     <PackageCard
                       name={t('services.saas.pro.name')}
                       price={t('services.saas.pro.price')}
+                      oldPrice="30 700 F HT"
                       secondaryPrice={t('services.saas.pro.annualPrice')}
                       savingLabel={t('services.saas.pro.annualSaving')}
                       description={t('services.saas.pro.description')}
@@ -115,6 +120,7 @@ function ServicesPackages() {
                     <PackageCard
                       name={t('services.saas.ultra.name')}
                       price={t('services.saas.ultra.price')}
+                      oldPrice="50 900 F HT"
                       secondaryPrice={t('services.saas.ultra.annualPrice')}
                       savingLabel={t('services.saas.ultra.annualSaving')}
                       description={t('services.saas.ultra.description')}
