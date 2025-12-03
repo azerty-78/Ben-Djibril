@@ -39,7 +39,7 @@ function PackageCard({
       whileHover={{ y: -8, scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
       transition={{ duration: 0.5 }}
-      className={`card relative ${
+      className={`card relative w-full overflow-hidden ${
         popular ? 'ring-2 ring-primary-500 dark:ring-primary-400 md:scale-105' : ''
       } ${className ?? ''}`}
     >
@@ -57,19 +57,19 @@ function PackageCard({
         </p>
 
         <div className="space-y-1.5">
-          <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text leading-tight whitespace-nowrap">
+          <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text leading-tight break-words">
             {price}
           </div>
           {(secondaryPrice || savingLabel) && (
-            <div className="flex flex-wrap items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight max-w-xs">
+            <div className="flex flex-wrap items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight w-full">
               {secondaryPrice && (
-                <span className="whitespace-nowrap">{secondaryPrice}</span>
+                <span className="break-words">{secondaryPrice}</span>
               )}
               {secondaryPrice && savingLabel && (
-                <span className="text-secondary-400 dark:text-secondary-500">•</span>
+                <span className="text-secondary-400 dark:text-secondary-500 flex-shrink-0">•</span>
               )}
               {savingLabel && (
-                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400 break-words">
                   {savingLabel}
                 </span>
               )}
@@ -82,7 +82,7 @@ function PackageCard({
         {features.map((feature, index) => (
           <li key={index} className="flex items-start gap-3">
             <CheckIcon className="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" />
-            <span className="text-secondary-700 dark:text-secondary-300">{feature}</span>
+            <span className="text-secondary-700 dark:text-secondary-300 break-words flex-1 min-w-0">{feature}</span>
           </li>
         ))}
       </ul>

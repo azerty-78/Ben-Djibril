@@ -30,8 +30,8 @@ function ServicesPackages() {
         </motion.div>
 
         {/* SaaS category */}
-        <div className="mb-12 md:mb-16">
-          <div className="text-center mb-6 md:mb-10">
+        <div className="mb-16 md:mb-24">
+          <div className="text-center mb-8 md:mb-12">
             <h3 className="text-2xl md:text-3xl font-bold mb-3 text-secondary-900 dark:text-white">
               {t('services.saasTitle')}
             </h3>
@@ -41,9 +41,9 @@ function ServicesPackages() {
           </div>
 
           <div className="max-w-6xl mx-auto">
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:snap-none">
+            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0">
               {/* Normal */}
-              <div className="min-w-[calc(100vw-2rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2">
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2 w-full md:w-auto">
                 <PackageCard
                   name={t('services.saas.normal.name')}
                   price={t('services.saas.normal.price')}
@@ -62,7 +62,7 @@ function ServicesPackages() {
               </div>
 
               {/* Good Deal (au centre, en avant) */}
-              <div className="min-w-[calc(100vw-2rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:-translate-y-3 md:scale-110">
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:-translate-y-2 md:scale-105 w-full md:w-auto">
                 <PackageCard
                   name={t('services.saas.goodDeal.name')}
                   price={t('services.saas.goodDeal.price')}
@@ -84,7 +84,7 @@ function ServicesPackages() {
               </div>
 
               {/* Premium */}
-              <div className="min-w-[calc(100vw-2rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2">
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2 w-full md:w-auto">
                 <PackageCard
                   name={t('services.saas.premium.name')}
                   price={t('services.saas.premium.price')}
@@ -105,7 +105,7 @@ function ServicesPackages() {
           </div>
 
           {/* Comparison button and table */}
-          <div className="mt-8 text-center">
+          <div className="mt-8 text-center hidden md:block">
             <button
               type="button"
               onClick={() => setShowComparison((prev) => !prev)}
@@ -129,8 +129,8 @@ function ServicesPackages() {
         </div>
 
         {/* Full Control category */}
-        <div className="mt-12 md:mt-16">
-          <div className="text-center mb-6 md:mb-10">
+        <div className="mt-16 md:mt-24">
+          <div className="text-center mb-8 md:mb-12">
             <h3 className="text-2xl md:text-3xl font-bold mb-3 text-secondary-900 dark:text-white">
               {t('services.fullControlTitle')}
             </h3>
@@ -140,9 +140,9 @@ function ServicesPackages() {
           </div>
 
           <div className="max-w-6xl mx-auto">
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:snap-none">
+            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0">
               {/* Ultra Speed */}
-              <div className="min-w-[calc(100vw-2rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2">
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2 w-full md:w-auto">
                 <PackageCard
                   name={t('services.fullControl.ultraSpeed.name')}
                   price={t('services.fullControl.ultraSpeed.price')}
@@ -159,7 +159,7 @@ function ServicesPackages() {
               </div>
 
               {/* Speed (au centre, en avant) */}
-              <div className="min-w-[calc(100vw-2rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:-translate-y-3 md:scale-110">
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:-translate-y-2 md:scale-105 w-full md:w-auto">
                 <PackageCard
                   name={t('services.fullControl.speed.name')}
                   price={t('services.fullControl.speed.price')}
@@ -179,7 +179,7 @@ function ServicesPackages() {
               </div>
 
               {/* Normal */}
-              <div className="min-w-[calc(100vw-2rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2">
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2 w-full md:w-auto">
                 <PackageCard
                   name={t('services.fullControl.normal.name')}
                   price={t('services.fullControl.normal.price')}
