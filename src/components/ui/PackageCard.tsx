@@ -8,22 +8,34 @@ type PackageCardProps = {
   description: string
   features: string[]
   popular?: boolean
+  popularLabel?: string
   cta: string
   ctaLink?: string
 }
 
-function PackageCard({ name, price, description, features, popular, cta, ctaLink = '/contact' }: PackageCardProps) {
+function PackageCard({
+  name,
+  price,
+  description,
+  features,
+  popular,
+  popularLabel,
+  cta,
+  ctaLink = '/contact',
+}: PackageCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className={`card relative ${popular ? 'ring-2 ring-primary-500 dark:ring-primary-400 scale-105' : ''}`}
+      className={`card relative ${
+        popular ? 'ring-2 ring-primary-500 dark:ring-primary-400 scale-105' : ''
+      }`}
     >
       {popular && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
-          Most Popular
+          {popularLabel}
         </div>
       )}
       <div className="text-center mb-6">
