@@ -13,13 +13,6 @@ function ServicesPackages() {
   const saasScrollRef = useRef<HTMLDivElement | null>(null)
   const fullScrollRef = useRef<HTMLDivElement | null>(null)
 
-  const scrollContainer = (node: HTMLDivElement | null, direction: 'next' | 'prev') => {
-    if (!node) return
-
-    const delta = direction === 'next' ? node.clientWidth : -node.clientWidth
-    node.scrollBy({ left: delta, behavior: 'smooth' })
-  }
-
   return (
     <section className="py-16 md:py-20 bg-white dark:bg-secondary-900">
       <div className="container mx-auto px-4">
@@ -49,28 +42,7 @@ function ServicesPackages() {
             </p>
           </div>
 
-          <div className="max-w-6xl mx-auto mt-4 md:mt-6">
-            {/* Contrôles de navigation mobiles */}
-            <div className="mb-2 flex justify-between items-center md:hidden px-1 text-xs text-secondary-500">
-              <button
-                type="button"
-                onClick={() => scrollContainer(saasScrollRef.current, 'prev')}
-                className="inline-flex items-center justify-center rounded-full border border-secondary-200/70 bg-white/70 px-2 py-1 text-secondary-500 shadow-sm backdrop-blur-sm"
-              >
-                ‹
-              </button>
-              <span className="text-[0.7rem]">
-                {t('services.saasTitle')} – {t('services.mostPopular')}
-              </span>
-              <button
-                type="button"
-                onClick={() => scrollContainer(saasScrollRef.current, 'next')}
-                className="inline-flex items-center justify-center rounded-full border border-secondary-200/70 bg-white/70 px-2 py-1 text-secondary-500 shadow-sm backdrop-blur-sm"
-              >
-                ›
-              </button>
-            </div>
-
+          <div className="max-w-6xl mx-auto mt-6 md:mt-8">
             <div
               ref={saasScrollRef}
               className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0"
@@ -172,28 +144,7 @@ function ServicesPackages() {
             </p>
           </div>
 
-          <div className="max-w-6xl mx-auto mt-4 md:mt-6">
-            {/* Contrôles de navigation mobiles */}
-            <div className="mb-2 flex justify-between items-center md:hidden px-1 text-xs text-secondary-500">
-              <button
-                type="button"
-                onClick={() => scrollContainer(fullScrollRef.current, 'prev')}
-                className="inline-flex items-center justify-center rounded-full border border-secondary-200/70 bg-white/70 px-2 py-1 text-secondary-500 shadow-sm backdrop-blur-sm"
-              >
-                ‹
-              </button>
-              <span className="text-[0.7rem]">
-                {t('services.fullControlTitle')} – {t('services.bestValue')}
-              </span>
-              <button
-                type="button"
-                onClick={() => scrollContainer(fullScrollRef.current, 'next')}
-                className="inline-flex items-center justify-center rounded-full border border-secondary-200/70 bg-white/70 px-2 py-1 text-secondary-500 shadow-sm backdrop-blur-sm"
-              >
-                ›
-              </button>
-            </div>
-
+          <div className="max-w-6xl mx-auto mt-6 md:mt-8">
             <div
               ref={fullScrollRef}
               className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0"

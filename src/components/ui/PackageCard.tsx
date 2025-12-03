@@ -39,12 +39,12 @@ function PackageCard({
       whileHover={{ y: -8, scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
       transition={{ duration: 0.5 }}
-      className={`card relative w-full overflow-hidden ${
-        popular ? 'ring-2 ring-primary-500 dark:ring-primary-400 md:scale-105' : ''
+      className={`card relative w-full overflow-visible ${
+        popular ? 'ring-2 ring-primary-500 dark:ring-primary-400 md:scale-105 pt-6 md:pt-6' : ''
       } ${className ?? ''}`}
     >
       {popular && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-semibold px-4 py-1.5 rounded-full z-10 shadow-lg whitespace-nowrap">
           {popularLabel}
         </div>
       )}
