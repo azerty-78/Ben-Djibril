@@ -1,9 +1,13 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import PackageCard from '../ui/PackageCard'
+import ServiceDetailsDialog from './ServiceDetailsDialog'
+import type { PlanId } from './ServiceDetailsDialog'
 
 function ServicesPackages() {
   const { t } = useTranslation()
+  const [selectedPlan, setSelectedPlan] = useState<PlanId | null>(null)
 
   return (
     <section className="py-16 md:py-20 bg-white dark:bg-secondary-900">
@@ -48,6 +52,7 @@ function ServicesPackages() {
               popular
               popularLabel={t('services.mostPopular')}
               cta={t('services.getStarted')}
+              onClick={() => setSelectedPlan('saas-goodDeal')}
             />
 
             <PackageCard
@@ -61,6 +66,7 @@ function ServicesPackages() {
                 t('services.saas.normal.feature4'),
               ]}
               cta={t('services.getStarted')}
+              onClick={() => setSelectedPlan('saas-normal')}
             />
 
             <PackageCard
@@ -74,6 +80,7 @@ function ServicesPackages() {
                 t('services.saas.premium.feature4'),
               ]}
               cta={t('services.getStarted')}
+              onClick={() => setSelectedPlan('saas-premium')}
             />
           </div>
         </div>
@@ -101,6 +108,7 @@ function ServicesPackages() {
                 t('services.fullControl.ultraSpeed.feature4'),
               ]}
               cta={t('services.requestQuote')}
+              onClick={() => setSelectedPlan('full-ultraSpeed')}
             />
 
             <PackageCard
@@ -116,6 +124,7 @@ function ServicesPackages() {
               popular
               popularLabel={t('services.bestValue')}
               cta={t('services.requestQuote')}
+              onClick={() => setSelectedPlan('full-speed')}
             />
 
             <PackageCard
@@ -129,10 +138,17 @@ function ServicesPackages() {
                 t('services.fullControl.normal.feature4'),
               ]}
               cta={t('services.requestQuote')}
+              onClick={() => setSelectedPlan('full-normal')}
             />
           </div>
         </div>
       </div>
+
+      <ServiceDetailsDialog
+        open={selectedPlan !== null}
+        planId={selectedPlan}
+        onClose={() => setSelectedPlan(null)}
+      />
     </section>
   )
 }

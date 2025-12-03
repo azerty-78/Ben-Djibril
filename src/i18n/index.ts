@@ -114,6 +114,50 @@ export const resources = {
             feature4: 'Ideal for non-urgent projects with tight budget',
           },
         },
+        details: {
+          saas: {
+            label: 'SaaS Model',
+            priceLabel: 'From',
+            audienceTitle: 'Who is this model for?',
+            audience:
+              'Ideal for entrepreneurs and businesses who want to launch quickly, with a controlled monthly cost, without managing servers, deployment or technical maintenance.',
+            ownershipTitle: 'Intellectual property & rights',
+            ownership:
+              'The application is operated in SaaS mode: you use the software and all its features, but the source code and intellectual property remain mine. You can stop at any time according to the terms of the contract.',
+            clientResponsibilitiesTitle: 'Your responsibilities',
+            clientResponsibilities:
+              'Define your business needs, validate the main functional choices, provide content and data, and respect the terms of use and payment deadlines.',
+            devResponsibilitiesTitle: 'My responsibilities',
+            devResponsibilities:
+              'Host and maintain the application, ensure security and updates, monitor performance, correct bugs and implement the evolutions included in the chosen plan.',
+            stopTitle: 'If you stop the subscription',
+            stop:
+              'Access to the application and associated services is suspended after the notice period. A backup of your data can be provided according to the contract, but the code and intellectual property remain mine.',
+          },
+          fullControl: {
+            label: 'Full Control Model',
+            priceLabel: 'Budget',
+            audienceTitle: 'Who is this model for?',
+            audience:
+              'Perfect for companies and projects where the software is strategic and must be fully owned (code, architecture, long‑term evolution).',
+            ownershipTitle: 'Intellectual property & rights',
+            ownership:
+              'You become the owner of the source code and of all intellectual property related to the project once the agreed milestones and payments are completed. Everything is documented for long‑term maintainability.',
+            clientResponsibilitiesTitle: 'Your responsibilities',
+            clientResponsibilities:
+              'Validate the functional scope, take part in follow‑up meetings, make decisions on priorities and accept deliveries within agreed time frames.',
+            devResponsibilitiesTitle: 'My responsibilities',
+            devResponsibilities:
+              'Design and implement a robust, scalable architecture, deliver clean and documented code, advise you on the best compromises between cost, quality and time, and support your technical teams if needed.',
+            stopTitle: 'If you stop the collaboration',
+            stop:
+              'You keep the delivered code and associated documentation according to the signed contract. You can continue the project with your internal team or another provider without losing control of your software.',
+          },
+          helper:
+            'This overview is not a legal contract, but a clear explanation of how the model works. We finalize everything together when we discuss your project.',
+          close: 'Close',
+          contactCta: 'Discuss this plan',
+        },
         requestQuote: 'Request a quote',
         ctaTitle: 'Ready to start your project?',
         ctaSubtitle: "Let's discuss your needs and find the best solution together",
@@ -262,6 +306,50 @@ export const resources = {
             feature3: 'Même qualité de code et documentation',
             feature4: 'Idéal pour les projets non urgents avec budget serré',
           },
+        },
+        details: {
+          saas: {
+            label: 'Modèle SaaS',
+            priceLabel: 'À partir de',
+            audienceTitle: 'Pour qui est ce modèle ?',
+            audience:
+              'Idéal pour les entrepreneurs et entreprises qui veulent lancer rapidement, avec un coût mensuel maîtrisé, sans gérer les serveurs, le déploiement ou la maintenance technique.',
+            ownershipTitle: 'Propriété intellectuelle & droits',
+            ownership:
+              "L'application est opérée en mode SaaS : vous utilisez le logiciel et toutes ses fonctionnalités, mais le code source et la propriété intellectuelle restent à moi. Vous pouvez arrêter quand vous voulez selon les conditions du contrat.",
+            clientResponsibilitiesTitle: 'Vos responsabilités',
+            clientResponsibilities:
+              'Définir vos besoins métier, valider les grands choix fonctionnels, fournir les contenus et données, et respecter les conditions d’utilisation et les échéances de paiement.',
+            devResponsibilitiesTitle: 'Mes responsabilités',
+            devResponsibilities:
+              "Héberger et maintenir l'application, assurer la sécurité et les mises à jour, surveiller les performances, corriger les bugs et mettre en place les évolutions prévues dans le forfait choisi.",
+            stopTitle: 'Si vous arrêtez l’abonnement',
+            stop:
+              "L’accès à l’application et aux services associés est suspendu après le préavis prévu. Une sauvegarde de vos données peut être fournie selon le contrat, mais le code et la propriété intellectuelle restent à moi.",
+          },
+          fullControl: {
+            label: 'Modèle Full Control',
+            priceLabel: 'Budget',
+            audienceTitle: 'Pour qui est ce modèle ?',
+            audience:
+              'Parfait pour les entreprises et projets où le logiciel est stratégique et doit être entièrement détenu (code, architecture, évolutions long terme).',
+            ownershipTitle: 'Propriété intellectuelle & droits',
+            ownership:
+              'Vous devenez propriétaire du code source et de toute la propriété intellectuelle liée au projet une fois les jalons et paiements prévus atteints. Tout est documenté pour une maintenabilité long terme.',
+            clientResponsibilitiesTitle: 'Vos responsabilités',
+            clientResponsibilities:
+              'Valider le périmètre fonctionnel, participer aux points de suivi, prendre les décisions sur les priorités et accepter les livraisons dans les délais convenus.',
+            devResponsibilitiesTitle: 'Mes responsabilités',
+            devResponsibilities:
+              'Concevoir et implémenter une architecture robuste et scalable, livrer un code propre et documenté, vous conseiller sur les meilleurs compromis entre coût, qualité et délai, et accompagner vos équipes techniques si besoin.',
+            stopTitle: 'Si vous arrêtez la collaboration',
+            stop:
+              'Vous conservez le code livré et la documentation associée selon le contrat signé. Vous pouvez continuer le projet avec votre équipe interne ou un autre prestataire sans perdre le contrôle de votre logiciel.',
+          },
+          helper:
+            'Cette fiche n’est pas un contrat juridique, mais une explication claire de la façon dont le modèle fonctionne. On finalise tout ensemble quand on discute de votre projet.',
+          close: 'Fermer',
+          contactCta: 'Discuter de ce forfait',
         },
         requestQuote: 'Demander un devis',
         ctaTitle: 'Prêt à démarrer votre projet ?',

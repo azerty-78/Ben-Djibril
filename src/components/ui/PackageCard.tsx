@@ -11,6 +11,7 @@ type PackageCardProps = {
   popularLabel?: string
   cta: string
   ctaLink?: string
+  onClick?: () => void
 }
 
 function PackageCard({
@@ -22,12 +23,15 @@ function PackageCard({
   popularLabel,
   cta,
   ctaLink = '/contact',
+  onClick,
 }: PackageCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
+      whileHover={{ y: -8, scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
       transition={{ duration: 0.5 }}
       className={`card relative ${
         popular ? 'ring-2 ring-primary-500 dark:ring-primary-400 scale-105' : ''
@@ -53,9 +57,19 @@ function PackageCard({
         ))}
       </ul>
 
-      <Link to={ctaLink} className="btn-primary w-full text-center block">
-        {cta}
-      </Link>
+      {onClick ? (
+        <button
+          type="button"
+          onClick={onClick}
+          className="btn-primary w-full text-center block"
+        >
+          {cta}
+        </button>
+      ) : (
+        <Link to={ctaLink} className="btn-primary w-full text-center block">
+          {cta}
+        </Link>
+      )}
     </motion.div>
   )
 }
