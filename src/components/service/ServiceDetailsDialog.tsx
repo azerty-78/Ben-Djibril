@@ -70,24 +70,24 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center px-3 sm:px-4"
+        className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-3 sm:px-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
         <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.96 }}
+          initial={{ opacity: 0, y: 40, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 40, scale: 0.96 }}
+          exit={{ opacity: 0, y: 30, scale: 0.96 }}
           transition={{ duration: 0.25 }}
-          className="relative max-w-4xl w-full bg-white dark:bg-secondary-900 rounded-t-2xl sm:rounded-2xl lg:rounded-3xl shadow-2xl border border-secondary-100/80 dark:border-secondary-700/80 overflow-hidden"
+          className="relative max-w-4xl w-full max-h-[90vh] bg-white dark:bg-secondary-900 rounded-2xl lg:rounded-3xl shadow-2xl border border-secondary-100/80 dark:border-secondary-700/80 overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="px-6 sm:px-8 pt-5 sm:pt-6 pb-3 sm:pb-4 border-b border-secondary-100 dark:border-secondary-800 bg-gradient-to-r from-primary-50/90 via-white to-accent-50/80 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800/90">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex items-start gap-3 sm:gap-4">
+          <div className="px-4 sm:px-6 md:px-8 pt-3.5 sm:pt-4 md:pt-5 pb-2.5 sm:pb-3.5 md:pb-4 border-b border-secondary-100 dark:border-secondary-800 bg-gradient-to-r from-primary-50/90 via-white to-accent-50/80 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800/90">
+            <div className="flex items-start justify-between gap-3 sm:gap-4">
+              <div className="flex items-start gap-2.5 sm:gap-3.5">
                 <div className="hidden sm:flex w-11 h-11 rounded-2xl bg-primary-600/90 text-white items-center justify-center shadow-lg">
                   {category === 'saas' ? (
                     <CloudIcon className="w-6 h-6" />
@@ -101,17 +101,17 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                       ? t('services.details.saas.label')
                       : t('services.details.fullControl.label')}
                   </p>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white mb-1">
+                  <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-secondary-900 dark:text-white mb-1">
                     {name}
                   </h2>
-                  <p className="text-xs sm:text-sm md:text-base text-secondary-600 dark:text-secondary-300">
+                  <p className="text-[0.7rem] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-300 max-w-xl md:max-w-2xl">
                     {description}
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-col items-end gap-2">
-                <div className="inline-flex flex-col items-end px-3 py-2 rounded-xl bg-primary-600 text-white shadow-lg min-w-[9rem]">
+                <div className="inline-flex flex-col items-end px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-primary-600 text-white shadow-lg min-w-[8.5rem] sm:min-w-[9rem]">
                   <span className="text-[0.65rem] sm:text-xs uppercase tracking-wide opacity-80">
                     {category === 'saas'
                       ? t('services.details.saas.priceLabel')
