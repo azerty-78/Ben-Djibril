@@ -250,6 +250,7 @@ function ServicesPackages() {
                   cta={t('services.requestQuote')}
                   onClick={() => setSelectedPlan('full-normal')}
                 />
+              </div>
             </div>
           </div>
         </div>
