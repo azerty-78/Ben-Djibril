@@ -61,7 +61,7 @@ function PackageCard({
             {price}
           </div>
           {(secondaryPrice || savingLabel) && (
-            <div className="flex flex-wrap items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight">
+            <div className="flex flex-wrap items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight max-w-xs">
               {secondaryPrice && (
                 <span className="whitespace-nowrap">{secondaryPrice}</span>
               )}
@@ -69,7 +69,7 @@ function PackageCard({
                 <span className="text-secondary-400 dark:text-secondary-500">•</span>
               )}
               {savingLabel && (
-                <span className="whitespace-nowrap font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                   {savingLabel}
                 </span>
               )}
