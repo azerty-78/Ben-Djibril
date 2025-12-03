@@ -77,6 +77,7 @@ function ServicesPackages() {
                 <PackageCard
                   name={t('services.saas.goodDeal.name')}
                   price={t('services.saas.goodDeal.price')}
+                  priceUnit={t('services.saas.goodDeal.priceUnit')}
                   oldPrice="18 500 F HT"
                   secondaryPrice={t('services.saas.goodDeal.annualPrice')}
                   savingLabel={t('services.saas.goodDeal.annualSaving')}
@@ -100,6 +101,7 @@ function ServicesPackages() {
                     <PackageCard
                       name={t('services.saas.pro.name')}
                       price={t('services.saas.pro.price')}
+                      priceUnit={t('services.saas.pro.priceUnit')}
                       oldPrice="30 700 F HT"
                       secondaryPrice={t('services.saas.pro.annualPrice')}
                       savingLabel={t('services.saas.pro.annualSaving')}
@@ -120,6 +122,7 @@ function ServicesPackages() {
                     <PackageCard
                       name={t('services.saas.ultra.name')}
                       price={t('services.saas.ultra.price')}
+                      priceUnit={t('services.saas.ultra.priceUnit')}
                       oldPrice="50 900 F HT"
                       secondaryPrice={t('services.saas.ultra.annualPrice')}
                       savingLabel={t('services.saas.ultra.annualSaving')}

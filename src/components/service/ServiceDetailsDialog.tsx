@@ -68,6 +68,7 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
 
   const name = t(`${baseKey}.name`)
   const price = t(`${baseKey}.price`)
+  const priceUnit = category === 'saas' ? t(`${baseKey}.priceUnit`) : undefined
   const description = t(`${baseKey}.description`)
   const features = [
     t(`${baseKey}.feature1`),
@@ -138,7 +139,14 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                       ? t('services.details.saas.priceLabel')
                       : t('services.details.fullControl.priceLabel')}
                   </span>
-                  <span className="text-sm sm:text-base font-semibold leading-tight">{price}</span>
+                  <div className="flex items-baseline gap-1 leading-tight">
+                    <span className="text-sm sm:text-base font-semibold">{price}</span>
+                    {priceUnit && (
+                      <span className="text-xs sm:text-sm opacity-90 font-normal">
+                        {priceUnit}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <button

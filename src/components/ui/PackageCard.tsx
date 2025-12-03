@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 type PackageCardProps = {
   name: string
   price: string
+  priceUnit?: string
   oldPrice?: string
   secondaryPrice?: string
   savingLabel?: string
@@ -21,6 +22,7 @@ type PackageCardProps = {
 function PackageCard({
   name,
   price,
+  priceUnit,
   oldPrice,
   secondaryPrice,
   savingLabel,
@@ -66,8 +68,15 @@ function PackageCard({
               </span>
             </div>
           )}
-          <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text leading-tight break-words">
-            {price}
+          <div className="flex items-baseline gap-1.5 leading-tight">
+            <span className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text">
+              {price}
+            </span>
+            {priceUnit && (
+              <span className="text-sm sm:text-base text-secondary-600 dark:text-secondary-400 font-normal">
+                {priceUnit}
+              </span>
+            )}
           </div>
           {(secondaryPrice || savingLabel) && (
             <div className="flex flex-wrap items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight w-full">

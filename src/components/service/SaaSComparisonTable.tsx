@@ -37,6 +37,7 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       name: t('services.saas.goodDeal.name'),
       oldPrice: '18 500 F HT',
       currentPrice: t('services.saas.goodDeal.price'),
+      priceUnit: t('services.saas.goodDeal.priceUnit'),
       description: t('services.saas.goodDeal.description'),
       planId: 'saas-goodDeal' as const,
       color: 'primary',
@@ -46,6 +47,7 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       name: t('services.saas.pro.name'),
       oldPrice: '30 700 F HT',
       currentPrice: t('services.saas.pro.price'),
+      priceUnit: t('services.saas.pro.priceUnit'),
       description: t('services.saas.pro.description'),
       planId: 'saas-pro' as const,
       color: 'secondary',
@@ -55,6 +57,7 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       name: t('services.saas.ultra.name'),
       oldPrice: '50 900 F HT',
       currentPrice: t('services.saas.ultra.price'),
+      priceUnit: t('services.saas.ultra.priceUnit'),
       description: t('services.saas.ultra.description'),
       planId: 'saas-ultra' as const,
       color: 'accent',
@@ -66,9 +69,9 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       key: 'priceMonthly',
       label: t('services.saasComparison.priceMonthly'),
       icon: ChartBarIcon,
-      good: t('services.saas.goodDeal.price'),
-      pro: t('services.saas.pro.price'),
-      ultra: t('services.saas.ultra.price'),
+      good: `${t('services.saas.goodDeal.price')} ${t('services.saas.goodDeal.priceUnit')}`,
+      pro: `${t('services.saas.pro.price')} ${t('services.saas.pro.priceUnit')}`,
+      ultra: `${t('services.saas.ultra.price')} ${t('services.saas.ultra.priceUnit')}`,
       type: 'text' as const,
     },
     {
@@ -200,10 +203,15 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
                         </div>
 
                         {/* Current Price */}
-                        <div className="mb-4">
+                        <div className="mb-4 flex items-baseline justify-center gap-1.5">
                           <span className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white">
                             {plan.currentPrice}
                           </span>
+                          {plan.priceUnit && (
+                            <span className="text-sm sm:text-base text-secondary-600 dark:text-secondary-400 font-normal">
+                              {plan.priceUnit}
+                            </span>
+                          )}
                         </div>
 
                         {/* CTA Button */}

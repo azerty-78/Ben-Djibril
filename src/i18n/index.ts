@@ -58,8 +58,9 @@ export const resources = {
         saas: {
           goodDeal: {
             name: 'Good Deal',
-            price: '15 500 F HT/mois',
-            description: 'Accessible plan to launch your custom platform at low cost. All prices are excluding taxes (HT).',
+            price: '15 500',
+            priceUnit: 'F HT/mois',
+            description: 'Accessible plan to launch your custom platform at low cost.',
             feature1: 'Secure hosting, maintenance and security updates included',
             feature2: 'Weekly backups and basic performance optimisation',
             feature3: 'Email support with answers within 48 business hours',
@@ -72,8 +73,9 @@ export const resources = {
           },
           pro: {
             name: 'Pro',
-            price: '25 700 F HT/mois',
-            description: 'Balanced plan for growing businesses with regular follow‑up. All prices are excluding taxes (HT).',
+            price: '25 700',
+            priceUnit: 'F HT/mois',
+            description: 'Balanced plan for growing businesses with regular follow‑up.',
             feature1: 'Dedicated cloud server, daily backups and advanced monitoring',
             feature2: 'Priority support (email + WhatsApp) with answers within 24h',
             feature3: 'Up to 2 functional evolutions per quarter included',
@@ -86,8 +88,9 @@ export const resources = {
           },
           ultra: {
             name: 'Ultra',
-            price: '40 900 F HT/mois',
-            description: 'High‑end plan for demanding projects, with strategic support. All prices are excluding taxes (HT).',
+            price: '40 900',
+            priceUnit: 'F HT/mois',
+            description: 'High‑end plan for demanding projects, with strategic support.',
             feature1: 'Premium infrastructure with very high availability and performance',
             feature2: 'VIP support 7/7 and monthly strategic follow‑up meeting',
             feature3: 'Up to 4 medium‑complexity evolutions per quarter included',
@@ -297,8 +300,9 @@ export const resources = {
         saas: {
           goodDeal: {
             name: 'Good Deal',
-            price: '15 500 F HT/mois',
-            description: 'Forfait accessible pour lancer votre plateforme personnalisée à moindre coût. Tous les prix sont hors taxes (HT).',
+            price: '15 500',
+            priceUnit: 'F HT/mois',
+            description: 'Forfait accessible pour lancer votre plateforme personnalisée à moindre coût.',
             feature1: 'Hébergement sécurisé, maintenance et mises à jour de sécurité inclus',
             feature2: 'Sauvegardes hebdomadaires et optimisation basique des performances',
             feature3: 'Support par email avec réponse sous 48h ouvrées',
@@ -311,8 +315,9 @@ export const resources = {
           },
           pro: {
             name: 'Pro',
-            price: '25 700 F HT/mois',
-            description: 'Forfait équilibré pour les entreprises en croissance, avec suivi régulier. Tous les prix sont hors taxes (HT).',
+            price: '25 700',
+            priceUnit: 'F HT/mois',
+            description: 'Forfait équilibré pour les entreprises en croissance, avec suivi régulier.',
             feature1: 'Serveur cloud dédié, sauvegardes quotidiennes et monitoring avancé',
             feature2: 'Support prioritaire (email + WhatsApp) avec réponse sous 24h',
             feature3: 'Jusqu\'à 2 évolutions fonctionnelles par trimestre incluses',
@@ -325,8 +330,9 @@ export const resources = {
           },
           ultra: {
             name: 'Ultra',
-            price: '40 900 F HT/mois',
-            description: 'Forfait haut de gamme pour projets stratégiques, avec accompagnement rapproché. Tous les prix sont hors taxes (HT).',
+            price: '40 900',
+            priceUnit: 'F HT/mois',
+            description: 'Forfait haut de gamme pour projets stratégiques, avec accompagnement rapproché.',
             feature1: 'Infrastructure premium très haute disponibilité et performances optimisées',
             feature2: 'Support VIP 7j/7 et réunion stratégique mensuelle',
             feature3: 'Jusqu\'à 4 évolutions fonctionnelles de complexité moyenne par trimestre',
