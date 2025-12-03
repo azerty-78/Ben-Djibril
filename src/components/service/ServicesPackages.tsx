@@ -36,7 +36,7 @@ function ServicesPackages() {
   }, [searchParams, setSearchParams])
 
   return (
-    <section className="py-16 md:py-20 bg-white dark:bg-secondary-900">
+    <section data-section="packages" className="py-16 md:py-20 bg-white dark:bg-secondary-900">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
