@@ -40,59 +40,68 @@ function ServicesPackages() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto items-stretch">
-            <PackageCard
-              name={t('services.saas.normal.name')}
-              price={t('services.saas.normal.price')}
-              secondaryPrice={t('services.saas.normal.annualPrice')}
-              savingLabel={t('services.saas.normal.annualSaving')}
-              description={t('services.saas.normal.description')}
-              features={[
-                t('services.saas.normal.feature1'),
-                t('services.saas.normal.feature2'),
-                t('services.saas.normal.feature3'),
-                t('services.saas.normal.feature4'),
-              ]}
-              cta={t('services.getStarted')}
-              onClick={() => setSelectedPlan('saas-normal')}
-              className="md:translate-y-2"
-            />
+          <div className="max-w-6xl mx-auto">
+            <div className="flex gap-4 overflow-x-auto pb-4 md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible">
+              {/* Normal */}
+              <div className="min-w-[260px] flex-1 md:min-w-0 md:translate-y-2">
+                <PackageCard
+                  name={t('services.saas.normal.name')}
+                  price={t('services.saas.normal.price')}
+                  secondaryPrice={t('services.saas.normal.annualPrice')}
+                  savingLabel={t('services.saas.normal.annualSaving')}
+                  description={t('services.saas.normal.description')}
+                  features={[
+                    t('services.saas.normal.feature1'),
+                    t('services.saas.normal.feature2'),
+                    t('services.saas.normal.feature3'),
+                    t('services.saas.normal.feature4'),
+                  ]}
+                  cta={t('services.getStarted')}
+                  onClick={() => setSelectedPlan('saas-normal')}
+                />
+              </div>
 
-            <PackageCard
-              name={t('services.saas.goodDeal.name')}
-              price={t('services.saas.goodDeal.price')}
-              secondaryPrice={t('services.saas.goodDeal.annualPrice')}
-              savingLabel={t('services.saas.goodDeal.annualSaving')}
-              description={t('services.saas.goodDeal.description')}
-              features={[
-                t('services.saas.goodDeal.feature1'),
-                t('services.saas.goodDeal.feature2'),
-                t('services.saas.goodDeal.feature3'),
-                t('services.saas.goodDeal.feature4'),
-              ]}
-              popular
-              popularLabel={t('services.mostPopular')}
-              cta={t('services.getStarted')}
-              onClick={() => setSelectedPlan('saas-goodDeal')}
-              className="md:-translate-y-3 md:scale-110 shadow-xl"
-            />
+              {/* Good Deal (au centre, en avant) */}
+              <div className="min-w-[260px] flex-1 md:min-w-0 md:-translate-y-3 md:scale-110">
+                <PackageCard
+                  name={t('services.saas.goodDeal.name')}
+                  price={t('services.saas.goodDeal.price')}
+                  secondaryPrice={t('services.saas.goodDeal.annualPrice')}
+                  savingLabel={t('services.saas.goodDeal.annualSaving')}
+                  description={t('services.saas.goodDeal.description')}
+                  features={[
+                    t('services.saas.goodDeal.feature1'),
+                    t('services.saas.goodDeal.feature2'),
+                    t('services.saas.goodDeal.feature3'),
+                    t('services.saas.goodDeal.feature4'),
+                  ]}
+                  popular
+                  popularLabel={t('services.mostPopular')}
+                  cta={t('services.getStarted')}
+                  onClick={() => setSelectedPlan('saas-goodDeal')}
+                  className="shadow-xl"
+                />
+              </div>
 
-            <PackageCard
-              name={t('services.saas.premium.name')}
-              price={t('services.saas.premium.price')}
-              secondaryPrice={t('services.saas.premium.annualPrice')}
-              savingLabel={t('services.saas.premium.annualSaving')}
-              description={t('services.saas.premium.description')}
-              features={[
-                t('services.saas.premium.feature1'),
-                t('services.saas.premium.feature2'),
-                t('services.saas.premium.feature3'),
-                t('services.saas.premium.feature4'),
-              ]}
-              cta={t('services.getStarted')}
-              onClick={() => setSelectedPlan('saas-premium')}
-              className="md:translate-y-2"
-            />
+              {/* Premium */}
+              <div className="min-w-[260px] flex-1 md:min-w-0 md:translate-y-2">
+                <PackageCard
+                  name={t('services.saas.premium.name')}
+                  price={t('services.saas.premium.price')}
+                  secondaryPrice={t('services.saas.premium.annualPrice')}
+                  savingLabel={t('services.saas.premium.annualSaving')}
+                  description={t('services.saas.premium.description')}
+                  features={[
+                    t('services.saas.premium.feature1'),
+                    t('services.saas.premium.feature2'),
+                    t('services.saas.premium.feature3'),
+                    t('services.saas.premium.feature4'),
+                  ]}
+                  cta={t('services.getStarted')}
+                  onClick={() => setSelectedPlan('saas-premium')}
+                />
+              </div>
+            </div>
           </div>
 
           {/* Comparison button and table */}
@@ -130,53 +139,62 @@ function ServicesPackages() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto items-stretch">
-            <PackageCard
-              name={t('services.fullControl.ultraSpeed.name')}
-              price={t('services.fullControl.ultraSpeed.price')}
-              description={t('services.fullControl.ultraSpeed.description')}
-              features={[
-                t('services.fullControl.ultraSpeed.feature1'),
-                t('services.fullControl.ultraSpeed.feature2'),
-                t('services.fullControl.ultraSpeed.feature3'),
-                t('services.fullControl.ultraSpeed.feature4'),
-              ]}
-              cta={t('services.requestQuote')}
-              onClick={() => setSelectedPlan('full-ultraSpeed')}
-              className="md:translate-y-2"
-            />
+          <div className="max-w-6xl mx-auto">
+            <div className="flex gap-4 overflow-x-auto pb-4 md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible">
+              {/* Ultra Speed */}
+              <div className="min-w-[260px] flex-1 md:min-w-0 md:translate-y-2">
+                <PackageCard
+                  name={t('services.fullControl.ultraSpeed.name')}
+                  price={t('services.fullControl.ultraSpeed.price')}
+                  description={t('services.fullControl.ultraSpeed.description')}
+                  features={[
+                    t('services.fullControl.ultraSpeed.feature1'),
+                    t('services.fullControl.ultraSpeed.feature2'),
+                    t('services.fullControl.ultraSpeed.feature3'),
+                    t('services.fullControl.ultraSpeed.feature4'),
+                  ]}
+                  cta={t('services.requestQuote')}
+                  onClick={() => setSelectedPlan('full-ultraSpeed')}
+                />
+              </div>
 
-            <PackageCard
-              name={t('services.fullControl.speed.name')}
-              price={t('services.fullControl.speed.price')}
-              description={t('services.fullControl.speed.description')}
-              features={[
-                t('services.fullControl.speed.feature1'),
-                t('services.fullControl.speed.feature2'),
-                t('services.fullControl.speed.feature3'),
-                t('services.fullControl.speed.feature4'),
-              ]}
-              popular
-              popularLabel={t('services.bestValue')}
-              cta={t('services.requestQuote')}
-              onClick={() => setSelectedPlan('full-speed')}
-              className="md:-translate-y-3 md:scale-110 shadow-xl"
-            />
+              {/* Speed (au centre, en avant) */}
+              <div className="min-w-[260px] flex-1 md:min-w-0 md:-translate-y-3 md:scale-110">
+                <PackageCard
+                  name={t('services.fullControl.speed.name')}
+                  price={t('services.fullControl.speed.price')}
+                  description={t('services.fullControl.speed.description')}
+                  features={[
+                    t('services.fullControl.speed.feature1'),
+                    t('services.fullControl.speed.feature2'),
+                    t('services.fullControl.speed.feature3'),
+                    t('services.fullControl.speed.feature4'),
+                  ]}
+                  popular
+                  popularLabel={t('services.bestValue')}
+                  cta={t('services.requestQuote')}
+                  onClick={() => setSelectedPlan('full-speed')}
+                  className="shadow-xl"
+                />
+              </div>
 
-            <PackageCard
-              name={t('services.fullControl.normal.name')}
-              price={t('services.fullControl.normal.price')}
-              description={t('services.fullControl.normal.description')}
-              features={[
-                t('services.fullControl.normal.feature1'),
-                t('services.fullControl.normal.feature2'),
-                t('services.fullControl.normal.feature3'),
-                t('services.fullControl.normal.feature4'),
-              ]}
-              cta={t('services.requestQuote')}
-              onClick={() => setSelectedPlan('full-normal')}
-              className="md:translate-y-2"
-            />
+              {/* Normal */}
+              <div className="min-w-[260px] flex-1 md:min-w-0 md:translate-y-2">
+                <PackageCard
+                  name={t('services.fullControl.normal.name')}
+                  price={t('services.fullControl.normal.price')}
+                  description={t('services.fullControl.normal.description')}
+                  features={[
+                    t('services.fullControl.normal.feature1'),
+                    t('services.fullControl.normal.feature2'),
+                    t('services.fullControl.normal.feature3'),
+                    t('services.fullControl.normal.feature4'),
+                  ]}
+                  cta={t('services.requestQuote')}
+                  onClick={() => setSelectedPlan('full-normal')}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -58,7 +58,7 @@ function PackageCard({
 
         <div className="flex items-end justify-between gap-2">
           <div>
-            <div className="text-3xl sm:text-4xl font-bold gradient-text leading-none mb-1">
+            <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text leading-tight whitespace-nowrap mb-1">
               {price}
             </div>
             {secondaryPrice && (
