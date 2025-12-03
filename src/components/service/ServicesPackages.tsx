@@ -38,7 +38,22 @@ function ServicesPackages() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto items-stretch">
+            <PackageCard
+              name={t('services.saas.normal.name')}
+              price={t('services.saas.normal.price')}
+              description={t('services.saas.normal.description')}
+              features={[
+                t('services.saas.normal.feature1'),
+                t('services.saas.normal.feature2'),
+                t('services.saas.normal.feature3'),
+                t('services.saas.normal.feature4'),
+              ]}
+              cta={t('services.getStarted')}
+              onClick={() => setSelectedPlan('saas-normal')}
+              className="md:translate-y-2"
+            />
+
             <PackageCard
               name={t('services.saas.goodDeal.name')}
               price={t('services.saas.goodDeal.price')}
@@ -53,20 +68,7 @@ function ServicesPackages() {
               popularLabel={t('services.mostPopular')}
               cta={t('services.getStarted')}
               onClick={() => setSelectedPlan('saas-goodDeal')}
-            />
-
-            <PackageCard
-              name={t('services.saas.normal.name')}
-              price={t('services.saas.normal.price')}
-              description={t('services.saas.normal.description')}
-              features={[
-                t('services.saas.normal.feature1'),
-                t('services.saas.normal.feature2'),
-                t('services.saas.normal.feature3'),
-                t('services.saas.normal.feature4'),
-              ]}
-              cta={t('services.getStarted')}
-              onClick={() => setSelectedPlan('saas-normal')}
+              className="md:-translate-y-3 md:scale-110 shadow-xl"
             />
 
             <PackageCard
@@ -81,6 +83,7 @@ function ServicesPackages() {
               ]}
               cta={t('services.getStarted')}
               onClick={() => setSelectedPlan('saas-premium')}
+              className="md:translate-y-2"
             />
           </div>
         </div>
@@ -96,7 +99,7 @@ function ServicesPackages() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto items-stretch">
             <PackageCard
               name={t('services.fullControl.ultraSpeed.name')}
               price={t('services.fullControl.ultraSpeed.price')}
@@ -109,6 +112,7 @@ function ServicesPackages() {
               ]}
               cta={t('services.requestQuote')}
               onClick={() => setSelectedPlan('full-ultraSpeed')}
+              className="md:translate-y-2"
             />
 
             <PackageCard
@@ -125,6 +129,7 @@ function ServicesPackages() {
               popularLabel={t('services.bestValue')}
               cta={t('services.requestQuote')}
               onClick={() => setSelectedPlan('full-speed')}
+              className="md:-translate-y-3 md:scale-110 shadow-xl"
             />
 
             <PackageCard
@@ -139,6 +144,7 @@ function ServicesPackages() {
               ]}
               cta={t('services.requestQuote')}
               onClick={() => setSelectedPlan('full-normal')}
+              className="md:translate-y-2"
             />
           </div>
         </div>

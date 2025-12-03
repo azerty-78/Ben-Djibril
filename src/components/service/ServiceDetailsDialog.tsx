@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { XMarkIcon, CloudIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 
 export type PlanId =
   | 'saas-goodDeal'
@@ -69,51 +70,89 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm flex items-center justify-center px-4"
+        className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center px-3 sm:px-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
         <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          initial={{ opacity: 0, y: 60, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 40, scale: 0.95 }}
+          exit={{ opacity: 0, y: 40, scale: 0.96 }}
           transition={{ duration: 0.25 }}
-          className="relative max-w-3xl w-full bg-white dark:bg-secondary-900 rounded-2xl shadow-2xl border border-secondary-100 dark:border-secondary-700 overflow-hidden"
+          className="relative max-w-4xl w-full bg-white dark:bg-secondary-900 rounded-t-2xl sm:rounded-2xl lg:rounded-3xl shadow-2xl border border-secondary-100/80 dark:border-secondary-700/80 overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-4 border-b border-secondary-100 dark:border-secondary-800 bg-gradient-to-r from-primary-50/80 via-white to-accent-50/60 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800/80">
-            <div className="flex justify-between items-start gap-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400 mb-2">
-                  {category === 'saas'
-                    ? t('services.details.saas.label')
-                    : t('services.details.fullControl.label')}
-                </p>
-                <h2 className="text-2xl sm:text-3xl font-bold text-secondary-900 dark:text-white mb-1">
-                  {name}
-                </h2>
-                <p className="text-sm sm:text-base text-secondary-600 dark:text-secondary-300">
-                  {description}
-                </p>
+          <div className="px-6 sm:px-8 pt-5 sm:pt-6 pb-3 sm:pb-4 border-b border-secondary-100 dark:border-secondary-800 bg-gradient-to-r from-primary-50/90 via-white to-accent-50/80 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800/90">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="hidden sm:flex w-11 h-11 rounded-2xl bg-primary-600/90 text-white items-center justify-center shadow-lg">
+                  {category === 'saas' ? (
+                    <CloudIcon className="w-6 h-6" />
+                  ) : (
+                    <ShieldCheckIcon className="w-6 h-6" />
+                  )}
+                </div>
+                <div>
+                  <p className="text-[0.7rem] sm:text-xs uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400 mb-1.5">
+                    {category === 'saas'
+                      ? t('services.details.saas.label')
+                      : t('services.details.fullControl.label')}
+                  </p>
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white mb-1">
+                    {name}
+                  </h2>
+                  <p className="text-xs sm:text-sm md:text-base text-secondary-600 dark:text-secondary-300">
+                    {description}
+                  </p>
+                </div>
               </div>
-              <div className="text-right">
-                <div className="inline-flex items-baseline px-3 py-2 rounded-xl bg-primary-600 text-white shadow-lg">
-                  <span className="text-xs mr-1 uppercase tracking-wide opacity-80">
+
+              <div className="flex flex-col items-end gap-2">
+                <div className="inline-flex flex-col items-end px-3 py-2 rounded-xl bg-primary-600 text-white shadow-lg min-w-[9rem]">
+                  <span className="text-[0.65rem] sm:text-xs uppercase tracking-wide opacity-80">
                     {category === 'saas'
                       ? t('services.details.saas.priceLabel')
                       : t('services.details.fullControl.priceLabel')}
                   </span>
                   <span className="text-sm sm:text-base font-semibold">{price}</span>
+                  {category === 'saas' && (
+                    <span className="mt-1 text-[0.7rem] sm:text-xs text-white/90">
+                      {t(`${baseKey}.annualHighlight`)}
+                    </span>
+                  )}
                 </div>
+
+                <button
+                  type="button"
+                  onClick={onClose}
+                  aria-label={t('services.details.close')}
+                  className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-secondary-200/80 dark:border-secondary-600/80 bg-white/80 dark:bg-secondary-900/80 text-secondary-600 dark:text-secondary-300 hover:bg-secondary-50 dark:hover:bg-secondary-800 transition-colors"
+                >
+                  <XMarkIcon className="w-4 h-4" />
+                </button>
               </div>
             </div>
           </div>
 
           {/* Content */}
-          <div className="px-6 sm:px-8 py-5 sm:py-6 space-y-6 max-h-[70vh] overflow-y-auto">
+          <div className="px-6 sm:px-8 py-5 sm:py-6 space-y-6 max-h-[75vh] overflow-y-auto bg-white dark:bg-secondary-900">
+            {category === 'saas' && (
+              <div className="border border-primary-100 dark:border-primary-700 rounded-xl p-4 bg-primary-50/60 dark:bg-primary-900/30">
+                <h3 className="text-sm font-semibold text-secondary-900 dark:text-white mb-1.5">
+                  {t('services.details.saas.billingTitle')}
+                </h3>
+                <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-100 mb-2">
+                  {t('services.details.saas.billingIntro')}
+                </p>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-secondary-700 dark:text-secondary-100">
+                  <li>{t(`${baseKey}.annualPrice`)}</li>
+                  <li>{t(`${baseKey}.annualSaving`)}</li>
+                </ul>
+              </div>
+            )}
             {/* Features */}
             <div>
               <h3 className="text-sm font-semibold text-secondary-900 dark:text-white mb-3">

@@ -63,6 +63,9 @@ export const resources = {
             feature2: 'Bug fixes and minor improvements',
             feature3: 'Email support on business days',
             feature4: 'Access to the application 24/7',
+            annualPrice: 'Annual payment: 300,000 XAF instead of 420,000 XAF',
+            annualSaving: 'Save 120,000 XAF per year compared to monthly payment.',
+            annualHighlight: 'Pay once a year and save up to 120,000 XAF.',
           },
           normal: {
             name: 'Normal',
@@ -72,6 +75,9 @@ export const resources = {
             feature2: 'Up to 2 functional evolutions per quarter',
             feature3: 'Priority support (email + WhatsApp)',
             feature4: 'Monitoring of performance and availability',
+            annualPrice: 'Annual payment: 400,000 XAF instead of 540,000 XAF',
+            annualSaving: 'Save 140,000 XAF per year compared to monthly payment.',
+            annualHighlight: 'Annual billing available with strong savings.',
           },
           premium: {
             name: 'Premium',
@@ -81,6 +87,9 @@ export const resources = {
             feature2: 'Strategic follow-up meeting every month',
             feature3: 'Proactive performance and security optimization',
             feature4: 'Custom reporting on usage and incidents',
+            annualPrice: 'Annual payment: 500,000 XAF instead of 660,000 XAF',
+            annualSaving: 'Save 160,000 XAF per year compared to monthly payment.',
+            annualHighlight: 'Best long-term value with annual payment.',
           },
         },
         fullControlTitle: 'Full Control – Ownership & Transparency',
@@ -118,6 +127,9 @@ export const resources = {
           saas: {
             label: 'SaaS Model',
             priceLabel: 'From',
+            billingTitle: 'Monthly or annual billing',
+            billingIntro:
+              'Each SaaS plan can be paid monthly or in one annual payment with a financial advantage.',
             audienceTitle: 'Who is this model for?',
             audience:
               'Ideal for entrepreneurs and businesses who want to launch quickly, with a controlled monthly cost, without managing servers, deployment or technical maintenance.',
@@ -256,6 +268,9 @@ export const resources = {
             feature2: 'Corrections de bugs et petites améliorations',
             feature3: 'Support par email aux jours ouvrés',
             feature4: 'Accès à l’application 24h/24 et 7j/7',
+            annualPrice: 'Paiement annuel : 300 000 XAF au lieu de 420 000 XAF',
+            annualSaving: 'Économie de 120 000 XAF par an par rapport au paiement mensuel.',
+            annualHighlight: 'En payant une fois par an, vous économisez jusqu’à 120 000 XAF.',
           },
           normal: {
             name: 'Normal',
@@ -265,6 +280,9 @@ export const resources = {
             feature2: 'Jusqu’à 2 évolutions fonctionnelles par trimestre',
             feature3: 'Support prioritaire (email + WhatsApp)',
             feature4: 'Suivi des performances et de la disponibilité',
+            annualPrice: 'Paiement annuel : 400 000 XAF au lieu de 540 000 XAF',
+            annualSaving: 'Économie de 140 000 XAF par an par rapport au paiement mensuel.',
+            annualHighlight: 'Facturation annuelle possible avec un gain financier important.',
           },
           premium: {
             name: 'Premium',
@@ -274,6 +292,9 @@ export const resources = {
             feature2: 'Réunion de suivi stratégique chaque mois',
             feature3: 'Optimisation proactive des performances et de la sécurité',
             feature4: 'Reporting personnalisé sur l’usage et les incidents',
+            annualPrice: 'Paiement annuel : 500 000 XAF au lieu de 660 000 XAF',
+            annualSaving: 'Économie de 160 000 XAF par an par rapport au paiement mensuel.',
+            annualHighlight: 'Meilleure valeur sur le long terme avec un paiement annuel.',
           },
         },
         fullControlTitle: 'Full Control – Propriété & Transparence',
@@ -311,6 +332,9 @@ export const resources = {
           saas: {
             label: 'Modèle SaaS',
             priceLabel: 'À partir de',
+            billingTitle: 'Facturation mensuelle ou annuelle',
+            billingIntro:
+              'Chaque forfait SaaS peut être payé au mois ou en un seul paiement annuel avec un avantage financier clair.',
             audienceTitle: 'Pour qui est ce modèle ?',
             audience:
               'Idéal pour les entrepreneurs et entreprises qui veulent lancer rapidement, avec un coût mensuel maîtrisé, sans gérer les serveurs, le déploiement ou la maintenance technique.',
