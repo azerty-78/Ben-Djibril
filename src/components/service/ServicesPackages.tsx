@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import PackageCard from '../ui/PackageCard'
@@ -10,6 +10,15 @@ function ServicesPackages() {
   const { t } = useTranslation()
   const [selectedPlan, setSelectedPlan] = useState<PlanId | null>(null)
   const [showComparison, setShowComparison] = useState(false)
+  const saasScrollRef = useRef<HTMLDivElement | null>(null)
+  const fullScrollRef = useRef<HTMLDivElement | null>(null)
+
+  const scrollContainer = (node: HTMLDivElement | null, direction: 'next' | 'prev') => {
+    if (!node) return
+
+    const delta = direction === 'next' ? node.clientWidth : -node.clientWidth
+    node.scrollBy({ left: delta, behavior: 'smooth' })
+  }
 
   return (
     <section className="py-16 md:py-20 bg-white dark:bg-secondary-900">
@@ -31,7 +40,7 @@ function ServicesPackages() {
 
         {/* SaaS category */}
         <div className="mb-16 md:mb-24">
-          <div className="text-center mb-8 md:mb-12">
+          <div className="text-center mb-6 md:mb-10">
             <h3 className="text-2xl md:text-3xl font-bold mb-3 text-secondary-900 dark:text-white">
               {t('services.saasTitle')}
             </h3>
@@ -40,29 +49,34 @@ function ServicesPackages() {
             </p>
           </div>
 
-          <div className="max-w-6xl mx-auto">
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0">
-              {/* Normal */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2 w-full md:w-auto">
-                <PackageCard
-                  name={t('services.saas.normal.name')}
-                  price={t('services.saas.normal.price')}
-                  secondaryPrice={t('services.saas.normal.annualPrice')}
-                  savingLabel={t('services.saas.normal.annualSaving')}
-                  description={t('services.saas.normal.description')}
-                  features={[
-                    t('services.saas.normal.feature1'),
-                    t('services.saas.normal.feature2'),
-                    t('services.saas.normal.feature3'),
-                    t('services.saas.normal.feature4'),
-                  ]}
-                  cta={t('services.getStarted')}
-                  onClick={() => setSelectedPlan('saas-normal')}
-                />
-              </div>
+          <div className="max-w-6xl mx-auto mt-4 md:mt-6">
+            {/* Contrôles de navigation mobiles */}
+            <div className="mb-2 flex justify-between items-center md:hidden px-1 text-xs text-secondary-500">
+              <button
+                type="button"
+                onClick={() => scrollContainer(saasScrollRef.current, 'prev')}
+                className="inline-flex items-center justify-center rounded-full border border-secondary-200/70 bg-white/70 px-2 py-1 text-secondary-500 shadow-sm backdrop-blur-sm"
+              >
+                ‹
+              </button>
+              <span className="text-[0.7rem]">
+                {t('services.saasTitle')} – {t('services.mostPopular')}
+              </span>
+              <button
+                type="button"
+                onClick={() => scrollContainer(saasScrollRef.current, 'next')}
+                className="inline-flex items-center justify-center rounded-full border border-secondary-200/70 bg-white/70 px-2 py-1 text-secondary-500 shadow-sm backdrop-blur-sm"
+              >
+                ›
+              </button>
+            </div>
 
-              {/* Good Deal (au centre, en avant) */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:-translate-y-2 md:scale-105 w-full md:w-auto">
+            <div
+              ref={saasScrollRef}
+              className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0"
+            >
+              {/* Good Deal – en premier sur mobile, au centre sur desktop */}
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:-translate-y-2 md:scale-105 md:order-2">
                 <PackageCard
                   name={t('services.saas.goodDeal.name')}
                   price={t('services.saas.goodDeal.price')}
@@ -83,8 +97,27 @@ function ServicesPackages() {
                 />
               </div>
 
+              {/* Normal */}
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-1">
+                <PackageCard
+                  name={t('services.saas.normal.name')}
+                  price={t('services.saas.normal.price')}
+                  secondaryPrice={t('services.saas.normal.annualPrice')}
+                  savingLabel={t('services.saas.normal.annualSaving')}
+                  description={t('services.saas.normal.description')}
+                  features={[
+                    t('services.saas.normal.feature1'),
+                    t('services.saas.normal.feature2'),
+                    t('services.saas.normal.feature3'),
+                    t('services.saas.normal.feature4'),
+                  ]}
+                  cta={t('services.getStarted')}
+                  onClick={() => setSelectedPlan('saas-normal')}
+                />
+              </div>
+
               {/* Premium */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2 w-full md:w-auto">
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-3">
                 <PackageCard
                   name={t('services.saas.premium.name')}
                   price={t('services.saas.premium.price')}
@@ -130,7 +163,7 @@ function ServicesPackages() {
 
         {/* Full Control category */}
         <div className="mt-16 md:mt-24">
-          <div className="text-center mb-8 md:mb-12">
+          <div className="text-center mb-6 md:mb-10">
             <h3 className="text-2xl md:text-3xl font-bold mb-3 text-secondary-900 dark:text-white">
               {t('services.fullControlTitle')}
             </h3>
@@ -139,27 +172,34 @@ function ServicesPackages() {
             </p>
           </div>
 
-          <div className="max-w-6xl mx-auto">
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0">
-              {/* Ultra Speed */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2 w-full md:w-auto">
-                <PackageCard
-                  name={t('services.fullControl.ultraSpeed.name')}
-                  price={t('services.fullControl.ultraSpeed.price')}
-                  description={t('services.fullControl.ultraSpeed.description')}
-                  features={[
-                    t('services.fullControl.ultraSpeed.feature1'),
-                    t('services.fullControl.ultraSpeed.feature2'),
-                    t('services.fullControl.ultraSpeed.feature3'),
-                    t('services.fullControl.ultraSpeed.feature4'),
-                  ]}
-                  cta={t('services.requestQuote')}
-                  onClick={() => setSelectedPlan('full-ultraSpeed')}
-                />
-              </div>
+          <div className="max-w-6xl mx-auto mt-4 md:mt-6">
+            {/* Contrôles de navigation mobiles */}
+            <div className="mb-2 flex justify-between items-center md:hidden px-1 text-xs text-secondary-500">
+              <button
+                type="button"
+                onClick={() => scrollContainer(fullScrollRef.current, 'prev')}
+                className="inline-flex items-center justify-center rounded-full border border-secondary-200/70 bg-white/70 px-2 py-1 text-secondary-500 shadow-sm backdrop-blur-sm"
+              >
+                ‹
+              </button>
+              <span className="text-[0.7rem]">
+                {t('services.fullControlTitle')} – {t('services.bestValue')}
+              </span>
+              <button
+                type="button"
+                onClick={() => scrollContainer(fullScrollRef.current, 'next')}
+                className="inline-flex items-center justify-center rounded-full border border-secondary-200/70 bg-white/70 px-2 py-1 text-secondary-500 shadow-sm backdrop-blur-sm"
+              >
+                ›
+              </button>
+            </div>
 
-              {/* Speed (au centre, en avant) */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:-translate-y-2 md:scale-105 w-full md:w-auto">
+            <div
+              ref={fullScrollRef}
+              className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0"
+            >
+              {/* Speed – en premier sur mobile, au centre sur desktop */}
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:-translate-y-2 md:scale-105 md:order-2">
                 <PackageCard
                   name={t('services.fullControl.speed.name')}
                   price={t('services.fullControl.speed.price')}
@@ -178,8 +218,25 @@ function ServicesPackages() {
                 />
               </div>
 
+              {/* Ultra Speed */}
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-1">
+                <PackageCard
+                  name={t('services.fullControl.ultraSpeed.name')}
+                  price={t('services.fullControl.ultraSpeed.price')}
+                  description={t('services.fullControl.ultraSpeed.description')}
+                  features={[
+                    t('services.fullControl.ultraSpeed.feature1'),
+                    t('services.fullControl.ultraSpeed.feature2'),
+                    t('services.fullControl.ultraSpeed.feature3'),
+                    t('services.fullControl.ultraSpeed.feature4'),
+                  ]}
+                  cta={t('services.requestQuote')}
+                  onClick={() => setSelectedPlan('full-ultraSpeed')}
+                />
+              </div>
+
               {/* Normal */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 md:translate-y-2 w-full md:w-auto">
+              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-3">
                 <PackageCard
                   name={t('services.fullControl.normal.name')}
                   price={t('services.fullControl.normal.price')}
@@ -193,7 +250,6 @@ function ServicesPackages() {
                   cta={t('services.requestQuote')}
                   onClick={() => setSelectedPlan('full-normal')}
                 />
-              </div>
             </div>
           </div>
         </div>
