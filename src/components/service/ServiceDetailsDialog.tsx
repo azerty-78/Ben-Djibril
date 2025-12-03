@@ -139,20 +139,33 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
 
           {/* Content */}
           <div className="px-6 sm:px-8 py-5 sm:py-6 space-y-6 max-h-[75vh] overflow-y-auto bg-white dark:bg-secondary-900">
+            {/* Overview */}
+            <div className="border border-secondary-100 dark:border-secondary-700 rounded-xl p-4 bg-secondary-50/60 dark:bg-secondary-900/50">
+              <h3 className="text-sm font-semibold text-secondary-900 dark:text-white mb-1.5">
+                {t('services.details.overviewTitle')}
+              </h3>
+              <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 leading-relaxed mb-2">
+                {description}
+              </p>
+              {category === 'saas' && (
+                <p className="text-[0.7rem] sm:text-xs text-secondary-600 dark:text-secondary-300">
+                  {t('services.details.saas.billingIntro')}
+                </p>
+              )}
+            </div>
+
             {category === 'saas' && (
               <div className="border border-primary-100 dark:border-primary-700 rounded-xl p-4 bg-primary-50/60 dark:bg-primary-900/30">
                 <h3 className="text-sm font-semibold text-secondary-900 dark:text-white mb-1.5">
                   {t('services.details.saas.billingTitle')}
                 </h3>
-                <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-100 mb-2">
-                  {t('services.details.saas.billingIntro')}
-                </p>
                 <ul className="space-y-1.5 text-xs sm:text-sm text-secondary-700 dark:text-secondary-100">
                   <li>{t(`${baseKey}.annualPrice`)}</li>
                   <li>{t(`${baseKey}.annualSaving`)}</li>
                 </ul>
               </div>
             )}
+
             {/* Features */}
             <div>
               <h3 className="text-sm font-semibold text-secondary-900 dark:text-white mb-3">

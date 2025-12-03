@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 type PackageCardProps = {
   name: string
   price: string
+  secondaryPrice?: string
+  savingLabel?: string
   description: string
   features: string[]
   popular?: boolean
@@ -18,6 +20,8 @@ type PackageCardProps = {
 function PackageCard({
   name,
   price,
+  secondaryPrice,
+  savingLabel,
   description,
   features,
   popular,
@@ -44,10 +48,32 @@ function PackageCard({
           {popularLabel}
         </div>
       )}
-      <div className="text-center mb-6">
-        <h3 className="text-2xl font-bold mb-2">{name}</h3>
-        <div className="text-4xl font-bold gradient-text mb-2">{price}</div>
-        <p className="text-secondary-600 dark:text-secondary-300 text-sm">{description}</p>
+      <div className="mb-6">
+        <h3 className="text-lg sm:text-xl font-bold mb-1 text-secondary-900 dark:text-white">
+          {name}
+        </h3>
+        <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 mb-3">
+          {description}
+        </p>
+
+        <div className="flex items-end justify-between gap-2">
+          <div>
+            <div className="text-3xl sm:text-4xl font-bold gradient-text leading-none mb-1">
+              {price}
+            </div>
+            {secondaryPrice && (
+              <p className="text-[0.7rem] sm:text-xs text-secondary-500 dark:text-secondary-400">
+                {secondaryPrice}
+              </p>
+            )}
+          </div>
+
+          {savingLabel && (
+            <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200 text-[0.7rem] sm:text-xs font-semibold">
+              {savingLabel}
+            </div>
+          )}
+        </div>
       </div>
 
       <ul className="space-y-3 mb-8">

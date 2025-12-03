@@ -42,6 +42,8 @@ function ServicesPackages() {
             <PackageCard
               name={t('services.saas.normal.name')}
               price={t('services.saas.normal.price')}
+              secondaryPrice={t('services.saas.normal.annualPrice')}
+              savingLabel={t('services.saas.normal.annualSaving')}
               description={t('services.saas.normal.description')}
               features={[
                 t('services.saas.normal.feature1'),
@@ -57,6 +59,8 @@ function ServicesPackages() {
             <PackageCard
               name={t('services.saas.goodDeal.name')}
               price={t('services.saas.goodDeal.price')}
+              secondaryPrice={t('services.saas.goodDeal.annualPrice')}
+              savingLabel={t('services.saas.goodDeal.annualSaving')}
               description={t('services.saas.goodDeal.description')}
               features={[
                 t('services.saas.goodDeal.feature1'),
@@ -74,6 +78,8 @@ function ServicesPackages() {
             <PackageCard
               name={t('services.saas.premium.name')}
               price={t('services.saas.premium.price')}
+              secondaryPrice={t('services.saas.premium.annualPrice')}
+              savingLabel={t('services.saas.premium.annualSaving')}
               description={t('services.saas.premium.description')}
               features={[
                 t('services.saas.premium.feature1'),
