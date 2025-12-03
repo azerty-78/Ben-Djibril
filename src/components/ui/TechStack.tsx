@@ -48,7 +48,8 @@ function TechItemCard({ item, index }: { item: TechItem; index: number }) {
   const [hasError, setHasError] = useState(false)
   const [svgContent, setSvgContent] = useState<string | null>(null)
   const iconName = item.slug.toLowerCase().replace(/\s+/g, '')
-  const iconUrl = `https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/${iconName}.svg`
+  // Utiliser la dernière version de simple-icons pour éviter les 404 sur certaines icônes (ex: Hostinger)
+  const iconUrl = `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${iconName}.svg`
   const iconColor = iconColors[iconName] || iconColors[item.slug.toLowerCase()] || '#6366f1'
 
   // Charger et colorer le SVG avec la couleur officielle
