@@ -152,6 +152,9 @@ export const resources = {
             stop:
               'Access to the application and associated services is suspended after the notice period. A backup of your data can be provided according to the contract, but the code and intellectual property remain mine.',
           },
+          fullControl: {
+            ...fullControlTranslations.en.details.fullControl,
+          },
           helper:
             'This overview is not a legal contract, but a clear explanation of how the model works. We finalize everything together when we discuss your project.',
           close: 'Close',
@@ -338,13 +341,16 @@ export const resources = {
               "L'application est opérée en mode SaaS : vous utilisez le logiciel et toutes ses fonctionnalités, mais le code source et la propriété intellectuelle restent à moi. Vous pouvez arrêter quand vous voulez selon les conditions du contrat.",
             clientResponsibilitiesTitle: 'Vos responsabilités',
             clientResponsibilities:
-              'Définir vos besoins métier, valider les grands choix fonctionnels, fournir les contenus et données, et respecter les conditions d’utilisation et les échéances de paiement.',
+              "Définir vos besoins métier, valider les grands choix fonctionnels, fournir les contenus et données, et respecter les conditions d'utilisation et les échéances de paiement.",
             devResponsibilitiesTitle: 'Mes responsabilités',
             devResponsibilities:
               "Héberger et maintenir l'application, assurer la sécurité et les mises à jour, surveiller les performances, corriger les bugs et mettre en place les évolutions prévues dans le forfait choisi.",
-            stopTitle: 'Si vous arrêtez l’abonnement',
+            stopTitle: "Si vous arrêtez l'abonnement",
             stop:
-              "L’accès à l’application et aux services associés est suspendu après le préavis prévu. Une sauvegarde de vos données peut être fournie selon le contrat, mais le code et la propriété intellectuelle restent à moi.",
+              "L'accès à l'application et aux services associés est suspendu après le préavis prévu. Une sauvegarde de vos données peut être fournie selon le contrat, mais le code et la propriété intellectuelle restent à moi.",
+          },
+          fullControl: {
+            ...fullControlTranslations.fr.details.fullControl,
           },
           helper:
             'Cette fiche n’est pas un contrat juridique, mais une explication claire de la façon dont le modèle fonctionne. On finalise tout ensemble quand on discute de votre projet.',
