@@ -25,14 +25,7 @@ function FullControlComparisonTable({ open }: FullControlComparisonTableProps) {
   const navigate = useNavigate()
 
   const handleChooseService = () => {
-    navigate('/services')
-    // Scroll to services section after a short delay
-    setTimeout(() => {
-      const servicesSection = document.querySelector('[data-section="services"]')
-      if (servicesSection) {
-        servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    }, 100)
+    navigate('/contact')
   }
 
   const plans = [

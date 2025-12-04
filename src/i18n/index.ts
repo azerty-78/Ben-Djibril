@@ -270,6 +270,7 @@ export const resources = {
           close: 'Close',
           contactCta: 'Discuss this plan',
           chooseServiceCta: 'Choose a service',
+          requestQuoteCta: 'Request a quote',
           overviewTitle: 'How this plan works in practice',
         },
         requestQuote: 'Request a quote',
@@ -568,12 +569,16 @@ export const resources = {
             stopTitle: 'Si vous arrêtez la collaboration',
             stop:
               'Vous conservez le code livré et la documentation associée selon le contrat signé. Vous pouvez continuer le projet avec votre équipe interne ou un autre prestataire sans perdre le contrôle de votre logiciel.',
+            deliverablesTitle: 'Que comprend chaque forfait Full Control ?',
+            deliverables:
+              'Tous les forfaits Full Control incluent : Code source (100% votre propriété), API REST (Backend), Front-end, Documentation complète, Serveur Virtuel Privé (Personnalisable), Certificat SSL, Nom de domaine personnalisé. Sauvegardes automatiques, sécurité maximale (HTTPS, JWT, protection contre piratage), contrats clairs et protecteurs, période de garantie incluse (1 à 6 mois selon forfait).',
           },
           helper:
             'Cette fiche n’est pas un contrat juridique, mais une explication claire de la façon dont le modèle fonctionne. On finalise tout ensemble quand on discute de votre projet.',
           close: 'Fermer',
           contactCta: 'Discuter de ce forfait',
           chooseServiceCta: 'Choix du service',
+          requestQuoteCta: 'Demander un devis',
           overviewTitle: 'Comment ce forfait fonctionne concrètement',
         },
         requestQuote: 'Demander un devis',

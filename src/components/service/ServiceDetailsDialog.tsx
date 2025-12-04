@@ -91,14 +91,18 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
 
   const handleChooseService = () => {
     onClose()
-    navigate('/services')
-    // Scroll to services section after a short delay
-    setTimeout(() => {
-      const servicesSection = document.querySelector('[data-section="services"]')
-      if (servicesSection) {
-        servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    }, 100)
+    if (category === 'fullControl') {
+      navigate('/contact')
+    } else {
+      navigate('/services')
+      // Scroll to services section after a short delay
+      setTimeout(() => {
+        const servicesSection = document.querySelector('[data-section="services"]')
+        if (servicesSection) {
+          servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+    }
   }
 
   return (
@@ -383,7 +387,9 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                 onClick={handleChooseService}
                 className="px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg bg-primary-600 text-white text-xs sm:text-sm font-semibold hover:bg-primary-500 shadow-md hover:shadow-lg transition-all duration-200 whitespace-nowrap"
               >
-                {t('services.details.chooseServiceCta')}
+                {category === 'fullControl'
+                  ? t('services.details.requestQuoteCta')
+                  : t('services.details.chooseServiceCta')}
               </button>
             </div>
           </div>
