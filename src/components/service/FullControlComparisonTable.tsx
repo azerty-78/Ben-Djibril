@@ -159,6 +159,33 @@ function FullControlComparisonTable({ open }: FullControlComparisonTableProps) {
       normal: t('services.fullControlComparison.techStackNormal'),
       type: 'text' as const,
     },
+    {
+      key: 'infrastructure',
+      label: t('services.fullControlComparison.infrastructure'),
+      icon: ServerIcon,
+      ultraSpeed: t('services.fullControlComparison.infrastructureUltra'),
+      speed: t('services.fullControlComparison.infrastructureSpeed'),
+      normal: t('services.fullControlComparison.infrastructureNormal'),
+      type: 'text' as const,
+    },
+    {
+      key: 'security',
+      label: t('services.fullControlComparison.security'),
+      icon: ShieldCheckIcon,
+      ultraSpeed: t('services.fullControlComparison.securityUltra'),
+      speed: t('services.fullControlComparison.securitySpeed'),
+      normal: t('services.fullControlComparison.securityNormal'),
+      type: 'text' as const,
+    },
+    {
+      key: 'warranty',
+      label: t('services.fullControlComparison.warranty'),
+      icon: ShieldCheckIcon,
+      ultraSpeed: t('services.fullControlComparison.warrantyUltra'),
+      speed: t('services.fullControlComparison.warrantySpeed'),
+      normal: t('services.fullControlComparison.warrantyNormal'),
+      type: 'text' as const,
+    },
   ]
 
   const getColorClasses = (color: string, type: 'bg' | 'text' | 'border' | 'button') => {
