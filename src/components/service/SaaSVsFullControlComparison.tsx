@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next'
-import { motion, AnimatePresence } from 'framer-motion'
 import {
   CheckIcon,
   XMarkIcon,
@@ -16,11 +15,7 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/24/outline'
 
-type SaaSVsFullControlComparisonProps = {
-  open: boolean
-}
-
-function SaaSVsFullControlComparison({ open }: SaaSVsFullControlComparisonProps) {
+function SaaSVsFullControlComparison() {
   const { t } = useTranslation()
 
   const comparisonRows = [
@@ -111,112 +106,104 @@ function SaaSVsFullControlComparison({ open }: SaaSVsFullControlComparisonProps)
   ]
 
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3 }}
-          className="overflow-hidden"
-        >
-          <div className="max-w-7xl mx-auto mt-8 mb-12 p-6 sm:p-8 bg-gradient-to-br from-secondary-50 to-secondary-100/50 dark:from-secondary-900/50 dark:to-secondary-800/30 rounded-2xl border border-secondary-200 dark:border-secondary-700 shadow-xl">
-            {/* Header */}
-            <div className="text-center mb-8">
-              <h3 className="text-2xl sm:text-3xl font-bold text-secondary-900 dark:text-white mb-3">
-                {t('services.saasVsFullControl.title')}
-              </h3>
-              <p className="text-secondary-600 dark:text-secondary-300 text-sm sm:text-base max-w-3xl mx-auto">
-                {t('services.saasVsFullControl.subtitle')}
-              </p>
-            </div>
+    <div className="max-w-7xl mx-auto mt-12 md:mt-16 mb-12 md:mb-16 px-4 sm:px-6">
+      <div className="bg-gradient-to-br from-secondary-50 to-secondary-100/50 dark:from-secondary-900/50 dark:to-secondary-800/30 rounded-2xl border border-secondary-200 dark:border-secondary-700 shadow-xl p-6 sm:p-8 md:p-10">
+        {/* Header */}
+        <div className="text-center mb-8 md:mb-10">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary-900 dark:text-white mb-3 md:mb-4">
+            {t('services.saasVsFullControl.title')}
+          </h3>
+          <p className="text-secondary-600 dark:text-secondary-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto">
+            {t('services.saasVsFullControl.subtitle')}
+          </p>
+        </div>
 
-            {/* Principle Section */}
-            <div className="mb-8 p-6 bg-white/60 dark:bg-secondary-900/40 rounded-xl border border-primary-200 dark:border-primary-800">
-              <h4 className="text-lg sm:text-xl font-bold text-secondary-900 dark:text-white mb-3">
-                {t('services.saasVsFullControl.principleTitle')}
-              </h4>
-              <div className="mb-4">
-                <h5 className="text-base font-semibold text-primary-700 dark:text-primary-300 mb-2">
-                  {t('services.saasVsFullControl.principleGeneral')}
-                </h5>
-                <p className="text-sm sm:text-base text-secondary-700 dark:text-secondary-200 leading-relaxed">
-                  {t('services.saasVsFullControl.principleGeneralDesc')}
-                </p>
-              </div>
-              <div>
-                <h5 className="text-base font-semibold text-primary-700 dark:text-primary-300 mb-2">
-                  {t('services.saasVsFullControl.fundamentalDifference')}
-                </h5>
-              </div>
-            </div>
-
-            {/* Comparison Table */}
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-b-2 border-secondary-300 dark:border-secondary-600">
-                    <th className="text-left p-4 font-bold text-secondary-900 dark:text-white bg-secondary-100/50 dark:bg-secondary-800/50">
-                      {t('services.saasVsFullControl.comparisonTable.criteria')}
-                    </th>
-                    <th className="text-center p-4 font-bold text-primary-700 dark:text-primary-300 bg-primary-50/50 dark:bg-primary-900/30">
-                      {t('services.saasVsFullControl.comparisonTable.saas')}
-                    </th>
-                    <th className="text-center p-4 font-bold text-accent-700 dark:text-accent-300 bg-accent-50/50 dark:bg-accent-900/30">
-                      {t('services.saasVsFullControl.comparisonTable.fullControl')}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {comparisonRows.map((row, index) => {
-                    const Icon = row.icon
-                    return (
-                      <tr
-                        key={row.key}
-                        className={`border-b border-secondary-200 dark:border-secondary-700 ${
-                          index % 2 === 0
-                            ? 'bg-white/40 dark:bg-secondary-900/20'
-                            : 'bg-secondary-50/30 dark:bg-secondary-800/10'
-                        }`}
-                      >
-                        <td className="p-4">
-                          <div className="flex items-center gap-3">
-                            <Icon className="w-5 h-5 text-secondary-600 dark:text-secondary-400 flex-shrink-0" />
-                            <span className="font-medium text-secondary-900 dark:text-white text-sm sm:text-base">
-                              {row.label}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="p-4 text-center">
-                          <div className="flex items-center justify-center gap-2">
-                            {row.key === 'modifications' || row.key === 'resale' ? (
-                              <XMarkIcon className="w-5 h-5 text-red-500" />
-                            ) : (
-                              <CheckIcon className="w-5 h-5 text-green-500" />
-                            )}
-                            <span className="text-sm sm:text-base text-secondary-700 dark:text-secondary-200">
-                              {row.saas}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="p-4 text-center">
-                          <div className="flex items-center justify-center gap-2">
-                            <CheckIcon className="w-5 h-5 text-green-500" />
-                            <span className="text-sm sm:text-base text-secondary-700 dark:text-secondary-200">
-                              {row.fullControl}
-                            </span>
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
+        {/* Principle Section */}
+        <div className="mb-8 md:mb-10 p-5 sm:p-6 md:p-8 bg-white/60 dark:bg-secondary-900/40 rounded-xl border border-primary-200 dark:border-primary-800">
+          <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-secondary-900 dark:text-white mb-4 md:mb-5">
+            {t('services.saasVsFullControl.principleTitle')}
+          </h4>
+          <div className="mb-4 md:mb-5">
+            <h5 className="text-base sm:text-lg font-semibold text-primary-700 dark:text-primary-300 mb-2 md:mb-3">
+              {t('services.saasVsFullControl.principleGeneral')}
+            </h5>
+            <p className="text-sm sm:text-base md:text-lg text-secondary-700 dark:text-secondary-200 leading-relaxed">
+              {t('services.saasVsFullControl.principleGeneralDesc')}
+            </p>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          <div>
+            <h5 className="text-base sm:text-lg font-semibold text-primary-700 dark:text-primary-300 mb-2 md:mb-3">
+              {t('services.saasVsFullControl.fundamentalDifference')}
+            </h5>
+          </div>
+        </div>
+
+        {/* Comparison Table */}
+        <div className="overflow-x-auto -mx-4 sm:-mx-6 md:mx-0">
+          <div className="inline-block min-w-full align-middle px-4 sm:px-6 md:px-0">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b-2 border-secondary-300 dark:border-secondary-600">
+                  <th className="text-left p-3 sm:p-4 md:p-5 font-bold text-xs sm:text-sm md:text-base text-secondary-900 dark:text-white bg-secondary-100/50 dark:bg-secondary-800/50 sticky left-0 z-10">
+                    {t('services.saasVsFullControl.comparisonTable.criteria')}
+                  </th>
+                  <th className="text-center p-3 sm:p-4 md:p-5 font-bold text-xs sm:text-sm md:text-base text-primary-700 dark:text-primary-300 bg-primary-50/50 dark:bg-primary-900/30 min-w-[200px] sm:min-w-[250px]">
+                    {t('services.saasVsFullControl.comparisonTable.saas')}
+                  </th>
+                  <th className="text-center p-3 sm:p-4 md:p-5 font-bold text-xs sm:text-sm md:text-base text-accent-700 dark:text-accent-300 bg-accent-50/50 dark:bg-accent-900/30 min-w-[200px] sm:min-w-[250px]">
+                    {t('services.saasVsFullControl.comparisonTable.fullControl')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparisonRows.map((row, index) => {
+                  const Icon = row.icon
+                  return (
+                    <tr
+                      key={row.key}
+                      className={`border-b border-secondary-200 dark:border-secondary-700 ${
+                        index % 2 === 0
+                          ? 'bg-white/40 dark:bg-secondary-900/20'
+                          : 'bg-secondary-50/30 dark:bg-secondary-800/10'
+                      }`}
+                    >
+                      <td className="p-3 sm:p-4 md:p-5 sticky left-0 z-10 bg-inherit">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-secondary-600 dark:text-secondary-400 flex-shrink-0" />
+                          <span className="font-medium text-secondary-900 dark:text-white text-xs sm:text-sm md:text-base">
+                            {row.label}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="p-3 sm:p-4 md:p-5 text-center">
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
+                          {row.key === 'modifications' || row.key === 'resale' ? (
+                            <XMarkIcon className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 flex-shrink-0" />
+                          ) : (
+                            <CheckIcon className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
+                          )}
+                          <span className="text-xs sm:text-sm md:text-base text-secondary-700 dark:text-secondary-200 break-words">
+                            {row.saas}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="p-3 sm:p-4 md:p-5 text-center">
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
+                          <CheckIcon className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
+                          <span className="text-xs sm:text-sm md:text-base text-secondary-700 dark:text-secondary-200 break-words">
+                            {row.fullControl}
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
