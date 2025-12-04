@@ -6,6 +6,7 @@ import PackageCard from '../ui/PackageCard'
 import ServiceDetailsDialog from './ServiceDetailsDialog'
 import SaaSComparisonTable from './SaaSComparisonTable'
 import FullControlComparisonTable from './FullControlComparisonTable'
+import SaaSVsFullControlComparison from './SaaSVsFullControlComparison'
 import type { PlanId } from './ServiceDetailsDialog'
 
 const VALID_PLANS: PlanId[] = [
@@ -23,6 +24,7 @@ function ServicesPackages() {
   const [selectedPlan, setSelectedPlan] = useState<PlanId | null>(null)
   const [showSaaSComparison, setShowSaaSComparison] = useState(false)
   const [showFullControlComparison, setShowFullControlComparison] = useState(false)
+  const [showSaaSVsFullControl, setShowSaaSVsFullControl] = useState(false)
   const saasScrollRef = useRef<HTMLDivElement | null>(null)
   const fullScrollRef = useRef<HTMLDivElement | null>(null)
 
@@ -46,6 +48,10 @@ function ServicesPackages() {
 
   const toggleFullControlComparison = useCallback(() => {
     setShowFullControlComparison((prev) => !prev)
+  }, [])
+
+  const toggleSaaSVsFullControl = useCallback(() => {
+    setShowSaaSVsFullControl((prev) => !prev)
   }, [])
 
   return (
@@ -286,6 +292,29 @@ function ServicesPackages() {
             </button>
           </div>
           <FullControlComparisonTable open={showFullControlComparison} />
+
+          {/* SaaS vs Full Control Comparison */}
+          <div className="mt-12 text-center">
+            <button
+              type="button"
+              onClick={toggleSaaSVsFullControl}
+              className="inline-flex items-center gap-2 rounded-xl border-2 border-accent-500 dark:border-accent-400 bg-accent-50 dark:bg-accent-900/30 px-6 py-3 text-sm font-semibold text-accent-700 dark:text-accent-300 hover:bg-accent-100 dark:hover:bg-accent-900/50 transition-all duration-200 shadow-md hover:shadow-lg"
+            >
+              <span>
+                {showSaaSVsFullControl
+                  ? t('services.saasVsFullControl.hide')
+                  : t('services.saasVsFullControl.show')}
+              </span>
+              <motion.span
+                animate={{ rotate: showSaaSVsFullControl ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+                className="text-accent-600 dark:text-accent-400"
+              >
+                ↓
+              </motion.span>
+            </button>
+          </div>
+          <SaaSVsFullControlComparison open={showSaaSVsFullControl} />
         </div>
       </div>
 
