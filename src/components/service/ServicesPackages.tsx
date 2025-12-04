@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import PackageCard from '../ui/PackageCard'
 import ServiceDetailsDialog from './ServiceDetailsDialog'
 import SaaSComparisonTable from './SaaSComparisonTable'
+import FullControlComparisonTable from './FullControlComparisonTable'
 import type { PlanId } from './ServiceDetailsDialog'
 
 const VALID_PLANS: PlanId[] = [
@@ -20,7 +21,8 @@ function ServicesPackages() {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const [selectedPlan, setSelectedPlan] = useState<PlanId | null>(null)
-  const [showComparison, setShowComparison] = useState(false)
+  const [showSaaSComparison, setShowSaaSComparison] = useState(false)
+  const [showFullControlComparison, setShowFullControlComparison] = useState(false)
   const saasScrollRef = useRef<HTMLDivElement | null>(null)
   const fullScrollRef = useRef<HTMLDivElement | null>(null)
 
@@ -38,8 +40,12 @@ function ServicesPackages() {
     setSelectedPlan(planId)
   }, [])
 
-  const toggleComparison = useCallback(() => {
-    setShowComparison((prev) => !prev)
+  const toggleSaaSComparison = useCallback(() => {
+    setShowSaaSComparison((prev) => !prev)
+  }, [])
+
+  const toggleFullControlComparison = useCallback(() => {
+    setShowFullControlComparison((prev) => !prev)
   }, [])
 
   return (
@@ -151,16 +157,16 @@ function ServicesPackages() {
           <div className="mt-8 text-center hidden md:block">
             <button
                     type="button"
-                    onClick={toggleComparison}
+                    onClick={toggleSaaSComparison}
                     className="inline-flex items-center gap-2 rounded-xl border-2 border-primary-500 dark:border-primary-400 bg-primary-50 dark:bg-primary-900/30 px-6 py-3 text-sm font-semibold text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-all duration-200 shadow-md hover:shadow-lg"
                   >
                     <span>
-                      {showComparison
+                      {showSaaSComparison
                         ? t('services.saasComparison.hide')
                         : t('services.saasComparison.show')}
                     </span>
               <motion.span
-                animate={{ rotate: showComparison ? 180 : 0 }}
+                animate={{ rotate: showSaaSComparison ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
                 className="text-primary-600 dark:text-primary-400"
               >
@@ -168,7 +174,7 @@ function ServicesPackages() {
               </motion.span>
             </button>
           </div>
-          <SaaSComparisonTable open={showComparison} />
+          <SaaSComparisonTable open={showSaaSComparison} />
         </div>
 
         {/* Full Control category */}
@@ -257,6 +263,29 @@ function ServicesPackages() {
               </div>
             </div>
           </div>
+
+          {/* Comparison button and table */}
+          <div className="mt-8 text-center hidden md:block">
+            <button
+              type="button"
+              onClick={toggleFullControlComparison}
+              className="inline-flex items-center gap-2 rounded-xl border-2 border-primary-500 dark:border-primary-400 bg-primary-50 dark:bg-primary-900/30 px-6 py-3 text-sm font-semibold text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-all duration-200 shadow-md hover:shadow-lg"
+            >
+              <span>
+                {showFullControlComparison
+                  ? t('services.fullControlComparison.hide')
+                  : t('services.fullControlComparison.show')}
+              </span>
+              <motion.span
+                animate={{ rotate: showFullControlComparison ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+                className="text-primary-600 dark:text-primary-400"
+              >
+                ↓
+              </motion.span>
+            </button>
+          </div>
+          <FullControlComparisonTable open={showFullControlComparison} />
         </div>
       </div>
 
