@@ -15,6 +15,9 @@ import {
   StopCircleIcon,
   DocumentTextIcon,
   CodeBracketIcon,
+  ServerIcon,
+  AcademicCapIcon,
+  ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline'
 
 export type PlanId =
