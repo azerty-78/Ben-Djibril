@@ -14,6 +14,7 @@ import {
   DocumentTextIcon,
   CodeBracketIcon,
   ServerIcon,
+  CpuChipIcon,
 } from '@heroicons/react/24/outline'
 
 type FullControlComparisonTableProps = {
@@ -147,6 +148,15 @@ function FullControlComparisonTable({ open }: FullControlComparisonTableProps) {
       ultraSpeed: t('services.fullControlComparison.architectureUltra'),
       speed: t('services.fullControlComparison.architectureSpeed'),
       normal: t('services.fullControlComparison.architectureNormal'),
+      type: 'text' as const,
+    },
+    {
+      key: 'techStack',
+      label: t('services.fullControlComparison.techStack'),
+      icon: CpuChipIcon,
+      ultraSpeed: t('services.fullControlComparison.techStackUltra'),
+      speed: t('services.fullControlComparison.techStackSpeed'),
+      normal: t('services.fullControlComparison.techStackNormal'),
       type: 'text' as const,
     },
   ]

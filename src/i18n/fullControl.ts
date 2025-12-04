@@ -48,6 +48,10 @@ export const fullControlTranslations = {
       architectureUltra: 'Optimized for speed',
       architectureSpeed: 'Solid',
       architectureNormal: 'Robust + scalable',
+      techStack: 'Tech Stack',
+      techStackUltra: 'Spring Boot (Kotlin/Java), React + Vite, MongoDB, JWT',
+      techStackSpeed: 'Spring Boot (Kotlin/Java), React + Vite, MongoDB, JWT, Redis',
+      techStackNormal: 'Spring Boot (Kotlin/Java), React + Vite, MongoDB, JWT, Redis, Docker, CI/CD',
     },
     fullControl: {
       ultraSpeed: {
@@ -99,22 +103,30 @@ export const fullControlTranslations = {
         priceLabel: 'Budget',
         audienceTitle: 'Who is this model for?',
         audience:
-          'Perfect for companies and projects where the software is strategic and must be fully owned (code, architecture, long‑term evolution).',
+          'Perfect for companies and projects where the software is strategic and must be fully owned (code, architecture, long‑term evolution). Ideal for entrepreneurs with tight deadlines (Ultra Speed), growing SMEs wanting quality balance (Speed), or established companies requiring premium quality (Normal).',
         ownershipTitle: 'Intellectual property & rights',
         ownership:
-          'You become the owner of the source code and of all intellectual property related to the project once the agreed milestones and payments are completed. Everything is documented for long‑term maintainability.',
+          'You become the owner of 100% of the source code and all intellectual property once milestones and payments are completed. You receive: complete source code (Git repository), REST API backend, frontend, database schema, documentation, and all associated assets. You can freely modify, distribute, resell, or create derivative products.',
         clientResponsibilitiesTitle: 'Your responsibilities',
         clientResponsibilities:
-          'Validate the functional scope, take part in follow‑up meetings, make decisions on priorities and accept deliveries within agreed time frames.',
+          'Provide detailed requirements or participate in scoping workshop (days 1-5), validate specifications within 48h-5 days (depending on plan), participate in milestone demos and provide clear feedback, provide content (texts, images, logos) within 7 days if requested, designate one main contact person, and pay installments on time (50% upfront, 50% on delivery).',
         devResponsibilitiesTitle: 'My responsibilities',
         devResponsibilities:
-          'Design and implement a robust, scalable architecture, deliver clean and documented code, advise you on the best compromises between cost, quality and time, and support your technical teams if needed.',
+          'Respect delivery deadlines (65-180 days depending on plan), deliver functional and tested code, provide complete documentation (40-200 pages depending on plan), conduct training sessions (2-4 sessions, 4-12h total), provide post-delivery support (1-6 months), maintain code quality standards, and transfer all access (server, domain, Git repository) at delivery.',
         stopTitle: 'If you stop the collaboration',
         stop:
-          'You keep the delivered code and associated documentation according to the signed contract. You can continue the project with your internal team or another provider without losing control of your software.',
+          'You keep all delivered code and documentation according to the signed contract. You can continue with your internal team or another provider. Code source is 100% your property. You can migrate your data to another solution. Support migration is available (optional, billed separately).',
         deliverablesTitle: 'What is included in all Full Control plans?',
         deliverables:
           'All Full Control plans include: Source code (100% your property), REST API (Backend), Front-end, Complete documentation, Customizable Private Virtual Server, SSL Certificate, Personalized domain name. Automatic backups, maximum security (HTTPS, JWT, anti-piracy protection), clear and protective contracts, warranty period included (1 to 6 months depending on plan).',
+        techStackTitle: 'Technology Stack',
+        techStackDescription: 'Modern, robust and scalable technologies used in all Full Control projects:',
+        techStackBackend: 'Backend: Spring Boot (Kotlin/Java) - RESTful API with JWT authentication',
+        techStackFrontend: 'Frontend: React + Vite - Modern, fast and responsive user interface with Tailwind CSS',
+        techStackDatabase: 'Database: MongoDB - NoSQL database for flexible data management',
+        techStackSecurity: 'Security: JWT tokens, HTTPS/SSL, input validation, XSS/CSRF protection',
+        techStackInfrastructure: 'Infrastructure: VPS (Ubuntu), Nginx, PM2, Docker (Normal plan), CI/CD (Normal plan)',
+        techStackAdditional: 'Additional: Redis for caching (Speed & Normal), Docker & CI/CD automation (Normal)',
       },
     },
   },
@@ -167,6 +179,10 @@ export const fullControlTranslations = {
       architectureUltra: 'Optimisée pour rapidité',
       architectureSpeed: 'Solide',
       architectureNormal: 'Robuste + scalable',
+      techStack: 'Stack Technique',
+      techStackUltra: 'Spring Boot (Kotlin/Java), React + Vite, MongoDB, JWT',
+      techStackSpeed: 'Spring Boot (Kotlin/Java), React + Vite, MongoDB, JWT, Redis',
+      techStackNormal: 'Spring Boot (Kotlin/Java), React + Vite, MongoDB, JWT, Redis, Docker, CI/CD',
     },
     fullControl: {
       ultraSpeed: {
@@ -218,22 +234,30 @@ export const fullControlTranslations = {
         priceLabel: 'Budget',
         audienceTitle: 'Pour qui est ce modèle ?',
         audience:
-          'Parfait pour les entreprises et projets où le logiciel est stratégique et doit être entièrement détenu (code, architecture, évolutions long terme).',
+          'Parfait pour les entreprises et projets où le logiciel est stratégique et doit être entièrement détenu (code, architecture, évolutions long terme). Idéal pour entrepreneurs avec deadline serrée (Ultra Speed), PME en croissance voulant équilibre qualité/prix (Speed), ou entreprises établies exigeant qualité premium (Normal).',
         ownershipTitle: 'Propriété intellectuelle & droits',
         ownership:
-          'Vous devenez propriétaire du code source et de toute la propriété intellectuelle liée au projet une fois les jalons et paiements prévus atteints. Tout est documenté pour une maintenabilité long terme.',
+          'Vous devenez propriétaire à 100% du code source et de toute la propriété intellectuelle une fois les jalons et paiements prévus atteints. Vous recevez : code source complet (repository Git), API REST backend, frontend, schéma base de données, documentation, et tous les assets associés. Vous pouvez librement modifier, distribuer, revendre ou créer des produits dérivés.',
         clientResponsibilitiesTitle: 'Vos responsabilités',
         clientResponsibilities:
-          'Valider le périmètre fonctionnel, participer aux points de suivi, prendre les décisions sur les priorités et accepter les livraisons dans les délais convenus.',
+          'Fournir cahier des charges détaillé ou participer à atelier cadrage (J1-J5), valider spécifications sous 48h-5 jours (selon forfait), participer aux démos jalons et donner feedback clair, fournir contenus (textes, images, logos) sous 7 jours si demandé, désigner 1 interlocuteur principal, et payer acomptes à temps (50% à signature, 50% à livraison).',
         devResponsibilitiesTitle: 'Mes responsabilités',
         devResponsibilities:
-          'Concevoir et implémenter une architecture robuste et scalable, livrer un code propre et documenté, vous conseiller sur les meilleurs compromis entre coût, qualité et délai, et accompagner vos équipes techniques si besoin.',
+          'Respecter délais de livraison (65-180 jours selon forfait), livrer code fonctionnel et testé, fournir documentation complète (40-200 pages selon forfait), réaliser sessions formation (2-4 sessions, 4-12h total), assurer support post-livraison (1-6 mois), maintenir standards qualité code, et transférer tous accès (serveur, domaine, repo Git) à livraison.',
         stopTitle: 'Si vous arrêtez la collaboration',
         stop:
-          'Vous conservez le code livré et la documentation associée selon le contrat signé. Vous pouvez continuer le projet avec votre équipe interne ou un autre prestataire sans perdre le contrôle de votre logiciel.',
+          'Vous conservez tout le code livré et la documentation selon le contrat signé. Vous pouvez continuer avec votre équipe interne ou un autre prestataire. Code source 100% votre propriété. Vous pouvez migrer vos données vers autre solution. Support migration disponible (optionnel, facturé séparément).',
         deliverablesTitle: 'Que comprend chaque forfait Full Control ?',
         deliverables:
           'Tous les forfaits Full Control incluent : Code source (100% votre propriété), API REST (Backend), Front-end, Documentation complète, Serveur Virtuel Privé (Personnalisable), Certificat SSL, Nom de domaine personnalisé. Sauvegardes automatiques, sécurité maximale (HTTPS, JWT, protection contre piratage), contrats clairs et protecteurs, période de garantie incluse (1 à 6 mois selon forfait).',
+        techStackTitle: 'Stack Technique',
+        techStackDescription: 'Technologies modernes, robustes et scalables utilisées dans tous les projets Full Control :',
+        techStackBackend: 'Backend : Spring Boot (Kotlin/Java) - API RESTful avec authentification JWT',
+        techStackFrontend: 'Frontend : React + Vite - Interface utilisateur moderne, rapide et responsive avec Tailwind CSS',
+        techStackDatabase: 'Base de données : MongoDB - Base de données NoSQL pour une gestion flexible des données',
+        techStackSecurity: 'Sécurité : Tokens JWT, HTTPS/SSL, validation des entrées, protection XSS/CSRF',
+        techStackInfrastructure: 'Infrastructure : VPS (Ubuntu), Nginx, PM2, Docker (forfait Normal), CI/CD (forfait Normal)',
+        techStackAdditional: 'Compléments : Redis pour le cache (Speed & Normal), Docker & automatisation CI/CD (Normal)',
       },
     },
   },

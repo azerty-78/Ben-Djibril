@@ -14,6 +14,7 @@ import {
   WrenchScrewdriverIcon,
   StopCircleIcon,
   DocumentTextIcon,
+  CodeBracketIcon,
 } from '@heroicons/react/24/outline'
 
 export type PlanId =
@@ -234,21 +235,65 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
             )}
 
             {category === 'fullControl' && (
-              <div className="border border-primary-200 dark:border-primary-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-primary-50/80 to-primary-100/40 dark:from-primary-900/20 dark:to-primary-800/10">
-                <div className="flex items-start gap-3 mb-3 sm:mb-4">
-                  <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary-600/10 dark:bg-primary-400/20 flex items-center justify-center">
-                    <CheckCircleIcon className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 dark:text-primary-400" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-3">
-                      {t('services.details.fullControl.deliverablesTitle')}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 leading-relaxed">
-                      {t('services.details.fullControl.deliverables')}
-                    </p>
+              <>
+                <div className="border border-primary-200 dark:border-primary-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-primary-50/80 to-primary-100/40 dark:from-primary-900/20 dark:to-primary-800/10">
+                  <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary-600/10 dark:bg-primary-400/20 flex items-center justify-center">
+                      <CheckCircleIcon className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-3">
+                        {t('services.details.fullControl.deliverablesTitle')}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 leading-relaxed">
+                        {t('services.details.fullControl.deliverables')}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+
+                <div className="border border-accent-200 dark:border-accent-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-accent-50/80 to-accent-100/40 dark:from-accent-900/20 dark:to-accent-800/10">
+                  <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-accent-600/10 dark:bg-accent-400/20 flex items-center justify-center">
+                      <CodeBracketIcon className="w-5 h-5 sm:w-6 sm:h-6 text-accent-600 dark:text-accent-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                        {t('services.details.fullControl.techStackTitle')}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 mb-3 leading-relaxed">
+                        {t('services.details.fullControl.techStackDescription')}
+                      </p>
+                      <ul className="space-y-2 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-accent-600 dark:text-accent-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.techStackBackend')}</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-accent-600 dark:text-accent-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.techStackFrontend')}</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-accent-600 dark:text-accent-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.techStackDatabase')}</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-accent-600 dark:text-accent-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.techStackSecurity')}</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-accent-600 dark:text-accent-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.techStackInfrastructure')}</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-accent-600 dark:text-accent-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.techStackAdditional')}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </>
             )}
 
             {/* Features */}
