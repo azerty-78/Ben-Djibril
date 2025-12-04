@@ -296,6 +296,247 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                     </div>
                   </div>
                 </div>
+
+                {/* Infrastructure & Hosting */}
+                <div className="border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-emerald-50/80 to-emerald-100/40 dark:from-emerald-900/20 dark:to-emerald-800/10">
+                  <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-emerald-600/10 dark:bg-emerald-400/20 flex items-center justify-center">
+                      <ServerIcon className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                        {t('services.details.fullControl.infrastructureTitle')}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 mb-3 leading-relaxed">
+                        {t('services.details.fullControl.infrastructureDescription')}
+                      </p>
+                      <ul className="space-y-2 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                          <span>
+                            {planId === 'full-ultraSpeed'
+                              ? t('services.details.fullControl.infrastructureServerUltra')
+                              : planId === 'full-speed'
+                                ? t('services.details.fullControl.infrastructureServerSpeed')
+                                : t('services.details.fullControl.infrastructureServerNormal')}
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.infrastructureDomain')}</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.infrastructureSSL')}</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                          <span>
+                            {planId === 'full-ultraSpeed'
+                              ? t('services.details.fullControl.infrastructureEmailsUltra')
+                              : planId === 'full-speed'
+                                ? t('services.details.fullControl.infrastructureEmailsSpeed')
+                                : t('services.details.fullControl.infrastructureEmailsNormal')}
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                          <span>
+                            {planId === 'full-ultraSpeed'
+                              ? t('services.details.fullControl.infrastructureCDNUltra')
+                              : planId === 'full-speed'
+                                ? t('services.details.fullControl.infrastructureCDNSpeed')
+                                : t('services.details.fullControl.infrastructureCDNNormal')}
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                          <span>
+                            {planId === 'full-ultraSpeed'
+                              ? t('services.details.fullControl.infrastructureBackupsUltra')
+                              : planId === 'full-speed'
+                                ? t('services.details.fullControl.infrastructureBackupsSpeed')
+                                : t('services.details.fullControl.infrastructureBackupsNormal')}
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Security */}
+                <div className="border border-purple-200 dark:border-purple-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-purple-50/80 to-purple-100/40 dark:from-purple-900/20 dark:to-purple-800/10">
+                  <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-purple-600/10 dark:bg-purple-400/20 flex items-center justify-center">
+                      <ShieldCheckIcon className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                        {t('services.details.fullControl.securityTitle')}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 mb-3 leading-relaxed">
+                        {t('services.details.fullControl.securityDescription')}
+                      </p>
+                      <ul className="space-y-2 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.securityAuth')}</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.securityProtection')}</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.securityHeaders')}</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.securityServer')}</span>
+                        </li>
+                        {planId !== 'full-ultraSpeed' && (
+                          <li className="flex items-start gap-2">
+                            <CheckCircleIcon className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" />
+                            <span>
+                              {planId === 'full-speed'
+                                ? t('services.details.fullControl.securityAdvancedSpeed')
+                                : t('services.details.fullControl.securityAdvancedNormal')}
+                            </span>
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Training */}
+                <div className="border border-indigo-200 dark:border-indigo-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-indigo-50/80 to-indigo-100/40 dark:from-indigo-900/20 dark:to-indigo-800/10">
+                  <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-indigo-600/10 dark:bg-indigo-400/20 flex items-center justify-center">
+                      <AcademicCapIcon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 dark:text-indigo-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                        {t('services.details.fullControl.trainingTitle')}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 mb-3 leading-relaxed">
+                        {t('services.details.fullControl.trainingDescription')}
+                      </p>
+                      <ul className="space-y-2 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-indigo-600 dark:text-indigo-400 flex-shrink-0 mt-0.5" />
+                          <span>
+                            {planId === 'full-ultraSpeed'
+                              ? t('services.details.fullControl.trainingUltra')
+                              : planId === 'full-speed'
+                                ? t('services.details.fullControl.trainingSpeed')
+                                : t('services.details.fullControl.trainingNormal')}
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-indigo-600 dark:text-indigo-400 flex-shrink-0 mt-0.5" />
+                          <span>{t('services.details.fullControl.trainingFormat')}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Support */}
+                <div className="border border-orange-200 dark:border-orange-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-orange-50/80 to-orange-100/40 dark:from-orange-900/20 dark:to-orange-800/10">
+                  <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-orange-600/10 dark:bg-orange-400/20 flex items-center justify-center">
+                      <WrenchScrewdriverIcon className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 dark:text-orange-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                        {t('services.details.fullControl.supportTitle')}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 mb-3 leading-relaxed">
+                        {t('services.details.fullControl.supportDescription')}
+                      </p>
+                      <ul className="space-y-2 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-orange-600 dark:text-orange-400 flex-shrink-0 mt-0.5" />
+                          <span>
+                            {planId === 'full-ultraSpeed'
+                              ? t('services.details.fullControl.supportUltra')
+                              : planId === 'full-speed'
+                                ? t('services.details.fullControl.supportSpeed')
+                                : t('services.details.fullControl.supportNormal')}
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircleIcon className="w-4 h-4 text-orange-600 dark:text-orange-400 flex-shrink-0 mt-0.5" />
+                          <span>
+                            {planId === 'full-ultraSpeed'
+                              ? t('services.details.fullControl.supportBugsUltra')
+                              : planId === 'full-speed'
+                                ? t('services.details.fullControl.supportBugsSpeed')
+                                : t('services.details.fullControl.supportBugsNormal')}
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Warranty */}
+                <div className="border border-green-200 dark:border-green-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-green-50/80 to-green-100/40 dark:from-green-900/20 dark:to-green-800/10">
+                  <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-green-600/10 dark:bg-green-400/20 flex items-center justify-center">
+                      <ShieldCheckIcon className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                        {t('services.details.fullControl.warrantyTitle')}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 mb-3 leading-relaxed">
+                        {t('services.details.fullControl.warrantyDescription')}
+                      </p>
+                      <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 leading-relaxed">
+                        {planId === 'full-ultraSpeed'
+                          ? t('services.details.fullControl.warrantyUltra')
+                          : planId === 'full-speed'
+                            ? t('services.details.fullControl.warrantySpeed')
+                            : t('services.details.fullControl.warrantyNormal')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Limits & Exclusions */}
+                <div className="border border-amber-200 dark:border-amber-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-amber-50/80 to-amber-100/40 dark:from-amber-900/20 dark:to-amber-800/10">
+                  <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-amber-600/10 dark:bg-amber-400/20 flex items-center justify-center">
+                      <ExclamationTriangleIcon className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 dark:text-amber-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                        {t('services.details.fullControl.limitsTitle')}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 mb-3 leading-relaxed">
+                        {t('services.details.fullControl.limitsDescription')}
+                      </p>
+                      <ul className="space-y-2 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                        <li className="flex items-start gap-2">
+                          <span className="text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5">•</span>
+                          <span>
+                            {planId === 'full-ultraSpeed'
+                              ? t('services.details.fullControl.limitsUltra')
+                              : planId === 'full-speed'
+                                ? t('services.details.fullControl.limitsSpeed')
+                                : t('services.details.fullControl.limitsNormal')}
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5">•</span>
+                          <span>{t('services.details.fullControl.limitsCommon')}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </>
             )}
 
