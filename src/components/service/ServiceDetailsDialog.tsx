@@ -69,12 +69,21 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
   const name = t(`${baseKey}.name`)
   const price = t(`${baseKey}.price`)
   const priceUnit = category === 'saas' ? t(`${baseKey}.priceUnit`) : undefined
+  const deliveryTime = category === 'fullControl' ? t(`${baseKey}.deliveryTime`) : undefined
   const description = t(`${baseKey}.description`)
   const features = [
     t(`${baseKey}.feature1`),
     t(`${baseKey}.feature2`),
     t(`${baseKey}.feature3`),
     t(`${baseKey}.feature4`),
+    ...(category === 'fullControl'
+      ? [
+          t(`${baseKey}.feature5`),
+          t(`${baseKey}.feature6`),
+          t(`${baseKey}.feature7`),
+          t(`${baseKey}.feature8`),
+        ]
+      : []),
   ]
 
   const detailsBaseKey =
@@ -139,11 +148,18 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                       ? t('services.details.saas.priceLabel')
                       : t('services.details.fullControl.priceLabel')}
                   </span>
-                  <div className="flex items-baseline gap-1 leading-tight">
-                    <span className="text-base sm:text-lg font-semibold">{price}</span>
-                    {priceUnit && (
-                      <span className="text-xs sm:text-sm opacity-90 font-normal">
-                        {priceUnit}
+                  <div className="flex flex-col items-end gap-1">
+                    <div className="flex items-baseline gap-1 leading-tight">
+                      <span className="text-base sm:text-lg font-semibold">{price}</span>
+                      {priceUnit && (
+                        <span className="text-xs sm:text-sm opacity-90 font-normal">
+                          {priceUnit}
+                        </span>
+                      )}
+                    </div>
+                    {deliveryTime && (
+                      <span className="text-[0.65rem] sm:text-xs opacity-80">
+                        {deliveryTime}
                       </span>
                     )}
                   </div>
@@ -208,6 +224,24 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                         <span className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 leading-relaxed">{t(`${baseKey}.annualSaving`)}</span>
                       </li>
                     </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {category === 'fullControl' && (
+              <div className="border border-primary-200 dark:border-primary-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-primary-50/80 to-primary-100/40 dark:from-primary-900/20 dark:to-primary-800/10">
+                <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                  <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary-600/10 dark:bg-primary-400/20 flex items-center justify-center">
+                    <CheckCircleIcon className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 dark:text-primary-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-3">
+                      {t('services.details.fullControl.deliverablesTitle')}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 leading-relaxed">
+                      {t('services.details.fullControl.deliverables')}
+                    </p>
                   </div>
                 </div>
               </div>

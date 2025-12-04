@@ -180,6 +180,9 @@ function ServicesPackages() {
             <p className="text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
               {t('services.fullControlSubtitle')}
             </p>
+            <p className="text-sm sm:text-base text-primary-600 dark:text-primary-400 font-medium mt-3 max-w-3xl mx-auto">
+              {t('services.fullControlDeliveryNote')}
+            </p>
           </div>
 
           <div className="max-w-6xl mx-auto mt-6 md:mt-8">
@@ -198,6 +201,10 @@ function ServicesPackages() {
                     t('services.fullControl.speed.feature2'),
                     t('services.fullControl.speed.feature3'),
                     t('services.fullControl.speed.feature4'),
+                    t('services.fullControl.speed.feature5'),
+                    t('services.fullControl.speed.feature6'),
+                    t('services.fullControl.speed.feature7'),
+                    t('services.fullControl.speed.feature8'),
                   ]}
                   popular
                   popularLabel={t('services.bestValue')}
@@ -218,9 +225,13 @@ function ServicesPackages() {
                     t('services.fullControl.ultraSpeed.feature2'),
                     t('services.fullControl.ultraSpeed.feature3'),
                     t('services.fullControl.ultraSpeed.feature4'),
+                    t('services.fullControl.ultraSpeed.feature5'),
+                    t('services.fullControl.ultraSpeed.feature6'),
+                    t('services.fullControl.ultraSpeed.feature7'),
+                    t('services.fullControl.ultraSpeed.feature8'),
                   ]}
                   cta={t('services.requestQuote')}
-                  onClick={() => setSelectedPlan('full-ultraSpeed')}
+                  onClick={() => handlePlanClick('full-ultraSpeed')}
                 />
               </div>
 
@@ -235,6 +246,10 @@ function ServicesPackages() {
                     t('services.fullControl.normal.feature2'),
                     t('services.fullControl.normal.feature3'),
                     t('services.fullControl.normal.feature4'),
+                    t('services.fullControl.normal.feature5'),
+                    t('services.fullControl.normal.feature6'),
+                    t('services.fullControl.normal.feature7'),
+                    t('services.fullControl.normal.feature8'),
                   ]}
                   cta={t('services.requestQuote')}
                   onClick={() => handlePlanClick('full-normal')}
