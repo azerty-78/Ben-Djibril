@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { motion } from 'framer-motion'
 import {
   CheckIcon,
   XMarkIcon,
@@ -106,20 +107,52 @@ function SaaSVsFullControlComparison() {
   ]
 
   return (
-    <div className="max-w-7xl mx-auto mt-12 md:mt-16 mb-12 md:mb-16 px-4 sm:px-6">
-      <div className="bg-gradient-to-br from-secondary-50 to-secondary-100/50 dark:from-secondary-900/50 dark:to-secondary-800/30 rounded-2xl border border-secondary-200 dark:border-secondary-700 shadow-xl p-6 sm:p-8 md:p-10">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="max-w-7xl mx-auto mt-12 md:mt-16 mb-12 md:mb-16 px-4 sm:px-6"
+    >
+      <div className="bg-gradient-to-br from-white/80 to-secondary-50/80 dark:from-secondary-800/80 dark:to-secondary-900/80 backdrop-blur-sm rounded-2xl border border-secondary-200 dark:border-secondary-700 shadow-xl p-6 sm:p-8 md:p-10 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-5 dark:opacity-10">
+          <div className="absolute top-10 right-10 w-48 h-48 bg-primary-400 rounded-full blur-3xl" />
+          <div className="absolute bottom-10 left-10 w-32 h-32 bg-accent-400 rounded-full blur-3xl" />
+        </div>
+
         {/* Header */}
-        <div className="text-center mb-8 md:mb-10">
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary-900 dark:text-white mb-3 md:mb-4">
-            {t('services.saasVsFullControl.title')}
-          </h3>
-          <p className="text-secondary-600 dark:text-secondary-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto">
+        <div className="text-center mb-8 md:mb-10 relative">
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary-400 rounded-full blur-xl opacity-50" />
+              <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
+                <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+              </div>
+            </div>
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-secondary-900 dark:text-white">
+              {t('services.saasVsFullControl.title')}
+            </h3>
+          </motion.div>
+          <p className="text-base sm:text-lg md:text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto px-2">
             {t('services.saasVsFullControl.subtitle')}
           </p>
         </div>
 
         {/* Principle Section */}
-        <div className="mb-8 md:mb-10 p-5 sm:p-6 md:p-8 bg-white/60 dark:bg-secondary-900/40 rounded-xl border border-primary-200 dark:border-primary-800">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mb-8 md:mb-10 p-5 sm:p-6 md:p-8 bg-white/80 dark:bg-secondary-900/60 backdrop-blur-sm rounded-xl border border-primary-200 dark:border-primary-800 shadow-lg relative"
+        >
           <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-secondary-900 dark:text-white mb-4 md:mb-5">
             {t('services.saasVsFullControl.principleTitle')}
           </h4>
@@ -136,12 +169,18 @@ function SaaSVsFullControlComparison() {
               {t('services.saasVsFullControl.fundamentalDifference')}
             </h5>
           </div>
-        </div>
+        </motion.div>
 
         {/* Comparison Table */}
-        <div className="overflow-x-auto -mx-4 sm:-mx-6 md:mx-0">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="overflow-x-auto -mx-4 sm:-mx-6 md:mx-0"
+        >
           <div className="inline-block min-w-full align-middle px-4 sm:px-6 md:px-0">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse bg-white/60 dark:bg-secondary-900/40 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg">
               <thead>
                 <tr className="border-b-2 border-secondary-300 dark:border-secondary-600">
                   <th className="text-left p-3 sm:p-4 md:p-5 font-bold text-xs sm:text-sm md:text-base text-secondary-900 dark:text-white bg-secondary-100/50 dark:bg-secondary-800/50 sticky left-0 z-10">
@@ -201,9 +240,9 @@ function SaaSVsFullControlComparison() {
               </tbody>
             </table>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

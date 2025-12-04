@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { CloudIcon, CodeBracketIcon } from '@heroicons/react/24/solid'
 import PackageCard from '../ui/PackageCard'
 import ServiceDetailsDialog from './ServiceDetailsDialog'
 import SaaSComparisonTable from './SaaSComparisonTable'
@@ -50,35 +51,89 @@ function ServicesPackages() {
   }, [])
 
   return (
-    <section data-section="packages" className="py-16 md:py-20 bg-white dark:bg-secondary-900">
-      <div className="container mx-auto px-4">
+    <section data-section="packages" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-secondary-50 via-white to-primary-50/30 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-5 dark:opacity-10">
+        <div className="absolute top-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-primary-400 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-10 w-48 sm:w-72 h-48 sm:h-72 bg-accent-400 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-secondary-900 dark:text-white">
-            {t('services.packagesTitle')}
-          </h2>
-          <p className="text-lg text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto">
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary-400 rounded-full blur-xl opacity-50" />
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, repeatDelay: 2 }}
+                >
+                  <CloudIcon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+                </motion.div>
+              </div>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 dark:text-white">
+              {t('services.packagesTitle')}
+            </h2>
+          </motion.div>
+          <p className="text-base sm:text-lg md:text-xl text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto px-2">
             {t('services.packagesSubtitle')}
           </p>
         </motion.div>
 
         {/* SaaS category */}
-        <div className="mb-16 md:mb-24">
-          <div className="text-center mb-6 md:mb-10">
-            <h3 className="text-2xl md:text-3xl font-bold mb-3 text-secondary-900 dark:text-white">
-              {t('services.saasTitle')}
-            </h3>
-            <p className="text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-16 md:mb-24"
+        >
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary-400 rounded-full blur-xl opacity-50" />
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
+                  <CloudIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+                </div>
+              </div>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-secondary-900 dark:text-white">
+                {t('services.saasTitle')}
+              </h3>
+            </motion.div>
+            <p className="text-base sm:text-lg md:text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto px-2 mb-3 sm:mb-4">
               {t('services.saasSubtitle')}
             </p>
-            <p className="text-sm sm:text-base text-primary-600 dark:text-primary-400 font-medium mt-3 max-w-3xl mx-auto">
-              {t('services.saasDeliveryNote')}
-            </p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 dark:bg-primary-900/30 rounded-full border border-primary-200 dark:border-primary-800"
+            >
+              <div className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
+              <p className="text-sm sm:text-base text-primary-700 dark:text-primary-300 font-medium">
+                {t('services.saasDeliveryNote')}
+              </p>
+            </motion.div>
           </div>
 
           <div className="max-w-6xl mx-auto mt-6 md:mt-8">
@@ -176,20 +231,49 @@ function ServicesPackages() {
             </button>
           </div>
           <SaaSComparisonTable open={showSaaSComparison} />
-        </div>
+        </motion.div>
 
         {/* Full Control category */}
-        <div className="mt-16 md:mt-24">
-          <div className="text-center mb-6 md:mb-10">
-            <h3 className="text-2xl md:text-3xl font-bold mb-3 text-secondary-900 dark:text-white">
-              {t('services.fullControlTitle')}
-            </h3>
-            <p className="text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-16 md:mt-24"
+        >
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-accent-400 rounded-full blur-xl opacity-50" />
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-accent-500 to-accent-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
+                  <CodeBracketIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+                </div>
+              </div>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-secondary-900 dark:text-white">
+                {t('services.fullControlTitle')}
+              </h3>
+            </motion.div>
+            <p className="text-base sm:text-lg md:text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto px-2 mb-3 sm:mb-4">
               {t('services.fullControlSubtitle')}
             </p>
-            <p className="text-sm sm:text-base text-primary-600 dark:text-primary-400 font-medium mt-3 max-w-3xl mx-auto">
-              {t('services.fullControlDeliveryNote')}
-            </p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-accent-50 dark:bg-accent-900/30 rounded-full border border-accent-200 dark:border-accent-800"
+            >
+              <div className="w-2 h-2 rounded-full bg-accent-500 animate-pulse" />
+              <p className="text-sm sm:text-base text-accent-700 dark:text-accent-300 font-medium">
+                {t('services.fullControlDeliveryNote')}
+              </p>
+            </motion.div>
           </div>
 
           <div className="max-w-6xl mx-auto mt-6 md:mt-8">
@@ -290,7 +374,7 @@ function ServicesPackages() {
 
           {/* SaaS vs Full Control Comparison */}
           <SaaSVsFullControlComparison />
-        </div>
+        </motion.div>
       </div>
 
       <ServiceDetailsDialog
