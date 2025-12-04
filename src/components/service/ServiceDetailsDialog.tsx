@@ -140,7 +140,7 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                       : t('services.details.fullControl.priceLabel')}
                   </span>
                   <div className="flex items-baseline gap-1 leading-tight">
-                    <span className="text-sm sm:text-base font-semibold">{price}</span>
+                    <span className="text-base sm:text-lg font-semibold">{price}</span>
                     {priceUnit && (
                       <span className="text-xs sm:text-sm opacity-90 font-normal">
                         {priceUnit}

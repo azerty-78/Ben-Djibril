@@ -204,7 +204,7 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
 
                         {/* Current Price */}
                         <div className="mb-4 flex items-baseline justify-center gap-1.5">
-                          <span className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white">
+                          <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary-900 dark:text-white">
                             {plan.currentPrice}
                           </span>
                           {plan.priceUnit && (

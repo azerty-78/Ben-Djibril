@@ -69,7 +69,7 @@ function PackageCard({
             </div>
           )}
           <div className="flex items-baseline gap-1.5 leading-tight">
-            <span className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text">
+            <span className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text">
               {price}
             </span>
             {priceUnit && (
@@ -79,17 +79,17 @@ function PackageCard({
             )}
           </div>
           {(secondaryPrice || savingLabel) && (
-            <div className="flex flex-wrap items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight w-full">
+            <div className="space-y-1 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight w-full mt-1.5">
               {secondaryPrice && (
-                <span className="break-words">{secondaryPrice}</span>
-              )}
-              {secondaryPrice && savingLabel && (
-                <span className="text-secondary-400 dark:text-secondary-500 flex-shrink-0">•</span>
+                <div className="break-words">{secondaryPrice}</div>
               )}
               {savingLabel && (
-                <span className="font-semibold text-emerald-600 dark:text-emerald-400 break-words">
-                  {savingLabel}
-                </span>
+                <div className="flex items-start gap-0">
+                  <span className="text-secondary-400 dark:text-secondary-500 flex-shrink-0">•</span>
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400 break-words flex-1">
+                    {savingLabel}
+                  </span>
+                </div>
               )}
             </div>
           )}
@@ -114,9 +114,9 @@ function PackageCard({
           {cta}
         </button>
       ) : (
-        <Link to={ctaLink} className="btn-primary w-full text-center block">
-          {cta}
-        </Link>
+      <Link to={ctaLink} className="btn-primary w-full text-center block">
+        {cta}
+      </Link>
       )}
     </motion.div>
   )
