@@ -127,10 +127,10 @@ function ServicesPackages() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 dark:bg-primary-900/30 rounded-full border border-primary-200 dark:border-primary-800"
+              className="flex items-start sm:items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-primary-50 dark:bg-primary-900/30 rounded-lg sm:rounded-full border border-primary-200 dark:border-primary-800 max-w-full mx-auto"
             >
-              <div className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-              <p className="text-sm sm:text-base text-primary-700 dark:text-primary-300 font-medium">
+              <div className="w-2 h-2 rounded-full bg-primary-500 animate-pulse flex-shrink-0 mt-1 sm:mt-0" />
+              <p className="text-xs sm:text-sm md:text-base text-primary-700 dark:text-primary-300 font-medium leading-relaxed break-words">
                 {t('services.saasDeliveryNote')}
               </p>
             </motion.div>
@@ -267,10 +267,10 @@ function ServicesPackages() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-accent-50 dark:bg-accent-900/30 rounded-full border border-accent-200 dark:border-accent-800"
+              className="flex items-start sm:items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-accent-50 dark:bg-accent-900/30 rounded-lg sm:rounded-full border border-accent-200 dark:border-accent-800 max-w-full mx-auto"
             >
-              <div className="w-2 h-2 rounded-full bg-accent-500 animate-pulse" />
-              <p className="text-sm sm:text-base text-accent-700 dark:text-accent-300 font-medium">
+              <div className="w-2 h-2 rounded-full bg-accent-500 animate-pulse flex-shrink-0 mt-1 sm:mt-0" />
+              <p className="text-xs sm:text-sm md:text-base text-accent-700 dark:text-accent-300 font-medium leading-relaxed break-words">
                 {t('services.fullControlDeliveryNote')}
               </p>
             </motion.div>
