@@ -1,31 +1,54 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid'
 import { FaGithub, FaLinkedin, FaXTwitter, FaWhatsapp } from 'react-icons/fa6'
 
 function Footer() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   
-  const services = [
-    { name: 'Développement Web', link: '/services?type=web-dev' },
-    { name: 'Sites Vitrines', link: '/services?type=showcase' },
-    { name: 'Portfolio', link: '/services?type=portfolio' },
+  // Les 8 services les plus demandés
+  const popularServices = [
     { name: 'E-commerce', link: '/services?type=ecommerce' },
-    { name: 'Applications Web', link: '/services?type=web-app' },
-    { name: 'Applications Mobile', link: '/services?type=mobile' },
-    { name: 'Applications Desktop', link: '/services?type=desktop' },
-    { name: 'API Development', link: '/services?type=api' },
-    { name: 'DevOps & Cloud', link: '/services?type=devops' },
-    { name: 'Consulting', link: '/services?type=consulting' },
     { name: 'Gestion de Stock', link: '/services?type=inventory' },
     { name: 'Gestion de Restaurant', link: '/services?type=restaurant' },
     { name: 'Logiciel de Facturation', link: '/services?type=billing' },
-    { name: 'Gestion de Commandes', link: '/services?type=orders' },
     { name: 'Point de Vente (PDV)', link: '/services?type=pos' },
     { name: 'Gestion de Clients', link: '/services?type=crm' },
-    { name: 'Gestion de Livraison', link: '/services?type=delivery' },
-    { name: 'Système de Réservation', link: '/services?type=booking' },
+    { name: 'Applications Mobile', link: '/services?type=mobile' },
+    { name: 'Applications Web', link: '/services?type=web-app' },
   ]
+
+  // Fonction pour scroller vers le haut de la page
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    e.preventDefault()
+    navigate(path)
+    // Scroll vers le haut après la navigation
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, 100)
+  }
+
+  // Fonction pour rediriger vers la section services
+  const handleViewAllServices = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    navigate('/services')
+    setTimeout(() => {
+      const servicesSection = document.querySelector('[data-section="services"]')
+      if (servicesSection) {
+        const offset = 80
+        const elementPosition = servicesSection.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - offset
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      } else {
+        // Si la section n'est pas trouvée, scroll vers le haut
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    }, 200)
+  }
   
   return (
     <footer className="mt-auto border-t border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-900 backdrop-blur-sm">

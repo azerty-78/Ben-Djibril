@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { useState, useMemo } from 'react'
 import {
   GlobeAltIcon,
   DevicePhoneMobileIcon,
@@ -20,6 +21,18 @@ import {
   UserGroupIcon,
   TruckIcon,
   CalendarIcon,
+  BeakerIcon,
+  HeartIcon,
+  ScissorsIcon,
+  BuildingOfficeIcon,
+  HomeIcon,
+  BanknotesIcon,
+  CurrencyDollarIcon,
+  WalletIcon,
+  MapPinIcon,
+  AcademicCapIcon,
+  BuildingLibraryIcon,
+  MagnifyingGlassIcon,
 } from '@heroicons/react/24/solid'
 
 type Service = {
@@ -35,6 +48,7 @@ type Service = {
 
 function ServicesList() {
   const { t } = useTranslation()
+  const [searchQuery, setSearchQuery] = useState('')
 
   const allServices: Service[] = [
     {
@@ -307,7 +321,200 @@ function ServicesList() {
       bgColor: 'bg-lime-100 dark:bg-lime-900/30',
       textColor: 'text-lime-600 dark:text-lime-400',
     },
+    {
+      id: 'pharmacy',
+      icon: BeakerIcon,
+      title: t('services.servicePharmacy.title'),
+      description: t('services.servicePharmacy.desc'),
+      features: [
+        t('services.servicePharmacy.feature1'),
+        t('services.servicePharmacy.feature2'),
+        t('services.servicePharmacy.feature3'),
+        t('services.servicePharmacy.feature4'),
+      ],
+      color: 'from-blue-600 to-blue-700',
+      bgColor: 'bg-blue-100 dark:bg-blue-900/30',
+      textColor: 'text-blue-600 dark:text-blue-400',
+    },
+    {
+      id: 'gym',
+      icon: HeartIcon,
+      title: t('services.serviceGym.title'),
+      description: t('services.serviceGym.desc'),
+      features: [
+        t('services.serviceGym.feature1'),
+        t('services.serviceGym.feature2'),
+        t('services.serviceGym.feature3'),
+        t('services.serviceGym.feature4'),
+      ],
+      color: 'from-red-600 to-red-700',
+      bgColor: 'bg-red-100 dark:bg-red-900/30',
+      textColor: 'text-red-600 dark:text-red-400',
+    },
+    {
+      id: 'salon',
+      icon: ScissorsIcon,
+      title: t('services.serviceSalon.title'),
+      description: t('services.serviceSalon.desc'),
+      features: [
+        t('services.serviceSalon.feature1'),
+        t('services.serviceSalon.feature2'),
+        t('services.serviceSalon.feature3'),
+        t('services.serviceSalon.feature4'),
+      ],
+      color: 'from-pink-600 to-pink-700',
+      bgColor: 'bg-pink-100 dark:bg-pink-900/30',
+      textColor: 'text-pink-600 dark:text-pink-400',
+    },
+    {
+      id: 'transport',
+      icon: TruckIcon,
+      title: t('services.serviceTransport.title'),
+      description: t('services.serviceTransport.desc'),
+      features: [
+        t('services.serviceTransport.feature1'),
+        t('services.serviceTransport.feature2'),
+        t('services.serviceTransport.feature3'),
+        t('services.serviceTransport.feature4'),
+      ],
+      color: 'from-slate-600 to-slate-700',
+      bgColor: 'bg-slate-100 dark:bg-slate-900/30',
+      textColor: 'text-slate-600 dark:text-slate-400',
+    },
+    {
+      id: 'rental',
+      icon: HomeIcon,
+      title: t('services.serviceRental.title'),
+      description: t('services.serviceRental.desc'),
+      features: [
+        t('services.serviceRental.feature1'),
+        t('services.serviceRental.feature2'),
+        t('services.serviceRental.feature3'),
+        t('services.serviceRental.feature4'),
+      ],
+      color: 'from-amber-600 to-amber-700',
+      bgColor: 'bg-amber-100 dark:bg-amber-900/30',
+      textColor: 'text-amber-600 dark:text-amber-400',
+    },
+    {
+      id: 'accounting',
+      icon: BanknotesIcon,
+      title: t('services.serviceAccounting.title'),
+      description: t('services.serviceAccounting.desc'),
+      features: [
+        t('services.serviceAccounting.feature1'),
+        t('services.serviceAccounting.feature2'),
+        t('services.serviceAccounting.feature3'),
+        t('services.serviceAccounting.feature4'),
+      ],
+      color: 'from-green-600 to-green-700',
+      bgColor: 'bg-green-100 dark:bg-green-900/30',
+      textColor: 'text-green-600 dark:text-green-400',
+    },
+    {
+      id: 'payroll',
+      icon: CurrencyDollarIcon,
+      title: t('services.servicePayroll.title'),
+      description: t('services.servicePayroll.desc'),
+      features: [
+        t('services.servicePayroll.feature1'),
+        t('services.servicePayroll.feature2'),
+        t('services.servicePayroll.feature3'),
+        t('services.servicePayroll.feature4'),
+      ],
+      color: 'from-emerald-600 to-emerald-700',
+      bgColor: 'bg-emerald-100 dark:bg-emerald-900/30',
+      textColor: 'text-emerald-600 dark:text-emerald-400',
+    },
+    {
+      id: 'mobile-money',
+      icon: WalletIcon,
+      title: t('services.serviceMobileMoney.title'),
+      description: t('services.serviceMobileMoney.desc'),
+      features: [
+        t('services.serviceMobileMoney.feature1'),
+        t('services.serviceMobileMoney.feature2'),
+        t('services.serviceMobileMoney.feature3'),
+        t('services.serviceMobileMoney.feature4'),
+      ],
+      color: 'from-orange-600 to-orange-700',
+      bgColor: 'bg-orange-100 dark:bg-orange-900/30',
+      textColor: 'text-orange-600 dark:text-orange-400',
+    },
+    {
+      id: 'market',
+      icon: MapPinIcon,
+      title: t('services.serviceMarket.title'),
+      description: t('services.serviceMarket.desc'),
+      features: [
+        t('services.serviceMarket.feature1'),
+        t('services.serviceMarket.feature2'),
+        t('services.serviceMarket.feature3'),
+        t('services.serviceMarket.feature4'),
+      ],
+      color: 'from-violet-600 to-violet-700',
+      bgColor: 'bg-violet-100 dark:bg-violet-900/30',
+      textColor: 'text-violet-600 dark:text-violet-400',
+    },
+    {
+      id: 'parking',
+      icon: BuildingOfficeIcon,
+      title: t('services.serviceParking.title'),
+      description: t('services.serviceParking.desc'),
+      features: [
+        t('services.serviceParking.feature1'),
+        t('services.serviceParking.feature2'),
+        t('services.serviceParking.feature3'),
+        t('services.serviceParking.feature4'),
+      ],
+      color: 'from-gray-600 to-gray-700',
+      bgColor: 'bg-gray-100 dark:bg-gray-900/30',
+      textColor: 'text-gray-600 dark:text-gray-400',
+    },
+    {
+      id: 'school',
+      icon: AcademicCapIcon,
+      title: t('services.serviceSchool.title'),
+      description: t('services.serviceSchool.desc'),
+      features: [
+        t('services.serviceSchool.feature1'),
+        t('services.serviceSchool.feature2'),
+        t('services.serviceSchool.feature3'),
+        t('services.serviceSchool.feature4'),
+      ],
+      color: 'from-indigo-600 to-indigo-700',
+      bgColor: 'bg-indigo-100 dark:bg-indigo-900/30',
+      textColor: 'text-indigo-600 dark:text-indigo-400',
+    },
+    {
+      id: 'hospital',
+      icon: BuildingLibraryIcon,
+      title: t('services.serviceHospital.title'),
+      description: t('services.serviceHospital.desc'),
+      features: [
+        t('services.serviceHospital.feature1'),
+        t('services.serviceHospital.feature2'),
+        t('services.serviceHospital.feature3'),
+        t('services.serviceHospital.feature4'),
+      ],
+      color: 'from-red-700 to-red-800',
+      bgColor: 'bg-red-100 dark:bg-red-900/30',
+      textColor: 'text-red-600 dark:text-red-400',
+    },
   ]
+
+  const filteredServices = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return allServices
+    }
+    const query = searchQuery.toLowerCase()
+    return allServices.filter(
+      (service) =>
+        service.title.toLowerCase().includes(query) ||
+        service.description.toLowerCase().includes(query) ||
+        service.features.some((feature) => feature.toLowerCase().includes(query))
+    )
+  }, [allServices, searchQuery])
 
   return (
     <section
@@ -350,8 +557,44 @@ function ServicesList() {
           </p>
         </motion.div>
 
+        {/* Search Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="max-w-2xl mx-auto mb-8 sm:mb-12 px-4"
+        >
+          <div className="relative">
+            <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400 dark:text-secondary-500" />
+            <input
+              type="text"
+              placeholder={t('services.searchPlaceholder') || 'Rechercher un service...'}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl border-2 border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white placeholder-secondary-400 dark:placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-sm sm:text-base"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-secondary-400 dark:text-secondary-500 hover:text-secondary-600 dark:hover:text-secondary-300 transition-colors"
+                aria-label="Clear search"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+          {searchQuery && (
+            <p className="mt-3 text-sm text-secondary-600 dark:text-secondary-400 text-center">
+              {filteredServices.length} {filteredServices.length === 1 ? t('services.searchResults.found') : t('services.searchResults.foundPlural')}
+            </p>
+          )}
+        </motion.div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
-          {allServices.map((service, index) => {
+          {filteredServices.map((service, index) => {
             const IconComponent = service.icon
             return (
               <motion.div
