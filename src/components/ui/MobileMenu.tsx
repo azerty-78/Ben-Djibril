@@ -19,9 +19,15 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
     `${linkBase} ${isActive ? 'bg-primary-600 text-white' : 'text-secondary-700 dark:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-700'}`
 
   const handleNavigation = (callback: () => void) => {
-    callback()
     setIsSubMenuOpen(false)
-    onNavigate?.()
+    // Fermer le menu principal avec un léger délai pour permettre l'animation
+    setTimeout(() => {
+      onNavigate?.()
+    }, 150)
+    // Exécuter la navigation après la fermeture du sous-menu
+    setTimeout(() => {
+      callback()
+    }, 50)
   }
 
   const scrollToSection = (sectionId: string, path: string = '/services') => {
@@ -38,7 +44,7 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
             behavior: 'smooth'
           })
         }
-      }, 100)
+      }, 200)
     })
   }
 
@@ -56,13 +62,16 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
             behavior: 'smooth'
           })
         }
-      }, 100)
+      }, 200)
     })
   }
 
   const handleNavLinkClick = () => {
     setIsSubMenuOpen(false)
-    onNavigate?.()
+    // Fermer le menu principal avec une animation fluide
+    setTimeout(() => {
+      onNavigate?.()
+    }, 200)
   }
 
   const serviceLinks = [
@@ -101,15 +110,19 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
               <span>{t('nav.services')}</span>
               <ChevronDownIcon className={`w-4 h-4 transition-transform duration-300 ease-in-out ${open ? 'rotate-180' : ''} text-secondary-600 dark:text-secondary-400`} />
             </Disclosure.Button>
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
               {open && (
                 <Disclosure.Panel
                   as={motion.div}
                   static
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: 'easeInOut' }}
+                  initial={{ height: 0, opacity: 0, x: -10 }}
+                  animate={{ height: 'auto', opacity: 1, x: 0 }}
+                  exit={{ height: 0, opacity: 0, x: -10 }}
+                  transition={{ 
+                    duration: 0.3, 
+                    ease: [0.4, 0, 0.2, 1],
+                    opacity: { duration: 0.2 }
+                  }}
                   className="overflow-hidden"
                 >
                   <div className="pl-4 space-y-1.5 mt-2 border-l-2 border-secondary-200 dark:border-secondary-700">
@@ -117,7 +130,7 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
                       <button
                         key={index}
                         onClick={link.onClick}
-                        className={`${linkBase} text-sm w-full text-left bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-200 hover:bg-secondary-50 dark:hover:bg-secondary-700 hover:text-primary-600 dark:hover:text-primary-400`}
+                        className={`${linkBase} text-sm w-full text-left bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-200 hover:bg-secondary-50 dark:hover:bg-secondary-700 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200`}
                       >
                         {link.label}
                       </button>

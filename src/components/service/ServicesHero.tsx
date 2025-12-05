@@ -5,140 +5,274 @@ import { CloudIcon, CodeBracketIcon } from '@heroicons/react/24/solid'
 function ServicesHero() {
   const { t } = useTranslation()
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.4, 0, 0.2, 1],
+      },
+    },
+  }
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.95, y: 20 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.4, 0, 0.2, 1],
+      },
+    },
+  }
+
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute inset-0 opacity-40 pointer-events-none">
-        <div className="absolute -top-16 -right-10 w-64 sm:w-96 h-64 sm:h-96 bg-primary-200 dark:bg-primary-600 rounded-full blur-3xl" />
-        <div className="absolute -bottom-16 -left-10 w-72 sm:w-[26rem] h-72 sm:h-[26rem] bg-accent-200 dark:bg-accent-600 rounded-full blur-3xl" />
+      <div className="absolute inset-0 opacity-30 dark:opacity-20 pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, ease: 'easeOut' }}
+          className="absolute -top-12 sm:-top-16 -right-8 sm:-right-10 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-primary-200 dark:bg-primary-600 rounded-full blur-3xl"
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, delay: 0.3, ease: 'easeOut' }}
+          className="absolute -bottom-12 sm:-bottom-16 -left-8 sm:-left-10 w-56 sm:w-72 md:w-[26rem] h-56 sm:h-72 md:h-[26rem] bg-accent-200 dark:bg-accent-600 rounded-full blur-3xl"
+        />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 relative">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 xl:gap-16 items-center"
+        >
           {/* Text content */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center lg:text-left max-w-xl mx-auto lg:mx-0"
+            variants={itemVariants}
+            className="text-center lg:text-left max-w-xl mx-auto lg:mx-0 order-2 lg:order-1"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 dark:bg-primary-900/40 border border-primary-200 dark:border-primary-700 mb-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-1.5 rounded-full bg-primary-50 dark:bg-primary-900/40 border border-primary-200 dark:border-primary-700 mb-4 sm:mb-5 md:mb-6"
+            >
               <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-              <span className="text-xs sm:text-sm font-medium text-primary-700 dark:text-primary-300">
+              <span className="text-[10px] xs:text-xs sm:text-sm font-medium text-primary-700 dark:text-primary-300 whitespace-nowrap">
                 SaaS & Full Control · {t('services.title')}
               </span>
-            </div>
+            </motion.div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-secondary-900 dark:text-white leading-tight">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-3 sm:mb-4 md:mb-6 text-secondary-900 dark:text-white leading-[1.1] sm:leading-tight"
+            >
               {t('services.title')}
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl text-secondary-600 dark:text-secondary-300 leading-relaxed mb-4 sm:mb-6">
+            </motion.h1>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-secondary-600 dark:text-secondary-300 leading-relaxed mb-3 sm:mb-4 md:mb-6"
+            >
               {t('services.subtitle')}
-            </p>
-            <p className="text-sm sm:text-base md:text-lg text-secondary-700 dark:text-secondary-200 leading-relaxed mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
+            </motion.p>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-xs sm:text-sm md:text-base lg:text-lg text-secondary-700 dark:text-secondary-200 leading-relaxed mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0"
+            >
               {t('services.heroDescription')}
-            </p>
+            </motion.p>
 
             {/* Pills for SaaS vs Full Control */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-8">
-              <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-white dark:bg-secondary-900/70 shadow-md border border-primary-100 dark:border-primary-700/60">
-                <div className="w-9 h-9 rounded-xl bg-primary-50 dark:bg-primary-900/40 flex items-center justify-center">
-                  <CloudIcon className="w-5 h-5 text-primary-600 dark:text-primary-300" />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-8"
+            >
+              <motion.div
+                whileHover={{ scale: 1.02, y: -2 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-secondary-900/70 shadow-md hover:shadow-lg border border-primary-100 dark:border-primary-700/60 transition-all duration-300"
+              >
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-primary-50 dark:bg-primary-900/40 flex items-center justify-center flex-shrink-0">
+                  <CloudIcon className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-primary-300" />
                 </div>
-                <div className="text-left">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-300">
+                <div className="text-left min-w-0">
+                  <p className="text-[10px] xs:text-xs font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-300">
                     SaaS
                   </p>
-                  <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                  <p className="text-[10px] xs:text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 line-clamp-2">
                     {t('services.saasSubtitle')}
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-white dark:bg-secondary-900/70 shadow-md border border-accent-100 dark:border-accent-700/60">
-                <div className="w-9 h-9 rounded-xl bg-accent-50 dark:bg-accent-900/40 flex items-center justify-center">
-                  <CodeBracketIcon className="w-5 h-5 text-accent-600 dark:text-accent-300" />
+              <motion.div
+                whileHover={{ scale: 1.02, y: -2 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-secondary-900/70 shadow-md hover:shadow-lg border border-accent-100 dark:border-accent-700/60 transition-all duration-300"
+              >
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-accent-50 dark:bg-accent-900/40 flex items-center justify-center flex-shrink-0">
+                  <CodeBracketIcon className="w-4 h-4 sm:w-5 sm:h-5 text-accent-600 dark:text-accent-300" />
                 </div>
-                <div className="text-left">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-accent-600 dark:text-accent-300">
+                <div className="text-left min-w-0">
+                  <p className="text-[10px] xs:text-xs font-semibold uppercase tracking-wide text-accent-600 dark:text-accent-300">
                     Full Control
                   </p>
-                  <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                  <p className="text-[10px] xs:text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 line-clamp-2">
                     {t('services.fullControlSubtitle')}
                   </p>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </motion.div>
 
           {/* Illustration */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative max-w-md mx-auto lg:mx-0"
+            variants={itemVariants}
+            className="relative max-w-md mx-auto lg:mx-0 order-1 lg:order-2"
           >
-            <div className="absolute -top-6 -left-6 w-20 h-20 rounded-3xl bg-primary-500/10 dark:bg-primary-400/10 blur-2xl" />
-            <div className="absolute -bottom-8 -right-4 w-24 h-24 rounded-full bg-accent-500/10 dark:bg-accent-400/10 blur-2xl" />
+            <motion.div
+              animate={{
+                scale: [1, 1.05, 1],
+                rotate: [0, 2, -2, 0],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+              className="absolute -top-4 sm:-top-6 -left-4 sm:-left-6 w-16 sm:w-20 h-16 sm:h-20 rounded-3xl bg-primary-500/10 dark:bg-primary-400/10 blur-2xl"
+            />
+            <motion.div
+              animate={{
+                scale: [1, 1.1, 1],
+                rotate: [0, -3, 3, 0],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: 1,
+              }}
+              className="absolute -bottom-6 sm:-bottom-8 -right-3 sm:-right-4 w-20 sm:w-24 h-20 sm:h-24 rounded-full bg-accent-500/10 dark:bg-accent-400/10 blur-2xl"
+            />
 
-            <div className="relative bg-white/80 dark:bg-secondary-900/80 backdrop-blur-sm rounded-3xl border border-secondary-100 dark:border-secondary-700 shadow-2xl p-5 sm:p-6 md:p-8">
-              <div className="grid gap-4 sm:gap-5">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              whileHover={{ y: -5 }}
+              className="relative bg-white/80 dark:bg-secondary-900/80 backdrop-blur-sm rounded-3xl border border-secondary-100 dark:border-secondary-700 shadow-2xl p-4 sm:p-5 md:p-6 lg:p-8 transition-all duration-300"
+            >
+              <div className="grid gap-3 sm:gap-4 md:gap-5">
                 {/* SaaS card preview */}
-                <div className="rounded-2xl border border-primary-100 dark:border-primary-700 bg-primary-50/70 dark:bg-primary-900/40 p-4 sm:p-5 shadow-md">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="text-xs uppercase tracking-wide text-primary-600 dark:text-primary-300 font-semibold">
+                <motion.div
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  transition={{ duration: 0.2 }}
+                  className="rounded-2xl border border-primary-100 dark:border-primary-700 bg-primary-50/70 dark:bg-primary-900/40 p-3 sm:p-4 md:p-5 shadow-md hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="flex items-start sm:items-center justify-between mb-2 sm:mb-3 gap-2">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[10px] xs:text-xs uppercase tracking-wide text-primary-600 dark:text-primary-300 font-semibold mb-1">
                         SaaS
                       </p>
-                      <p className="text-sm sm:text-base font-bold text-secondary-900 dark:text-white">
+                      <p className="text-xs sm:text-sm md:text-base font-bold text-secondary-900 dark:text-white line-clamp-1">
                         {t('services.saas.goodDeal.name')}
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-xs text-secondary-500 dark:text-secondary-400 line-through">
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-[9px] xs:text-xs text-secondary-500 dark:text-secondary-400 line-through">
                         18 500 F HT
                       </p>
-                      <p className="text-xl sm:text-2xl font-extrabold text-primary-700 dark:text-primary-300">
+                      <p className="text-lg sm:text-xl md:text-2xl font-extrabold text-primary-700 dark:text-primary-300">
                         15 500 F
                       </p>
-                      <p className="text-[10px] sm:text-xs text-secondary-600 dark:text-secondary-300">
+                      <p className="text-[9px] xs:text-[10px] sm:text-xs text-secondary-600 dark:text-secondary-300">
                         {t('services.saas.goodDeal.priceUnit')}
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                  <p className="text-[10px] xs:text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 line-clamp-2">
                     {t('services.saas.goodDeal.shortDesc')}
                   </p>
-                </div>
+                </motion.div>
 
                 {/* Full Control card preview */}
-                <div className="rounded-2xl border border-accent-100 dark:border-accent-700 bg-accent-50/70 dark:bg-accent-900/40 p-4 sm:p-5 shadow-md">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="text-xs uppercase tracking-wide text-accent-600 dark:text-accent-300 font-semibold">
+                <motion.div
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  className="rounded-2xl border border-accent-100 dark:border-accent-700 bg-accent-50/70 dark:bg-accent-900/40 p-3 sm:p-4 md:p-5 shadow-md hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="flex items-start sm:items-center justify-between mb-2 sm:mb-3 gap-2">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[10px] xs:text-xs uppercase tracking-wide text-accent-600 dark:text-accent-300 font-semibold mb-1">
                         Full Control
                       </p>
-                      <p className="text-sm sm:text-base font-bold text-secondary-900 dark:text-white">
+                      <p className="text-xs sm:text-sm md:text-base font-bold text-secondary-900 dark:text-white line-clamp-1">
                         {t('services.fullControl.speed.name')}
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-xs text-secondary-500 dark:text-secondary-400">
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-[9px] xs:text-xs text-secondary-500 dark:text-secondary-400">
                         {t('services.fullControl.speed.deliveryTime')}
                       </p>
-                      <p className="text-[10px] sm:text-xs text-secondary-600 dark:text-secondary-300">
+                      <p className="text-[9px] xs:text-[10px] sm:text-xs text-secondary-600 dark:text-secondary-300 font-semibold">
                         {t('services.fullControl.speed.price')}
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                  <p className="text-[10px] xs:text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 line-clamp-2">
                     {t('services.fullControl.speed.description')}
                   </p>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

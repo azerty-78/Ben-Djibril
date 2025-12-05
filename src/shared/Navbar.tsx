@@ -58,15 +58,19 @@ function Navbar() {
               </div>
             </div>
 
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
               {open && (
                 <Disclosure.Panel
                   as={motion.div}
                   static
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  initial={{ height: 0, opacity: 0, y: -10 }}
+                  animate={{ height: 'auto', opacity: 1, y: 0 }}
+                  exit={{ height: 0, opacity: 0, y: -10 }}
+                  transition={{ 
+                    duration: 0.35, 
+                    ease: [0.4, 0, 0.2, 1],
+                    opacity: { duration: 0.25 }
+                  }}
                   className="lg:hidden overflow-hidden"
                 >
                   <div className="pb-3 sm:pb-4">
