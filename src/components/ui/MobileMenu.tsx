@@ -1,9 +1,9 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { Disclosure } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type MobileMenuProps = {
   onNavigate?: () => void
@@ -12,7 +12,14 @@ type MobileMenuProps = {
 function MobileMenu({ onNavigate }: MobileMenuProps) {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const location = useLocation()
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
+  
+  // Fermer le menu quand la route change
+  useEffect(() => {
+    setIsSubMenuOpen(false)
+    onNavigate?.()
+  }, [location.pathname, onNavigate])
   
   const linkBase = 'px-3 py-2.5 rounded-lg font-medium transition-colors'
   const linkClass = (isActive: boolean) =>
@@ -20,14 +27,10 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
 
   const handleNavigation = (callback: () => void) => {
     setIsSubMenuOpen(false)
-    // Fermer le menu principal avec un léger délai pour permettre l'animation
-    setTimeout(() => {
-      onNavigate?.()
-    }, 150)
-    // Exécuter la navigation après la fermeture du sous-menu
-    setTimeout(() => {
-      callback()
-    }, 50)
+    // Fermer le menu principal immédiatement
+    onNavigate?.()
+    // Exécuter la navigation
+    callback()
   }
 
   const scrollToSection = (sectionId: string, path: string = '/services') => {
@@ -68,10 +71,8 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
 
   const handleNavLinkClick = () => {
     setIsSubMenuOpen(false)
-    // Fermer le menu principal avec une animation fluide
-    setTimeout(() => {
-      onNavigate?.()
-    }, 200)
+    // Fermer le menu principal immédiatement
+    onNavigate?.()
   }
 
   const serviceLinks = [
