@@ -22,6 +22,7 @@ function Footer() {
   // Fonction pour scroller vers le haut de la page
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault()
+    const pathname = path.split('?')[0] // Extraire le pathname sans les query params
     navigate(path)
     // Scroll vers le haut après la navigation
     setTimeout(() => {
@@ -141,10 +142,11 @@ function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-4 text-secondary-900 dark:text-secondary-100">Services</h4>
             <ul className="space-y-2.5">
-              {services.map((service, index) => (
+              {popularServices.map((service, index) => (
                 <li key={index}>
                   <Link 
-                    to={service.link} 
+                    to={service.link}
+                    onClick={(e) => handleLinkClick(e, service.link)}
                     className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors"
                   >
                     {service.name}
@@ -153,7 +155,8 @@ function Footer() {
               ))}
               <li className="pt-2">
                 <Link 
-                  to="/services" 
+                  to="/services"
+                  onClick={handleViewAllServices}
                   className="text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium inline-flex items-center gap-1"
                 >
                   Voir tous les services
@@ -168,32 +171,56 @@ function Footer() {
             <h4 className="font-semibold text-lg mb-4 text-secondary-900 dark:text-secondary-100">Pages</h4>
             <ul className="space-y-2.5">
               <li>
-                <Link to="/" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
+                <Link 
+                  to="/" 
+                  onClick={(e) => handleLinkClick(e, '/')}
+                  className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors"
+                >
                   Accueil
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
+                <Link 
+                  to="/about" 
+                  onClick={(e) => handleLinkClick(e, '/about')}
+                  className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors"
+                >
                   À propos
                 </Link>
               </li>
               <li>
-                <Link to="/projects" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
+                <Link 
+                  to="/projects" 
+                  onClick={(e) => handleLinkClick(e, '/projects')}
+                  className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors"
+                >
                   Projets
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
+                <Link 
+                  to="/services" 
+                  onClick={(e) => handleLinkClick(e, '/services')}
+                  className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors"
+                >
                   Services
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
+                <Link 
+                  to="/blog" 
+                  onClick={(e) => handleLinkClick(e, '/blog')}
+                  className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors"
+                >
                   Blog
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors">
+                <Link 
+                  to="/contact" 
+                  onClick={(e) => handleLinkClick(e, '/contact')}
+                  className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors"
+                >
                   Contact
                 </Link>
               </li>
