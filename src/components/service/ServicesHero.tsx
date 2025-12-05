@@ -1,9 +1,55 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { CloudIcon, CodeBracketIcon } from '@heroicons/react/24/solid'
+import { useNavigate } from 'react-router-dom'
 
 function ServicesHero() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  
+  const scrollToSection = (sectionId: string) => {
+    navigate('/services')
+    setTimeout(() => {
+      const section = document.querySelector(`[data-section="${sectionId}"]`)
+      if (section) {
+        const offset = 80
+        const elementPosition = section.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - offset
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      }
+    }, 200)
+  }
+  
+  const scrollToSubSection = (subsectionId: string) => {
+    navigate('/services')
+    setTimeout(() => {
+      const section = document.querySelector(`[data-subsection="${subsectionId}"]`)
+      if (section) {
+        const offset = 80
+        const elementPosition = section.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - offset
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      } else {
+        // Si la sous-section n'est pas trouvée, scroll vers la section packages
+        const packagesSection = document.querySelector('[data-section="packages"]')
+        if (packagesSection) {
+          const offset = 80
+          const elementPosition = packagesSection.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.pageYOffset - offset
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          })
+        }
+      }
+    }, 200)
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -202,14 +248,16 @@ function ServicesHero() {
             >
               <div className="grid gap-3 sm:gap-4 md:gap-5">
                 {/* SaaS card preview */}
-                <motion.div
+                <motion.button
+                  type="button"
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   transition={{ duration: 0.2 }}
-                  className="rounded-2xl border border-primary-100 dark:border-primary-700 bg-primary-50/70 dark:bg-primary-900/40 p-3 sm:p-4 md:p-5 shadow-md hover:shadow-lg transition-all duration-300"
+                  onClick={() => scrollToSubSection('saas')}
+                  className="w-full rounded-2xl border border-primary-100 dark:border-primary-700 bg-primary-50/70 dark:bg-primary-900/40 p-3 sm:p-4 md:p-5 shadow-md hover:shadow-lg transition-all duration-300 text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                 >
                   <div className="flex items-start sm:items-center justify-between mb-2 sm:mb-3 gap-2">
                     <div className="min-w-0 flex-1">
@@ -232,20 +280,22 @@ function ServicesHero() {
                       </p>
                     </div>
                   </div>
-                  <p className="text-[10px] xs:text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 line-clamp-2">
+                  <p className="text-[10px] xs:text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
                     {t('services.saas.goodDeal.shortDesc')}
                   </p>
-                </motion.div>
+                </motion.button>
 
                 {/* Full Control card preview */}
-                <motion.div
+                <motion.button
+                  type="button"
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="rounded-2xl border border-accent-100 dark:border-accent-700 bg-accent-50/70 dark:bg-accent-900/40 p-3 sm:p-4 md:p-5 shadow-md hover:shadow-lg transition-all duration-300"
+                  onClick={() => scrollToSubSection('fullControl')}
+                  className="w-full rounded-2xl border border-accent-100 dark:border-accent-700 bg-accent-50/70 dark:bg-accent-900/40 p-3 sm:p-4 md:p-5 shadow-md hover:shadow-lg transition-all duration-300 text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2"
                 >
                   <div className="flex items-start sm:items-center justify-between mb-2 sm:mb-3 gap-2">
                     <div className="min-w-0 flex-1">
@@ -265,10 +315,10 @@ function ServicesHero() {
                       </p>
                     </div>
                   </div>
-                  <p className="text-[10px] xs:text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 line-clamp-2">
+                  <p className="text-[10px] xs:text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
                     {t('services.fullControl.speed.description')}
                   </p>
-                </motion.div>
+                </motion.button>
               </div>
             </motion.div>
           </motion.div>

@@ -19,7 +19,8 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
   useEffect(() => {
     setIsSubMenuOpen(false)
     onNavigate?.()
-  }, [location.pathname, onNavigate])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname])
   
   const linkBase = 'px-3 py-2.5 rounded-lg font-medium transition-colors'
   const linkClass = (isActive: boolean) =>
