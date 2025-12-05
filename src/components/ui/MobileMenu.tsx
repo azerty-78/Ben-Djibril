@@ -94,7 +94,7 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
         {t('nav.home')}
       </NavLink>
 
-      <Disclosure open={isSubMenuOpen} onChange={setIsSubMenuOpen}>
+      <Disclosure open={isSubMenuOpen} onChange={setIsSubMenuOpen} as="div">
         {({ open }) => (
           <>
             <Disclosure.Button className={`${linkBase} flex items-center justify-between text-secondary-700 dark:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-700 font-medium`}>
