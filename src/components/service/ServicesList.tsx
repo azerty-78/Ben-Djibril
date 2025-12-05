@@ -182,19 +182,42 @@ function ServicesList() {
   ]
 
   return (
-    <section data-section="services" className="py-16 md:py-20 bg-secondary-50/50 dark:bg-secondary-800/50">
-      <div className="container mx-auto px-4">
+    <section
+      data-section="services"
+      className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-secondary-50 via-white to-primary-50/30 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden"
+    >
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-5 dark:opacity-10">
+        <div className="absolute top-16 right-10 w-56 sm:w-80 h-56 sm:h-80 bg-primary-400 rounded-full blur-3xl" />
+        <div className="absolute bottom-16 left-6 w-44 sm:w-64 h-44 sm:h-64 bg-accent-400 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-secondary-900 dark:text-white">
-            {t('services.allServicesTitle')}
-          </h2>
-          <p className="text-lg text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto">
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary-400 rounded-full blur-xl opacity-50" />
+              <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
+                <GlobeAltIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+              </div>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-secondary-900 dark:text-white">
+              {t('services.allServicesTitle')}
+            </h2>
+          </motion.div>
+          <p className="text-base sm:text-lg md:text-xl text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto px-2">
             {t('services.allServicesSubtitle')}
           </p>
         </motion.div>

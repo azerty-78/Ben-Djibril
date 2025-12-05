@@ -229,3 +229,6 @@ Les deux modèles répondent à des besoins différents :
 
 Le choix dépend de votre situation, vos besoins, votre budget et vos capacités techniques.
 
+
+
+
