@@ -24,7 +24,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto text-center"
+          className="max-w-7xl mx-auto text-center"
         >
           <div className="pt-0 sm:pt-2 md:pt-4 pb-4 sm:pb-6 md:pb-8 mb-6 overflow-visible">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold gradient-text leading-[1.4] sm:leading-[1.3] md:leading-[1.25] lg:leading-[1.2] md:whitespace-nowrap overflow-visible min-h-[1.2em]">
