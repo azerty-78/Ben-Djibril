@@ -95,6 +95,7 @@ function ServicesPackages() {
 
         {/* SaaS category */}
         <motion.div
+          data-subsection="saas"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -235,6 +236,7 @@ function ServicesPackages() {
 
         {/* Full Control category */}
         <motion.div
+          data-subsection="fullControl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
