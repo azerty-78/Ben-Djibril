@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { useState, useMemo } from 'react'
+import ServiceInfoDialog from './ServiceInfoDialog'
 import {
   GlobeAltIcon,
   DevicePhoneMobileIcon,
@@ -49,6 +49,7 @@ type Service = {
 function ServicesList() {
   const { t } = useTranslation()
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null)
 
   const allServices: Service[] = [
     {
@@ -643,18 +644,24 @@ function ServicesList() {
                   ))}
                 </ul>
 
-                <Link
-                  to={`/contact?service=${service.id}`}
+                <button
+                  onClick={() => setSelectedServiceId(service.id)}
                   className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline font-medium text-sm group-hover:gap-3 transition-all"
                 >
-                  {t('services.requestQuote')}
+                  En savoir plus
                   <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                </Link>
+                </button>
               </motion.div>
             )
           })}
         </div>
       </div>
+
+      <ServiceInfoDialog
+        open={selectedServiceId !== null}
+        serviceId={selectedServiceId as any}
+        onClose={() => setSelectedServiceId(null)}
+      />
     </section>
   )
 }
