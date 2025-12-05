@@ -83,9 +83,19 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
   const detailedDescription = t(`${serviceBaseKey}.detailedDescription`, { defaultValue: description })
   const valueProposition = t(`${serviceBaseKey}.valueProposition`, { defaultValue: '' })
   
-  // Récupérer les fonctionnalités possibles
+  // Récupérer les fonctionnalités de base (feature1-4)
+  const baseFeatures = [
+    t(`${serviceBaseKey}.feature1`, { defaultValue: '' }),
+    t(`${serviceBaseKey}.feature2`, { defaultValue: '' }),
+    t(`${serviceBaseKey}.feature3`, { defaultValue: '' }),
+    t(`${serviceBaseKey}.feature4`, { defaultValue: '' }),
+  ].filter(f => f !== '')
+  
+  // Récupérer les fonctionnalités possibles (liste étendue)
   const possibleFeaturesRaw = t(`${serviceBaseKey}.possibleFeatures`, { returnObjects: true, defaultValue: [] }) as string[]
-  const possibleFeatures = Array.isArray(possibleFeaturesRaw) ? possibleFeaturesRaw : []
+  const possibleFeatures = Array.isArray(possibleFeaturesRaw) && possibleFeaturesRaw.length > 0 
+    ? possibleFeaturesRaw 
+    : baseFeatures // Utiliser les features de base si possibleFeatures n'existe pas
 
   // Récupérer les forfaits éligibles avec valeurs par défaut
   // Par défaut, tous les services sont éligibles à tous les forfaits sauf indication contraire
@@ -159,58 +169,156 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
             </div>
 
             {/* Content */}
-            <div className="px-4 sm:px-6 md:px-8 py-4 sm:py-6 max-h-[calc(90vh-200px)] overflow-y-auto">
-              {/* Description détaillée */}
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-secondary-900 dark:text-white mb-3 flex items-center gap-2">
-                  <InformationCircleIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-                  Description
-                </h3>
-                <p className="text-secondary-700 dark:text-secondary-300 leading-relaxed">
-                  {detailedDescription}
-                </p>
+            <div className="px-4 sm:px-6 md:px-8 py-6 sm:py-8 max-h-[calc(90vh-200px)] overflow-y-auto">
+              {/* Section principale - Description détaillée */}
+              <div className="space-y-6 mb-8">
+                {/* Description détaillée - Mise en avant */}
+                <div className="bg-gradient-to-br from-secondary-50 to-white dark:from-secondary-800/50 dark:to-secondary-900/50 rounded-2xl p-6 sm:p-8 border border-secondary-200 dark:border-secondary-700 shadow-sm">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary-100 dark:bg-primary-900/40 flex items-center justify-center">
+                      <InformationCircleIcon className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-secondary-900 dark:text-white mb-3">
+                        À propos de ce service
+                      </h3>
+                      <p className="text-base text-secondary-700 dark:text-secondary-300 leading-relaxed">
+                        {detailedDescription}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Features de base - Toujours affichées */}
+                {baseFeatures.length > 0 && (
+                  <div className="bg-white dark:bg-secondary-800 rounded-2xl p-6 sm:p-8 border border-secondary-200 dark:border-secondary-700 shadow-sm">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary-100 dark:bg-primary-900/40 flex items-center justify-center">
+                        <CheckCircleIcon className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-secondary-900 dark:text-white">
+                          Fonctionnalités principales
+                        </h3>
+                        <p className="text-sm text-secondary-600 dark:text-secondary-400 mt-1">
+                          Les fonctionnalités clés incluses dans ce service
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      {baseFeatures.map((feature, index) => (
+                        <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-secondary-50 dark:bg-secondary-900/50 border border-secondary-200 dark:border-secondary-700 hover:border-primary-300 dark:hover:border-primary-700 transition-colors">
+                          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center mt-0.5">
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <span className="text-sm text-secondary-700 dark:text-secondary-300 leading-relaxed">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Plus-value - Mise en évidence */}
+                {valueProposition && (
+                  <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 p-6 sm:p-8 text-white shadow-lg">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+                    <div className="relative">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                          </svg>
+                        </div>
+                        <h3 className="text-xl font-bold">
+                          Plus-value du projet
+                        </h3>
+                      </div>
+                      <p className="text-primary-50 leading-relaxed text-base">
+                        {valueProposition}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Fonctionnalités possibles - Design amélioré */}
+                {possibleFeatures.length > 0 && (
+                  <div className="bg-white dark:bg-secondary-800 rounded-2xl p-6 sm:p-8 border border-secondary-200 dark:border-secondary-700 shadow-sm">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-accent-100 dark:bg-accent-900/40 flex items-center justify-center">
+                        <CheckCircleIcon className="w-6 h-6 text-accent-600 dark:text-accent-400" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-secondary-900 dark:text-white">
+                          Fonctionnalités pouvant être développées
+                        </h3>
+                        <p className="text-sm text-secondary-600 dark:text-secondary-400 mt-1">
+                          Liste exhaustive des fonctionnalités disponibles pour ce service
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      {possibleFeatures.map((feature, index) => (
+                        <div
+                          key={index}
+                          className="flex items-start gap-3 p-3 rounded-lg bg-secondary-50 dark:bg-secondary-900/50 border border-secondary-200 dark:border-secondary-700 hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
+                        >
+                          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center mt-0.5">
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <span className="text-sm text-secondary-700 dark:text-secondary-300 leading-relaxed">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Stack technique */}
+                <div className="bg-gradient-to-br from-accent-50 to-white dark:from-accent-900/20 dark:to-secondary-800 rounded-2xl p-6 sm:p-8 border border-accent-200 dark:border-accent-800 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-accent-100 dark:bg-accent-900/40 flex items-center justify-center">
+                      <CodeBracketIcon className="w-6 h-6 text-accent-600 dark:text-accent-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-secondary-900 dark:text-white">
+                        Stack technique
+                      </h3>
+                      <p className="text-sm text-secondary-600 dark:text-secondary-400 mt-1">
+                        Technologies et outils utilisés pour développer ce service
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {['React / Next.js', 'TypeScript', 'Spring Boot', 'PostgreSQL', 'Docker', 'AWS / Cloud'].map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1.5 rounded-lg bg-white dark:bg-secondary-900 border border-accent-200 dark:border-accent-800 text-sm font-medium text-accent-700 dark:text-accent-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              {/* Plus-value */}
-              {valueProposition && (
-                <div className="mb-6 p-4 rounded-xl bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800">
-                  <h3 className="text-lg font-semibold text-primary-900 dark:text-primary-100 mb-2">
-                    Plus-value du projet
+              {/* Section Formulaire de demande de devis */}
+              <div className="mt-8 pt-8 border-t-2 border-secondary-200 dark:border-secondary-700">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-secondary-900 dark:text-white mb-2">
+                    Demander un devis
                   </h3>
-                  <p className="text-primary-800 dark:text-primary-200 leading-relaxed">
-                    {valueProposition}
+                  <p className="text-sm text-secondary-600 dark:text-secondary-400">
+                    Remplissez le formulaire ci-dessous pour recevoir un devis personnalisé pour ce service
                   </p>
                 </div>
-              )}
-
-              {/* Fonctionnalités possibles */}
-              {possibleFeatures.length > 0 && (
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-secondary-900 dark:text-white mb-3 flex items-center gap-2">
-                    <CheckCircleIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-                    Fonctionnalités pouvant être développées
-                  </h3>
-                  <ul className="grid sm:grid-cols-2 gap-2">
-                    {possibleFeatures.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm text-secondary-700 dark:text-secondary-300">
-                        <span className="text-primary-600 dark:text-primary-400 mt-1">✓</span>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Formulaire de demande de devis */}
-              <div className="mt-8 pt-6 border-t border-secondary-200 dark:border-secondary-700">
-                <h3 className="text-lg font-semibold text-secondary-900 dark:text-white mb-4">
-                  Demander un devis
-                </h3>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* Choix du type de forfait */}
-                  <div>
-                    <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
+                  <div className="bg-secondary-50 dark:bg-secondary-800/50 rounded-xl p-4 mb-4">
+                    <label className="block text-sm font-semibold text-secondary-900 dark:text-white mb-3">
                       Type de forfait *
                     </label>
                     <div className="flex gap-3">
@@ -221,15 +329,16 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
                             setSelectedPlanType('saas')
                             setSelectedFullControlPlan(null)
                           }}
-                          className={`flex-1 px-4 py-3 rounded-lg border-2 transition-all ${
+                          className={`flex-1 px-4 py-4 rounded-xl border-2 transition-all ${
                             selectedPlanType === 'saas'
-                              ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
-                              : 'border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300'
+                              ? 'border-primary-500 bg-primary-500 text-white shadow-lg shadow-primary-500/30'
+                              : 'border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:border-primary-300 dark:hover:border-primary-600'
                           }`}
                         >
-                          <div className="flex items-center justify-center gap-2">
-                            <CloudIcon className="w-5 h-5" />
-                            <span className="font-medium">SaaS</span>
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <CloudIcon className={`w-6 h-6 ${selectedPlanType === 'saas' ? 'text-white' : 'text-primary-600 dark:text-primary-400'}`} />
+                            <span className="font-semibold">SaaS</span>
+                            <span className="text-xs opacity-80">Abonnement mensuel</span>
                           </div>
                         </button>
                       )}
@@ -240,15 +349,16 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
                             setSelectedPlanType('fullControl')
                             setSelectedSaaSPlan(null)
                           }}
-                          className={`flex-1 px-4 py-3 rounded-lg border-2 transition-all ${
+                          className={`flex-1 px-4 py-4 rounded-xl border-2 transition-all ${
                             selectedPlanType === 'fullControl'
-                              ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
-                              : 'border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300'
+                              ? 'border-primary-500 bg-primary-500 text-white shadow-lg shadow-primary-500/30'
+                              : 'border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:border-primary-300 dark:hover:border-primary-600'
                           }`}
                         >
-                          <div className="flex items-center justify-center gap-2">
-                            <CodeBracketIcon className="w-5 h-5" />
-                            <span className="font-medium">Full Control</span>
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <CodeBracketIcon className={`w-6 h-6 ${selectedPlanType === 'fullControl' ? 'text-white' : 'text-primary-600 dark:text-primary-400'}`} />
+                            <span className="font-semibold">Full Control</span>
+                            <span className="text-xs opacity-80">Propriété complète</span>
                           </div>
                         </button>
                       )}
@@ -257,22 +367,23 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
 
                   {/* Choix du forfait SaaS */}
                   {selectedPlanType === 'saas' && hasSaaS && (
-                    <div>
-                      <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
-                        Forfait SaaS *
+                    <div className="bg-secondary-50 dark:bg-secondary-800/50 rounded-xl p-4 mb-4">
+                      <label className="block text-sm font-semibold text-secondary-900 dark:text-white mb-3">
+                        Sélectionnez votre forfait SaaS *
                       </label>
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-3 gap-3">
                         {eligiblePlans.saas.map((plan) => {
                           const planKey = plan === 'goodDeal' ? 'goodDeal' : plan === 'pro' ? 'pro' : 'ultra'
+                          const isSelected = selectedSaaSPlan === planKey
                           return (
                             <button
                               key={plan}
                               type="button"
                               onClick={() => setSelectedSaaSPlan(planKey as SaaSPlan)}
-                              className={`px-3 py-2 rounded-lg border-2 text-sm transition-all ${
-                                selectedSaaSPlan === planKey
-                                  ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
-                                  : 'border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300'
+                              className={`px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
+                                isSelected
+                                  ? 'border-primary-500 bg-primary-500 text-white shadow-lg shadow-primary-500/30'
+                                  : 'border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:border-primary-300 dark:hover:border-primary-600'
                               }`}
                             >
                               {t(`services.saas.${planKey}.name`)}
@@ -285,22 +396,23 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
 
                   {/* Choix du forfait Full Control */}
                   {selectedPlanType === 'fullControl' && hasFullControl && (
-                    <div>
-                      <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
-                        Forfait Full Control *
+                    <div className="bg-secondary-50 dark:bg-secondary-800/50 rounded-xl p-4 mb-4">
+                      <label className="block text-sm font-semibold text-secondary-900 dark:text-white mb-3">
+                        Sélectionnez votre forfait Full Control *
                       </label>
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-3 gap-3">
                         {eligiblePlans.fullControl.map((plan) => {
                           const planKey = plan === 'normal' ? 'normal' : plan === 'speed' ? 'speed' : 'ultraSpeed'
+                          const isSelected = selectedFullControlPlan === planKey
                           return (
                             <button
                               key={plan}
                               type="button"
                               onClick={() => setSelectedFullControlPlan(planKey as FullControlPlan)}
-                              className={`px-3 py-2 rounded-lg border-2 text-sm transition-all ${
-                                selectedFullControlPlan === planKey
-                                  ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
-                                  : 'border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300'
+                              className={`px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
+                                isSelected
+                                  ? 'border-primary-500 bg-primary-500 text-white shadow-lg shadow-primary-500/30'
+                                  : 'border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:border-primary-300 dark:hover:border-primary-600'
                               }`}
                             >
                               {t(`services.fullControl.${planKey}.name`)}
@@ -312,66 +424,76 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
                   )}
 
                   {/* Informations de contact */}
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1">
-                        Nom complet *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-2 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      />
+                  <div className="bg-white dark:bg-secondary-800 rounded-xl p-4 sm:p-6 border border-secondary-200 dark:border-secondary-700">
+                    <h4 className="text-lg font-semibold text-secondary-900 dark:text-white mb-4">
+                      Vos informations
+                    </h4>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
+                          Nom complet *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-900 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                          placeholder="Votre nom complet"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
+                          Email *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-900 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                          placeholder="votre@email.com"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
+                          Téléphone *
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-900 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                          placeholder="+237 6XX XXX XXX"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
+                          Entreprise
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.company}
+                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                          className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-900 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                          placeholder="Nom de votre entreprise"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1">
-                        Email *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-4 py-2 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1">
-                        Téléphone *
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full px-4 py-2 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1">
-                        Entreprise
-                      </label>
-                      <input
-                        type="text"
-                        value={formData.company}
-                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                        className="w-full px-4 py-2 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      />
-                    </div>
-                  </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1">
-                      Message (optionnel)
-                    </label>
-                    <textarea
-                      rows={4}
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
-                    />
+                    <div className="mt-4">
+                      <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
+                        Message (optionnel)
+                      </label>
+                      <textarea
+                        rows={4}
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-900 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
+                        placeholder="Décrivez brièvement vos besoins ou questions..."
+                      />
+                    </div>
                   </div>
 
                   <div className="flex gap-3 pt-2">
