@@ -21,7 +21,7 @@ function LanguageSwitcher() {
       {/* Version mobile : icône seule qui bascule */}
       <button
         onClick={toggleLanguage}
-        className="md:hidden px-3 py-2 rounded-lg text-sm bg-secondary-100 dark:bg-secondary-700 hover:bg-secondary-200 dark:hover:bg-secondary-600 transition-colors font-semibold"
+        className="md:hidden px-3 py-2 rounded-lg text-sm bg-secondary-100 dark:bg-secondary-700 text-secondary-700 dark:text-white hover:bg-secondary-200 dark:hover:bg-secondary-600 transition-colors font-semibold"
         aria-label={current.startsWith('fr') ? 'Switch to English' : 'Changer en français'}
         title={current.startsWith('fr') ? 'EN' : 'FR'}
       >
@@ -32,13 +32,13 @@ function LanguageSwitcher() {
       <div className="hidden md:flex items-center gap-2">
         <button
           onClick={() => setLang('fr')}
-          className={`px-3 py-2 rounded-lg text-sm ${current.startsWith('fr') ? 'bg-primary-600 text-white' : 'bg-secondary-100 dark:bg-secondary-700 hover:bg-secondary-200 dark:hover:bg-secondary-600'}`}
+          className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${current.startsWith('fr') ? 'bg-primary-600 text-white' : 'bg-secondary-100 dark:bg-secondary-700 text-secondary-700 dark:text-white hover:bg-secondary-200 dark:hover:bg-secondary-600'}`}
         >
           FR
         </button>
         <button
           onClick={() => setLang('en')}
-          className={`px-3 py-2 rounded-lg text-sm ${current.startsWith('en') ? 'bg-primary-600 text-white' : 'bg-secondary-100 dark:bg-secondary-700 hover:bg-secondary-200 dark:hover:bg-secondary-600'}`}
+          className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${current.startsWith('en') ? 'bg-primary-600 text-white' : 'bg-secondary-100 dark:bg-secondary-700 text-secondary-700 dark:text-white hover:bg-secondary-200 dark:hover:bg-secondary-600'}`}
         >
           EN
         </button>
