@@ -57,7 +57,7 @@ export const resources = {
         features: 'Features', getStarted: 'Get Started', mostPopular: 'Most Popular', bestValue: 'Best value',
         saasTitle: 'SaaS – Simplicity & Monthly Subscription',
         saasSubtitle: 'You only pay a monthly license, I manage the servers, maintenance and updates. The intellectual property and source code remain mine.',
-        saasDeliveryNote: 'All SaaS plans are delivered in approximately 2 months.',
+        saasDeliveryNote: 'All SaaS plans are delivered with a maximum delay of 2 months.',
         saas: {
           goodDeal: {
             name: 'Good Deal',
@@ -178,7 +178,15 @@ export const resources = {
         serviceDesktop: { title: 'Desktop Applications', desc: 'Native desktop applications', feature1: 'Cross-platform', feature2: 'Native UI', feature3: 'System integration', feature4: 'Offline mode' },
         serviceAPI: { title: 'API Development', desc: 'RESTful and GraphQL APIs', feature1: 'REST API', feature2: 'GraphQL', feature3: 'Documentation', feature4: 'Security & Auth' },
         serviceDevOps: { title: 'DevOps & Cloud', desc: 'Infrastructure and deployment', feature1: 'CI/CD pipelines', feature2: 'Docker & Kubernetes', feature3: 'Cloud deployment', feature4: 'Monitoring & Logs' },
-        serviceConsult: { title: 'Consulting', desc: 'Expert advice and audits', feature1: 'Code review', feature2: 'Architecture audit', feature3: 'Performance optimization', feature4: 'Technical consulting' }
+        serviceConsult: { title: 'Consulting', desc: 'Expert advice and audits', feature1: 'Code review', feature2: 'Architecture audit', feature3: 'Performance optimization', feature4: 'Technical consulting' },
+        serviceInventory: { title: 'Inventory Management', desc: 'Complete stock management system for your business', feature1: 'Real-time stock tracking', feature2: 'Low stock alerts', feature3: 'Product categorization', feature4: 'Stock reports & analytics' },
+        serviceRestaurant: { title: 'Restaurant Management', desc: 'Complete solution for restaurant and food service businesses', feature1: 'Menu management', feature2: 'Table reservation system', feature3: 'Order tracking', feature4: 'Kitchen display system' },
+        serviceBilling: { title: 'Billing Software', desc: 'Professional invoicing and billing system', feature1: 'Invoice generation', feature2: 'Payment tracking', feature3: 'Tax management', feature4: 'Financial reports' },
+        serviceOrders: { title: 'Order Management', desc: 'Efficient order processing and tracking system', feature1: 'Order creation & tracking', feature2: 'Status updates', feature3: 'Customer notifications', feature4: 'Order history' },
+        servicePOS: { title: 'Point of Sale (POS)', desc: 'Complete POS system for retail businesses', feature1: 'Cash register integration', feature2: 'Payment processing', feature3: 'Receipt printing', feature4: 'Sales reports' },
+        serviceCRM: { title: 'Customer Management', desc: 'Customer relationship management system', feature1: 'Customer database', feature2: 'Contact management', feature3: 'Interaction history', feature4: 'Customer analytics' },
+        serviceDelivery: { title: 'Delivery Management', desc: 'Delivery tracking and management system', feature1: 'Delivery scheduling', feature2: 'Route optimization', feature3: 'Real-time tracking', feature4: 'Delivery notifications' },
+        serviceBooking: { title: 'Booking System', desc: 'Online reservation and appointment booking system', feature1: 'Calendar integration', feature2: 'Availability management', feature3: 'Email notifications', feature4: 'Booking confirmation' }
       },
       projects: {
         title: 'Projects',
@@ -256,7 +264,7 @@ export const resources = {
         features: 'Fonctionnalités', getStarted: 'Commencer', mostPopular: 'Le plus populaire', bestValue: 'Meilleur rapport qualité / prix',
         saasTitle: 'SaaS – Simplicité & Abonnement mensuel',
         saasSubtitle: "Vous ne payez qu'une licence mensuelle, je gère les serveurs, la maintenance et les mises à jour. La propriété intellectuelle et le code source restent à moi.",
-        saasDeliveryNote: 'Tous les forfaits SaaS sont livrés en environ 2 mois.',
+        saasDeliveryNote: 'Tous les forfaits SaaS sont livrés avec un délai maximum de 2 mois.',
         saas: {
           goodDeal: {
             name: 'Good Deal',
@@ -377,7 +385,15 @@ export const resources = {
         serviceDesktop: { title: 'Applications Desktop', desc: 'Applications desktop natives', feature1: 'Cross-platform', feature2: 'Interface native', feature3: 'Intégration système', feature4: 'Mode hors ligne' },
         serviceAPI: { title: 'Développement API', desc: 'APIs RESTful et GraphQL', feature1: 'API REST', feature2: 'GraphQL', feature3: 'Documentation', feature4: 'Sécurité & Auth' },
         serviceDevOps: { title: 'DevOps & Cloud', desc: 'Infrastructure et déploiement', feature1: 'Pipelines CI/CD', feature2: 'Docker & Kubernetes', feature3: 'Déploiement cloud', feature4: 'Monitoring & Logs' },
-        serviceConsult: { title: 'Conseil', desc: 'Conseil expert et audits', feature1: 'Revue de code', feature2: 'Audit architecture', feature3: 'Optimisation performance', feature4: 'Conseil technique' }
+        serviceConsult: { title: 'Conseil', desc: 'Conseil expert et audits', feature1: 'Revue de code', feature2: 'Audit architecture', feature3: 'Optimisation performance', feature4: 'Conseil technique' },
+        serviceInventory: { title: 'Gestion de Stock', desc: 'Système complet de gestion de stock pour votre entreprise', feature1: 'Suivi de stock en temps réel', feature2: 'Alertes de stock faible', feature3: 'Catégorisation des produits', feature4: 'Rapports et analyses de stock' },
+        serviceRestaurant: { title: 'Gestion de Restaurant', desc: 'Solution complète pour restaurants et établissements de restauration', feature1: 'Gestion des menus', feature2: 'Système de réservation de tables', feature3: 'Suivi des commandes', feature4: 'Affichage cuisine' },
+        serviceBilling: { title: 'Logiciel de Facturation', desc: 'Système professionnel de facturation et de factures', feature1: 'Génération de factures', feature2: 'Suivi des paiements', feature3: 'Gestion des taxes', feature4: 'Rapports financiers' },
+        serviceOrders: { title: 'Gestion de Commandes', desc: 'Système efficace de traitement et suivi des commandes', feature1: 'Création et suivi des commandes', feature2: 'Mises à jour de statut', feature3: 'Notifications clients', feature4: 'Historique des commandes' },
+        servicePOS: { title: 'Point de Vente (PDV)', desc: 'Système complet de point de vente pour commerces', feature1: 'Intégration caisse enregistreuse', feature2: 'Traitement des paiements', feature3: 'Impression de tickets', feature4: 'Rapports de ventes' },
+        serviceCRM: { title: 'Gestion de Clients', desc: 'Système de gestion de la relation client', feature1: 'Base de données clients', feature2: 'Gestion des contacts', feature3: 'Historique des interactions', feature4: 'Analyses clients' },
+        serviceDelivery: { title: 'Gestion de Livraison', desc: 'Système de suivi et gestion des livraisons', feature1: 'Planification des livraisons', feature2: 'Optimisation des itinéraires', feature3: 'Suivi en temps réel', feature4: 'Notifications de livraison' },
+        serviceBooking: { title: 'Système de Réservation', desc: 'Système de réservation et prise de rendez-vous en ligne', feature1: 'Intégration calendrier', feature2: 'Gestion des disponibilités', feature3: 'Notifications par email', feature4: 'Confirmation de réservation' }
       },
       projects: {
         title: 'Projets',

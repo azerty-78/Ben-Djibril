@@ -17,6 +17,14 @@ function Footer() {
     { name: 'API Development', link: '/services?type=api' },
     { name: 'DevOps & Cloud', link: '/services?type=devops' },
     { name: 'Consulting', link: '/services?type=consulting' },
+    { name: 'Gestion de Stock', link: '/services?type=inventory' },
+    { name: 'Gestion de Restaurant', link: '/services?type=restaurant' },
+    { name: 'Logiciel de Facturation', link: '/services?type=billing' },
+    { name: 'Gestion de Commandes', link: '/services?type=orders' },
+    { name: 'Point de Vente (PDV)', link: '/services?type=pos' },
+    { name: 'Gestion de Clients', link: '/services?type=crm' },
+    { name: 'Gestion de Livraison', link: '/services?type=delivery' },
+    { name: 'Système de Réservation', link: '/services?type=booking' },
   ]
   
   return (
