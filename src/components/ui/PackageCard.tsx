@@ -13,6 +13,7 @@ type PackageCardProps = {
   features: string[]
   popular?: boolean
   popularLabel?: string
+  deliveryTime?: string
   cta: string
   ctaLink?: string
   onClick?: () => void
@@ -30,6 +31,7 @@ function PackageCard({
   features,
   popular,
   popularLabel,
+  deliveryTime,
   cta,
   ctaLink = '/contact',
   onClick,
@@ -68,8 +70,8 @@ function PackageCard({
               </span>
             </div>
           )}
-          <div className="flex items-baseline gap-1.5 leading-tight">
-            <span className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text">
+          <div className="flex flex-wrap items-baseline gap-1.5 leading-tight">
+            <span className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text break-words overflow-wrap-anywhere max-w-full">
               {price}
             </span>
             {priceUnit && (
@@ -78,6 +80,13 @@ function PackageCard({
               </span>
             )}
           </div>
+          {deliveryTime && (
+            <div className="mt-2">
+              <span className="text-xs sm:text-sm text-primary-600 dark:text-primary-400 font-semibold">
+                {deliveryTime}
+              </span>
+            </div>
+          )}
           {(secondaryPrice || savingLabel) && (
             <div className="flex flex-wrap items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight w-full mt-1.5">
               {secondaryPrice && (

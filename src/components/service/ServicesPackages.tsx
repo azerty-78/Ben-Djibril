@@ -286,6 +286,7 @@ function ServicesPackages() {
                 <PackageCard
                   name={t('services.fullControl.speed.name')}
                   price={t('services.fullControl.speed.price')}
+                  deliveryTime={t('services.fullControl.speed.deliveryTime')}
                   description={t('services.fullControl.speed.description')}
                   features={[
                     t('services.fullControl.speed.feature1'),
@@ -310,6 +311,7 @@ function ServicesPackages() {
                 <PackageCard
                   name={t('services.fullControl.ultraSpeed.name')}
                   price={t('services.fullControl.ultraSpeed.price')}
+                  deliveryTime={t('services.fullControl.ultraSpeed.deliveryTime')}
                   description={t('services.fullControl.ultraSpeed.description')}
                   features={[
                     t('services.fullControl.ultraSpeed.feature1'),
@@ -331,6 +333,7 @@ function ServicesPackages() {
                 <PackageCard
                   name={t('services.fullControl.normal.name')}
                   price={t('services.fullControl.normal.price')}
+                  deliveryTime={t('services.fullControl.normal.deliveryTime')}
                   description={t('services.fullControl.normal.description')}
                   features={[
                     t('services.fullControl.normal.feature1'),
