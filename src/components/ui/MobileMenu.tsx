@@ -22,9 +22,13 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname])
   
-  const linkBase = 'px-3 py-2.5 rounded-lg font-medium transition-colors'
+  const linkBase = 'px-4 py-3 rounded-xl font-medium transition-all duration-200 flex items-center gap-2 relative'
   const linkClass = (isActive: boolean) =>
-    `${linkBase} ${isActive ? 'bg-primary-600 text-white' : 'text-secondary-700 dark:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-700'}`
+    `${linkBase} ${
+      isActive 
+        ? 'bg-primary-600 text-white shadow-md dark:shadow-lg' 
+        : 'text-secondary-700 dark:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-800 active:scale-95'
+    }`
 
   const handleNavigation = (callback: () => void) => {
     setIsSubMenuOpen(false)
@@ -96,46 +100,65 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
   ]
 
   return (
-    <nav className="grid gap-2 text-sm">
+    <nav className="grid gap-2.5 text-sm">
       <NavLink 
         to="/" 
         className={({ isActive }) => linkClass(isActive)}
         onClick={handleNavLinkClick}
       >
-        {t('nav.home')}
+        {({ isActive }) => (
+          <>
+            {isActive && (
+              <motion.span
+                className="absolute left-0 top-0 bottom-0 w-1 bg-primary-600 dark:bg-primary-400 rounded-r-full"
+                layoutId="activeMobileNavLink"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span>{t('nav.home')}</span>
+          </>
+        )}
       </NavLink>
 
       <Disclosure open={isSubMenuOpen} onChange={setIsSubMenuOpen} as="div">
         {({ open }) => (
           <>
-            <Disclosure.Button className={`${linkBase} flex items-center justify-between text-secondary-700 dark:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-700 font-medium`}>
+            <Disclosure.Button className={`${linkBase} justify-between text-secondary-700 dark:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-800 active:scale-95`}>
               <span>{t('nav.services')}</span>
-              <ChevronDownIcon className={`w-4 h-4 transition-transform duration-300 ease-in-out ${open ? 'rotate-180' : ''} text-secondary-600 dark:text-secondary-400`} />
+              <motion.div
+                animate={{ rotate: open ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ChevronDownIcon className="w-5 h-5 text-secondary-600 dark:text-secondary-400" />
+              </motion.div>
             </Disclosure.Button>
             <AnimatePresence mode="wait">
               {open && (
                 <Disclosure.Panel
                   as={motion.div}
                   static
-                  initial={{ height: 0, opacity: 0, x: -10 }}
-                  animate={{ height: 'auto', opacity: 1, x: 0 }}
-                  exit={{ height: 0, opacity: 0, x: -10 }}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
                   transition={{ 
-                    duration: 0.3, 
+                    duration: 0.25, 
                     ease: [0.4, 0, 0.2, 1],
-                    opacity: { duration: 0.2 }
+                    opacity: { duration: 0.15 }
                   }}
                   className="overflow-hidden"
                 >
-                  <div className="pl-4 space-y-1.5 mt-2 border-l-2 border-secondary-200 dark:border-secondary-700">
+                  <div className="pl-4 ml-2 space-y-1.5 mt-2 border-l-2 border-primary-200 dark:border-primary-800">
                     {serviceLinks.map((link, index) => (
-                      <button
+                      <motion.button
                         key={index}
                         onClick={link.onClick}
-                        className={`${linkBase} text-sm w-full text-left bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-200 hover:bg-secondary-50 dark:hover:bg-secondary-700 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200`}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="px-3 py-2.5 rounded-lg text-sm w-full text-left bg-secondary-50 dark:bg-secondary-900/50 text-secondary-700 dark:text-secondary-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 active:scale-95 transition-all duration-200 font-medium"
                       >
                         {link.label}
-                      </button>
+                      </motion.button>
                     ))}
                   </div>
                 </Disclosure.Panel>
@@ -150,32 +173,76 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
         className={({ isActive }) => linkClass(isActive)}
         onClick={handleNavLinkClick}
       >
-        {t('nav.projects')}
+        {({ isActive }) => (
+          <>
+            {isActive && (
+              <motion.span
+                className="absolute left-0 top-0 bottom-0 w-1 bg-primary-600 dark:bg-primary-400 rounded-r-full"
+                layoutId="activeMobileNavLink"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span>{t('nav.projects')}</span>
+          </>
+        )}
       </NavLink>
       <NavLink 
         to="/about" 
         className={({ isActive }) => linkClass(isActive)}
         onClick={handleNavLinkClick}
       >
-        {t('nav.about')}
+        {({ isActive }) => (
+          <>
+            {isActive && (
+              <motion.span
+                className="absolute left-0 top-0 bottom-0 w-1 bg-primary-600 dark:bg-primary-400 rounded-r-full"
+                layoutId="activeMobileNavLink"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span>{t('nav.about')}</span>
+          </>
+        )}
       </NavLink>
       <NavLink 
         to="/blog" 
         className={({ isActive }) => linkClass(isActive)}
         onClick={handleNavLinkClick}
       >
-        {t('nav.blog')}
+        {({ isActive }) => (
+          <>
+            {isActive && (
+              <motion.span
+                className="absolute left-0 top-0 bottom-0 w-1 bg-primary-600 dark:bg-primary-400 rounded-r-full"
+                layoutId="activeMobileNavLink"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span>{t('nav.blog')}</span>
+          </>
+        )}
       </NavLink>
       <NavLink 
         to="/contact" 
         className={({ isActive }) => linkClass(isActive)}
         onClick={handleNavLinkClick}
       >
-        {t('nav.contact')}
+        {({ isActive }) => (
+          <>
+            {isActive && (
+              <motion.span
+                className="absolute left-0 top-0 bottom-0 w-1 bg-primary-600 dark:bg-primary-400 rounded-r-full"
+                layoutId="activeMobileNavLink"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span>{t('nav.contact')}</span>
+          </>
+        )}
       </NavLink>
       <NavLink 
         to="/contact" 
-        className="btn-primary w-full text-center mt-3 py-2.5"
+        className="btn-primary w-full text-center mt-4 py-3 shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
         onClick={handleNavLinkClick}
       >
         {t('nav.contact')}

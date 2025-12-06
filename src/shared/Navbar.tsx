@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import LanguageSwitcher from './LanguageSwitcher'
 import ThemeToggle from './ThemeToggle'
 import { Disclosure } from '@headlessui/react'
@@ -10,77 +11,198 @@ import MobileMenu from '../components/ui/MobileMenu'
 
 function Navbar() {
   const { t } = useTranslation()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const linkBase = 'px-2.5 xl:px-3 py-1.5 xl:py-2 rounded-lg text-sm transition-colors'
+  const location = useLocation()
+  const [scrolled, setScrolled] = useState(false)
+  const closeMenuRef = useRef<(() => void) | null>(null)
+
+  // Fermer le menu quand la route change
+  useEffect(() => {
+    if (closeMenuRef.current) {
+      closeMenuRef.current()
+    }
+  }, [location.pathname])
+
+  // Détecter le scroll pour améliorer l'effet visuel
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const linkBase = 'px-3 xl:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative group'
   const linkClass = (isActive: boolean) =>
-    `${linkBase} ${isActive ? 'bg-primary-600 text-white' : 'text-secondary-700 dark:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-700'}`
+    `${linkBase} ${
+      isActive 
+        ? 'text-primary-600 dark:text-primary-400' 
+        : 'text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400'
+    }`
 
   return (
-    <header className="sticky top-0 z-50 bg-white/70 dark:bg-secondary-900/60 backdrop-blur border-b border-secondary-200 dark:border-secondary-700">
-      <Disclosure open={isMenuOpen} onChange={setIsMenuOpen}>
-        {({ open }) => (
-          <div className="container mx-auto px-3 sm:px-4 lg:px-6">
-            <div className="flex items-center justify-between py-2.5 sm:py-3">
-              <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
-                <NavLink 
-                  to="/" 
-                  className="text-lg sm:text-xl font-bold gradient-text whitespace-nowrap"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Ben Djibril
-                </NavLink>
+    <header 
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-white/95 dark:bg-secondary-900/95 backdrop-blur-md shadow-md dark:shadow-lg dark:shadow-black/30 border-b border-secondary-200/80 dark:border-secondary-700/80' 
+          : 'bg-white/80 dark:bg-secondary-900/80 backdrop-blur-sm border-b border-secondary-200/50 dark:border-secondary-700/50'
+      }`}
+    >
+      <Disclosure>
+        {({ open, close }) => {
+          // Stocker la fonction close dans le ref
+          closeMenuRef.current = close
+
+          return (
+            <div className="container mx-auto px-4 sm:px-5 lg:px-6 xl:px-8">
+              <div className="flex items-center justify-between py-3 sm:py-3.5 lg:py-4">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
+                  <NavLink 
+                    to="/" 
+                    className="text-xl sm:text-2xl font-bold gradient-text whitespace-nowrap hover:scale-105 transition-transform duration-200"
+                    onClick={() => close()}
+                  >
+                    Ben Djibril
+                  </NavLink>
+                </div>
+
+                <div className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm">
+                  <NavLink to="/" className={({ isActive }) => linkClass(isActive)}>
+                    {({ isActive }) => (
+                      <>
+                        {t('nav.home')}
+                        {isActive && (
+                          <motion.span
+                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full"
+                            layoutId="activeNavLink"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                  <NavLink to="/services" className={({ isActive }) => linkClass(isActive)}>
+                    {({ isActive }) => (
+                      <>
+                        {t('nav.services')}
+                        {isActive && (
+                          <motion.span
+                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full"
+                            layoutId="activeNavLink"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                  <NavLink to="/projects" className={({ isActive }) => linkClass(isActive)}>
+                    {({ isActive }) => (
+                      <>
+                        {t('nav.projects')}
+                        {isActive && (
+                          <motion.span
+                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full"
+                            layoutId="activeNavLink"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                  <NavLink to="/about" className={({ isActive }) => linkClass(isActive)}>
+                    {({ isActive }) => (
+                      <>
+                        {t('nav.about')}
+                        {isActive && (
+                          <motion.span
+                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full"
+                            layoutId="activeNavLink"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                  <NavLink to="/blog" className={({ isActive }) => linkClass(isActive)}>
+                    {({ isActive }) => (
+                      <>
+                        {t('nav.blog')}
+                        {isActive && (
+                          <motion.span
+                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full"
+                            layoutId="activeNavLink"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                  <NavLink to="/contact" className={({ isActive }) => linkClass(isActive)}>
+                    {({ isActive }) => (
+                      <>
+                        {t('nav.contact')}
+                        {isActive && (
+                          <motion.span
+                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full"
+                            layoutId="activeNavLink"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                </div>
+
+                <div className="hidden lg:flex items-center gap-2.5 xl:gap-3 flex-shrink-0">
+                  <LanguageSwitcher />
+                  <ThemeToggle />
+                  <NavLink 
+                    to="/contact" 
+                    className="btn-primary text-sm px-5 py-2.5 whitespace-nowrap shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
+                  >
+                    {t('nav.contact')}
+                  </NavLink>
+                </div>
+
+                <div className="lg:hidden flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
+                  <LanguageSwitcher />
+                  <ThemeToggle />
+                  <Disclosure.Button 
+                    aria-label="Menu" 
+                    className="p-2.5 rounded-xl bg-secondary-100 dark:bg-secondary-800 text-secondary-800 dark:text-secondary-100 hover:bg-secondary-200 dark:hover:bg-secondary-700 active:scale-95 transition-all duration-200 flex-shrink-0 shadow-sm"
+                  >
+                    <motion.div
+                      animate={{ rotate: open ? 90 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {open ? (
+                        <XMarkIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                      ) : (
+                        <Bars3Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                      )}
+                    </motion.div>
+                  </Disclosure.Button>
+                </div>
               </div>
 
-              <div className="hidden lg:flex items-center gap-1.5 xl:gap-2 text-sm">
-                <NavLink to="/" className={({ isActive }) => linkClass(isActive)}>{t('nav.home')}</NavLink>
-                <NavLink to="/services" className={({ isActive }) => linkClass(isActive)}>{t('nav.services')}</NavLink>
-                <NavLink to="/projects" className={({ isActive }) => linkClass(isActive)}>{t('nav.projects')}</NavLink>
-                <NavLink to="/about" className={({ isActive }) => linkClass(isActive)}>{t('nav.about')}</NavLink>
-                <NavLink to="/blog" className={({ isActive }) => linkClass(isActive)}>{t('nav.blog')}</NavLink>
-                <NavLink to="/contact" className={({ isActive }) => linkClass(isActive)}>{t('nav.contact')}</NavLink>
-              </div>
-
-              <div className="hidden lg:flex items-center gap-2 xl:gap-3 flex-shrink-0">
-                <LanguageSwitcher />
-                <ThemeToggle />
-                <NavLink to="/contact" className="btn-primary text-sm px-4 py-2 whitespace-nowrap">Contact</NavLink>
-              </div>
-
-              <div className="lg:hidden flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
-                <LanguageSwitcher />
-                <ThemeToggle />
-                <Disclosure.Button 
-                  aria-label="Menu" 
-                  className="p-2 rounded-lg bg-secondary-100 dark:bg-secondary-800 text-secondary-800 dark:text-secondary-100 hover:bg-secondary-200 dark:hover:bg-secondary-700 transition-colors flex-shrink-0"
-                >
-                  {open ? <XMarkIcon className="w-5 h-5 sm:w-6 sm:h-6" /> : <Bars3Icon className="w-5 h-5 sm:w-6 sm:h-6" />}
-                </Disclosure.Button>
-              </div>
-            </div>
-
-            <AnimatePresence mode="wait">
-              {open && (
-                <Disclosure.Panel
-                  as={motion.div}
-                  static
-                  initial={{ height: 0, opacity: 0, y: -10 }}
-                  animate={{ height: 'auto', opacity: 1, y: 0 }}
-                  exit={{ height: 0, opacity: 0, y: -10 }}
+              <Disclosure.Panel className="lg:hidden">
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
                   transition={{ 
-                    duration: 0.35, 
-                    ease: [0.4, 0, 0.2, 1],
-                    opacity: { duration: 0.25 }
+                    duration: 0.3, 
+                    ease: [0.4, 0, 0.2, 1]
                   }}
-                  className="lg:hidden overflow-hidden"
+                  className="overflow-hidden"
                 >
-                  <div className="pb-3 sm:pb-4">
-                    <MobileMenu onNavigate={() => setIsMenuOpen(false)} />
+                  <div className="pb-4 pt-2 border-t border-secondary-200/50 dark:border-secondary-700/50 mt-2">
+                    <MobileMenu onNavigate={() => close()} />
                   </div>
-                </Disclosure.Panel>
-              )}
-            </AnimatePresence>
-          </div>
-        )}
+                </motion.div>
+              </Disclosure.Panel>
+            </div>
+          )
+        }}
       </Disclosure>
     </header>
   )
