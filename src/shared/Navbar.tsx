@@ -184,22 +184,28 @@ function Navbar() {
                 </div>
               </div>
 
-              <Disclosure.Panel className="lg:hidden">
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ 
-                    duration: 0.3, 
-                    ease: [0.4, 0, 0.2, 1]
-                  }}
-                  className="overflow-hidden"
-                >
-                  <div className="pb-4 pt-2 border-t border-secondary-200/50 dark:border-secondary-700/50 mt-2">
-                    <MobileMenu onNavigate={() => close()} />
-                  </div>
-                </motion.div>
-              </Disclosure.Panel>
+              <AnimatePresence>
+                {open && (
+                  <Disclosure.Panel 
+                    static
+                    className="lg:hidden overflow-hidden"
+                  >
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ 
+                        duration: 0.3, 
+                        ease: [0.4, 0, 0.2, 1]
+                      }}
+                    >
+                      <div className="pb-4 pt-2 border-t border-secondary-200/50 dark:border-secondary-700/50 mt-2">
+                        <MobileMenu onNavigate={() => close()} />
+                      </div>
+                    </motion.div>
+                  </Disclosure.Panel>
+                )}
+              </AnimatePresence>
             </div>
           )
         }}
