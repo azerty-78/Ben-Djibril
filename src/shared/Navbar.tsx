@@ -6,7 +6,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 import ThemeToggle from './ThemeToggle'
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import MobileMenu from '../components/ui/MobileMenu'
 
 function Navbar() {
@@ -184,28 +184,11 @@ function Navbar() {
                 </div>
               </div>
 
-              <AnimatePresence>
-                {open && (
-                  <Disclosure.Panel 
-                    static
-                    className="lg:hidden overflow-hidden"
-                  >
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ 
-                        duration: 0.3, 
-                        ease: [0.4, 0, 0.2, 1]
-                      }}
-                    >
-                      <div className="pb-4 pt-2 border-t border-secondary-200/50 dark:border-secondary-700/50 mt-2">
-                        <MobileMenu onNavigate={() => close()} />
-                      </div>
-                    </motion.div>
-                  </Disclosure.Panel>
-                )}
-              </AnimatePresence>
+              <Disclosure.Panel className="lg:hidden">
+                <div className="pb-4 pt-2 border-t border-secondary-200/50 dark:border-secondary-700/50 mt-2">
+                  <MobileMenu onNavigate={() => close()} />
+                </div>
+              </Disclosure.Panel>
             </div>
           )
         }}
