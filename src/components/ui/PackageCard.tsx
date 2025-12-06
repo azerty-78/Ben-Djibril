@@ -88,31 +88,17 @@ function PackageCard({
             </div>
           )}
           {(secondaryPrice || savingLabel) && (
-            <div className="mt-3 pt-3 border-t border-secondary-200/50 dark:border-secondary-700/50">
+            <div className="flex flex-wrap items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight w-full mt-1.5">
               {secondaryPrice && (
-                <div className="flex items-start gap-2 mb-2">
-                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center mt-0.5">
-                    <svg className="w-2.5 h-2.5 text-emerald-600 dark:text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-300 leading-relaxed flex-1">
-                    {secondaryPrice}
-                  </p>
-                </div>
+                <span className="break-words">{secondaryPrice}</span>
+              )}
+              {secondaryPrice && savingLabel && (
+                <span className="text-secondary-400 dark:text-secondary-500 flex-shrink-0">•</span>
               )}
               {savingLabel && (
-                <div className="flex items-start gap-2">
-                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center mt-0.5">
-                    <svg className="w-2.5 h-2.5 text-emerald-600 dark:text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941a1 1 0 102 0v-.1a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 8.234 6 9.009 6 10c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941a1 1 0 102 0v-.1a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <p className="text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400 leading-relaxed flex-1">
-                    {savingLabel}
-                  </p>
-                </div>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400 break-words">
+                  {savingLabel}
+                </span>
               )}
             </div>
           )}
