@@ -63,7 +63,7 @@ export const resources = {
           goodDeal: {
             name: 'Good Deal',
             price: '15 500',
-            priceUnit: 'F HT/mois',
+            priceUnit: 'f (HT)/ months',
             description: 'Accessible plan to launch your custom platform at low cost.',
             shortDesc: 'Accessible plan to launch your custom platform at low cost.',
             feature1: 'Secure hosting, maintenance and security updates included',
@@ -79,7 +79,7 @@ export const resources = {
           pro: {
             name: 'Pro',
             price: '25 700',
-            priceUnit: 'F HT/mois',
+            priceUnit: 'f (HT)/ months',
             description: 'Balanced plan for growing businesses with regular follow‑up.',
             feature1: 'Dedicated cloud server, daily backups and advanced monitoring',
             feature2: 'Priority support (email + WhatsApp) with answers within 24h',
@@ -94,7 +94,7 @@ export const resources = {
           ultra: {
             name: 'Ultra',
             price: '40 900',
-            priceUnit: 'F HT/mois',
+            priceUnit: 'f (HT)/ months',
             description: 'High‑end plan for demanding projects, with strategic support.',
             feature1: 'Premium infrastructure with very high availability and performance',
             feature2: 'VIP support 7/7 and monthly strategic follow‑up meeting',
@@ -253,7 +253,7 @@ export const resources = {
           goodDeal: {
             name: 'Good Deal',
             price: '15 500',
-            priceUnit: 'F HT/mois',
+            priceUnit: 'f (HT)/ mois',
             description: 'Forfait accessible pour lancer votre plateforme personnalisée à moindre coût.',
             shortDesc: 'Forfait accessible pour lancer votre plateforme personnalisée à moindre coût.',
             feature1: 'Hébergement sécurisé, maintenance et mises à jour de sécurité inclus',
@@ -269,7 +269,7 @@ export const resources = {
           pro: {
             name: 'Pro',
             price: '25 700',
-            priceUnit: 'F HT/mois',
+            priceUnit: 'f (HT)/ mois',
             description: 'Forfait équilibré pour les entreprises en croissance, avec suivi régulier.',
             feature1: 'Serveur cloud dédié, sauvegardes quotidiennes et monitoring avancé',
             feature2: 'Support prioritaire (email + WhatsApp) avec réponse sous 24h',
@@ -284,7 +284,7 @@ export const resources = {
           ultra: {
             name: 'Ultra',
             price: '40 900',
-            priceUnit: 'F HT/mois',
+            priceUnit: 'f (HT)/ mois',
             description: 'Forfait haut de gamme pour projets stratégiques, avec accompagnement rapproché.',
             feature1: 'Infrastructure premium très haute disponibilité et performances optimisées',
             feature2: 'Support VIP 7j/7 et réunion stratégique mensuelle',

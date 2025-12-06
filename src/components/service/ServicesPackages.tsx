@@ -148,7 +148,7 @@ function ServicesPackages() {
                   name={t('services.saas.goodDeal.name')}
                   price={t('services.saas.goodDeal.price')}
                   priceUnit={t('services.saas.goodDeal.priceUnit')}
-                  oldPrice="18 500 F HT"
+                  oldPrice="200 000 f (HT)"
                   secondaryPrice={t('services.saas.goodDeal.annualPrice')}
                   savingLabel={t('services.saas.goodDeal.annualSaving')}
                   description={t('services.saas.goodDeal.description')}
