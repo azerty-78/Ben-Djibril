@@ -158,7 +158,13 @@ function Navbar() {
                 <LanguageSwitcher />
                 <ThemeToggle />
             <button
-              onClick={() => setIsMenuOpen((prev) => !prev)}
+              onClick={() => {
+                console.log('Clic détecté, état avant:', isMenuOpen)
+                setIsMenuOpen((prev) => {
+                  console.log('Nouvel état:', !prev)
+                  return !prev
+                })
+              }}
               aria-label="Menu"
               className="p-2.5 rounded-xl bg-secondary-100 dark:bg-secondary-800 text-secondary-800 dark:text-secondary-100 hover:bg-secondary-200 dark:hover:bg-secondary-700 active:scale-95 transition-all duration-200 flex-shrink-0 shadow-sm"
             >
@@ -176,19 +182,16 @@ function Navbar() {
           </div>
         </div>
 
-        {isMenuOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            className="lg:hidden overflow-hidden"
-          >
-            <div className="pb-4 pt-2 border-t border-secondary-200/50 dark:border-secondary-700/50 mt-2">
-              <MobileMenu onNavigate={() => setIsMenuOpen(false)} />
-            </div>
-          </motion.div>
-        )}
+        <div 
+          style={{ 
+            display: isMenuOpen ? 'block' : 'none'
+          }}
+          className="lg:hidden"
+        >
+          <div className="pb-4 pt-2 border-t border-secondary-200/50 dark:border-secondary-700/50 mt-2">
+            <MobileMenu onNavigate={() => setIsMenuOpen(false)} />
+          </div>
+        </div>
       </div>
     </header>
   )
