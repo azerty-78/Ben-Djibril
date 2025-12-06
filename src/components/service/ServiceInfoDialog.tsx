@@ -7,7 +7,9 @@ import {
   CloudIcon,
   CodeBracketIcon,
   InformationCircleIcon,
+  EnvelopeIcon,
 } from '@heroicons/react/24/outline'
+import { FaWhatsapp } from 'react-icons/fa6'
 
 type ServiceId = 
   | 'web-dev' | 'showcase' | 'portfolio' | 'ecommerce' | 'web-app' | 'mobile' | 'desktop' | 'api' | 'devops' | 'consulting'
@@ -30,6 +32,7 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
   const [selectedPlanType, setSelectedPlanType] = useState<PlanType | null>(null)
   const [selectedSaaSPlan, setSelectedSaaSPlan] = useState<SaaSPlan | null>(null)
   const [selectedFullControlPlan, setSelectedFullControlPlan] = useState<FullControlPlan | null>(null)
+  const [contactMethod, setContactMethod] = useState<'whatsapp' | 'email' | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -115,16 +118,79 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
   const hasSaaS = eligiblePlans.saas.length > 0
   const hasFullControl = eligiblePlans.fullControl.length > 0
 
+  // Formater le message pour WhatsApp
+  const formatWhatsAppMessage = () => {
+    const serviceName = title
+    const planTypeName = selectedPlanType === 'saas' ? 'SaaS' : 'Full Control'
+    const planName = selectedPlanType === 'saas' 
+      ? t(`services.saas.${selectedSaaSPlan}.name`)
+      : t(`services.fullControl.${selectedFullControlPlan}.name`)
+    
+    let message = `Bonjour,\n\n`
+    message += `Je souhaite demander un devis pour le service : *${serviceName}*\n\n`
+    message += `*Informations sur le forfait :*\n`
+    message += `- Type : ${planTypeName}\n`
+    message += `- Forfait : ${planName}\n\n`
+    message += `*Mes informations :*\n`
+    message += `- Nom : ${formData.name}\n`
+    message += `- Email : ${formData.email}\n`
+    message += `- Téléphone : ${formData.phone}\n`
+    if (formData.company) {
+      message += `- Entreprise : ${formData.company}\n`
+    }
+    if (formData.message) {
+      message += `\n*Message :*\n${formData.message}\n`
+    }
+    message += `\nMerci de me recontacter pour discuter de ce projet.`
+    
+    return encodeURIComponent(message)
+  }
+
+  // Formater le message pour Email
+  const formatEmailMessage = () => {
+    const serviceName = title
+    const planTypeName = selectedPlanType === 'saas' ? 'SaaS' : 'Full Control'
+    const planName = selectedPlanType === 'saas' 
+      ? t(`services.saas.${selectedSaaSPlan}.name`)
+      : t(`services.fullControl.${selectedFullControlPlan}.name`)
+    
+    let message = `Bonjour,\n\n`
+    message += `Je souhaite demander un devis pour le service : ${serviceName}\n\n`
+    message += `Informations sur le forfait :\n`
+    message += `- Type : ${planTypeName}\n`
+    message += `- Forfait : ${planName}\n\n`
+    message += `Mes informations :\n`
+    message += `- Nom : ${formData.name}\n`
+    message += `- Email : ${formData.email}\n`
+    message += `- Téléphone : ${formData.phone}\n`
+    if (formData.company) {
+      message += `- Entreprise : ${formData.company}\n`
+    }
+    if (formData.message) {
+      message += `\nMessage :\n${formData.message}\n`
+    }
+    message += `\nMerci de me recontacter pour discuter de ce projet.\n\n`
+    message += `Cordialement,\n${formData.name}`
+    
+    return message
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Envoyer le formulaire
-    console.log('Form submitted:', {
-      serviceId,
-      planType: selectedPlanType,
-      saasPlan: selectedSaaSPlan,
-      fullControlPlan: selectedFullControlPlan,
-      formData,
-    })
+    
+    if (!contactMethod) return
+    
+    if (contactMethod === 'whatsapp') {
+      const message = formatWhatsAppMessage()
+      const whatsappUrl = `https://wa.me/237655938501?text=${message}`
+      window.open(whatsappUrl, '_blank')
+    } else if (contactMethod === 'email') {
+      const subject = encodeURIComponent(`Demande de devis - ${title}`)
+      const body = encodeURIComponent(formatEmailMessage())
+      const emailUrl = `mailto:contact@bendjibril.dev?subject=${subject}&body=${body}`
+      window.location.href = emailUrl
+    }
+    
     // Fermer le dialogue après soumission
     onClose()
   }
@@ -292,7 +358,7 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {['React / Next.js', 'TypeScript', 'Spring Boot', 'PostgreSQL', 'Docker', 'AWS / Cloud'].map((tech, index) => (
+                    {['React', 'TypeScript', 'Spring Boot', 'MongoDB', 'AWS/Cloud/VPS', 'Docker'].map((tech, index) => (
                       <span
                         key={index}
                         className="px-3 py-1.5 rounded-lg bg-white dark:bg-secondary-900 border border-accent-200 dark:border-accent-800 text-sm font-medium text-accent-700 dark:text-accent-300"
@@ -423,9 +489,51 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
                     </div>
                   )}
 
+                  {/* Choix de la méthode de contact */}
+                  <div className="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900/20 dark:to-accent-900/20 rounded-xl p-4 sm:p-6 border-2 border-primary-200 dark:border-primary-800 mb-4">
+                    <label className="block text-sm font-semibold text-secondary-900 dark:text-white mb-3">
+                      Comment souhaitez-vous nous contacter ? *
+                    </label>
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setContactMethod('whatsapp')}
+                        className={`flex items-center justify-center gap-3 px-4 py-4 rounded-xl border-2 transition-all ${
+                          contactMethod === 'whatsapp'
+                            ? 'border-success-500 bg-success-500 text-white shadow-lg shadow-success-500/30'
+                            : 'border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:border-success-300 dark:hover:border-success-600'
+                        }`}
+                      >
+                        <FaWhatsapp className={`w-6 h-6 ${contactMethod === 'whatsapp' ? 'text-white' : 'text-success-600 dark:text-success-400'}`} />
+                        <div className="text-left">
+                          <div className="font-semibold">WhatsApp</div>
+                          <div className="text-xs opacity-80">Contact rapide</div>
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setContactMethod('email')}
+                        className={`flex items-center justify-center gap-3 px-4 py-4 rounded-xl border-2 transition-all ${
+                          contactMethod === 'email'
+                            ? 'border-primary-500 bg-primary-500 text-white shadow-lg shadow-primary-500/30'
+                            : 'border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:border-primary-300 dark:hover:border-primary-600'
+                        }`}
+                      >
+                        <EnvelopeIcon className={`w-6 h-6 ${contactMethod === 'email' ? 'text-white' : 'text-primary-600 dark:text-primary-400'}`} />
+                        <div className="text-left">
+                          <div className="font-semibold">Email</div>
+                          <div className="text-xs opacity-80">Contact formel</div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+
                   {/* Informations de contact */}
-                  <div className="bg-white dark:bg-secondary-800 rounded-xl p-4 sm:p-6 border border-secondary-200 dark:border-secondary-700">
-                    <h4 className="text-lg font-semibold text-secondary-900 dark:text-white mb-4">
+                  <div className="bg-white dark:bg-secondary-800 rounded-xl p-4 sm:p-6 border border-secondary-200 dark:border-secondary-700 shadow-sm">
+                    <h4 className="text-lg font-semibold text-secondary-900 dark:text-white mb-4 flex items-center gap-2">
+                      <svg className="w-5 h-5 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
                       Vos informations
                     </h4>
                     <div className="grid sm:grid-cols-2 gap-4">
@@ -470,21 +578,21 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
-                          Entreprise
+                          Entreprise <span className="text-xs text-secondary-500">(optionnel)</span>
                         </label>
                         <input
                           type="text"
                           value={formData.company}
                           onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                           className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-900 text-secondary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                          placeholder="Nom de votre entreprise"
+                          placeholder="Nom de votre entreprise (optionnel)"
                         />
                       </div>
                     </div>
 
                     <div className="mt-4">
                       <label className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
-                        Message (optionnel)
+                        Message <span className="text-xs text-secondary-500">(optionnel)</span>
                       </label>
                       <textarea
                         rows={4}
@@ -496,20 +604,30 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
                     </div>
                   </div>
 
-                  <div className="flex gap-3 pt-2">
+                  <div className="flex flex-col sm:flex-row gap-3 pt-4">
                     <button
                       type="button"
                       onClick={onClose}
-                      className="flex-1 px-4 py-3 rounded-lg border-2 border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-50 dark:hover:bg-secondary-700 transition-colors font-medium"
+                      className="sm:flex-1 px-4 py-3 rounded-lg border-2 border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-50 dark:hover:bg-secondary-700 transition-colors font-medium"
                     >
                       Annuler
                     </button>
                     <button
                       type="submit"
-                      disabled={!selectedPlanType || (selectedPlanType === 'saas' && !selectedSaaSPlan) || (selectedPlanType === 'fullControl' && !selectedFullControlPlan)}
-                      className="flex-1 px-4 py-3 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      disabled={
+                        !contactMethod || 
+                        !selectedPlanType || 
+                        (selectedPlanType === 'saas' && !selectedSaaSPlan) || 
+                        (selectedPlanType === 'fullControl' && !selectedFullControlPlan) ||
+                        !formData.name ||
+                        !formData.email ||
+                        !formData.phone
+                      }
+                      className="sm:flex-1 px-4 py-3 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
                     >
-                      Envoyer la demande
+                      {contactMethod === 'whatsapp' && <FaWhatsapp className="w-5 h-5" />}
+                      {contactMethod === 'email' && <EnvelopeIcon className="w-5 h-5" />}
+                      Envoyer via {contactMethod === 'whatsapp' ? 'WhatsApp' : contactMethod === 'email' ? 'Email' : '...'}
                     </button>
                   </div>
                 </form>
