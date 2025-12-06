@@ -35,7 +35,7 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
     {
       id: 'goodDeal',
       name: t('services.saas.goodDeal.name'),
-      oldPrice: '18 500 F HT',
+      oldPrice: '200 000 f (HT)',
       currentPrice: t('services.saas.goodDeal.price'),
       priceUnit: t('services.saas.goodDeal.priceUnit'),
       description: t('services.saas.goodDeal.description'),
@@ -45,7 +45,7 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
     {
       id: 'pro',
       name: t('services.saas.pro.name'),
-      oldPrice: '30 700 F HT',
+      oldPrice: '450 000 f (HT)',
       currentPrice: t('services.saas.pro.price'),
       priceUnit: t('services.saas.pro.priceUnit'),
       description: t('services.saas.pro.description'),
@@ -55,7 +55,7 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
     {
       id: 'ultra',
       name: t('services.saas.ultra.name'),
-      oldPrice: '50 900 F HT',
+      oldPrice: '600 000 f (HT)',
       currentPrice: t('services.saas.ultra.price'),
       priceUnit: t('services.saas.ultra.priceUnit'),
       description: t('services.saas.ultra.description'),
