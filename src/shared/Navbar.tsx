@@ -19,11 +19,6 @@ function Navbar() {
     setIsMenuOpen(false)
   }, [location.pathname])
 
-  // Debug: logger quand l'état change
-  useEffect(() => {
-    console.log('🔄 État isMenuOpen a changé:', isMenuOpen)
-  }, [isMenuOpen])
-
   // Détecter le scroll pour améliorer l'effet visuel
   useEffect(() => {
     const handleScroll = () => {
@@ -50,9 +45,6 @@ function Navbar() {
       }`}
     >
       <div className="container mx-auto px-4 sm:px-5 lg:px-6 xl:px-8">
-        <div style={{ padding: '5px', backgroundColor: 'purple', color: 'white', marginBottom: '5px' }}>
-          DEBUG: isMenuOpen = {String(isMenuOpen)}
-        </div>
         <div className="flex items-center justify-between py-3 sm:py-3.5 lg:py-4">
               <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
                 <NavLink 
@@ -166,15 +158,8 @@ function Navbar() {
                 <LanguageSwitcher />
                 <ThemeToggle />
             <button
-              onClick={() => {
-                console.log('Bouton cliqué, état actuel:', isMenuOpen)
-                setIsMenuOpen((prev) => {
-                  const newState = !prev
-                  console.log('Nouvel état calculé:', newState)
-                  return newState
-                })
-              }}
-                  aria-label="Menu" 
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              aria-label="Menu"
               className="p-2.5 rounded-xl bg-secondary-100 dark:bg-secondary-800 text-secondary-800 dark:text-secondary-100 hover:bg-secondary-200 dark:hover:bg-secondary-700 active:scale-95 transition-all duration-200 flex-shrink-0 shadow-sm"
             >
               <motion.div
@@ -191,52 +176,19 @@ function Navbar() {
           </div>
         </div>
 
-        <div 
-          style={{ 
-            display: isMenuOpen ? 'block' : 'none',
-            position: 'relative',
-            zIndex: 1000,
-            width: '100%',
-            padding: '20px',
-            marginTop: '10px',
-            backgroundColor: 'red',
-            border: '5px solid yellow',
-            minHeight: '300px'
-          }}
-        >
-          <div style={{ 
-            padding: '20px', 
-            marginBottom: '20px', 
-            backgroundColor: 'lime', 
-            border: '3px solid black',
-            fontSize: '20px',
-            fontWeight: 'bold'
-          }}>
-            ✅ MENU OUVERT - ÉTAT: {isMenuOpen ? 'OUI' : 'NON'}
-          </div>
-          <div style={{ padding: '10px', marginBottom: '10px', backgroundColor: '#f0f0f0', border: '2px solid green' }}>
-            <strong>Test de contenu simple :</strong>
-            <div style={{ padding: '10px', marginTop: '10px' }}>
-              <a href="/" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Accueil</a>
-              <a href="/services" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Services</a>
-              <a href="/projects" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Projets</a>
-              <a href="/about" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>À propos</a>
-              <a href="/contact" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Contact</a>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            className="lg:hidden overflow-hidden"
+          >
+            <div className="pb-4 pt-2 border-t border-secondary-200/50 dark:border-secondary-700/50 mt-2">
+              <MobileMenu onNavigate={() => setIsMenuOpen(false)} />
             </div>
-          </div>
-          <div style={{ padding: '10px', backgroundColor: '#fff3cd', border: '2px solid orange' }}>
-            <strong>Composant MobileMenu ci-dessous :</strong>
-            <MobileMenu onNavigate={() => setIsMenuOpen(false)} />
-          </div>
-        </div>
-        <div style={{ 
-          padding: '10px', 
-          backgroundColor: 'blue', 
-          color: 'white',
-          display: isMenuOpen ? 'none' : 'block'
-        }}>
-          Menu fermé - État: {isMenuOpen ? 'OUI' : 'NON'}
-        </div>
+          </motion.div>
+        )}
       </div>
     </header>
   )
