@@ -19,6 +19,11 @@ function Navbar() {
     setIsMenuOpen(false)
   }, [location.pathname])
 
+  // Debug: logger quand l'état change
+  useEffect(() => {
+    console.log('🔄 État isMenuOpen a changé:', isMenuOpen)
+  }, [isMenuOpen])
+
   // Détecter le scroll pour améliorer l'effet visuel
   useEffect(() => {
     const handleScroll = () => {
@@ -49,15 +54,15 @@ function Navbar() {
           DEBUG: isMenuOpen = {String(isMenuOpen)}
         </div>
         <div className="flex items-center justify-between py-3 sm:py-3.5 lg:py-4">
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
-            <NavLink 
-              to="/" 
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
+                <NavLink 
+                  to="/" 
               className="text-xl sm:text-2xl font-bold gradient-text whitespace-nowrap hover:scale-105 transition-transform duration-200"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Ben Djibril
-            </NavLink>
-          </div>
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Ben Djibril
+                </NavLink>
+              </div>
 
           <div className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm">
             <NavLink to="/" className={({ isActive }) => linkClass(isActive)}>
@@ -144,29 +149,32 @@ function Navbar() {
                 </>
               )}
             </NavLink>
-          </div>
+              </div>
 
           <div className="hidden lg:flex items-center gap-2.5 xl:gap-3 flex-shrink-0">
-            <LanguageSwitcher />
-            <ThemeToggle />
+                <LanguageSwitcher />
+                <ThemeToggle />
             <NavLink 
               to="/contact" 
               className="btn-primary text-sm px-5 py-2.5 whitespace-nowrap shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
             >
               {t('nav.contact')}
             </NavLink>
-          </div>
+              </div>
 
           <div className="lg:hidden flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
-            <LanguageSwitcher />
-            <ThemeToggle />
+                <LanguageSwitcher />
+                <ThemeToggle />
             <button
               onClick={() => {
                 console.log('Bouton cliqué, état actuel:', isMenuOpen)
-                setIsMenuOpen(!isMenuOpen)
-                console.log('Nouvel état:', !isMenuOpen)
+                setIsMenuOpen((prev) => {
+                  const newState = !prev
+                  console.log('Nouvel état calculé:', newState)
+                  return newState
+                })
               }}
-              aria-label="Menu"
+                  aria-label="Menu" 
               className="p-2.5 rounded-xl bg-secondary-100 dark:bg-secondary-800 text-secondary-800 dark:text-secondary-100 hover:bg-secondary-200 dark:hover:bg-secondary-700 active:scale-95 transition-all duration-200 flex-shrink-0 shadow-sm"
             >
               <motion.div
@@ -183,55 +191,52 @@ function Navbar() {
           </div>
         </div>
 
-        {isMenuOpen ? (
-          <div 
-            style={{ 
-              display: 'block',
-              position: 'relative',
-              zIndex: 1000,
-              width: '100%',
-              padding: '20px',
-              marginTop: '10px',
-              backgroundColor: 'red',
-              border: '5px solid yellow',
-              minHeight: '300px'
-            }}
-          >
-            <div style={{ 
-              padding: '20px', 
-              marginBottom: '20px', 
-              backgroundColor: 'lime', 
-              border: '3px solid black',
-              fontSize: '20px',
-              fontWeight: 'bold'
-            }}>
-              ✅ MENU OUVERT - ÉTAT: {isMenuOpen ? 'OUI' : 'NON'}
-            </div>
-            <div style={{ padding: '10px', marginBottom: '10px', backgroundColor: '#f0f0f0', border: '2px solid green' }}>
-              <strong>Test de contenu simple :</strong>
-              <div style={{ padding: '10px', marginTop: '10px' }}>
-                <a href="/" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Accueil</a>
-                <a href="/services" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Services</a>
-                <a href="/projects" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Projets</a>
-                <a href="/about" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>À propos</a>
-                <a href="/contact" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Contact</a>
-              </div>
-            </div>
-            <div style={{ padding: '10px', backgroundColor: '#fff3cd', border: '2px solid orange' }}>
-              <strong>Composant MobileMenu ci-dessous :</strong>
-              <MobileMenu onNavigate={() => setIsMenuOpen(false)} />
-            </div>
-          </div>
-        ) : (
+        <div 
+          style={{ 
+            display: isMenuOpen ? 'block' : 'none',
+            position: 'relative',
+            zIndex: 1000,
+            width: '100%',
+            padding: '20px',
+            marginTop: '10px',
+            backgroundColor: 'red',
+            border: '5px solid yellow',
+            minHeight: '300px'
+          }}
+        >
           <div style={{ 
-            padding: '10px', 
-            backgroundColor: 'blue', 
-            color: 'white',
-            display: 'block'
+            padding: '20px', 
+            marginBottom: '20px', 
+            backgroundColor: 'lime', 
+            border: '3px solid black',
+            fontSize: '20px',
+            fontWeight: 'bold'
           }}>
-            Menu fermé - État: {isMenuOpen ? 'OUI' : 'NON'}
+            ✅ MENU OUVERT - ÉTAT: {isMenuOpen ? 'OUI' : 'NON'}
           </div>
-        )}
+          <div style={{ padding: '10px', marginBottom: '10px', backgroundColor: '#f0f0f0', border: '2px solid green' }}>
+            <strong>Test de contenu simple :</strong>
+            <div style={{ padding: '10px', marginTop: '10px' }}>
+              <a href="/" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Accueil</a>
+              <a href="/services" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Services</a>
+              <a href="/projects" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Projets</a>
+              <a href="/about" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>À propos</a>
+              <a href="/contact" style={{ display: 'block', padding: '8px', marginBottom: '5px', backgroundColor: 'white', border: '1px solid #ccc' }}>Contact</a>
+            </div>
+          </div>
+          <div style={{ padding: '10px', backgroundColor: '#fff3cd', border: '2px solid orange' }}>
+            <strong>Composant MobileMenu ci-dessous :</strong>
+            <MobileMenu onNavigate={() => setIsMenuOpen(false)} />
+          </div>
+        </div>
+        <div style={{ 
+          padding: '10px', 
+          backgroundColor: 'blue', 
+          color: 'white',
+          display: isMenuOpen ? 'none' : 'block'
+        }}>
+          Menu fermé - État: {isMenuOpen ? 'OUI' : 'NON'}
+        </div>
       </div>
     </header>
   )
