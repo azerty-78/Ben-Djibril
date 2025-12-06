@@ -2,7 +2,15 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { CloudIcon, CodeBracketIcon } from '@heroicons/react/24/solid'
+import { 
+  CloudIcon, 
+  CodeBracketIcon,
+  ServerIcon,
+  ComputerDesktopIcon,
+  DocumentTextIcon,
+  ShieldCheckIcon,
+  GlobeAltIcon
+} from '@heroicons/react/24/solid'
 import PackageCard from '../ui/PackageCard'
 import ServiceDetailsDialog from './ServiceDetailsDialog'
 import SaaSComparisonTable from './SaaSComparisonTable'
@@ -265,16 +273,48 @@ function ServicesPackages() {
               {t('services.fullControlSubtitle')}
             </p>
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex items-start sm:items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-accent-50 dark:bg-accent-900/30 rounded-lg sm:rounded-full border border-accent-200 dark:border-accent-800 max-w-full mx-auto"
+              className="max-w-4xl mx-auto mt-6 sm:mt-8"
             >
-              <div className="w-2 h-2 rounded-full bg-accent-500 animate-pulse flex-shrink-0 mt-1 sm:mt-0" />
-              <p className="text-xs sm:text-sm md:text-base text-accent-700 dark:text-accent-300 font-medium leading-relaxed break-words">
-                {t('services.fullControlDeliveryNote')}
-              </p>
+              <div className="bg-gradient-to-br from-accent-50 to-accent-100/50 dark:from-accent-900/30 dark:to-accent-800/20 rounded-2xl p-4 sm:p-6 border border-accent-200 dark:border-accent-800 shadow-lg">
+                <h4 className="text-sm sm:text-base md:text-lg font-bold text-accent-900 dark:text-accent-100 mb-4 sm:mb-5 text-center">
+                  {t('services.fullControl.includesTitle')}
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  {[
+                    { key: 'sourceCode', icon: CodeBracketIcon },
+                    { key: 'restApi', icon: ServerIcon },
+                    { key: 'frontend', icon: ComputerDesktopIcon },
+                    { key: 'documentation', icon: DocumentTextIcon },
+                    { key: 'vps', icon: CloudIcon },
+                    { key: 'ssl', icon: ShieldCheckIcon },
+                    { key: 'domain', icon: GlobeAltIcon },
+                  ].map((item, index) => {
+                    const IconComponent = item.icon
+                    
+                    return (
+                      <motion.div
+                        key={item.key}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.4 + index * 0.05, duration: 0.3 }}
+                        className="flex items-center gap-3 p-3 sm:p-4 bg-white dark:bg-secondary-800 rounded-xl border border-accent-200/50 dark:border-accent-700/50 hover:border-accent-400 dark:hover:border-accent-500 transition-all duration-200 hover:shadow-md group"
+                      >
+                        <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-accent-100 dark:bg-accent-900/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                          <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-accent-600 dark:text-accent-400" />
+                        </div>
+                        <span className="text-xs sm:text-sm font-medium text-secondary-700 dark:text-secondary-200 leading-tight">
+                          {t(`services.fullControl.includes.${item.key}`)}
+                        </span>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+              </div>
             </motion.div>
           </div>
 

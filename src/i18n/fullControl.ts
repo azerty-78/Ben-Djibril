@@ -117,6 +117,16 @@ export const fullControlTranslations = {
       warrantyNormal: '6 months (Zero critical bugs guarantee, unlimited fixes)',
     },
     fullControl: {
+      includesTitle: 'All Full Control plans include',
+      includes: {
+        sourceCode: 'Source code',
+        restApi: 'REST API (Backend)',
+        frontend: 'Front-end',
+        documentation: 'Documentation',
+        vps: 'Private Virtual Server (Customizable)',
+        ssl: 'SSL Certificate',
+        domain: 'Personalized domain name',
+      },
       ultraSpeed: {
         name: 'Ultra Speed',
         price: 'Custom quote',
@@ -360,6 +370,16 @@ export const fullControlTranslations = {
       warrantyNormal: '6 mois (Garantie zéro bug critique, corrections illimitées)',
     },
     fullControl: {
+      includesTitle: 'Tous les forfaits Full Control incluent',
+      includes: {
+        sourceCode: 'Code source',
+        restApi: 'API REST (Backend)',
+        frontend: 'Front-end',
+        documentation: 'Documentation',
+        vps: 'Serveur Virtuel Privé (Personnalisable)',
+        ssl: 'Certificat SSL',
+        domain: 'Nom de domaine personnalisé',
+      },
       ultraSpeed: {
         name: 'Ultra Speed',
         price: 'Devis sur mesure',
