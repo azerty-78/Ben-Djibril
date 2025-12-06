@@ -9,7 +9,12 @@ import {
   ComputerDesktopIcon,
   DocumentTextIcon,
   ShieldCheckIcon,
-  GlobeAltIcon
+  GlobeAltIcon,
+  WrenchScrewdriverIcon,
+  ClockIcon,
+  CloudArrowUpIcon,
+  ChatBubbleLeftRightIcon,
+  CurrencyDollarIcon
 } from '@heroicons/react/24/solid'
 import PackageCard from '../ui/PackageCard'
 import ServiceDetailsDialog from './ServiceDetailsDialog'
@@ -132,16 +137,56 @@ function ServicesPackages() {
               {t('services.saasSubtitle')}
             </p>
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex items-start sm:items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-primary-50 dark:bg-primary-900/30 rounded-lg sm:rounded-full border border-primary-200 dark:border-primary-800 max-w-full mx-auto"
+              className="max-w-4xl mx-auto mt-6 sm:mt-8"
             >
-              <div className="w-2 h-2 rounded-full bg-primary-500 animate-pulse flex-shrink-0 mt-1 sm:mt-0" />
-              <p className="text-xs sm:text-sm md:text-base text-primary-700 dark:text-primary-300 font-medium leading-relaxed break-words">
-                {t('services.saasDeliveryNote')}
-              </p>
+              <div className="bg-gradient-to-br from-primary-50 to-primary-100/50 dark:from-primary-950/60 dark:to-primary-900/40 dark:via-primary-900/30 rounded-2xl p-4 sm:p-6 border border-primary-200 dark:border-primary-800/80 dark:shadow-2xl dark:shadow-primary-900/20 shadow-lg">
+                <h4 className="text-sm sm:text-base md:text-lg font-bold text-primary-900 dark:text-primary-50 mb-4 sm:mb-5 text-center">
+                  {t('services.saas.includesTitle')}
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  {[
+                    { key: 'hosting', icon: CloudIcon },
+                    { key: 'maintenance', icon: WrenchScrewdriverIcon },
+                    { key: 'access', icon: ClockIcon },
+                    { key: 'ssl', icon: ShieldCheckIcon },
+                    { key: 'backups', icon: CloudArrowUpIcon },
+                    { key: 'support', icon: ChatBubbleLeftRightIcon },
+                    { key: 'annualBilling', icon: CurrencyDollarIcon },
+                  ].map((item, index) => {
+                    const IconComponent = item.icon
+                    
+                    return (
+                      <motion.div
+                        key={item.key}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.4 + index * 0.05, duration: 0.3 }}
+                        className="flex items-center gap-3 p-3 sm:p-4 bg-white dark:bg-secondary-900/80 dark:backdrop-blur-sm rounded-xl border border-primary-200/50 dark:border-primary-700/70 dark:hover:border-primary-500/80 hover:border-primary-400 dark:hover:bg-secondary-800/90 transition-all duration-200 hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-primary-900/30 group"
+                      >
+                        <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-primary-100 dark:bg-primary-900/60 dark:border dark:border-primary-800/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-200 group-hover:bg-primary-200 dark:group-hover:bg-primary-900/80">
+                          <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 dark:text-primary-300 dark:group-hover:text-primary-200" />
+                        </div>
+                        <span className="text-xs sm:text-sm font-medium text-secondary-700 dark:text-secondary-100 leading-tight">
+                          {t(`services.saas.includes.${item.key}`)}
+                        </span>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+                <div className="mt-4 sm:mt-5 pt-4 sm:pt-5 border-t border-primary-200/50 dark:border-primary-700/60">
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-primary-500 dark:bg-primary-400 animate-pulse flex-shrink-0 shadow-sm dark:shadow-primary-400/50" />
+                    <p className="text-xs sm:text-sm md:text-base text-primary-700 dark:text-primary-200 font-medium leading-relaxed">
+                      {t('services.saasDeliveryNote')}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
 
@@ -279,8 +324,8 @@ function ServicesPackages() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="max-w-4xl mx-auto mt-6 sm:mt-8"
             >
-              <div className="bg-gradient-to-br from-accent-50 to-accent-100/50 dark:from-accent-900/30 dark:to-accent-800/20 rounded-2xl p-4 sm:p-6 border border-accent-200 dark:border-accent-800 shadow-lg">
-                <h4 className="text-sm sm:text-base md:text-lg font-bold text-accent-900 dark:text-accent-100 mb-4 sm:mb-5 text-center">
+              <div className="bg-gradient-to-br from-accent-50 to-accent-100/50 dark:from-accent-950/60 dark:to-accent-900/40 dark:via-accent-900/30 rounded-2xl p-4 sm:p-6 border border-accent-200 dark:border-accent-800/80 dark:shadow-2xl dark:shadow-accent-900/20 shadow-lg">
+                <h4 className="text-sm sm:text-base md:text-lg font-bold text-accent-900 dark:text-accent-50 mb-4 sm:mb-5 text-center">
                   {t('services.fullControl.includesTitle')}
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -302,12 +347,12 @@ function ServicesPackages() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.4 + index * 0.05, duration: 0.3 }}
-                        className="flex items-center gap-3 p-3 sm:p-4 bg-white dark:bg-secondary-800 rounded-xl border border-accent-200/50 dark:border-accent-700/50 hover:border-accent-400 dark:hover:border-accent-500 transition-all duration-200 hover:shadow-md group"
+                        className="flex items-center gap-3 p-3 sm:p-4 bg-white dark:bg-secondary-900/80 dark:backdrop-blur-sm rounded-xl border border-accent-200/50 dark:border-accent-700/70 dark:hover:border-accent-500/80 hover:border-accent-400 dark:hover:bg-secondary-800/90 transition-all duration-200 hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-accent-900/30 group"
                       >
-                        <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-accent-100 dark:bg-accent-900/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                          <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-accent-600 dark:text-accent-400" />
+                        <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-accent-100 dark:bg-accent-900/60 dark:border dark:border-accent-800/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-200 group-hover:bg-accent-200 dark:group-hover:bg-accent-900/80">
+                          <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-accent-600 dark:text-accent-300 dark:group-hover:text-accent-200" />
                         </div>
-                        <span className="text-xs sm:text-sm font-medium text-secondary-700 dark:text-secondary-200 leading-tight">
+                        <span className="text-xs sm:text-sm font-medium text-secondary-700 dark:text-secondary-100 leading-tight">
                           {t(`services.fullControl.includes.${item.key}`)}
                         </span>
                       </motion.div>
