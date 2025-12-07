@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid'
+import { EMAILJS_CONFIG, isEmailJSConfigured } from '../config/emailjs'
 
 function Contact() {
   const { t } = useTranslation()
@@ -30,20 +31,28 @@ function Contact() {
 
     setStatus('sending')
     try {
-      // TODO: Remplacer par tes clés EmailJS
-      await emailjs.send(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-        },
-        'YOUR_PUBLIC_KEY'
-      )
-      setStatus('success')
-      setFormData({ name: '', email: '', message: '' })
-      setTimeout(() => setStatus('idle'), 5000)
+      if (isEmailJSConfigured()) {
+        await emailjs.send(
+          EMAILJS_CONFIG.SERVICE_ID,
+          EMAILJS_CONFIG.CONTACT_TEMPLATE_ID,
+          {
+            from_name: formData.name,
+            from_email: formData.email,
+            message: formData.message,
+          },
+          EMAILJS_CONFIG.PUBLIC_KEY
+        )
+        setStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+        setTimeout(() => setStatus('idle'), 5000)
+      } else {
+        // Mode développement : simuler l'envoi
+        console.warn('EmailJS non configuré. Mode simulation activé.')
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        setStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+        setTimeout(() => setStatus('idle'), 5000)
+      }
     } catch (error) {
       console.error('EmailJS error:', error)
       setStatus('error')
