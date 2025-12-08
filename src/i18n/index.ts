@@ -82,8 +82,37 @@ export const resources = {
       projects: {
         title: 'Projects',
         subtitle: 'Real solutions for real businesses',
-        viewProject: 'View Project', viewCode: 'View Code', problem: 'Problem', solution: 'Solution', impact: 'Impact',
-        tags: 'Technologies'
+        description: 'Discover the projects I\'ve built for clients, showcasing innovative solutions and measurable results.',
+        viewProject: 'View Project',
+        viewCode: 'View Code',
+        problem: 'Problem',
+        solution: 'Solution',
+        impact: 'Impact',
+        tags: 'Technologies',
+        ctaPrimary: 'Start Your Project',
+        ctaSecondary: 'View Projects',
+        stats: {
+          projects: 'Projects',
+          clients: 'Clients',
+          satisfaction: 'Satisfaction',
+          weeks: 'Weeks'
+        },
+        grid: {
+          title: 'Featured Projects',
+          subtitle: 'Explore my portfolio of successful projects',
+          filter: 'Filter',
+          all: 'All',
+          showing: 'Showing',
+          projects: 'projects',
+          clear: 'Clear filter',
+          noProjects: 'No projects found with this filter.'
+        },
+        cta: {
+          title: 'Ready to Start Your Project?',
+          subtitle: 'Let\'s work together to bring your vision to life',
+          description: 'I\'m always excited to take on new challenges and create innovative solutions.',
+          button: 'Get in Touch'
+        }
       },
       testimonials: {
         title: 'What clients say',
