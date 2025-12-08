@@ -199,7 +199,7 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-3 sm:px-4 overflow-y-auto"
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 xs:px-3 sm:px-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -210,32 +210,32 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.96 }}
             transition={{ duration: 0.25 }}
-            className="relative max-w-4xl w-full my-8 bg-white dark:bg-secondary-900 rounded-2xl lg:rounded-3xl shadow-2xl border border-secondary-100/80 dark:border-secondary-700/80 overflow-hidden"
+            className="relative max-w-4xl w-full max-h-[95vh] xs:max-h-[90vh] bg-white dark:bg-secondary-900 rounded-xl xs:rounded-2xl lg:rounded-3xl shadow-2xl border border-secondary-100/80 dark:border-secondary-700/80 overflow-hidden mx-2 xs:mx-0"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="px-4 sm:px-6 md:px-8 pt-4 sm:pt-5 pb-3 sm:pb-4 border-b border-secondary-100 dark:border-secondary-800 bg-gradient-to-r from-primary-50/90 via-white to-accent-50/80 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800/90">
-              <div className="flex items-center justify-between gap-3 sm:gap-4">
+            <div className="px-3 xs:px-4 sm:px-6 md:px-8 pt-3 xs:pt-4 sm:pt-5 pb-2.5 xs:pb-3 sm:pb-4 border-b border-secondary-100 dark:border-secondary-800 bg-gradient-to-r from-primary-50/90 via-white to-accent-50/80 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800/90">
+              <div className="flex items-center justify-between gap-2 xs:gap-3 sm:gap-4">
                 <div className="flex-1 min-w-0">
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white">
+                  <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white break-words leading-tight">
                     {title}
                   </h2>
-                  <p className="text-sm sm:text-base text-secondary-600 dark:text-secondary-300 mt-1">
+                  <p className="text-xs xs:text-sm sm:text-base text-secondary-600 dark:text-secondary-300 mt-1">
                     {description}
                   </p>
                 </div>
                 <button
                   onClick={onClose}
-                  className="flex-shrink-0 p-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
+                  className="flex-shrink-0 p-1.5 xs:p-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
                   aria-label="Close"
                 >
-                  <XMarkIcon className="w-6 h-6 text-secondary-600 dark:text-secondary-300" />
+                  <XMarkIcon className="w-5 h-5 xs:w-6 xs:h-6 text-secondary-600 dark:text-secondary-300" />
                 </button>
               </div>
             </div>
 
             {/* Content */}
-            <div className="px-4 sm:px-6 md:px-8 py-6 sm:py-8 max-h-[calc(90vh-200px)] overflow-y-auto">
+            <div className="px-3 xs:px-4 sm:px-6 md:px-8 py-4 xs:py-5 sm:py-6 md:py-7 max-h-[calc(95vh-140px)] xs:max-h-[calc(90vh-160px)] sm:max-h-[calc(90vh-180px)] overflow-y-auto bg-white dark:bg-secondary-900 scrollbar-thin scrollbar-thumb-secondary-300 dark:scrollbar-thumb-secondary-600 scrollbar-track-transparent">
               {/* Section principale - Description détaillée */}
               <div className="space-y-6 mb-8">
                 {/* Description détaillée - Mise en avant */}
