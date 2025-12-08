@@ -85,10 +85,12 @@ export const resources = {
         description: 'Discover the projects I\'ve built for clients, showcasing innovative solutions and measurable results.',
         viewProject: 'View Project',
         viewCode: 'View Code',
+        viewDemo: 'View Demo',
         problem: 'Problem',
         solution: 'Solution',
         impact: 'Impact',
         tags: 'Technologies',
+        stack: 'Technology Stack',
         ctaPrimary: 'Start Your Project',
         ctaSecondary: 'View Projects',
         stats: {
@@ -97,10 +99,25 @@ export const resources = {
           satisfaction: 'Satisfaction',
           weeks: 'Weeks'
         },
+        types: {
+          'web-app': 'Web Application',
+          'mobile-app': 'Mobile Application',
+          'ecommerce': 'E-commerce',
+          'portfolio': 'Portfolio',
+          'dashboard': 'Dashboard',
+          'api': 'API',
+          'desktop-app': 'Desktop Application'
+        },
+        visibility: {
+          public: 'Public',
+          private: 'Private',
+          confidential: 'Confidential'
+        },
         grid: {
           title: 'Featured Projects',
           subtitle: 'Explore my portfolio of successful projects',
           filter: 'Filter',
+          filterBy: 'Filter by type',
           all: 'All',
           showing: 'Showing',
           projects: 'projects',
@@ -210,10 +227,12 @@ export const resources = {
         description: 'Découvrez les projets que j\'ai réalisés pour mes clients, mettant en avant des solutions innovantes et des résultats mesurables.',
         viewProject: 'Voir le projet',
         viewCode: 'Voir le code',
+        viewDemo: 'Voir la démo',
         problem: 'Problème',
         solution: 'Solution',
         impact: 'Impact',
         tags: 'Technologies',
+        stack: 'Stack Technologique',
         ctaPrimary: 'Démarrer votre projet',
         ctaSecondary: 'Voir les projets',
         stats: {
@@ -222,10 +241,25 @@ export const resources = {
           satisfaction: 'Satisfaction',
           weeks: 'Semaines'
         },
+        types: {
+          'web-app': 'Application Web',
+          'mobile-app': 'Application Mobile',
+          'ecommerce': 'E-commerce',
+          'portfolio': 'Portfolio',
+          'dashboard': 'Tableau de Bord',
+          'api': 'API',
+          'desktop-app': 'Application Desktop'
+        },
+        visibility: {
+          public: 'Public',
+          private: 'Privé',
+          confidential: 'Confidentiel'
+        },
         grid: {
           title: 'Projets en vedette',
           subtitle: 'Explorez mon portfolio de projets réussis',
           filter: 'Filtrer',
+          filterBy: 'Filtrer par type',
           all: 'Tous',
           showing: 'Affichage de',
           projects: 'projets',
