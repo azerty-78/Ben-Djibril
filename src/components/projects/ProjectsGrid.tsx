@@ -2,27 +2,41 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import ProjectCard from '../ui/ProjectCard'
-import { mockProjects } from '../../data/mockData'
+import { projects, getProjectTypes, type ProjectType, getProjectByLang } from '../../data/projects'
 import { 
   FunnelIcon,
-  XMarkIcon 
+  XMarkIcon,
+  ComputerDesktopIcon,
+  DevicePhoneMobileIcon,
+  ShoppingBagIcon,
+  BriefcaseIcon,
+  ChartBarIcon,
+  ServerIcon,
+  CommandLineIcon
 } from '@heroicons/react/24/outline'
 
-type Project = typeof mockProjects[0]
+const typeIcons: Record<ProjectType, typeof ComputerDesktopIcon> = {
+  'web-app': ComputerDesktopIcon,
+  'mobile-app': DevicePhoneMobileIcon,
+  'ecommerce': ShoppingBagIcon,
+  'portfolio': BriefcaseIcon,
+  'dashboard': ChartBarIcon,
+  'api': ServerIcon,
+  'desktop-app': CommandLineIcon
+}
 
 function ProjectsGrid() {
-  const { t } = useTranslation()
-  const [selectedFilter, setSelectedFilter] = useState<string>('all')
+  const { t, i18n } = useTranslation()
+  const currentLang = i18n.language as 'en' | 'fr'
+  const [selectedFilter, setSelectedFilter] = useState<ProjectType | 'all'>('all')
 
-  // Extract all unique tags from projects
-  const allTags = Array.from(
-    new Set(mockProjects.flatMap(project => project.tags))
-  )
+  // Get all unique project types
+  const projectTypes = getProjectTypes()
 
-  // Filter projects based on selected tag
+  // Filter projects based on selected type
   const filteredProjects = selectedFilter === 'all'
-    ? mockProjects
-    : mockProjects.filter(project => project.tags.includes(selectedFilter))
+    ? projects
+    : projects.filter(project => project.type === selectedFilter)
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -85,60 +99,78 @@ function ProjectsGrid() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-8 sm:mb-10 md:mb-12"
         >
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-3">
             {/* Filter Label */}
-            <div className="flex items-center gap-2 text-secondary-700 dark:text-secondary-300">
-              <FunnelIcon className="w-5 h-5" />
-              <span className="text-sm sm:text-base font-medium">
-                {t('projects.grid.filter')}:
+            <div className="flex items-center gap-2 text-secondary-700 dark:text-secondary-300 mb-2 sm:mb-0">
+              <FunnelIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+              <span className="text-sm sm:text-base font-semibold">
+                {t('projects.grid.filterBy')}:
               </span>
             </div>
 
-            {/* All Filter */}
-            <button
-              onClick={() => setSelectedFilter('all')}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ${
-                selectedFilter === 'all'
-                  ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/30'
-                  : 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700'
-              }`}
-            >
-              {t('projects.grid.all')}
-            </button>
-
-            {/* Tag Filters */}
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => setSelectedFilter(tag)}
-                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ${
-                  selectedFilter === tag
+            {/* Filter Buttons Container */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+              {/* All Filter */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedFilter('all')}
+                className={`px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-medium transition-all duration-200 flex items-center gap-2 ${
+                  selectedFilter === 'all'
                     ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/30'
-                    : 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700'
+                    : 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700 hover:shadow-md'
                 }`}
               >
-                {tag}
-              </button>
-            ))}
+                {t('projects.grid.all')}
+              </motion.button>
+
+              {/* Type Filters */}
+              {projectTypes.map((type) => {
+                const Icon = typeIcons[type]
+                return (
+                  <motion.button
+                    key={type}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setSelectedFilter(type)}
+                    className={`px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-medium transition-all duration-200 flex items-center gap-2 ${
+                      selectedFilter === type
+                        ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/30'
+                        : 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700 hover:shadow-md'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    {t(`projects.types.${type}`)}
+                  </motion.button>
+                )
+              })}
+            </div>
           </div>
 
           {/* Active Filter Indicator */}
           {selectedFilter !== 'all' && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="mt-4 flex items-center justify-center gap-2"
+              initial={{ opacity: 0, scale: 0.9, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
             >
-              <span className="text-sm text-secondary-600 dark:text-secondary-400">
-                {t('projects.grid.showing')} {filteredProjects.length} {t('projects.grid.projects')}
-              </span>
-              <button
+              <div className="px-4 py-2 rounded-lg bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800">
+                <span className="text-sm sm:text-base text-secondary-700 dark:text-secondary-300">
+                  <span className="font-semibold text-primary-600 dark:text-primary-400">
+                    {filteredProjects.length}
+                  </span>{' '}
+                  {t('projects.grid.showing')} {t(`projects.types.${selectedFilter}`).toLowerCase()}
+                </span>
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedFilter('all')}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700 transition-colors text-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700 transition-colors text-sm sm:text-base font-medium"
               >
-                <XMarkIcon className="w-4 h-4" />
+                <XMarkIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 {t('projects.grid.clear')}
-              </button>
+              </motion.button>
             </motion.div>
           )}
         </motion.div>
@@ -154,25 +186,30 @@ function ProjectsGrid() {
               exit="hidden"
               className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
             >
-              {filteredProjects.map((project, index) => (
-                <motion.div
-                  key={`${project.title}-${index}`}
-                  variants={itemVariants}
-                  layout
-                >
-                  <ProjectCard
-                    title={project.title}
-                    description={project.description}
-                    problem={project.problem}
-                    solution={project.solution}
-                    impact={project.impact}
-                    tags={project.tags}
-                    client={project.client}
-                    projectUrl={project.projectUrl}
-                    codeUrl={project.codeUrl}
-                  />
-                </motion.div>
-              ))}
+              {filteredProjects.map((project) => {
+                const projectData = getProjectByLang(project, currentLang)
+                return (
+                  <motion.div
+                    key={project.id}
+                    variants={itemVariants}
+                    layout
+                  >
+                    <ProjectCard
+                      id={project.id}
+                      name={projectData.name}
+                      description={projectData.description}
+                      problem={projectData.problem}
+                      solution={projectData.solution}
+                      impact={projectData.impact}
+                      stack={project.stack}
+                      client={project.client}
+                      links={project.links}
+                      type={project.type}
+                      visibility={project.visibility}
+                    />
+                  </motion.div>
+                )
+              })}
             </motion.div>
           ) : (
             <motion.div
@@ -193,4 +230,3 @@ function ProjectsGrid() {
 }
 
 export default ProjectsGrid
-
