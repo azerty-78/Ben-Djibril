@@ -1,0 +1,9 @@
+version: "2"
+authtoken: # Ajoutez votre token ngrok ici (obtenu depuis https://dashboard.ngrok.com/get-started/your-authtoken)
+tunnels:
+  web:
+    addr: 5180
+    proto: http
+    domain: 2a2ba9adf6ba.ngrok-free.app
+    inspect: false
+

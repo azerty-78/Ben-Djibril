@@ -115,7 +115,14 @@ npm install
 ```bash
 npm run dev
 ```
-Le site sera accessible sur `http://localhost:5173` (ou le port disponible)
+Le site sera accessible sur `http://localhost:5180`
+
+### Partage avec ngrok
+Pour partager votre application en développement via ngrok :
+```bash
+npm run ngrok
+```
+Voir [docs/NGROK_SETUP.md](docs/NGROK_SETUP.md) pour plus de détails.
 
 ### Build de production
 ```bash
