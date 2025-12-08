@@ -180,7 +180,7 @@ function ProjectsGrid() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-8 sm:mb-10 md:mb-12"
+          className="mb-8 sm:mb-10 md:mb-12 relative z-50"
         >
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 max-w-2xl mx-auto">
             {/* Filter Label */}
@@ -237,7 +237,7 @@ function ProjectsGrid() {
         </motion.div>
 
         {/* Projects Grid or Empty State */}
-        <div id="projects-grid-content">
+        <div id="projects-grid-content" className="relative z-10">
           <AnimatePresence mode="wait">
             {filteredProjects.length > 0 ? (
               <motion.div
@@ -246,7 +246,7 @@ function ProjectsGrid() {
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
-                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 relative z-10"
               >
               {filteredProjects.map((project) => {
                 const projectData = getProjectByLang(project, currentLang)
