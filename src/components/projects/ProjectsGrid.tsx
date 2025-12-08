@@ -7,24 +7,73 @@ import { projects, getProjectTypes, type ProjectType, getProjectByLang } from '.
 import { 
   FunnelIcon,
   XMarkIcon,
-  ComputerDesktopIcon,
-  DevicePhoneMobileIcon,
+  FolderOpenIcon,
+  GlobeAltIcon,
+  DocumentTextIcon,
+  StarIcon,
   ShoppingBagIcon,
-  BriefcaseIcon,
-  ChartBarIcon,
+  CodeBracketIcon,
+  DevicePhoneMobileIcon,
+  ComputerDesktopIcon,
   ServerIcon,
+  WrenchScrewdriverIcon,
   CommandLineIcon,
-  FolderOpenIcon
+  CubeIcon,
+  BuildingStorefrontIcon,
+  CalculatorIcon,
+  ClipboardDocumentListIcon,
+  CreditCardIcon,
+  UserGroupIcon,
+  TruckIcon,
+  CalendarIcon,
+  BeakerIcon,
+  HeartIcon,
+  ScissorsIcon,
+  BuildingOfficeIcon,
+  HomeIcon,
+  BanknotesIcon,
+  CurrencyDollarIcon,
+  WalletIcon,
+  MapPinIcon,
+  AcademicCapIcon,
+  BuildingLibraryIcon
 } from '@heroicons/react/24/outline'
 
-const typeIcons: Record<ProjectType, typeof ComputerDesktopIcon> = {
-  'web-app': ComputerDesktopIcon,
-  'mobile-app': DevicePhoneMobileIcon,
-  'ecommerce': ShoppingBagIcon,
-  'portfolio': BriefcaseIcon,
-  'dashboard': ChartBarIcon,
-  'api': ServerIcon,
-  'desktop-app': CommandLineIcon
+// Map project types to service icons
+const getTypeIcon = (type: ProjectType) => {
+  const iconMap: Record<ProjectType, typeof GlobeAltIcon> = {
+    'web-dev': GlobeAltIcon,
+    'showcase': DocumentTextIcon,
+    'portfolio': StarIcon,
+    'ecommerce': ShoppingBagIcon,
+    'web-app': CodeBracketIcon,
+    'mobile': DevicePhoneMobileIcon,
+    'desktop': ComputerDesktopIcon,
+    'api': ServerIcon,
+    'devops': WrenchScrewdriverIcon,
+    'consulting': CommandLineIcon,
+    'inventory': CubeIcon,
+    'restaurant': BuildingStorefrontIcon,
+    'billing': CalculatorIcon,
+    'orders': ClipboardDocumentListIcon,
+    'pos': CreditCardIcon,
+    'crm': UserGroupIcon,
+    'delivery': TruckIcon,
+    'booking': CalendarIcon,
+    'pharmacy': BeakerIcon,
+    'gym': HeartIcon,
+    'salon': ScissorsIcon,
+    'transport': TruckIcon,
+    'rental': HomeIcon,
+    'accounting': BanknotesIcon,
+    'payroll': CurrencyDollarIcon,
+    'mobile-money': WalletIcon,
+    'market': MapPinIcon,
+    'parking': MapPinIcon,
+    'school': AcademicCapIcon,
+    'hospital': BuildingLibraryIcon
+  }
+  return iconMap[type] || GlobeAltIcon
 }
 
 function ProjectsGrid() {
@@ -40,6 +89,24 @@ function ProjectsGrid() {
     ? projects
     : projects.filter(project => project.type === selectedFilter)
 
+  // Scroll to results when filter changes
+  const handleFilterChange = (value: string) => {
+    setSelectedFilter(value as ProjectType | 'all')
+    // Scroll to projects grid after a short delay to allow state update
+    setTimeout(() => {
+      const gridElement = document.getElementById('projects-grid-content')
+      if (gridElement) {
+        const offset = 100 // Offset for navbar
+        const elementPosition = gridElement.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - offset
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      }
+    }, 100)
+  }
+
   // Build select options
   const selectOptions = [
     {
@@ -50,7 +117,7 @@ function ProjectsGrid() {
     ...projectTypes.map(type => ({
       value: type,
       label: t(`projects.types.${type}`),
-      icon: typeIcons[type]
+      icon: getTypeIcon(type)
     }))
   ]
 
@@ -129,7 +196,7 @@ function ProjectsGrid() {
               <CustomSelect
                 options={selectOptions}
                 value={selectedFilter}
-                onChange={(value) => setSelectedFilter(value as ProjectType | 'all')}
+                onChange={handleFilterChange}
                 placeholder={t('projects.grid.selectPlaceholder')}
               />
             </div>
@@ -141,7 +208,7 @@ function ProjectsGrid() {
                 animate={{ opacity: 1, scale: 1 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedFilter('all')}
+                onClick={() => handleFilterChange('all')}
                 className="px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700 transition-colors text-sm sm:text-base font-medium flex items-center justify-center gap-2 whitespace-nowrap"
               >
                 <XMarkIcon className="w-5 h-5" />
@@ -170,16 +237,17 @@ function ProjectsGrid() {
         </motion.div>
 
         {/* Projects Grid or Empty State */}
-        <AnimatePresence mode="wait">
-          {filteredProjects.length > 0 ? (
-            <motion.div
-              key={selectedFilter}
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-            >
+        <div id="projects-grid-content">
+          <AnimatePresence mode="wait">
+            {filteredProjects.length > 0 ? (
+              <motion.div
+                key={selectedFilter}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+              >
               {filteredProjects.map((project) => {
                 const projectData = getProjectByLang(project, currentLang)
                 return (
@@ -200,6 +268,7 @@ function ProjectsGrid() {
                       links={project.links}
                       type={project.type}
                       visibility={project.visibility}
+                      images={project.images}
                     />
                   </motion.div>
                 )
@@ -235,18 +304,19 @@ function ProjectsGrid() {
                   })}
                 </p>
 
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setSelectedFilter('all')}
-                  className="btn-primary px-6 py-3 flex items-center gap-2 mx-auto"
-                >
-                  {t('projects.grid.noProjects.viewAll')}
-                </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleFilterChange('all')}
+                className="btn-primary px-6 py-3 flex items-center gap-2 mx-auto"
+              >
+                {t('projects.grid.noProjects.viewAll')}
+              </motion.button>
               </div>
             </motion.div>
           )}
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   )
