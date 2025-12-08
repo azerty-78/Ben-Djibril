@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { 
   RocketLaunchIcon,
   ArrowRightIcon,
-  SparklesIcon
+  StarIcon
 } from '@heroicons/react/24/solid'
 
 function ProjectsCTA() {
@@ -109,7 +109,7 @@ function ProjectsCTA() {
                 ease: "easeInOut"
               }}
             >
-              <SparklesIcon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+              <StarIcon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
             </motion.div>
             <motion.div
               animate={{
@@ -137,7 +137,7 @@ function ProjectsCTA() {
                 delay: 1
               }}
             >
-              <SparklesIcon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+              <StarIcon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
             </motion.div>
           </div>
         </motion.div>

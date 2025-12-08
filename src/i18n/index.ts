@@ -207,8 +207,37 @@ export const resources = {
       projects: {
         title: 'Projets',
         subtitle: 'De vraies solutions pour de vraies entreprises',
-        viewProject: 'Voir le projet', viewCode: 'Voir le code', problem: 'Problème', solution: 'Solution', impact: 'Impact',
-        tags: 'Technologies'
+        description: 'Découvrez les projets que j\'ai réalisés pour mes clients, mettant en avant des solutions innovantes et des résultats mesurables.',
+        viewProject: 'Voir le projet',
+        viewCode: 'Voir le code',
+        problem: 'Problème',
+        solution: 'Solution',
+        impact: 'Impact',
+        tags: 'Technologies',
+        ctaPrimary: 'Démarrer votre projet',
+        ctaSecondary: 'Voir les projets',
+        stats: {
+          projects: 'Projets',
+          clients: 'Clients',
+          satisfaction: 'Satisfaction',
+          weeks: 'Semaines'
+        },
+        grid: {
+          title: 'Projets en vedette',
+          subtitle: 'Explorez mon portfolio de projets réussis',
+          filter: 'Filtrer',
+          all: 'Tous',
+          showing: 'Affichage de',
+          projects: 'projets',
+          clear: 'Effacer le filtre',
+          noProjects: 'Aucun projet trouvé avec ce filtre.'
+        },
+        cta: {
+          title: 'Prêt à démarrer votre projet ?',
+          subtitle: 'Travaillons ensemble pour donner vie à votre vision',
+          description: 'Je suis toujours ravi de relever de nouveaux défis et de créer des solutions innovantes.',
+          button: 'Me contacter'
+        }
       },
       testimonials: {
         title: 'Ce que disent les clients',

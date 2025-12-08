@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { 
   CodeBracketIcon, 
   RocketLaunchIcon,
-  SparklesIcon 
+  StarIcon
 } from '@heroicons/react/24/solid'
 import { Link } from 'react-router-dom'
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
@@ -109,7 +109,7 @@ function ProjectsHero() {
           }}
           className="absolute bottom-20 left-1/4 w-14 h-14 sm:w-18 sm:h-18 text-primary-400 dark:text-primary-500 opacity-30"
         >
-          <SparklesIcon />
+          <StarIcon />
         </motion.div>
       </div>
 
