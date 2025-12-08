@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import ProjectCard from '../ui/ProjectCard'
+import CustomSelect from '../ui/CustomSelect'
 import { projects, getProjectTypes, type ProjectType, getProjectByLang } from '../../data/projects'
 import { 
   FunnelIcon,
@@ -12,7 +13,8 @@ import {
   BriefcaseIcon,
   ChartBarIcon,
   ServerIcon,
-  CommandLineIcon
+  CommandLineIcon,
+  FolderOpenIcon
 } from '@heroicons/react/24/outline'
 
 const typeIcons: Record<ProjectType, typeof ComputerDesktopIcon> = {
@@ -37,6 +39,20 @@ function ProjectsGrid() {
   const filteredProjects = selectedFilter === 'all'
     ? projects
     : projects.filter(project => project.type === selectedFilter)
+
+  // Build select options
+  const selectOptions = [
+    {
+      value: 'all',
+      label: t('projects.grid.all'),
+      icon: FolderOpenIcon
+    },
+    ...projectTypes.map(type => ({
+      value: type,
+      label: t(`projects.types.${type}`),
+      icon: typeIcons[type]
+    }))
+  ]
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -91,7 +107,7 @@ function ProjectsGrid() {
           </p>
         </motion.div>
 
-        {/* Filters */}
+        {/* Filter Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -99,60 +115,47 @@ function ProjectsGrid() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-8 sm:mb-10 md:mb-12"
         >
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 max-w-2xl mx-auto">
             {/* Filter Label */}
-            <div className="flex items-center gap-2 text-secondary-700 dark:text-secondary-300 mb-2 sm:mb-0">
+            <div className="flex items-center gap-2 text-secondary-700 dark:text-secondary-300">
               <FunnelIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-              <span className="text-sm sm:text-base font-semibold">
+              <span className="text-sm sm:text-base font-semibold whitespace-nowrap">
                 {t('projects.grid.filterBy')}:
               </span>
             </div>
 
-            {/* Filter Buttons Container */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-              {/* All Filter */}
+            {/* Custom Select */}
+            <div className="flex-1 sm:max-w-xs">
+              <CustomSelect
+                options={selectOptions}
+                value={selectedFilter}
+                onChange={(value) => setSelectedFilter(value as ProjectType | 'all')}
+                placeholder={t('projects.grid.selectPlaceholder')}
+              />
+            </div>
+
+            {/* Clear Filter Button (only show when filter is active) */}
+            {selectedFilter !== 'all' && (
               <motion.button
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedFilter('all')}
-                className={`px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-medium transition-all duration-200 flex items-center gap-2 ${
-                  selectedFilter === 'all'
-                    ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/30'
-                    : 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700 hover:shadow-md'
-                }`}
+                className="px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700 transition-colors text-sm sm:text-base font-medium flex items-center justify-center gap-2 whitespace-nowrap"
               >
-                {t('projects.grid.all')}
+                <XMarkIcon className="w-5 h-5" />
+                {t('projects.grid.clear')}
               </motion.button>
-
-              {/* Type Filters */}
-              {projectTypes.map((type) => {
-                const Icon = typeIcons[type]
-                return (
-                  <motion.button
-                    key={type}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setSelectedFilter(type)}
-                    className={`px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-medium transition-all duration-200 flex items-center gap-2 ${
-                      selectedFilter === type
-                        ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/30'
-                        : 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700 hover:shadow-md'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                    {t(`projects.types.${type}`)}
-                  </motion.button>
-                )
-              })}
-            </div>
+            )}
           </div>
 
-          {/* Active Filter Indicator */}
+          {/* Active Filter Info */}
           {selectedFilter !== 'all' && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: -10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 flex items-center justify-center"
             >
               <div className="px-4 py-2 rounded-lg bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800">
                 <span className="text-sm sm:text-base text-secondary-700 dark:text-secondary-300">
@@ -162,20 +165,11 @@ function ProjectsGrid() {
                   {t('projects.grid.showing')} {t(`projects.types.${selectedFilter}`).toLowerCase()}
                 </span>
               </div>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedFilter('all')}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700 transition-colors text-sm sm:text-base font-medium"
-              >
-                <XMarkIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                {t('projects.grid.clear')}
-              </motion.button>
             </motion.div>
           )}
         </motion.div>
 
-        {/* Projects Grid */}
+        {/* Projects Grid or Empty State */}
         <AnimatePresence mode="wait">
           {filteredProjects.length > 0 ? (
             <motion.div
@@ -213,14 +207,43 @@ function ProjectsGrid() {
             </motion.div>
           ) : (
             <motion.div
+              key="empty"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="text-center py-12 sm:py-16"
+              className="text-center py-16 sm:py-20 md:py-24"
             >
-              <p className="text-lg sm:text-xl text-secondary-600 dark:text-secondary-400">
-                {t('projects.grid.noProjects')}
-              </p>
+              <div className="max-w-md mx-auto">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="mb-6"
+                >
+                  <div className="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-secondary-100 dark:bg-secondary-800 mb-4">
+                    <FolderOpenIcon className="w-10 h-10 sm:w-12 sm:h-12 text-secondary-400 dark:text-secondary-500" />
+                  </div>
+                </motion.div>
+                
+                <h3 className="text-2xl sm:text-3xl font-bold text-secondary-900 dark:text-white mb-3">
+                  {t('projects.grid.noProjects.title')}
+                </h3>
+                
+                <p className="text-base sm:text-lg text-secondary-600 dark:text-secondary-400 mb-6">
+                  {t('projects.grid.noProjects.message', { 
+                    type: t(`projects.types.${selectedFilter}`).toLowerCase() 
+                  })}
+                </p>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedFilter('all')}
+                  className="btn-primary px-6 py-3 flex items-center gap-2 mx-auto"
+                >
+                  {t('projects.grid.noProjects.viewAll')}
+                </motion.button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

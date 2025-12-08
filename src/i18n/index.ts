@@ -118,11 +118,23 @@ export const resources = {
           subtitle: 'Explore my portfolio of successful projects',
           filter: 'Filter',
           filterBy: 'Filter by type',
-          all: 'All',
+          selectPlaceholder: 'Select project type',
+          all: 'All Projects',
           showing: 'Showing',
           projects: 'projects',
           clear: 'Clear filter',
-          noProjects: 'No projects found with this filter.'
+          noProjects: {
+            title: 'No projects found',
+            message: 'No {type} projects available at the moment. Please try another filter.',
+            viewAll: 'View All Projects'
+          }
+        },
+        clientTypes: {
+          company: 'Company',
+          individual: 'Individual',
+          startup: 'Startup',
+          ngo: 'NGO',
+          government: 'Government'
         },
         cta: {
           title: 'Ready to Start Your Project?',
@@ -260,11 +272,23 @@ export const resources = {
           subtitle: 'Explorez mon portfolio de projets réussis',
           filter: 'Filtrer',
           filterBy: 'Filtrer par type',
-          all: 'Tous',
+          selectPlaceholder: 'Sélectionner un type de projet',
+          all: 'Tous les projets',
           showing: 'Affichage de',
           projects: 'projets',
           clear: 'Effacer le filtre',
-          noProjects: 'Aucun projet trouvé avec ce filtre.'
+          noProjects: {
+            title: 'Aucun projet trouvé',
+            message: 'Aucun projet de type {type} disponible pour le moment. Veuillez essayer un autre filtre.',
+            viewAll: 'Voir tous les projets'
+          }
+        },
+        clientTypes: {
+          company: 'Entreprise',
+          individual: 'Particulier',
+          startup: 'Startup',
+          ngo: 'ONG',
+          government: 'Gouvernement'
         },
         cta: {
           title: 'Prêt à démarrer votre projet ?',
