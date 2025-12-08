@@ -41,7 +41,14 @@ export interface ProjectLinks {
 export interface ProjectClient {
   name: string
   type: 'company' | 'individual' | 'startup' | 'ngo' | 'government'
-  description: string
+  translations: {
+    en: {
+      description: string
+    }
+    fr: {
+      description: string
+    }
+  }
 }
 
 export interface Project {
@@ -79,7 +86,14 @@ export const projects: Project[] = [
     client: {
       name: 'FashionHub',
       type: 'company',
-      description: 'A leading fashion retailer in West Africa, specializing in trendy clothing and accessories for young professionals.'
+      translations: {
+        en: {
+          description: 'A leading fashion retailer in West Africa, specializing in trendy clothing and accessories for young professionals.'
+        },
+        fr: {
+          description: 'Un détaillant de mode de premier plan en Afrique de l\'Ouest, spécialisé dans les vêtements et accessoires tendance pour les jeunes professionnels.'
+        }
+      }
     },
     links: {
       official: 'https://fashionhub.example.com',
@@ -116,7 +130,14 @@ export const projects: Project[] = [
     client: {
       name: 'TechStart Analytics',
       type: 'startup',
-      description: 'A fast-growing B2B SaaS startup providing analytics solutions for small and medium businesses, helping them make data-driven decisions.'
+      translations: {
+        en: {
+          description: 'A fast-growing B2B SaaS startup providing analytics solutions for small and medium businesses, helping them make data-driven decisions.'
+        },
+        fr: {
+          description: 'Une startup SaaS B2B en pleine croissance fournissant des solutions d\'analyse pour les petites et moyennes entreprises, les aidant à prendre des décisions basées sur les données.'
+        }
+      }
     },
     links: {
       official: 'https://techstart-analytics.example.com',
@@ -152,7 +173,14 @@ export const projects: Project[] = [
     client: {
       name: 'HealthCare Plus',
       type: 'company',
-      description: 'A healthcare technology company providing telemedicine services and patient management solutions across multiple countries in Africa.'
+      translations: {
+        en: {
+          description: 'A healthcare technology company providing telemedicine services and patient management solutions across multiple countries in Africa.'
+        },
+        fr: {
+          description: 'Une entreprise de technologie de la santé fournissant des services de télémédecine et des solutions de gestion des patients dans plusieurs pays d\'Afrique.'
+        }
+      }
     },
     links: {
       official: 'https://healthcareplus.example.com',
@@ -188,7 +216,14 @@ export const projects: Project[] = [
     client: {
       name: 'Creative Agency Studio',
       type: 'company',
-      description: 'A boutique creative agency specializing in brand identity, web design, and digital marketing for creative professionals and small businesses.'
+      translations: {
+        en: {
+          description: 'A boutique creative agency specializing in brand identity, web design, and digital marketing for creative professionals and small businesses.'
+        },
+        fr: {
+          description: 'Une agence créative spécialisée dans l\'identité de marque, le design web et le marketing digital pour les professionnels créatifs et les petites entreprises.'
+        }
+      }
     },
     links: {
       official: 'https://creativestudio.example.com',
@@ -222,7 +257,11 @@ export const projects: Project[] = [
 export const getProjectByLang = (project: Project, lang: 'en' | 'fr') => {
   return {
     ...project,
-    ...project.translations[lang]
+    ...project.translations[lang],
+    client: {
+      ...project.client,
+      description: project.client.translations[lang].description
+    }
   }
 }
 

@@ -264,7 +264,7 @@ function ProjectsGrid() {
                       solution={projectData.solution}
                       impact={projectData.impact}
                       stack={project.stack}
-                      client={project.client}
+                      client={projectData.client}
                       links={project.links}
                       type={project.type}
                       visibility={project.visibility}
