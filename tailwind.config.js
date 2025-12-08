@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '475px',
+      },
       colors: {
         // Palette claire/sombre moderne et harmonisée
         primary: {
