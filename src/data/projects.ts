@@ -1,11 +1,34 @@
 export type ProjectType = 
-  | 'web-app'
-  | 'mobile-app'
-  | 'ecommerce'
+  | 'web-dev'
+  | 'showcase'
   | 'portfolio'
-  | 'dashboard'
+  | 'ecommerce'
+  | 'web-app'
+  | 'mobile'
+  | 'desktop'
   | 'api'
-  | 'desktop-app'
+  | 'devops'
+  | 'consulting'
+  | 'inventory'
+  | 'restaurant'
+  | 'billing'
+  | 'orders'
+  | 'pos'
+  | 'crm'
+  | 'delivery'
+  | 'booking'
+  | 'pharmacy'
+  | 'gym'
+  | 'salon'
+  | 'transport'
+  | 'rental'
+  | 'accounting'
+  | 'payroll'
+  | 'mobile-money'
+  | 'market'
+  | 'parking'
+  | 'school'
+  | 'hospital'
 
 export type ProjectVisibility = 'public' | 'private' | 'confidential'
 
@@ -28,6 +51,7 @@ export interface Project {
   stack: string[]
   client: ProjectClient
   links: ProjectLinks
+  images: string[] // Multiple images for the project
   translations: {
     en: {
       name: string
@@ -62,6 +86,11 @@ export const projects: Project[] = [
       github: 'https://github.com/example/fashionhub',
       demo: 'https://demo.fashionhub.example.com'
     },
+    images: [
+      'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1556742111-a301076d9d18?w=1200&h=800&fit=crop'
+    ],
     translations: {
       en: {
         name: 'E-commerce Fashion Platform',
@@ -81,7 +110,7 @@ export const projects: Project[] = [
   },
   {
     id: '2',
-    type: 'dashboard',
+    type: 'web-app',
     visibility: 'public',
     stack: ['React', 'D3.js', 'Node.js', 'MongoDB', 'Express'],
     client: {
@@ -93,6 +122,11 @@ export const projects: Project[] = [
       official: 'https://techstart-analytics.example.com',
       github: 'https://github.com/example/techstart-dashboard'
     },
+    images: [
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop'
+    ],
     translations: {
       en: {
         name: 'Analytics Dashboard SaaS',
@@ -112,7 +146,7 @@ export const projects: Project[] = [
   },
   {
     id: '3',
-    type: 'mobile-app',
+    type: 'mobile',
     visibility: 'public',
     stack: ['Kotlin Multiplatform', 'Android', 'iOS', 'Spring Boot', 'PostgreSQL'],
     client: {
@@ -124,6 +158,11 @@ export const projects: Project[] = [
       official: 'https://healthcareplus.example.com',
       github: 'https://github.com/example/healthcare-mobile'
     },
+    images: [
+      'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&h=800&fit=crop'
+    ],
     translations: {
       en: {
         name: 'Telemedicine Mobile App',
@@ -155,6 +194,11 @@ export const projects: Project[] = [
       official: 'https://creativestudio.example.com',
       github: 'https://github.com/example/creative-studio-portfolio'
     },
+    images: [
+      'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=800&fit=crop'
+    ],
     translations: {
       en: {
         name: 'Creative Portfolio Website',

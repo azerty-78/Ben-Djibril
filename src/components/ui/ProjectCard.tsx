@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { 
@@ -12,8 +13,10 @@ import {
   GlobeAltIcon,
   LockClosedIcon,
   EyeIcon,
-  PlayIcon
+  PlayIcon,
+  PhotoIcon
 } from '@heroicons/react/24/outline'
+import ImageLightbox from './ImageLightbox'
 import type { ProjectType, ProjectVisibility, ProjectLinks, ProjectClient } from '../../data/projects'
 
 type ProjectCardProps = {
@@ -28,6 +31,7 @@ type ProjectCardProps = {
   links: ProjectLinks
   type: ProjectType
   visibility: ProjectVisibility
+  images: string[]
 }
 
 const typeColors: Record<ProjectType, { gradient: string; light: string; dark: string }> = {
