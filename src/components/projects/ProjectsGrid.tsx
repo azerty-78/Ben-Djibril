@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import ProjectCard from '../ui/ProjectCard'
-import { mockProjects } from '../data/mockData'
+import { mockProjects } from '../../data/mockData'
 import { 
   FunnelIcon,
   XMarkIcon 
