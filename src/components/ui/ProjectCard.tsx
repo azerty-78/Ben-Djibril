@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { 
@@ -107,15 +107,21 @@ function ProjectCard({
   images,
 }: ProjectCardProps) {
   const { t } = useTranslation()
-  const ClientIcon = clientTypeIcons[client.type]
-  const typeColor = typeColors[type] || defaultColor
+  
+  // Memoize expensive computations
+  const ClientIcon = useMemo(() => clientTypeIcons[client.type], [client.type])
+  const typeColor = useMemo(() => typeColors[type] || defaultColor, [type])
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
 
-  const handleImageClick = (index: number) => {
+  const handleImageClick = useCallback((index: number) => {
     setLightboxIndex(index)
     setLightboxOpen(true)
-  }
+  }, [])
+
+  // Memoize stack display
+  const displayedStack = useMemo(() => stack.slice(0, 5), [stack])
+  const remainingStackCount = useMemo(() => Math.max(0, stack.length - 5), [stack.length])
 
   return (
     <>
@@ -124,23 +130,38 @@ function ProjectCard({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        whileHover={{ y: -12, scale: 1.02 }}
-        className="group relative bg-white dark:bg-secondary-900 rounded-2xl sm:rounded-3xl shadow-lg hover:shadow-2xl border border-secondary-100 dark:border-secondary-800 overflow-hidden transition-all duration-300 h-full flex flex-col"
+      whileHover={{ y: -10, scale: 1.01 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      className="group relative bg-white dark:bg-secondary-900 rounded-2xl sm:rounded-3xl shadow-lg hover:shadow-2xl border border-secondary-100 dark:border-secondary-800 overflow-hidden transition-all duration-300 h-full flex flex-col"
       >
         {/* Image/Header Section */}
-        <div className={`relative h-56 sm:h-64 bg-gradient-to-br ${typeColor.gradient} overflow-hidden cursor-pointer`} onClick={() => handleImageClick(0)}>
+        <div 
+          className={`relative h-56 sm:h-64 bg-gradient-to-br ${typeColor.gradient} overflow-hidden cursor-pointer`} 
+          onClick={() => handleImageClick(0)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              handleImageClick(0)
+            }
+          }}
+          aria-label={`${t('projects.viewImages')} ${name}`}
+        >
           {/* Actual Image or Placeholder */}
           {images && images.length > 0 ? (
             <>
               <img
                 src={images[0]}
                 alt={name}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 will-change-transform"
               />
               {/* Image Count Badge */}
               {images.length > 1 && (
                 <div className="absolute top-4 left-4 z-30 px-3 py-1.5 rounded-lg bg-black/60 backdrop-blur-md flex items-center gap-1.5">
-                  <PhotoIcon className="w-4 h-4 text-white" />
+                  <PhotoIcon className="w-4 h-4 text-white" aria-hidden="true" />
                   <span className="text-xs font-bold text-white">
                     {images.length} {t('projects.images')}
                   </span>
@@ -246,10 +267,11 @@ function ProjectCard({
           {/* Problem, Solution, Impact */}
           <div className="space-y-3 mb-5 flex-1">
             <motion.div
-              whileHover={{ x: 4 }}
+              whileHover={{ x: 3 }}
+              transition={{ duration: 0.2 }}
               className="flex items-start gap-3 p-3.5 rounded-xl bg-accent-50/60 dark:bg-accent-900/20 border border-accent-100 dark:border-accent-800/30 hover:bg-accent-50 dark:hover:bg-accent-900/30 transition-colors"
             >
-              <div className="p-2 rounded-lg bg-accent-100 dark:bg-accent-900/40 flex-shrink-0">
+              <div className="p-2 rounded-lg bg-accent-100 dark:bg-accent-900/40 flex-shrink-0" aria-hidden="true">
                 <ExclamationTriangleIcon className="w-5 h-5 text-accent-600 dark:text-accent-400" />
               </div>
               <div className="flex-1 min-w-0">
@@ -263,10 +285,11 @@ function ProjectCard({
             </motion.div>
 
             <motion.div
-              whileHover={{ x: 4 }}
+              whileHover={{ x: 3 }}
+              transition={{ duration: 0.2 }}
               className="flex items-start gap-3 p-3.5 rounded-xl bg-primary-50/60 dark:bg-primary-900/20 border border-primary-100 dark:border-primary-800/30 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors"
             >
-              <div className="p-2 rounded-lg bg-primary-100 dark:bg-primary-900/40 flex-shrink-0">
+              <div className="p-2 rounded-lg bg-primary-100 dark:bg-primary-900/40 flex-shrink-0" aria-hidden="true">
                 <LightBulbIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
               </div>
               <div className="flex-1 min-w-0">
@@ -280,10 +303,11 @@ function ProjectCard({
             </motion.div>
 
             <motion.div
-              whileHover={{ x: 4 }}
+              whileHover={{ x: 3 }}
+              transition={{ duration: 0.2 }}
               className="flex items-start gap-3 p-3.5 rounded-xl bg-success-50/60 dark:bg-success-900/20 border border-success-100 dark:border-success-800/30 hover:bg-success-50 dark:hover:bg-success-900/30 transition-colors"
             >
-              <div className="p-2 rounded-lg bg-success-100 dark:bg-success-900/40 flex-shrink-0">
+              <div className="p-2 rounded-lg bg-success-100 dark:bg-success-900/40 flex-shrink-0" aria-hidden="true">
                 <ChartBarIcon className="w-5 h-5 text-success-600 dark:text-success-400" />
               </div>
               <div className="flex-1 min-w-0">
@@ -303,18 +327,19 @@ function ProjectCard({
               {t('projects.stack')}
             </p>
             <div className="flex flex-wrap gap-2">
-              {stack.slice(0, 5).map((tech, index) => (
+              {displayedStack.map((tech, index) => (
                 <motion.span
-                  key={index}
+                  key={`${tech}-${index}`}
                   whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
                   className="px-3 py-1.5 bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 rounded-lg text-xs font-semibold border border-secondary-200 dark:border-secondary-700 hover:bg-secondary-200 dark:hover:bg-secondary-700 transition-colors"
                 >
                   {tech}
                 </motion.span>
               ))}
-              {stack.length > 5 && (
+              {remainingStackCount > 0 && (
                 <span className="px-3 py-1.5 bg-secondary-100 dark:bg-secondary-800 text-secondary-500 dark:text-secondary-400 rounded-lg text-xs font-semibold border border-secondary-200 dark:border-secondary-700">
-                  +{stack.length - 5}
+                  +{remainingStackCount}
                 </span>
               )}
             </div>
