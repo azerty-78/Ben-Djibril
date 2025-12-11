@@ -50,8 +50,8 @@ function PackageCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -8, scale: 1.03 }}
-      whileTap={{ scale: 0.97 }}
+      whileHover={{ y: -4, scale: 1.015, zIndex: 5 }}
+      whileTap={{ scale: 0.98, zIndex: 5 }}
       transition={{ duration: 0.5 }}
       className={`card relative w-full overflow-visible ${
         popular ? 'ring-2 ring-primary-500 dark:ring-primary-400 md:scale-105 pt-6 md:pt-6' : ''
