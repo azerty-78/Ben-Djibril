@@ -18,7 +18,11 @@ import {
   ServerIcon,
   AcademicCapIcon,
   ExclamationTriangleIcon,
+  ChatBubbleLeftRightIcon,
+  CalendarDaysIcon,
+  ClockIcon,
 } from '@heroicons/react/24/outline'
+import { FaWhatsapp } from 'react-icons/fa6'
 
 export type PlanId =
   | 'saas-goodDeal'
@@ -550,22 +554,201 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                 </h3>
               </div>
               <ul className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-                {features.map((feature, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 bg-white/70 dark:bg-secondary-900/50 rounded-lg p-3 sm:p-4 border border-secondary-100/60 dark:border-secondary-700/40 shadow-sm"
-                  >
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-success-500/15 text-success-700 dark:text-success-300 text-[0.7rem] sm:text-xs font-semibold">
-                        {index + 1}
+                {features.map((feature, index) => {
+                  const hasMVP = feature.includes('MVP') && !feature.includes('MVPA')
+                  const hasMVPA = feature.includes('MVPA')
+                  const hasCRUD = feature.includes('CRUD')
+                  
+                  return (
+                    <li
+                      key={index}
+                      className="flex items-start gap-3 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 bg-white/70 dark:bg-secondary-900/50 rounded-lg p-3 sm:p-4 border border-secondary-100/60 dark:border-secondary-700/40 shadow-sm"
+                    >
+                      <div className="flex flex-col items-center gap-1">
+                        <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-success-500/15 text-success-700 dark:text-success-300 text-[0.7rem] sm:text-xs font-semibold">
+                          {index + 1}
+                        </span>
+                        <CheckCircleIcon className="w-4 h-4 text-success-500 dark:text-success-400 hidden sm:block" />
+                      </div>
+                      <span className="leading-relaxed flex-1">
+                        {feature.split(/(MVP|MVPA|CRUD)/).map((part, i) => {
+                          if (part === 'MVP' && hasMVP) {
+                            return (
+                              <span key={i} className="group relative inline-block">
+                                <span className="underline decoration-dotted decoration-primary-500 dark:decoration-primary-400 cursor-help">
+                                  {part}
+                                </span>
+                                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-secondary-900 dark:bg-secondary-800 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 whitespace-normal w-64">
+                                  {t('services.saasComparison.mvpTooltip')}
+                                </span>
+                              </span>
+                            )
+                          }
+                          if (part === 'MVPA' && hasMVPA) {
+                            return (
+                              <span key={i} className="group relative inline-block">
+                                <span className="underline decoration-dotted decoration-primary-500 dark:decoration-primary-400 cursor-help">
+                                  {part}
+                                </span>
+                                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-secondary-900 dark:bg-secondary-800 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 whitespace-normal w-64">
+                                  {t('services.saasComparison.mvpaTooltip')}
+                                </span>
+                              </span>
+                            )
+                          }
+                          if (part === 'CRUD' && hasCRUD) {
+                            return (
+                              <span key={i} className="group relative inline-block">
+                                <span className="underline decoration-dotted decoration-primary-500 dark:decoration-primary-400 cursor-help">
+                                  {part}
+                                </span>
+                                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-secondary-900 dark:bg-secondary-800 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 whitespace-normal w-64">
+                                  {t('services.saasComparison.crudTooltip')}
+                                </span>
+                              </span>
+                            )
+                          }
+                          return <span key={i}>{part}</span>
+                        })}
                       </span>
-                      <CheckCircleIcon className="w-4 h-4 text-success-500 dark:text-success-400 hidden sm:block" />
-                    </div>
-                    <span className="leading-relaxed flex-1">{feature}</span>
-                  </li>
-                ))}
+                    </li>
+                  )
+                })}
               </ul>
             </div>
+
+            {/* Support & SLA */}
+            {category === 'saas' && (
+              <div className="border border-primary-200 dark:border-primary-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-primary-50/80 to-primary-100/40 dark:from-primary-900/30 dark:to-primary-800/20">
+                <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                  <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary-600/10 dark:bg-primary-400/20 flex items-center justify-center">
+                    <ClockIcon className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 dark:text-primary-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                      {t(`${baseKey}.supportLevel`)}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 leading-relaxed mb-3">
+                      {t(`${baseKey}.supportSLA`)}
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-primary-500 dark:bg-primary-400 animate-pulse" />
+                      <span className="text-xs text-primary-700 dark:text-primary-300 font-medium">
+                        Disponible
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Next Evolutions Timeline */}
+            {category === 'saas' && (
+              <div className="border border-accent-200 dark:border-accent-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-accent-50/80 to-accent-100/40 dark:from-accent-900/20 dark:to-accent-800/10">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-accent-600/10 dark:bg-accent-400/20 flex items-center justify-center">
+                    <CalendarDaysIcon className="w-5 h-5 sm:w-6 sm:h-6 text-accent-600 dark:text-accent-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-3">
+                      {t('services.saasComparison.nextEvolutions')}
+                    </h3>
+                    <div className="space-y-3">
+                      {planId === 'saas-goodDeal' && (
+                        <>
+                          <div className="flex items-start gap-3 p-3 bg-white/60 dark:bg-secondary-900/40 rounded-lg border border-accent-200/50 dark:border-accent-700/50">
+                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-accent-100 dark:bg-accent-900/40 flex items-center justify-center text-xs font-semibold text-accent-700 dark:text-accent-300">
+                              Q1
+                            </div>
+                            <div>
+                              <p className="text-xs sm:text-sm font-semibold text-secondary-900 dark:text-white mb-1">
+                                Prochaine évolution incluse
+                              </p>
+                              <p className="text-xs text-secondary-600 dark:text-secondary-400">
+                                {t('services.saas.goodDeal.cadence')} - 1 nouvelle fonctionnalité
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {planId === 'saas-pro' && (
+                        <>
+                          <div className="flex items-start gap-3 p-3 bg-white/60 dark:bg-secondary-900/40 rounded-lg border border-accent-200/50 dark:border-accent-700/50">
+                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-accent-100 dark:bg-accent-900/40 flex items-center justify-center text-xs font-semibold text-accent-700 dark:text-accent-300">
+                              S1
+                            </div>
+                            <div>
+                              <p className="text-xs sm:text-sm font-semibold text-secondary-900 dark:text-white mb-1">
+                                Prochaine évolution incluse
+                              </p>
+                              <p className="text-xs text-secondary-600 dark:text-secondary-400">
+                                {t('services.saas.pro.cadence')} - 1 nouvelle fonctionnalité
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {planId === 'saas-ultra' && (
+                        <>
+                          <div className="flex items-start gap-3 p-3 bg-white/60 dark:bg-secondary-900/40 rounded-lg border border-accent-200/50 dark:border-accent-700/50">
+                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-accent-100 dark:bg-accent-900/40 flex items-center justify-center text-xs font-semibold text-accent-700 dark:text-accent-300">
+                              Q1
+                            </div>
+                            <div>
+                              <p className="text-xs sm:text-sm font-semibold text-secondary-900 dark:text-white mb-1">
+                                Prochaine évolution incluse
+                              </p>
+                              <p className="text-xs text-secondary-600 dark:text-secondary-400">
+                                {t('services.saas.ultra.cadence')} - 1 nouvelle fonctionnalité
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Talk to Expert CTA */}
+            {category === 'saas' && (
+              <div className="border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 sm:p-5 md:p-6 bg-gradient-to-br from-emerald-50/80 to-emerald-100/40 dark:from-emerald-900/20 dark:to-emerald-800/10">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-emerald-600/10 dark:bg-emerald-400/20 flex items-center justify-center">
+                      <ChatBubbleLeftRightIcon className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary-900 dark:text-white mb-1">
+                        {t('services.saasComparison.talkToExpert')}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                        Des questions ? Discutons de votre projet
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 w-full sm:w-auto">
+                    <a
+                      href="https://wa.me/237655938501"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                    >
+                      <FaWhatsapp className="w-5 h-5" />
+                      WhatsApp
+                    </a>
+                    <a
+                      href="mailto:contact@bendjibril.dev"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-secondary-600 hover:bg-secondary-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                    >
+                      <InformationCircleIcon className="w-5 h-5" />
+                      Email
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Audience & ownership */}
             <div className="grid md:grid-cols-2 gap-4 sm:gap-5">

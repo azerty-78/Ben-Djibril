@@ -18,13 +18,15 @@ import {
   ShieldCheckIcon,
   SparklesIcon,
   NoSymbolIcon,
+  CalendarDaysIcon,
 } from '@heroicons/react/24/outline'
 
 type SaaSComparisonTableProps = {
   open: boolean
+  highlightedPlan?: string | null
 }
 
-function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
+function SaaSComparisonTable({ open, highlightedPlan }: SaaSComparisonTableProps) {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -182,6 +184,24 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
       type: 'text' as const,
     },
     {
+      key: 'cadence',
+      label: t('services.saasComparison.cadence'),
+      icon: CalendarDaysIcon,
+      good: t('services.saasComparison.cadenceGood'),
+      pro: t('services.saasComparison.cadencePro'),
+      ultra: t('services.saasComparison.cadenceUltra'),
+      type: 'text' as const,
+    },
+    {
+      key: 'support',
+      label: t('services.saasComparison.support'),
+      icon: ClockIcon,
+      good: t('services.saasComparison.supportGood'),
+      pro: t('services.saasComparison.supportPro'),
+      ultra: t('services.saasComparison.supportUltra'),
+      type: 'text' as const,
+    },
+    {
       key: 'seo',
       label: t('services.saasComparison.seo'),
       icon: SparklesIcon,
@@ -281,7 +301,9 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
                         idx < plans.length - 1
                           ? 'border-r-2 border-secondary-200 dark:border-secondary-700'
                           : ''
-                      } ${idx === 0 ? 'md:border-l-2 border-secondary-200 dark:border-secondary-700' : ''}`}
+                      } ${idx === 0 ? 'md:border-l-2 border-secondary-200 dark:border-secondary-700' : ''} ${
+                        highlightedPlan === plan.id ? 'ring-4 ring-primary-400 dark:ring-primary-500 ring-offset-2' : ''
+                      } transition-all duration-500`}
                     >
                       <div className="text-center">
                         {/* Old Price (Strikethrough) */}
@@ -383,7 +405,9 @@ function SaaSComparisonTable({ open }: SaaSComparisonTableProps) {
                               planIdx < plans.length - 1
                                 ? 'border-r border-secondary-200 dark:border-secondary-700'
                                 : ''
-                            }`}
+                            } ${
+                              highlightedPlan === plan.id ? 'ring-2 ring-primary-400 dark:ring-primary-500' : ''
+                            } transition-all duration-500`}
                           >
                             {value === 'CHECK' ? (
                               <CheckIcon className="w-5 h-5 mx-auto text-emerald-500 dark:text-emerald-400" />

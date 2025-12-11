@@ -38,8 +38,11 @@ function ServicesPackages() {
   const [selectedPlan, setSelectedPlan] = useState<PlanId | null>(null)
   const [showSaaSComparison, setShowSaaSComparison] = useState(false)
   const [showFullControlComparison, setShowFullControlComparison] = useState(false)
+  const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('monthly')
+  const [highlightedPlan, setHighlightedPlan] = useState<string | null>(null)
   const saasScrollRef = useRef<HTMLDivElement | null>(null)
   const fullScrollRef = useRef<HTMLDivElement | null>(null)
+  const comparisonTableRef = useRef<HTMLDivElement | null>(null)
 
   const saasFeatures = {
     goodDeal: [
@@ -105,6 +108,16 @@ function ServicesPackages() {
 
   const toggleFullControlComparison = useCallback(() => {
     setShowFullControlComparison((prev) => !prev)
+  }, [])
+
+  const handleComparePlan = useCallback((planId: string) => {
+    setShowSaaSComparison(true)
+    setHighlightedPlan(planId)
+    setTimeout(() => {
+      comparisonTableRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      // Retirer le highlight après 3 secondes
+      setTimeout(() => setHighlightedPlan(null), 3000)
+    }, 100)
   }, [])
 
   return (
@@ -235,6 +248,37 @@ function ServicesPackages() {
           </div>
 
           <div className="max-w-6xl mx-auto mt-6 md:mt-8">
+            {/* Toggle Mensuel/Annuel */}
+            <div className="flex justify-center mb-6">
+              <div className="inline-flex items-center gap-2 p-1 bg-secondary-100 dark:bg-secondary-800 rounded-lg border border-secondary-200 dark:border-secondary-700">
+                <button
+                  type="button"
+                  onClick={() => setBillingPeriod('monthly')}
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
+                    billingPeriod === 'monthly'
+                      ? 'bg-white dark:bg-secondary-700 text-primary-700 dark:text-primary-300 shadow-sm'
+                      : 'text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-secondary-200'
+                  }`}
+                >
+                  Mensuel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBillingPeriod('annual')}
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
+                    billingPeriod === 'annual'
+                      ? 'bg-white dark:bg-secondary-700 text-primary-700 dark:text-primary-300 shadow-sm'
+                      : 'text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-secondary-200'
+                  }`}
+                >
+                  Annuel
+                  <span className="ml-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-semibold">
+                    (-16%)
+                  </span>
+                </button>
+              </div>
+            </div>
+
             <div
               ref={saasScrollRef}
               className="flex gap-4 overflow-x-auto overflow-y-visible pb-4 pt-6 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0"
@@ -243,15 +287,19 @@ function ServicesPackages() {
               <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:-translate-y-2 md:scale-105 md:order-2 relative">
                 <PackageCard
                   name={t('services.saas.goodDeal.name')}
-                  price={t('services.saas.goodDeal.price')}
-                  priceUnit={t('services.saas.goodDeal.priceUnit')}
-                  oldPrice="200 000 f (HT)"
-                  secondaryPrice={t('services.saas.goodDeal.annualPrice')}
-                  savingLabel={t('services.saas.goodDeal.annualSaving')}
+                  price={billingPeriod === 'annual' ? t('services.saas.goodDeal.annualPriceShort') : t('services.saas.goodDeal.price')}
+                  priceUnit={billingPeriod === 'annual' ? '/an' : t('services.saas.goodDeal.priceUnit')}
+                  oldPrice={billingPeriod === 'annual' ? undefined : "200 000 f (HT)"}
+                  secondaryPrice={billingPeriod === 'monthly' ? t('services.saas.goodDeal.annualPrice') : undefined}
+                  savingLabel={billingPeriod === 'monthly' ? t('services.saas.goodDeal.annualSaving') : undefined}
                   description={t('services.saas.goodDeal.description')}
                   features={saasFeatures.goodDeal}
                   popular
                   popularLabel={t('services.mostPopular')}
+                  cadenceBadge={t('services.saas.goodDeal.cadenceBadge')}
+                  idealFor={t('services.saas.goodDeal.idealFor')}
+                  compareLabel={t('services.saasComparison.comparePlan')}
+                  onCompare={() => handleComparePlan('goodDeal')}
                   cta={t('services.getStarted')}
                   onClick={() => handlePlanClick('saas-goodDeal')}
                   className="shadow-xl"
@@ -262,13 +310,17 @@ function ServicesPackages() {
               <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-1">
                     <PackageCard
                       name={t('services.saas.pro.name')}
-                      price={t('services.saas.pro.price')}
-                      priceUnit={t('services.saas.pro.priceUnit')}
-                      oldPrice="450 000 f (HT)"
-                      secondaryPrice={t('services.saas.pro.annualPrice')}
-                      savingLabel={t('services.saas.pro.annualSaving')}
+                      price={billingPeriod === 'annual' ? t('services.saas.pro.annualPriceShort') : t('services.saas.pro.price')}
+                      priceUnit={billingPeriod === 'annual' ? '/an' : t('services.saas.pro.priceUnit')}
+                      oldPrice={billingPeriod === 'annual' ? undefined : "450 000 f (HT)"}
+                      secondaryPrice={billingPeriod === 'monthly' ? t('services.saas.pro.annualPrice') : undefined}
+                      savingLabel={billingPeriod === 'monthly' ? t('services.saas.pro.annualSaving') : undefined}
                       description={t('services.saas.pro.description')}
                       features={saasFeatures.pro}
+                      cadenceBadge={t('services.saas.pro.cadenceBadge')}
+                      idealFor={t('services.saas.pro.idealFor')}
+                      compareLabel={t('services.saasComparison.comparePlan')}
+                      onCompare={() => handleComparePlan('pro')}
                       cta={t('services.getStarted')}
                       onClick={() => handlePlanClick('saas-pro')}
                     />
@@ -278,13 +330,17 @@ function ServicesPackages() {
               <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-3">
                     <PackageCard
                       name={t('services.saas.ultra.name')}
-                      price={t('services.saas.ultra.price')}
-                      priceUnit={t('services.saas.ultra.priceUnit')}
-                      oldPrice="600 000 f (HT)"
-                      secondaryPrice={t('services.saas.ultra.annualPrice')}
-                      savingLabel={t('services.saas.ultra.annualSaving')}
+                      price={billingPeriod === 'annual' ? t('services.saas.ultra.annualPriceShort') : t('services.saas.ultra.price')}
+                      priceUnit={billingPeriod === 'annual' ? '/an' : t('services.saas.ultra.priceUnit')}
+                      oldPrice={billingPeriod === 'annual' ? undefined : "600 000 f (HT)"}
+                      secondaryPrice={billingPeriod === 'monthly' ? t('services.saas.ultra.annualPrice') : undefined}
+                      savingLabel={billingPeriod === 'monthly' ? t('services.saas.ultra.annualSaving') : undefined}
                       description={t('services.saas.ultra.description')}
                       features={saasFeatures.ultra}
+                      cadenceBadge={t('services.saas.ultra.cadenceBadge')}
+                      idealFor={t('services.saas.ultra.idealFor')}
+                      compareLabel={t('services.saasComparison.comparePlan')}
+                      onCompare={() => handleComparePlan('ultra')}
                       cta={t('services.getStarted')}
                       onClick={() => handlePlanClick('saas-ultra')}
                     />
@@ -293,7 +349,7 @@ function ServicesPackages() {
           </div>
 
           {/* Comparison button and table */}
-          <div className="mt-8 text-center hidden md:block">
+          <div ref={comparisonTableRef} className="mt-8 text-center hidden md:block">
             <button
                     type="button"
                     onClick={toggleSaaSComparison}
@@ -313,7 +369,7 @@ function ServicesPackages() {
               </motion.span>
             </button>
           </div>
-          <SaaSComparisonTable open={showSaaSComparison} />
+          <SaaSComparisonTable open={showSaaSComparison} highlightedPlan={highlightedPlan} />
         </motion.div>
 
         {/* Full Control category */}
