@@ -75,20 +75,19 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
   const priceUnit = category === 'saas' ? t(`${baseKey}.priceUnit`) : undefined
   const deliveryTime = category === 'fullControl' ? t(`${baseKey}.deliveryTime`) : undefined
   const description = t(`${baseKey}.description`)
-  const features = [
-    t(`${baseKey}.feature1`),
-    t(`${baseKey}.feature2`),
-    t(`${baseKey}.feature3`),
-    t(`${baseKey}.feature4`),
-    ...(category === 'fullControl'
-      ? [
-          t(`${baseKey}.feature5`),
-          t(`${baseKey}.feature6`),
-          t(`${baseKey}.feature7`),
-          t(`${baseKey}.feature8`),
-        ]
-      : []),
-  ]
+  const buildFeatureList = (keyBase: string, max = 15) => {
+    const list: string[] = []
+    for (let i = 1; i <= max; i++) {
+      const value = t(`${keyBase}.feature${i}`, { defaultValue: '' })
+      const fallbackKey = `${keyBase}.feature${i}`
+      if (value && value !== fallbackKey) {
+        list.push(value)
+      }
+    }
+    return list
+  }
+
+  const features = buildFeatureList(baseKey)
 
   const detailsBaseKey =
     category === 'saas' ? 'services.details.saas' : 'services.details.fullControl'
@@ -554,9 +553,14 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                 {features.map((feature, index) => (
                   <li
                     key={index}
-                    className="flex items-start gap-3 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 bg-white/60 dark:bg-secondary-900/40 rounded-lg p-3 sm:p-4 border border-secondary-100/60 dark:border-secondary-700/40"
+                    className="flex items-start gap-3 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200 bg-white/70 dark:bg-secondary-900/50 rounded-lg p-3 sm:p-4 border border-secondary-100/60 dark:border-secondary-700/40 shadow-sm"
                   >
-                    <CheckCircleIcon className="w-5 h-5 text-success-500 dark:text-success-400 flex-shrink-0 mt-0.5" />
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-success-500/15 text-success-700 dark:text-success-300 text-[0.7rem] sm:text-xs font-semibold">
+                        {index + 1}
+                      </span>
+                      <CheckCircleIcon className="w-4 h-4 text-success-500 dark:text-success-400 hidden sm:block" />
+                    </div>
                     <span className="leading-relaxed flex-1">{feature}</span>
                   </li>
                 ))}

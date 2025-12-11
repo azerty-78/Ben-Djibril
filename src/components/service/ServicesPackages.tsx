@@ -41,6 +41,50 @@ function ServicesPackages() {
   const saasScrollRef = useRef<HTMLDivElement | null>(null)
   const fullScrollRef = useRef<HTMLDivElement | null>(null)
 
+  const saasFeatures = {
+    goodDeal: [
+      t('services.saas.goodDeal.feature1'),
+      t('services.saas.goodDeal.feature2'),
+      t('services.saas.goodDeal.feature3'),
+      t('services.saas.goodDeal.feature4'),
+      t('services.saas.goodDeal.feature5'),
+      t('services.saas.goodDeal.feature6'),
+      t('services.saas.goodDeal.feature7'),
+      t('services.saas.goodDeal.feature8'),
+      t('services.saas.goodDeal.feature9'),
+      t('services.saas.goodDeal.feature10'),
+    ],
+    pro: [
+      t('services.saas.pro.feature1'),
+      t('services.saas.pro.feature2'),
+      t('services.saas.pro.feature3'),
+      t('services.saas.pro.feature4'),
+      t('services.saas.pro.feature5'),
+      t('services.saas.pro.feature6'),
+      t('services.saas.pro.feature7'),
+      t('services.saas.pro.feature8'),
+      t('services.saas.pro.feature9'),
+      t('services.saas.pro.feature10'),
+      t('services.saas.pro.feature11'),
+      t('services.saas.pro.feature12'),
+    ],
+    ultra: [
+      t('services.saas.ultra.feature1'),
+      t('services.saas.ultra.feature2'),
+      t('services.saas.ultra.feature3'),
+      t('services.saas.ultra.feature4'),
+      t('services.saas.ultra.feature5'),
+      t('services.saas.ultra.feature6'),
+      t('services.saas.ultra.feature7'),
+      t('services.saas.ultra.feature8'),
+      t('services.saas.ultra.feature9'),
+      t('services.saas.ultra.feature10'),
+      t('services.saas.ultra.feature11'),
+      t('services.saas.ultra.feature12'),
+      t('services.saas.ultra.feature13'),
+    ],
+  }
+
   // Détecter le paramètre plan dans l'URL et ouvrir le dialogue
   useEffect(() => {
     const planParam = searchParams.get('plan')
@@ -205,12 +249,7 @@ function ServicesPackages() {
                   secondaryPrice={t('services.saas.goodDeal.annualPrice')}
                   savingLabel={t('services.saas.goodDeal.annualSaving')}
                   description={t('services.saas.goodDeal.description')}
-                  features={[
-                    t('services.saas.goodDeal.feature1'),
-                    t('services.saas.goodDeal.feature2'),
-                    t('services.saas.goodDeal.feature3'),
-                    t('services.saas.goodDeal.feature4'),
-                  ]}
+                  features={saasFeatures.goodDeal}
                   popular
                   popularLabel={t('services.mostPopular')}
                   cta={t('services.getStarted')}
@@ -229,12 +268,7 @@ function ServicesPackages() {
                       secondaryPrice={t('services.saas.pro.annualPrice')}
                       savingLabel={t('services.saas.pro.annualSaving')}
                       description={t('services.saas.pro.description')}
-                      features={[
-                        t('services.saas.pro.feature1'),
-                        t('services.saas.pro.feature2'),
-                        t('services.saas.pro.feature3'),
-                        t('services.saas.pro.feature4'),
-                      ]}
+                      features={saasFeatures.pro}
                       cta={t('services.getStarted')}
                       onClick={() => handlePlanClick('saas-pro')}
                     />
@@ -250,12 +284,7 @@ function ServicesPackages() {
                       secondaryPrice={t('services.saas.ultra.annualPrice')}
                       savingLabel={t('services.saas.ultra.annualSaving')}
                       description={t('services.saas.ultra.description')}
-                      features={[
-                        t('services.saas.ultra.feature1'),
-                        t('services.saas.ultra.feature2'),
-                        t('services.saas.ultra.feature3'),
-                        t('services.saas.ultra.feature4'),
-                      ]}
+                      features={saasFeatures.ultra}
                       cta={t('services.getStarted')}
                       onClick={() => handlePlanClick('saas-ultra')}
                     />
