@@ -249,8 +249,8 @@ function ServicesPackages() {
 
           <div className="max-w-6xl mx-auto mt-6 md:mt-8">
             {/* Toggle Mensuel/Annuel */}
-            <div className="flex justify-center mb-6">
-              <div className="inline-flex items-center gap-2 p-1 bg-secondary-100 dark:bg-secondary-800 rounded-lg border border-secondary-200 dark:border-secondary-700">
+            <div className="flex justify-center mb-8 md:mb-10 relative z-10">
+              <div className="inline-flex items-center gap-2 p-1 bg-white/90 dark:bg-secondary-800/90 backdrop-blur-md rounded-lg border border-secondary-200 dark:border-secondary-700 shadow-lg dark:shadow-secondary-900/40">
                 <button
                   type="button"
                   onClick={() => setBillingPeriod('monthly')}
@@ -281,7 +281,7 @@ function ServicesPackages() {
 
             <div
               ref={saasScrollRef}
-              className="flex gap-4 overflow-x-auto overflow-y-visible pb-4 pt-6 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0"
+              className="flex gap-4 overflow-x-auto overflow-y-visible pb-4 pt-6 md:pt-6 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0"
             >
               {/* Good Deal – en premier sur mobile, au centre sur desktop */}
               <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:-translate-y-2 md:scale-105 md:order-2 relative">
