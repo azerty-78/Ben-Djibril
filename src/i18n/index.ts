@@ -173,17 +173,97 @@ export const resources = {
         subtitle: 'Trusted by businesses worldwide'
       },
       contact: {
-        title: 'Contact',
-        subtitle: "Let's discuss your project",
-        send: 'Send',
-        name: 'Your name',
-        email: 'Email',
-        message: 'Message',
-        sending: 'Sending...',
-        success: 'Message sent successfully!',
-        error: 'Error sending message. Please try again.',
-        required: 'This field is required',
-        invalidEmail: 'Invalid email address'
+        hero: {
+          title: 'Get in Touch',
+          subtitle: "I'm here to help bring your digital vision to life. Let's discuss your project and create something amazing together.",
+          responseTime: 'Response within 24h',
+          freeQuote: 'Free quote',
+          available: 'Available worldwide'
+        },
+        form: {
+          title: 'Send me a message',
+          subtitle: 'Fill out the form below and I\'ll get back to you as soon as possible.',
+          name: 'Full Name',
+          namePlaceholder: 'John Doe',
+          email: 'Email Address',
+          emailPlaceholder: 'john@example.com',
+          subject: 'Subject',
+          subjectPlaceholder: 'Project inquiry',
+          message: 'Message',
+          messagePlaceholder: 'Tell me about your project...',
+          send: 'Send Message',
+          sending: 'Sending...',
+          success: 'Message sent successfully! I\'ll get back to you soon.',
+          error: 'Error sending message. Please try again or contact me directly.',
+          errors: {
+            required: 'This field is required',
+            invalidEmail: 'Please enter a valid email address',
+            messageTooShort: 'Message must be at least 10 characters'
+          }
+        },
+        cards: {
+          title: 'Other Ways to Reach Me',
+          subtitle: 'Choose the method that works best for you',
+          email: {
+            title: 'Email',
+            description: 'Send me an email and I\'ll respond within 24 hours.',
+            action: 'Send Email'
+          },
+          phone: {
+            title: 'Phone',
+            description: 'Call me directly for urgent matters or quick questions.',
+            action: 'Call Now'
+          },
+          whatsapp: {
+            title: 'WhatsApp',
+            description: 'Chat with me on WhatsApp for instant communication.',
+            action: 'Chat on WhatsApp'
+          },
+          location: {
+            title: 'Location',
+            description: 'Based in Yaoundé, Cameroon. Available for remote work worldwide.',
+            action: 'View on Map'
+          },
+          social: {
+            title: 'Follow me on social media'
+          },
+          availability: {
+            title: 'Availability',
+            description: 'I\'m available Monday to Friday, 9 AM to 6 PM (WAT). For urgent matters, feel free to contact me anytime.'
+          }
+        },
+        map: {
+          title: 'Find Me',
+          subtitle: 'Located in Yaoundé, Cameroon. Open to remote collaboration worldwide.',
+          location: {
+            title: 'My Location',
+            address: 'Yaoundé, Cameroon',
+            action: 'Open in Google Maps'
+          },
+          timezone: {
+            label: 'Timezone',
+            value: 'WAT (UTC+1)'
+          },
+          language: {
+            label: 'Languages',
+            value: 'FR / EN'
+          },
+          response: {
+            label: 'Response Time',
+            value: '< 24 hours'
+          }
+        },
+        cta: {
+          title: 'Ready to Start Your Project?',
+          subtitle: 'Let\'s work together to bring your digital vision to life',
+          benefits: {
+            response: 'Response within 24h',
+            quote: 'Free quote',
+            consultation: 'Free consultation'
+          },
+          viewProjects: 'View My Projects',
+          emailDirect: 'Email Me Directly'
+        }
       },
       notFound: { title: 'Page not found', back: 'Back to home' },
     }
@@ -352,17 +432,97 @@ export const resources = {
         subtitle: 'Recommandé par des entreprises du monde entier'
       },
       contact: {
-        title: 'Contact',
-        subtitle: 'Discutons de votre projet',
-        send: 'Envoyer',
-        name: 'Votre nom',
-        email: 'Email',
-        message: 'Message',
-        sending: 'Envoi en cours...',
-        success: 'Message envoyé avec succès !',
-        error: 'Erreur lors de l\'envoi. Veuillez réessayer.',
-        required: 'Ce champ est requis',
-        invalidEmail: 'Adresse email invalide'
+        hero: {
+          title: 'Contactez-moi',
+          subtitle: 'Je suis là pour vous aider à donner vie à votre vision digitale. Discutons de votre projet et créons quelque chose d\'extraordinaire ensemble.',
+          responseTime: 'Réponse sous 24h',
+          freeQuote: 'Devis gratuit',
+          available: 'Disponible dans le monde entier'
+        },
+        form: {
+          title: 'Envoyez-moi un message',
+          subtitle: 'Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais.',
+          name: 'Nom complet',
+          namePlaceholder: 'Jean Dupont',
+          email: 'Adresse email',
+          emailPlaceholder: 'jean@exemple.com',
+          subject: 'Sujet',
+          subjectPlaceholder: 'Demande de projet',
+          message: 'Message',
+          messagePlaceholder: 'Parlez-moi de votre projet...',
+          send: 'Envoyer le message',
+          sending: 'Envoi en cours...',
+          success: 'Message envoyé avec succès ! Je vous répondrai bientôt.',
+          error: 'Erreur lors de l\'envoi. Veuillez réessayer ou me contacter directement.',
+          errors: {
+            required: 'Ce champ est requis',
+            invalidEmail: 'Veuillez entrer une adresse email valide',
+            messageTooShort: 'Le message doit contenir au moins 10 caractères'
+          }
+        },
+        cards: {
+          title: 'Autres moyens de me joindre',
+          subtitle: 'Choisissez la méthode qui vous convient le mieux',
+          email: {
+            title: 'Email',
+            description: 'Envoyez-moi un email et je répondrai sous 24 heures.',
+            action: 'Envoyer un email'
+          },
+          phone: {
+            title: 'Téléphone',
+            description: 'Appelez-moi directement pour les questions urgentes ou rapides.',
+            action: 'Appeler maintenant'
+          },
+          whatsapp: {
+            title: 'WhatsApp',
+            description: 'Discutez avec moi sur WhatsApp pour une communication instantanée.',
+            action: 'Chatter sur WhatsApp'
+          },
+          location: {
+            title: 'Localisation',
+            description: 'Basé à Yaoundé, Cameroun. Disponible pour le travail à distance dans le monde entier.',
+            action: 'Voir sur la carte'
+          },
+          social: {
+            title: 'Suivez-moi sur les réseaux sociaux'
+          },
+          availability: {
+            title: 'Disponibilité',
+            description: 'Je suis disponible du lundi au vendredi, de 9h à 18h (WAT). Pour les urgences, n\'hésitez pas à me contacter à tout moment.'
+          }
+        },
+        map: {
+          title: 'Me trouver',
+          subtitle: 'Situé à Yaoundé, Cameroun. Ouvert à la collaboration à distance dans le monde entier.',
+          location: {
+            title: 'Ma localisation',
+            address: 'Yaoundé, Cameroun',
+            action: 'Ouvrir dans Google Maps'
+          },
+          timezone: {
+            label: 'Fuseau horaire',
+            value: 'WAT (UTC+1)'
+          },
+          language: {
+            label: 'Langues',
+            value: 'FR / EN'
+          },
+          response: {
+            label: 'Temps de réponse',
+            value: '< 24 heures'
+          }
+        },
+        cta: {
+          title: 'Prêt à démarrer votre projet ?',
+          subtitle: 'Travaillons ensemble pour donner vie à votre vision digitale',
+          benefits: {
+            response: 'Réponse sous 24h',
+            quote: 'Devis gratuit',
+            consultation: 'Consultation gratuite'
+          },
+          viewProjects: 'Voir mes réalisations',
+          emailDirect: 'M\'envoyer un email'
+        }
       },
       notFound: { title: 'Page introuvable', back: 'Retour à l\'accueil' },
     }
