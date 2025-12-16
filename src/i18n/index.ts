@@ -198,7 +198,9 @@ export const resources = {
           errors: {
             required: 'This field is required',
             invalidEmail: 'Please enter a valid email address',
-            messageTooShort: 'Message must be at least 10 characters'
+            messageTooShort: 'Message must be at least 10 characters',
+            messageTooLong: 'Message is too long (max 2000 characters)',
+            charactersMin: 'characters minimum'
           }
         },
         cards: {
@@ -263,6 +265,46 @@ export const resources = {
           },
           viewProjects: 'View My Projects',
           emailDirect: 'Email Me Directly'
+        },
+        stats: {
+          title: 'Contact Statistics',
+          subtitle: 'My commitment to excellent communication',
+          responseTime: 'Average Response Time',
+          satisfaction: 'Client Satisfaction',
+          messages: 'Messages Handled',
+          rating: 'Average Rating'
+        },
+        faq: {
+          title: 'Frequently Asked Questions',
+          subtitle: 'Find answers to common questions about working with me',
+          stillHaveQuestions: 'Still have questions?',
+          contactDirectly: 'Contact me directly',
+          items: {
+            howLong: {
+              question: 'How long does it take to get a response?',
+              answer: 'I typically respond to all inquiries within 24 hours, often much sooner. For urgent matters, you can reach me directly via phone or WhatsApp.'
+            },
+            pricing: {
+              question: 'How do you price your projects?',
+              answer: 'Pricing depends on the scope, complexity, and timeline of your project. I offer both SaaS (subscription-based) and Full Control (one-time payment) models. Contact me for a free, personalized quote.'
+            },
+            process: {
+              question: 'What is your development process?',
+              answer: 'My process includes: 1) Initial consultation to understand your needs, 2) Proposal and quote, 3) Project planning and design, 4) Development with regular updates, 5) Testing and deployment, 6) Ongoing support and maintenance.'
+            },
+            remote: {
+              question: 'Do you work remotely?',
+              answer: 'Yes! I work with clients worldwide remotely. I\'m based in Yaoundé, Cameroon, but I\'m available for remote collaboration across different time zones.'
+            },
+            languages: {
+              question: 'What languages do you speak?',
+              answer: 'I\'m a native French speaker and have an intermediate level in English. I can communicate effectively in both languages for project discussions and documentation.'
+            },
+            support: {
+              question: 'Do you provide ongoing support?',
+              answer: 'Yes, I offer ongoing support and maintenance packages. This includes bug fixes, updates, security patches, and feature additions. Support terms are discussed and agreed upon before project start.'
+            }
+          }
         }
       },
       notFound: { title: 'Page not found', back: 'Back to home' },
@@ -457,7 +499,9 @@ export const resources = {
           errors: {
             required: 'Ce champ est requis',
             invalidEmail: 'Veuillez entrer une adresse email valide',
-            messageTooShort: 'Le message doit contenir au moins 10 caractères'
+            messageTooShort: 'Le message doit contenir au moins 10 caractères',
+            messageTooLong: 'Le message est trop long (maximum 2000 caractères)',
+            charactersMin: 'caractères minimum'
           }
         },
         cards: {
@@ -522,6 +566,46 @@ export const resources = {
           },
           viewProjects: 'Voir mes réalisations',
           emailDirect: 'M\'envoyer un email'
+        },
+        stats: {
+          title: 'Statistiques de Contact',
+          subtitle: 'Mon engagement pour une communication excellente',
+          responseTime: 'Temps de Réponse Moyen',
+          satisfaction: 'Satisfaction Client',
+          messages: 'Messages Traités',
+          rating: 'Note Moyenne'
+        },
+        faq: {
+          title: 'Questions Fréquemment Posées',
+          subtitle: 'Trouvez des réponses aux questions courantes sur le travail avec moi',
+          stillHaveQuestions: 'Vous avez encore des questions ?',
+          contactDirectly: 'Contactez-moi directement',
+          items: {
+            howLong: {
+              question: 'Combien de temps faut-il pour obtenir une réponse ?',
+              answer: 'Je réponds généralement à toutes les demandes sous 24 heures, souvent beaucoup plus rapidement. Pour les questions urgentes, vous pouvez me joindre directement par téléphone ou WhatsApp.'
+            },
+            pricing: {
+              question: 'Comment tarifiez-vous vos projets ?',
+              answer: 'Le tarif dépend de la portée, de la complexité et du délai de votre projet. Je propose deux modèles : SaaS (abonnement mensuel) et Full Control (paiement unique). Contactez-moi pour un devis gratuit et personnalisé.'
+            },
+            process: {
+              question: 'Quel est votre processus de développement ?',
+              answer: 'Mon processus comprend : 1) Consultation initiale pour comprendre vos besoins, 2) Proposition et devis, 3) Planification et conception du projet, 4) Développement avec mises à jour régulières, 5) Tests et déploiement, 6) Support et maintenance continus.'
+            },
+            remote: {
+              question: 'Travaillez-vous à distance ?',
+              answer: 'Oui ! Je travaille avec des clients du monde entier à distance. Je suis basé à Yaoundé, Cameroun, mais je suis disponible pour une collaboration à distance dans différents fuseaux horaires.'
+            },
+            languages: {
+              question: 'Quelles langues parlez-vous ?',
+              answer: 'Je suis francophone natif et j\'ai un niveau intermédiaire en anglais. Je peux communiquer efficacement dans les deux langues pour les discussions de projet et la documentation.'
+            },
+            support: {
+              question: 'Fournissez-vous un support continu ?',
+              answer: 'Oui, je propose des forfaits de support et de maintenance continus. Cela inclut les corrections de bugs, les mises à jour, les correctifs de sécurité et les ajouts de fonctionnalités. Les conditions de support sont discutées et convenues avant le début du projet.'
+            }
+          }
         }
       },
       notFound: { title: 'Page introuvable', back: 'Retour à l\'accueil' },

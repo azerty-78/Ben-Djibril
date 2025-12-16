@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
@@ -8,20 +8,56 @@ import {
   PaperAirplaneIcon,
   UserIcon,
   EnvelopeIcon,
-  ChatBubbleLeftRightIcon
+  ChatBubbleLeftRightIcon,
+  InformationCircleIcon
 } from '@heroicons/react/24/solid'
 import { EMAILJS_CONFIG, isEmailJSConfigured } from '../../config/emailjs'
 
+const FORM_STORAGE_KEY = 'contact_form_draft'
+const MIN_MESSAGE_LENGTH = 10
+const MAX_MESSAGE_LENGTH = 2000
+
 function ContactForm() {
   const { t } = useTranslation()
-  const [formData, setFormData] = useState({ 
-    name: '', 
-    email: '', 
-    subject: '',
-    message: '' 
-  })
+  
+  // Charger les données sauvegardées au montage
+  const loadSavedData = () => {
+    try {
+      const saved = localStorage.getItem(FORM_STORAGE_KEY)
+      if (saved) {
+        return JSON.parse(saved)
+      }
+    } catch (error) {
+      console.error('Error loading saved form data:', error)
+    }
+    return { name: '', email: '', subject: '', message: '' }
+  }
+
+  const [formData, setFormData] = useState(loadSavedData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+
+  // Sauvegarder automatiquement dans localStorage
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      try {
+        localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData))
+      } catch (error) {
+        console.error('Error saving form data:', error)
+      }
+    }, 500) // Debounce de 500ms
+
+    return () => clearTimeout(timeoutId)
+  }, [formData])
+
+  // Nettoyer le localStorage après envoi réussi
+  const clearSavedData = () => {
+    try {
+      localStorage.removeItem(FORM_STORAGE_KEY)
+    } catch (error) {
+      console.error('Error clearing saved form data:', error)
+    }
+  }
 
   const validate = () => {
     const newErrors: Record<string, string> = {}
@@ -38,8 +74,10 @@ function ContactForm() {
     }
     if (!formData.message.trim()) {
       newErrors.message = t('contact.form.errors.required') as string
-    } else if (formData.message.trim().length < 10) {
+    } else if (formData.message.trim().length < MIN_MESSAGE_LENGTH) {
       newErrors.message = t('contact.form.errors.messageTooShort') as string
+    } else if (formData.message.trim().length > MAX_MESSAGE_LENGTH) {
+      newErrors.message = t('contact.form.errors.messageTooLong') as string
     }
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -195,9 +233,16 @@ function ContactForm() {
 
             {/* Message */}
             <div>
-              <label htmlFor="message" className="block text-sm font-semibold mb-2 text-secondary-900 dark:text-white">
-                {t('contact.form.message')}
-              </label>
+              <div className="flex items-center justify-between mb-2">
+                <label htmlFor="message" className="block text-sm font-semibold text-secondary-900 dark:text-white">
+                  {t('contact.form.message')}
+                </label>
+                <div className="flex items-center gap-2 text-xs text-secondary-500 dark:text-secondary-400">
+                  <span className={formData.message.length > MAX_MESSAGE_LENGTH ? 'text-danger-500' : ''}>
+                    {formData.message.length} / {MAX_MESSAGE_LENGTH}
+                  </span>
+                </div>
+              </div>
               <div className="relative">
                 <div className="absolute top-4 left-4 pointer-events-none">
                   <ChatBubbleLeftRightIcon className="h-5 w-5 text-secondary-400" />
@@ -205,11 +250,18 @@ function ContactForm() {
                 <textarea
                   id="message"
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={(e) => {
+                    if (e.target.value.length <= MAX_MESSAGE_LENGTH) {
+                      setFormData({ ...formData, message: e.target.value })
+                    }
+                  }}
                   rows={6}
+                  maxLength={MAX_MESSAGE_LENGTH}
                   className={`w-full pl-12 pr-4 py-3.5 border rounded-xl bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white placeholder-secondary-400 focus:outline-none focus:ring-2 transition-all resize-none ${
                     errors.message 
                       ? 'border-danger-500 focus:ring-danger-500' 
+                      : formData.message.length > MAX_MESSAGE_LENGTH * 0.9
+                      ? 'border-warning-500 focus:ring-warning-500'
                       : 'border-secondary-300 dark:border-secondary-600 focus:ring-primary-500 focus:border-primary-500'
                   }`}
                   placeholder={t('contact.form.messagePlaceholder') as string}
@@ -219,6 +271,12 @@ function ContactForm() {
                 <p className="text-danger-500 text-sm mt-2 flex items-center gap-1">
                   <ExclamationCircleIcon className="w-4 h-4" />
                   {errors.message}
+                </p>
+              )}
+              {formData.message.length > 0 && formData.message.length < MIN_MESSAGE_LENGTH && (
+                <p className="text-warning-600 dark:text-warning-400 text-sm mt-2 flex items-center gap-1">
+                  <InformationCircleIcon className="w-4 h-4" />
+                  {t('contact.form.errors.messageTooShort')} ({MIN_MESSAGE_LENGTH} {t('contact.form.errors.charactersMin')})
                 </p>
               )}
             </div>
