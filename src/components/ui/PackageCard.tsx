@@ -103,17 +103,21 @@ function PackageCard({
             </div>
           )}
           {(secondaryPrice || savingLabel) && (
-            <div className="flex flex-wrap items-center gap-1.5 text-[0.65rem] sm:text-[0.7rem] md:text-xs text-secondary-600 dark:text-secondary-400 leading-tight w-full mt-1.5">
+            <div className="w-full mt-3 space-y-2">
               {secondaryPrice && (
-                <span className="break-words">{secondaryPrice}</span>
-              )}
-              {secondaryPrice && savingLabel && (
-                <span className="text-secondary-400 dark:text-secondary-500 flex-shrink-0">•</span>
+                <div className="px-3 py-2 bg-primary-50/60 dark:bg-primary-900/20 rounded-lg border border-primary-200/50 dark:border-primary-800/50">
+                  <p className="text-[0.7rem] sm:text-xs text-secondary-700 dark:text-secondary-300 leading-relaxed">
+                    {secondaryPrice}
+                  </p>
+                </div>
               )}
               {savingLabel && (
-                <span className="font-semibold text-emerald-600 dark:text-emerald-400 break-words">
-                  {savingLabel}
-                </span>
+                <div className="flex items-center gap-2 px-3 py-2 bg-emerald-50/60 dark:bg-emerald-900/20 rounded-lg border border-emerald-200/50 dark:border-emerald-800/50">
+                  <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+                  <p className="text-[0.7rem] sm:text-xs font-semibold text-emerald-700 dark:text-emerald-300 leading-relaxed">
+                    {savingLabel}
+                  </p>
+                </div>
               )}
             </div>
           )}
