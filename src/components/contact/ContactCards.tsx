@@ -3,10 +3,8 @@ import { useTranslation } from 'react-i18next'
 import {
   EnvelopeIcon,
   PhoneIcon,
-  ChatBubbleLeftRightIcon,
   MapPinIcon,
-  ClockIcon,
-  GlobeAltIcon
+  ClockIcon
 } from '@heroicons/react/24/solid'
 import { FaWhatsapp, FaLinkedin, FaXTwitter, FaGithub } from 'react-icons/fa6'
 
