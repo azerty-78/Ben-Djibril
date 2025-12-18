@@ -200,8 +200,27 @@ export const resources = {
             invalidEmail: 'Please enter a valid email address',
             messageTooShort: 'Message must be at least 10 characters',
             messageTooLong: 'Message is too long (max 2000 characters)',
-            charactersMin: 'characters minimum'
-          }
+            charactersMin: 'characters minimum',
+            networkOffline: 'You appear to be offline. Please check your internet connection.',
+            networkError: 'Network error. Please check your connection and try again.'
+          },
+          preferredContact: 'Preferred Contact Method',
+          contactMethods: {
+            email: 'Email',
+            phone: 'Phone',
+            whatsapp: 'WhatsApp',
+            any: 'Any'
+          },
+          suggestions: {
+            title: 'Suggested subjects',
+            project: 'New Project Inquiry',
+            quote: 'Request a Quote',
+            support: 'Support Request',
+            collaboration: 'Collaboration Opportunity',
+            question: 'General Question'
+          },
+          keyboardShortcut: 'Press Ctrl/Cmd + Enter to submit',
+          errorHelp: 'You can also contact me directly via email or phone.'
         },
         cards: {
           title: 'Other Ways to Reach Me',
@@ -303,6 +322,92 @@ export const resources = {
             support: {
               question: 'Do you provide ongoing support?',
               answer: 'Yes, I offer ongoing support and maintenance packages. This includes bug fixes, updates, security patches, and feature additions. Support terms are discussed and agreed upon before project start.'
+            }
+          }
+        },
+        nextSteps: {
+          title: 'What Happens Next?',
+          subtitle: 'Here\'s what to expect after sending your message',
+          steps: {
+            confirmation: {
+              title: 'Message Received',
+              description: 'Your message has been successfully sent and I\'ve received it.'
+            },
+            response: {
+              title: 'Quick Response',
+              description: 'I\'ll review your message and respond within 24 hours, usually much sooner.'
+            },
+            discussion: {
+              title: 'Let\'s Discuss',
+              description: 'We\'ll discuss your project needs and find the best solution together.'
+            }
+          },
+          contactMethods: {
+            email: 'Email Me Directly',
+            phone: 'Call Me Now',
+            whatsapp: 'Chat on WhatsApp',
+            any: 'Contact Me'
+          },
+          viewProjects: 'View My Projects'
+        },
+        availability: {
+          title: 'Current Availability',
+          available: 'Available Now',
+          unavailable: 'Currently Offline',
+          currentTime: 'Current time',
+          hours: 'Available Monday to Friday, 9 AM - 6 PM (WAT). For urgent matters, feel free to contact me anytime.'
+        },
+        whyChoose: {
+          title: 'Why Choose Me?',
+          subtitle: 'What sets me apart and makes me the right choice for your project',
+          features: {
+            response: {
+              title: 'Fast Response',
+              description: 'I respond to all inquiries within 24 hours, often much sooner. Quick communication is key to project success.'
+            },
+            quality: {
+              title: 'Quality Guaranteed',
+              description: 'I deliver high-quality code, following best practices and industry standards. Your project is in safe hands.'
+            },
+            pricing: {
+              title: 'Transparent Pricing',
+              description: 'Clear, upfront pricing with no hidden fees. Choose between SaaS or Full Control models that fit your budget.'
+            },
+            experience: {
+              title: '4+ Years Experience',
+              description: 'With 4 years of experience in backend, mobile, and DevOps, I bring expertise to every project.'
+            },
+            remote: {
+              title: 'Remote Collaboration',
+              description: 'Work with me from anywhere in the world. I\'m experienced in remote collaboration across time zones.'
+            },
+            support: {
+              title: 'Ongoing Support',
+              description: 'I provide continuous support and maintenance to ensure your project stays up-to-date and secure.'
+            }
+          }
+        },
+        testimonials: {
+          title: 'What Clients Say About Working With Me',
+          subtitle: 'Real feedback from clients who have experienced my communication and service',
+          items: {
+            client1: {
+              name: 'Sarah M.',
+              role: 'CEO',
+              company: 'Tech Startup',
+              content: 'Ben responded to my inquiry within hours and was incredibly professional throughout the entire project. His communication was clear and he always kept me updated.'
+            },
+            client2: {
+              name: 'Jean-Pierre K.',
+              role: 'Director',
+              company: 'Educational Institution',
+              content: 'Working with Ben was a pleasure. He understood our needs quickly and delivered exactly what we asked for. Highly recommend his services!'
+            },
+            client3: {
+              name: 'Marie L.',
+              role: 'Founder',
+              company: 'E-commerce Business',
+              content: 'Ben\'s responsiveness and attention to detail made our collaboration smooth. He was always available to answer questions and provide updates.'
             }
           }
         }
@@ -501,8 +606,27 @@ export const resources = {
             invalidEmail: 'Veuillez entrer une adresse email valide',
             messageTooShort: 'Le message doit contenir au moins 10 caractères',
             messageTooLong: 'Le message est trop long (maximum 2000 caractères)',
-            charactersMin: 'caractères minimum'
-          }
+            charactersMin: 'caractères minimum',
+            networkOffline: 'Vous semblez être hors ligne. Veuillez vérifier votre connexion internet.',
+            networkError: 'Erreur réseau. Veuillez vérifier votre connexion et réessayer.'
+          },
+          preferredContact: 'Méthode de Contact Préférée',
+          contactMethods: {
+            email: 'Email',
+            phone: 'Téléphone',
+            whatsapp: 'WhatsApp',
+            any: 'Peu importe'
+          },
+          suggestions: {
+            title: 'Sujets suggérés',
+            project: 'Demande de Nouveau Projet',
+            quote: 'Demande de Devis',
+            support: 'Demande de Support',
+            collaboration: 'Opportunité de Collaboration',
+            question: 'Question Générale'
+          },
+          keyboardShortcut: 'Appuyez sur Ctrl/Cmd + Entrée pour envoyer',
+          errorHelp: 'Vous pouvez également me contacter directement par email ou téléphone.'
         },
         cards: {
           title: 'Autres moyens de me joindre',
@@ -604,6 +728,92 @@ export const resources = {
             support: {
               question: 'Fournissez-vous un support continu ?',
               answer: 'Oui, je propose des forfaits de support et de maintenance continus. Cela inclut les corrections de bugs, les mises à jour, les correctifs de sécurité et les ajouts de fonctionnalités. Les conditions de support sont discutées et convenues avant le début du projet.'
+            }
+          }
+        },
+        nextSteps: {
+          title: 'Prochaines Étapes ?',
+          subtitle: 'Voici ce à quoi vous pouvez vous attendre après l\'envoi de votre message',
+          steps: {
+            confirmation: {
+              title: 'Message Reçu',
+              description: 'Votre message a été envoyé avec succès et je l\'ai bien reçu.'
+            },
+            response: {
+              title: 'Réponse Rapide',
+              description: 'Je vais examiner votre message et répondre sous 24 heures, souvent beaucoup plus rapidement.'
+            },
+            discussion: {
+              title: 'Discutons',
+              description: 'Nous discuterons de vos besoins de projet et trouverons ensemble la meilleure solution.'
+            }
+          },
+          contactMethods: {
+            email: 'M\'envoyer un email',
+            phone: 'M\'appeler maintenant',
+            whatsapp: 'Chatter sur WhatsApp',
+            any: 'Me contacter'
+          },
+          viewProjects: 'Voir mes réalisations'
+        },
+        availability: {
+          title: 'Disponibilité Actuelle',
+          available: 'Disponible Maintenant',
+          unavailable: 'Actuellement Hors Ligne',
+          currentTime: 'Heure actuelle',
+          hours: 'Disponible du lundi au vendredi, 9h - 18h (WAT). Pour les urgences, n\'hésitez pas à me contacter à tout moment.'
+        },
+        whyChoose: {
+          title: 'Pourquoi Me Choisir ?',
+          subtitle: 'Ce qui me distingue et fait de moi le bon choix pour votre projet',
+          features: {
+            response: {
+              title: 'Réponse Rapide',
+              description: 'Je réponds à toutes les demandes sous 24 heures, souvent beaucoup plus rapidement. Une communication rapide est essentielle au succès du projet.'
+            },
+            quality: {
+              title: 'Qualité Garantie',
+              description: 'Je livre un code de haute qualité, en suivant les meilleures pratiques et les standards de l\'industrie. Votre projet est entre de bonnes mains.'
+            },
+            pricing: {
+              title: 'Tarification Transparente',
+              description: 'Tarification claire et transparente sans frais cachés. Choisissez entre les modèles SaaS ou Full Control qui correspondent à votre budget.'
+            },
+            experience: {
+              title: '4+ Ans d\'Expérience',
+              description: 'Avec 4 ans d\'expérience en backend, mobile et DevOps, j\'apporte de l\'expertise à chaque projet.'
+            },
+            remote: {
+              title: 'Collaboration à Distance',
+              description: 'Travaillez avec moi depuis n\'importe où dans le monde. Je suis expérimenté en collaboration à distance à travers les fuseaux horaires.'
+            },
+            support: {
+              title: 'Support Continu',
+              description: 'Je fournis un support et une maintenance continus pour garantir que votre projet reste à jour et sécurisé.'
+            }
+          }
+        },
+        testimonials: {
+          title: 'Ce Que Disent les Clients de Mon Travail',
+          subtitle: 'Vrais témoignages de clients qui ont expérimenté ma communication et mon service',
+          items: {
+            client1: {
+              name: 'Sarah M.',
+              role: 'PDG',
+              company: 'Startup Tech',
+              content: 'Ben a répondu à ma demande en quelques heures et a été incroyablement professionnel tout au long du projet. Sa communication était claire et il me tenait toujours informée.'
+            },
+            client2: {
+              name: 'Jean-Pierre K.',
+              role: 'Directeur',
+              company: 'Institution Éducative',
+              content: 'Travailler avec Ben a été un plaisir. Il a rapidement compris nos besoins et a livré exactement ce que nous avions demandé. Je recommande vivement ses services !'
+            },
+            client3: {
+              name: 'Marie L.',
+              role: 'Fondatrice',
+              company: 'Entreprise E-commerce',
+              content: 'La réactivité de Ben et son attention aux détails ont rendu notre collaboration fluide. Il était toujours disponible pour répondre aux questions et fournir des mises à jour.'
             }
           }
         }

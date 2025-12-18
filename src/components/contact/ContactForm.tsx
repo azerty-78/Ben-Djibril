@@ -12,6 +12,7 @@ import {
   InformationCircleIcon
 } from '@heroicons/react/24/solid'
 import { EMAILJS_CONFIG, isEmailJSConfigured } from '../../config/emailjs'
+import ContactNextSteps from './ContactNextSteps'
 
 const FORM_STORAGE_KEY = 'contact_form_draft'
 const MIN_MESSAGE_LENGTH = 10
@@ -34,8 +35,12 @@ function ContactForm() {
   }
 
   const [formData, setFormData] = useState(loadSavedData)
+  const [preferredContact, setPreferredContact] = useState<string>('email')
+  const [subjectSuggestions, setSubjectSuggestions] = useState<string[]>([])
+  const [showSuggestions, setShowSuggestions] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   // Sauvegarder automatiquement dans localStorage
   useEffect(() => {
@@ -98,24 +103,46 @@ function ContactForm() {
             from_email: formData.email,
             subject: formData.subject,
             message: formData.message,
+            preferred_contact: preferredContact,
           },
           EMAILJS_CONFIG.PUBLIC_KEY
         )
         setStatus('success')
-        setFormData({ name: '', email: '', subject: '', message: '' })
-        setTimeout(() => setStatus('idle'), 5000)
+        clearSavedData()
+        // Afficher les prochaines étapes pendant 10 secondes
+        setTimeout(() => {
+          setFormData({ name: '', email: '', subject: '', message: '' })
+          setStatus('idle')
+        }, 10000)
       } else {
         // Mode développement : simuler l'envoi
         console.warn('EmailJS non configuré. Mode simulation activé.')
         await new Promise(resolve => setTimeout(resolve, 1000))
         setStatus('success')
-        setFormData({ name: '', email: '', subject: '', message: '' })
-        setTimeout(() => setStatus('idle'), 5000)
+        clearSavedData()
+        // Afficher les prochaines étapes pendant 10 secondes
+        setTimeout(() => {
+          setFormData({ name: '', email: '', subject: '', message: '' })
+          setStatus('idle')
+        }, 10000)
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('EmailJS error:', error)
       setStatus('error')
-      setTimeout(() => setStatus('idle'), 5000)
+      
+      // Gestion d'erreurs spécifiques
+      if (error?.text) {
+        setErrorMessage(error.text)
+      } else if (navigator.onLine === false) {
+        setErrorMessage(t('contact.form.errors.networkOffline') as string)
+      } else {
+        setErrorMessage(t('contact.form.errors.networkError') as string)
+      }
+      
+      setTimeout(() => {
+        setStatus('idle')
+        setErrorMessage('')
+      }, 7000)
     }
   }
 
@@ -207,7 +234,7 @@ function ContactForm() {
             </div>
 
             {/* Subject */}
-            <div>
+            <div className="relative">
               <label htmlFor="subject" className="block text-sm font-semibold mb-2 text-secondary-900 dark:text-white">
                 {t('contact.form.subject')}
               </label>
@@ -215,7 +242,11 @@ function ContactForm() {
                 id="subject"
                 type="text"
                 value={formData.subject}
-                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, subject: e.target.value })
+                  setShowSuggestions(false)
+                }}
+                onFocus={() => setShowSuggestions(subjectSuggestions.length > 0 && !formData.subject)}
                 className={`w-full px-4 py-3.5 border rounded-xl bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white placeholder-secondary-400 focus:outline-none focus:ring-2 transition-all ${
                   errors.subject 
                     ? 'border-danger-500 focus:ring-danger-500' 
@@ -228,6 +259,30 @@ function ContactForm() {
                   <ExclamationCircleIcon className="w-4 h-4" />
                   {errors.subject}
                 </p>
+              )}
+              
+              {/* Suggestions de sujet */}
+              {showSuggestions && subjectSuggestions.length > 0 && (
+                <div className="absolute z-10 mt-2 w-full bg-white dark:bg-secondary-800 rounded-xl shadow-xl border border-secondary-200 dark:border-secondary-700 overflow-hidden">
+                  <div className="p-2">
+                    <p className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 mb-2 px-2">
+                      {t('contact.form.suggestions.title')}
+                    </p>
+                    {subjectSuggestions.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        onClick={() => {
+                          setFormData({ ...formData, subject: suggestion })
+                          setShowSuggestions(false)
+                        }}
+                        className="w-full text-left px-3 py-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-700 text-sm text-secondary-700 dark:text-secondary-300 transition-colors"
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
 
@@ -297,38 +352,79 @@ function ContactForm() {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-3 text-danger-600 dark:text-danger-400 bg-danger-50 dark:bg-danger-900/20 p-4 rounded-xl border border-danger-200 dark:border-danger-800"
+                className="flex items-start gap-3 text-danger-600 dark:text-danger-400 bg-danger-50 dark:bg-danger-900/20 p-4 rounded-xl border border-danger-200 dark:border-danger-800"
               >
-                <ExclamationCircleIcon className="w-6 h-6 flex-shrink-0" />
-                <span className="font-medium">{t('contact.form.error')}</span>
+                <ExclamationCircleIcon className="w-6 h-6 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="font-medium mb-1">{t('contact.form.error')}</p>
+                  {errorMessage && (
+                    <p className="text-sm opacity-90">{errorMessage}</p>
+                  )}
+                  <p className="text-sm mt-2 opacity-75">
+                    {t('contact.form.errorHelp')}
+                  </p>
+                </div>
               </motion.div>
             )}
 
+            {/* Preferred Contact Method */}
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-secondary-900 dark:text-white">
+                {t('contact.form.preferredContact')}
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {['email', 'phone', 'whatsapp', 'any'].map((method) => (
+                  <button
+                    key={method}
+                    type="button"
+                    onClick={() => setPreferredContact(method)}
+                    className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                      preferredContact === method
+                        ? 'bg-primary-600 dark:bg-primary-500 text-white shadow-lg'
+                        : 'bg-secondary-100 dark:bg-secondary-700 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-600'
+                    }`}
+                  >
+                    {t(`contact.form.contactMethods.${method}`)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Submit Button */}
-            <motion.button
-              type="submit"
-              disabled={status === 'sending'}
-              whileHover={{ scale: status !== 'sending' ? 1.02 : 1 }}
-              whileTap={{ scale: status !== 'sending' ? 0.98 : 1 }}
-              className="btn-primary w-full text-center py-4 text-lg font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {status === 'sending' ? (
-                <>
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
-                  />
-                  {t('contact.form.sending')}
-                </>
-              ) : (
-                <>
-                  <PaperAirplaneIcon className="w-5 h-5" />
-                  {t('contact.form.send')}
-                </>
-              )}
-            </motion.button>
+            <div className="space-y-2">
+              <motion.button
+                type="submit"
+                disabled={status === 'sending'}
+                whileHover={{ scale: status !== 'sending' ? 1.02 : 1 }}
+                whileTap={{ scale: status !== 'sending' ? 0.98 : 1 }}
+                className="btn-primary w-full text-center py-4 text-lg font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {status === 'sending' ? (
+                  <>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                    />
+                    {t('contact.form.sending')}
+                  </>
+                ) : (
+                  <>
+                    <PaperAirplaneIcon className="w-5 h-5" />
+                    {t('contact.form.send')}
+                  </>
+                )}
+              </motion.button>
+              <p className="text-xs text-center text-secondary-500 dark:text-secondary-400">
+                {t('contact.form.keyboardShortcut')}
+              </p>
+            </div>
           </motion.form>
+
+          {/* Next Steps Section */}
+          {status === 'success' && (
+            <ContactNextSteps preferredContact={preferredContact} />
+          )}
         </motion.div>
       </div>
     </section>
