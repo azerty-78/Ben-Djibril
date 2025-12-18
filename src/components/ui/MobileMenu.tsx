@@ -145,13 +145,6 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
         {t('nav.about')}
       </NavLink>
       <NavLink 
-        to="/blog" 
-        className={({ isActive }) => linkClass(isActive)}
-        onClick={handleNavLinkClick}
-      >
-        {t('nav.blog')}
-      </NavLink>
-      <NavLink 
         to="/contact" 
         className={({ isActive }) => linkClass(isActive)}
         onClick={handleNavLinkClick}

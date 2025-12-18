@@ -113,20 +113,6 @@ function Navbar() {
                 </>
               )}
             </NavLink>
-            <NavLink to="/blog" className={({ isActive }) => linkClass(isActive)}>
-              {({ isActive }) => (
-                <>
-                  {t('nav.blog')}
-                  {isActive && (
-                    <motion.span
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full"
-                      layoutId="activeNavLink"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </>
-              )}
-            </NavLink>
             <NavLink to="/contact" className={({ isActive }) => linkClass(isActive)}>
               {({ isActive }) => (
                 <>

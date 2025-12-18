@@ -12,7 +12,7 @@ export const resources = {
   en: {
     translation: {
       nav: {
-        home: 'Home', services: 'Services', projects: 'Projects', about: 'About', blog: 'Blog', contact: 'Contact',
+        home: 'Home', services: 'Services', projects: 'Projects', about: 'About', contact: 'Contact',
         serviceWeb: 'Web Development', serviceEcom: 'E-commerce', serviceApp: 'Web Apps', serviceConsult: 'Consulting'
       },
       footer: {
@@ -418,7 +418,7 @@ export const resources = {
   fr: {
     translation: {
       nav: {
-        home: 'Accueil', services: 'Services', projects: 'Projets', about: 'À propos', blog: 'Blog', contact: 'Contact',
+        home: 'Accueil', services: 'Services', projects: 'Projets', about: 'À propos', contact: 'Contact',
         serviceWeb: 'Développement Web', serviceEcom: 'E-commerce', serviceApp: 'Applications Web', serviceConsult: 'Conseil'
       },
       footer: {

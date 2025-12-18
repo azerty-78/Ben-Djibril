@@ -76,7 +76,6 @@ Portfolio professionnel moderne d'un Ingénieur DevOps spécialisé en développ
 - **Projects** (`/projects`) - Portfolio de projets réalisés
 - **About** (`/about`) - Page détaillée à propos avec stack technique complète
 - **Contact** (`/contact`) - Formulaire de contact avec EmailJS
-- **Blog** (`/blog`) - Page blog (en développement)
 
 ## 🎨 Palette de Couleurs
 
@@ -171,7 +170,6 @@ ben-djibril/
 │   │   ├── Projects.tsx
 │   │   ├── About.tsx
 │   │   ├── Contact.tsx
-│   │   ├── Blog.tsx
 │   │   └── NotFound.tsx
 │   ├── layouts/           # Layouts partagés
 │   │   └── RootLayout.tsx
