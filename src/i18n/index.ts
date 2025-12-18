@@ -229,6 +229,10 @@ export const resources = {
           sending: 'Sending...',
           success: 'Message sent successfully! I\'ll get back to you soon.',
           error: 'Error sending message. Please try again or contact me directly.',
+          serviceContextTitle: 'You selected a specific service',
+          serviceContextDescription: 'You are contacting me about: {{service}}. Give me a bit of context so I can answer with a precise proposal.',
+          defaultSubjectPrefix: 'Request a quote for',
+          defaultMessagePrefix: 'Hello, I would like to discuss a project about',
           errors: {
             required: 'This field is required',
             invalidEmail: 'Please enter a valid email address',
@@ -669,6 +673,10 @@ export const resources = {
           sending: 'Envoi en cours...',
           success: 'Message envoyé avec succès ! Je vous répondrai bientôt.',
           error: 'Erreur lors de l\'envoi. Veuillez réessayer ou me contacter directement.',
+          serviceContextTitle: 'Service sélectionné',
+          serviceContextDescription: 'Vous me contactez à propos de : {{service}}. Donnez-moi quelques détails pour que je puisse vous répondre avec une proposition adaptée.',
+          defaultSubjectPrefix: 'Demande de devis pour',
+          defaultMessagePrefix: 'Bonjour, je souhaite discuter d\'un projet concernant',
           errors: {
             required: 'Ce champ est requis',
             invalidEmail: 'Veuillez entrer une adresse email valide',

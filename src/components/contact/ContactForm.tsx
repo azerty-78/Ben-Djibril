@@ -1,5 +1,6 @@
 import { useState, useEffect, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import { 
@@ -20,7 +21,56 @@ const MAX_MESSAGE_LENGTH = 2000
 
 function ContactForm() {
   const { t } = useTranslation()
-  
+  const [searchParams] = useSearchParams()
+
+  // Mapper un ID de service vers un libellé lisible via i18n
+  const getServiceLabel = (serviceId: string | null) => {
+    if (!serviceId) return ''
+    const map: Record<string, string> = {
+      'web-dev': t('services.serviceWebDev.title') as string,
+      'showcase': t('services.serviceShowcase.title') as string,
+      'portfolio': t('services.servicePortfolio.title') as string,
+      'ecommerce': t('services.serviceEcom.title') as string,
+      'web-app': t('services.serviceApp.title') as string,
+      'mobile': t('services.serviceMobile.title') as string,
+      'desktop': t('services.serviceDesktop.title') as string,
+      'api': t('services.serviceAPI.title') as string,
+      'devops': t('services.serviceDevOps.title') as string,
+      'inventory': t('services.serviceInventory.title') as string,
+      'restaurant': t('services.serviceRestaurant.title') as string,
+      'billing': t('services.serviceBilling.title') as string,
+      'orders': t('services.serviceOrders.title') as string,
+      'pos': t('services.servicePOS.title') as string,
+      'crm': t('services.serviceCRM.title') as string,
+      'delivery': t('services.serviceDelivery.title') as string,
+      'booking': t('services.serviceBooking.title') as string,
+      'pharmacy': t('services.servicePharmacy.title') as string,
+      'gym': t('services.serviceGym.title') as string,
+      'salon': t('services.serviceSalon.title') as string,
+      'transport': t('services.serviceTransport.title') as string,
+      'rental': t('services.serviceRental.title') as string,
+      'accounting': t('services.serviceAccounting.title') as string,
+      'payroll': t('services.servicePayroll.title') as string,
+      'mobile-money': t('services.serviceMobileMoney.title') as string,
+      'market': t('services.serviceMarket.title') as string,
+      'parking': t('services.serviceParking.title') as string,
+      'school': t('services.serviceSchool.title') as string,
+      'hospital': t('services.serviceHospital.title') as string,
+    }
+    return map[serviceId] || ''
+  }
+
+  const initialServiceId = searchParams.get('service')
+  const initialServiceLabel = getServiceLabel(initialServiceId)
+
+  const initialSubject = initialServiceLabel
+    ? `${t('contact.form.defaultSubjectPrefix')} ${initialServiceLabel}`
+    : ''
+
+  const initialMessage = initialServiceLabel
+    ? `${t('contact.form.defaultMessagePrefix')} ${initialServiceLabel}.\n\n`
+    : ''
+
   // Charger les données sauvegardées au montage
   const loadSavedData = () => {
     try {
@@ -31,7 +81,7 @@ function ContactForm() {
     } catch (error) {
       console.error('Error loading saved form data:', error)
     }
-    return { name: '', email: '', subject: '', message: '' }
+    return { name: '', email: '', subject: initialSubject, message: initialMessage }
   }
 
   const [formData, setFormData] = useState(loadSavedData)
@@ -156,7 +206,7 @@ function ContactForm() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          <div className="text-center mb-8 sm:mb-12">
+          <div className="text-center mb-6 sm:mb-8">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-secondary-900 dark:text-white mb-4">
               {t('contact.form.title')}
             </h2>
@@ -164,6 +214,31 @@ function ContactForm() {
               {t('contact.form.subtitle')}
             </p>
           </div>
+
+          {/* Contexte du service sélectionné */}
+          {initialServiceLabel && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="mb-6 sm:mb-8"
+            >
+              <div className="inline-flex items-start gap-3 px-4 py-3 rounded-2xl bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-700">
+                <div className="mt-1">
+                  <span className="inline-flex h-2 w-2 rounded-full bg-primary-500 animate-pulse" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-semibold text-primary-700 dark:text-primary-300 mb-1">
+                    {t('contact.form.serviceContextTitle')}
+                  </p>
+                  <p className="text-sm text-secondary-700 dark:text-secondary-200">
+                    {t('contact.form.serviceContextDescription', { service: initialServiceLabel })}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
 
           <motion.form
             initial={{ opacity: 0, y: 20 }}
