@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { StarIcon, QuoteIcon } from '@heroicons/react/24/solid'
+import { StarIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
 
 interface Testimonial {
   name: string
@@ -85,7 +85,7 @@ function ContactTestimonials() {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-primary-100 dark:bg-primary-900/30 rounded-2xl mb-6"
             >
-              <QuoteIcon className="w-8 h-8 sm:w-10 sm:h-10 text-primary-600 dark:text-primary-400" />
+              <ChatBubbleLeftRightIcon className="w-8 h-8 sm:w-10 sm:h-10 text-primary-600 dark:text-primary-400" />
             </motion.div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-secondary-900 dark:text-white mb-4">
               {t('contact.testimonials.title')}
