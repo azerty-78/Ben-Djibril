@@ -56,6 +56,40 @@ export const resources = {
         packagesSubtitle: 'Two billing models adapted to how you want to manage your project',
         allServicesTitle: 'All Our Services',
         allServicesSubtitle: 'Complete solutions for all your digital needs',
+        filters: {
+          all: 'All',
+          web: 'Websites & Showcases',
+          ecommerce: 'E-commerce & POS',
+          apps: 'Web & Mobile Apps',
+          business: 'Business & Operations',
+          vertical: 'Industry-specific'
+        },
+        sectors: {
+          generic: 'General',
+          personal: 'Personal / Portfolio',
+          retail: 'Retail & Commerce',
+          apps: 'Applications',
+          internal: 'Internal Tools',
+          backend: 'APIs & Integrations',
+          infrastructure: 'Infrastructure & DevOps',
+          consulting: 'Consulting',
+          finance: 'Finance & Accounting',
+          operations: 'Operations',
+          crm: 'CRM & Clients',
+          logistics: 'Logistics & Delivery',
+          services: 'Services & Appointments',
+          health: 'Health',
+          sport: 'Sport & Fitness',
+          beauty: 'Beauty & Care',
+          realEstate: 'Real Estate & Rentals',
+          marketplace: 'Marketplace',
+          mobility: 'Mobility & Parking',
+          education: 'Education'
+        },
+        actions: {
+          more: 'Learn more',
+          contact: 'Request a quote'
+        },
         packageStarter: 'Starter', packagePro: 'Professional', packageEnterprise: 'Enterprise',
         features: 'Features', getStarted: 'Get Started', mostPopular: 'Most Popular', bestValue: 'Best value',
         details: {
@@ -462,6 +496,40 @@ export const resources = {
         packagesSubtitle: 'Deux modèles de facturation selon la façon dont vous voulez gérer votre projet',
         allServicesTitle: 'Tous nos Services',
         allServicesSubtitle: 'Des solutions complètes pour tous vos besoins digitaux',
+        filters: {
+          all: 'Tous',
+          web: 'Sites & Vitrines',
+          ecommerce: 'E-commerce & Caisse',
+          apps: 'Apps Web & Mobile',
+          business: 'Business & Gestion',
+          vertical: 'Métiers spécifiques'
+        },
+        sectors: {
+          generic: 'Général',
+          personal: 'Personnel / Portfolio',
+          retail: 'Retail & Commerce',
+          apps: 'Applications',
+          internal: 'Outils internes',
+          backend: 'APIs & Intégrations',
+          infrastructure: 'Infrastructure & DevOps',
+          consulting: 'Conseil',
+          finance: 'Finance & Comptabilité',
+          operations: 'Opérations',
+          crm: 'CRM & Clients',
+          logistics: 'Logistique & Livraison',
+          services: 'Services & Rendez-vous',
+          health: 'Santé',
+          sport: 'Sport & Fitness',
+          beauty: 'Beauté & Bien-être',
+          realEstate: 'Immobilier & Location',
+          marketplace: 'Marketplace',
+          mobility: 'Mobilité & Parking',
+          education: 'Éducation'
+        },
+        actions: {
+          more: 'En savoir plus',
+          contact: 'Demander un devis'
+        },
         packageStarter: 'Starter', packagePro: 'Professionnel', packageEnterprise: 'Enterprise',
         features: 'Fonctionnalités', getStarted: 'Commencer', mostPopular: 'Le plus populaire', bestValue: 'Meilleur rapport qualité / prix',
         details: {

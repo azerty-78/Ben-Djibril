@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ServiceInfoDialog from './ServiceInfoDialog'
 import {
   GlobeAltIcon,
@@ -35,6 +36,8 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/react/24/solid'
 
+type ServiceCategory = 'web' | 'ecommerce' | 'apps' | 'business' | 'vertical'
+
 type Service = {
   id: string
   icon: React.ComponentType<{ className?: string }>
@@ -44,11 +47,15 @@ type Service = {
   color: string
   bgColor: string
   textColor: string
+  category: ServiceCategory
+  sector?: string
 }
 
 function ServicesList() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState<'all' | ServiceCategory>('all')
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null)
 
   const allServices: Service[] = [
@@ -66,6 +73,8 @@ function ServicesList() {
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-100 dark:bg-blue-900/30',
       textColor: 'text-blue-600 dark:text-blue-400',
+      category: 'web',
+      sector: t('services.sectors.generic'),
     },
     {
       id: 'showcase',
@@ -81,6 +90,8 @@ function ServicesList() {
       color: 'from-purple-500 to-purple-600',
       bgColor: 'bg-purple-100 dark:bg-purple-900/30',
       textColor: 'text-purple-600 dark:text-purple-400',
+      category: 'web',
+      sector: t('services.sectors.generic'),
     },
     {
       id: 'portfolio',
@@ -96,6 +107,8 @@ function ServicesList() {
       color: 'from-pink-500 to-pink-600',
       bgColor: 'bg-pink-100 dark:bg-pink-900/30',
       textColor: 'text-pink-600 dark:text-pink-400',
+      category: 'web',
+      sector: t('services.sectors.personal'),
     },
     {
       id: 'ecommerce',
@@ -111,6 +124,8 @@ function ServicesList() {
       color: 'from-green-500 to-green-600',
       bgColor: 'bg-green-100 dark:bg-green-900/30',
       textColor: 'text-green-600 dark:text-green-400',
+      category: 'ecommerce',
+      sector: t('services.sectors.retail'),
     },
     {
       id: 'web-app',
@@ -126,6 +141,8 @@ function ServicesList() {
       color: 'from-primary-500 to-primary-600',
       bgColor: 'bg-primary-100 dark:bg-primary-900/30',
       textColor: 'text-primary-600 dark:text-primary-400',
+      category: 'apps',
+      sector: t('services.sectors.apps'),
     },
     {
       id: 'mobile',
@@ -141,6 +158,8 @@ function ServicesList() {
       color: 'from-accent-500 to-accent-600',
       bgColor: 'bg-accent-100 dark:bg-accent-900/30',
       textColor: 'text-accent-600 dark:text-accent-400',
+      category: 'apps',
+      sector: t('services.sectors.apps'),
     },
     {
       id: 'desktop',
@@ -156,6 +175,8 @@ function ServicesList() {
       color: 'from-indigo-500 to-indigo-600',
       bgColor: 'bg-indigo-100 dark:bg-indigo-900/30',
       textColor: 'text-indigo-600 dark:text-indigo-400',
+      category: 'apps',
+      sector: t('services.sectors.internal'),
     },
     {
       id: 'api',
@@ -171,6 +192,8 @@ function ServicesList() {
       color: 'from-orange-500 to-orange-600',
       bgColor: 'bg-orange-100 dark:bg-orange-900/30',
       textColor: 'text-orange-600 dark:text-orange-400',
+      category: 'apps',
+      sector: t('services.sectors.backend'),
     },
     {
       id: 'devops',
@@ -186,6 +209,8 @@ function ServicesList() {
       color: 'from-cyan-500 to-cyan-600',
       bgColor: 'bg-cyan-100 dark:bg-cyan-900/30',
       textColor: 'text-cyan-600 dark:text-cyan-400',
+      category: 'business',
+      sector: t('services.sectors.infrastructure'),
     },
     {
       id: 'consulting',
@@ -201,6 +226,8 @@ function ServicesList() {
       color: 'from-yellow-500 to-yellow-600',
       bgColor: 'bg-yellow-100 dark:bg-yellow-900/30',
       textColor: 'text-yellow-600 dark:text-yellow-400',
+      category: 'business',
+      sector: t('services.sectors.consulting'),
     },
     {
       id: 'inventory',
@@ -216,6 +243,8 @@ function ServicesList() {
       color: 'from-teal-500 to-teal-600',
       bgColor: 'bg-teal-100 dark:bg-teal-900/30',
       textColor: 'text-teal-600 dark:text-teal-400',
+      category: 'business',
+      sector: t('services.sectors.retail'),
     },
     {
       id: 'restaurant',
@@ -231,6 +260,8 @@ function ServicesList() {
       color: 'from-red-500 to-red-600',
       bgColor: 'bg-red-100 dark:bg-red-900/30',
       textColor: 'text-red-600 dark:text-red-400',
+      category: 'vertical',
+      sector: t('services.sectors.restaurant'),
     },
     {
       id: 'billing',
@@ -246,6 +277,8 @@ function ServicesList() {
       color: 'from-emerald-500 to-emerald-600',
       bgColor: 'bg-emerald-100 dark:bg-emerald-900/30',
       textColor: 'text-emerald-600 dark:text-emerald-400',
+      category: 'business',
+      sector: t('services.sectors.finance'),
     },
     {
       id: 'orders',
@@ -261,6 +294,8 @@ function ServicesList() {
       color: 'from-violet-500 to-violet-600',
       bgColor: 'bg-violet-100 dark:bg-violet-900/30',
       textColor: 'text-violet-600 dark:text-violet-400',
+      category: 'business',
+      sector: t('services.sectors.operations'),
     },
     {
       id: 'pos',
@@ -276,6 +311,8 @@ function ServicesList() {
       color: 'from-amber-500 to-amber-600',
       bgColor: 'bg-amber-100 dark:bg-amber-900/30',
       textColor: 'text-amber-600 dark:text-amber-400',
+      category: 'ecommerce',
+      sector: t('services.sectors.retail'),
     },
     {
       id: 'crm',
@@ -291,6 +328,8 @@ function ServicesList() {
       color: 'from-rose-500 to-rose-600',
       bgColor: 'bg-rose-100 dark:bg-rose-900/30',
       textColor: 'text-rose-600 dark:text-rose-400',
+      category: 'business',
+      sector: t('services.sectors.crm'),
     },
     {
       id: 'delivery',
@@ -306,6 +345,8 @@ function ServicesList() {
       color: 'from-sky-500 to-sky-600',
       bgColor: 'bg-sky-100 dark:bg-sky-900/30',
       textColor: 'text-sky-600 dark:text-sky-400',
+      category: 'vertical',
+      sector: t('services.sectors.logistics'),
     },
     {
       id: 'booking',
@@ -321,6 +362,8 @@ function ServicesList() {
       color: 'from-lime-500 to-lime-600',
       bgColor: 'bg-lime-100 dark:bg-lime-900/30',
       textColor: 'text-lime-600 dark:text-lime-400',
+      category: 'vertical',
+      sector: t('services.sectors.services'),
     },
     {
       id: 'pharmacy',
@@ -336,6 +379,8 @@ function ServicesList() {
       color: 'from-blue-600 to-blue-700',
       bgColor: 'bg-blue-100 dark:bg-blue-900/30',
       textColor: 'text-blue-600 dark:text-blue-400',
+      category: 'vertical',
+      sector: t('services.sectors.health'),
     },
     {
       id: 'gym',
@@ -351,6 +396,8 @@ function ServicesList() {
       color: 'from-red-600 to-red-700',
       bgColor: 'bg-red-100 dark:bg-red-900/30',
       textColor: 'text-red-600 dark:text-red-400',
+      category: 'vertical',
+      sector: t('services.sectors.sport'),
     },
     {
       id: 'salon',
@@ -366,6 +413,8 @@ function ServicesList() {
       color: 'from-pink-600 to-pink-700',
       bgColor: 'bg-pink-100 dark:bg-pink-900/30',
       textColor: 'text-pink-600 dark:text-pink-400',
+      category: 'vertical',
+      sector: t('services.sectors.beauty'),
     },
     {
       id: 'transport',
@@ -381,6 +430,8 @@ function ServicesList() {
       color: 'from-slate-600 to-slate-700',
       bgColor: 'bg-slate-100 dark:bg-slate-900/30',
       textColor: 'text-slate-600 dark:text-slate-400',
+      category: 'vertical',
+      sector: t('services.sectors.logistics'),
     },
     {
       id: 'rental',
@@ -396,6 +447,8 @@ function ServicesList() {
       color: 'from-amber-600 to-amber-700',
       bgColor: 'bg-amber-100 dark:bg-amber-900/30',
       textColor: 'text-amber-600 dark:text-amber-400',
+      category: 'vertical',
+      sector: t('services.sectors.realEstate'),
     },
     {
       id: 'accounting',
@@ -411,6 +464,8 @@ function ServicesList() {
       color: 'from-green-600 to-green-700',
       bgColor: 'bg-green-100 dark:bg-green-900/30',
       textColor: 'text-green-600 dark:text-green-400',
+      category: 'business',
+      sector: t('services.sectors.finance'),
     },
     {
       id: 'payroll',
@@ -426,6 +481,8 @@ function ServicesList() {
       color: 'from-emerald-600 to-emerald-700',
       bgColor: 'bg-emerald-100 dark:bg-emerald-900/30',
       textColor: 'text-emerald-600 dark:text-emerald-400',
+      category: 'business',
+      sector: t('services.sectors.hr'),
     },
     {
       id: 'mobile-money',
@@ -441,6 +498,8 @@ function ServicesList() {
       color: 'from-orange-600 to-orange-700',
       bgColor: 'bg-orange-100 dark:bg-orange-900/30',
       textColor: 'text-orange-600 dark:text-orange-400',
+      category: 'vertical',
+      sector: t('services.sectors.finance'),
     },
     {
       id: 'market',
@@ -456,6 +515,8 @@ function ServicesList() {
       color: 'from-violet-600 to-violet-700',
       bgColor: 'bg-violet-100 dark:bg-violet-900/30',
       textColor: 'text-violet-600 dark:text-violet-400',
+      category: 'ecommerce',
+      sector: t('services.sectors.marketplace'),
     },
     {
       id: 'parking',
@@ -471,6 +532,8 @@ function ServicesList() {
       color: 'from-gray-600 to-gray-700',
       bgColor: 'bg-gray-100 dark:bg-gray-900/30',
       textColor: 'text-gray-600 dark:text-gray-400',
+      category: 'vertical',
+      sector: t('services.sectors.mobility'),
     },
     {
       id: 'school',
@@ -486,6 +549,8 @@ function ServicesList() {
       color: 'from-indigo-600 to-indigo-700',
       bgColor: 'bg-indigo-100 dark:bg-indigo-900/30',
       textColor: 'text-indigo-600 dark:text-indigo-400',
+      category: 'vertical',
+      sector: t('services.sectors.education'),
     },
     {
       id: 'hospital',
@@ -501,21 +566,30 @@ function ServicesList() {
       color: 'from-red-700 to-red-800',
       bgColor: 'bg-red-100 dark:bg-red-900/30',
       textColor: 'text-red-600 dark:text-red-400',
+      category: 'vertical',
+      sector: t('services.sectors.health'),
     },
   ]
 
   const filteredServices = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return allServices
-    }
-    const query = searchQuery.toLowerCase()
-    return allServices.filter(
-      (service) =>
+    const query = searchQuery.trim().toLowerCase()
+
+    return allServices.filter((service) => {
+      const matchesCategory = selectedCategory === 'all' || service.category === selectedCategory
+
+      if (!query) {
+        return matchesCategory
+      }
+
+      const inText =
         service.title.toLowerCase().includes(query) ||
         service.description.toLowerCase().includes(query) ||
-        service.features.some((feature) => feature.toLowerCase().includes(query))
-    )
-  }, [allServices, searchQuery])
+        service.features.some((feature) => feature.toLowerCase().includes(query)) ||
+        (service.sector && service.sector.toLowerCase().includes(query))
+
+      return matchesCategory && inText
+    })
+  }, [allServices, searchQuery, selectedCategory])
 
   return (
     <section
@@ -558,41 +632,76 @@ function ServicesList() {
           </p>
         </motion.div>
 
-        {/* Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="max-w-2xl mx-auto mb-8 sm:mb-12 px-4"
-        >
-          <div className="relative">
-            <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400 dark:text-secondary-500" />
-            <input
-              type="text"
-              placeholder={t('services.searchPlaceholder') || 'Rechercher un service...'}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl border-2 border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white placeholder-secondary-400 dark:placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-sm sm:text-base"
-            />
-            {searchQuery && (
+        {/* Filtres + barre de recherche */}
+        <div className="max-w-5xl mx-auto mb-8 sm:mb-12">
+          {/* Filtres par catégorie */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 px-4"
+          >
+            {[
+              { id: 'all' as const, label: t('services.filters.all') },
+              { id: 'web' as const, label: t('services.filters.web') },
+              { id: 'ecommerce' as const, label: t('services.filters.ecommerce') },
+              { id: 'apps' as const, label: t('services.filters.apps') },
+              { id: 'business' as const, label: t('services.filters.business') },
+              { id: 'vertical' as const, label: t('services.filters.vertical') },
+            ].map((filter) => (
               <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-secondary-400 dark:text-secondary-500 hover:text-secondary-600 dark:hover:text-secondary-300 transition-colors"
-                aria-label="Clear search"
+                key={filter.id}
+                type="button"
+                onClick={() => setSelectedCategory(filter.id)}
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium border transition-all ${
+                  selectedCategory === filter.id
+                    ? 'bg-primary-600 text-white border-primary-600 shadow-md shadow-primary-500/30'
+                    : 'bg-white/80 dark:bg-secondary-800/80 text-secondary-700 dark:text-secondary-200 border-secondary-200 dark:border-secondary-700 hover:bg-secondary-50 dark:hover:bg-secondary-700'
+                }`}
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                {filter.label}
               </button>
+            ))}
+          </motion.div>
+
+          {/* Search Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="max-w-2xl mx-auto px-4"
+          >
+            <div className="relative">
+              <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400 dark:text-secondary-500" />
+              <input
+                type="text"
+                placeholder={t('services.searchPlaceholder') || 'Rechercher un service...'}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl border-2 border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white placeholder-secondary-400 dark:placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-sm sm:text-base"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-secondary-400 dark:text-secondary-500 hover:text-secondary-600 dark:hover:text-secondary-300 transition-colors"
+                  aria-label="Clear search"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
+            {(searchQuery || selectedCategory !== 'all') && (
+              <p className="mt-3 text-sm text-secondary-600 dark:text-secondary-400 text-center">
+                {filteredServices.length}{' '}
+                {filteredServices.length === 1 ? t('services.searchResults.found') : t('services.searchResults.foundPlural')}
+              </p>
             )}
-          </div>
-          {searchQuery && (
-            <p className="mt-3 text-sm text-secondary-600 dark:text-secondary-400 text-center">
-              {filteredServices.length} {filteredServices.length === 1 ? t('services.searchResults.found') : t('services.searchResults.foundPlural')}
-            </p>
-          )}
-        </motion.div>
+          </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
           {filteredServices.map((service, index) => {
@@ -607,22 +716,29 @@ function ServicesList() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="card group cursor-pointer"
               >
-                <div
-                  className={`w-16 h-16 ${service.bgColor} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
-                >
-                  <motion.div
-                    animate={{
-                      y: [0, -5, 0],
-                      rotate: [0, 5, -5, 0],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      repeatDelay: 2,
-                    }}
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <div
+                    className={`w-16 h-16 ${service.bgColor} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
                   >
-                    <IconComponent className={`w-8 h-8 ${service.textColor}`} />
-                  </motion.div>
+                    <motion.div
+                      animate={{
+                        y: [0, -5, 0],
+                        rotate: [0, 5, -5, 0],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        repeatDelay: 2,
+                      }}
+                    >
+                      <IconComponent className={`w-8 h-8 ${service.textColor}`} />
+                    </motion.div>
+                  </div>
+                  {service.sector && (
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-medium bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-200 border border-secondary-200 dark:border-secondary-700">
+                      {service.sector}
+                    </span>
+                  )}
                 </div>
 
                 <h3 className="text-xl md:text-2xl font-bold mb-3 text-secondary-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
@@ -644,13 +760,21 @@ function ServicesList() {
                   ))}
                 </ul>
 
-                <button
-                  onClick={() => setSelectedServiceId(service.id)}
-                  className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline font-medium text-sm group-hover:gap-3 transition-all"
-                >
-                  En savoir plus
-                  <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                </button>
+                <div className="flex flex-col sm:flex-row gap-2 mt-auto">
+                  <button
+                    onClick={() => setSelectedServiceId(service.id)}
+                    className="inline-flex items-center justify-center gap-2 text-primary-600 dark:text-primary-400 hover:underline font-medium text-sm group-hover:gap-3 transition-all"
+                  >
+                    {t('services.actions.more')}
+                    <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
+                  </button>
+                  <button
+                    onClick={() => navigate(`/contact?service=${encodeURIComponent(service.id)}`)}
+                    className="inline-flex items-center justify-center gap-2 text-secondary-700 dark:text-secondary-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium text-sm"
+                  >
+                    {t('services.actions.contact')}
+                  </button>
+                </div>
               </motion.div>
             )
           })}
