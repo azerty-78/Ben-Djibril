@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { CodeBracketIcon, RocketLaunchIcon, AcademicCapIcon, ArrowDownTrayIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
+import { CodeBracketIcon, RocketLaunchIcon, AcademicCapIcon, ArrowDownTrayIcon, ArrowRightIcon, GlobeAltIcon } from '@heroicons/react/24/solid'
 
 function AboutSection() {
   const { t } = useTranslation()
@@ -216,13 +216,15 @@ function AboutSection() {
 
             <motion.div
               whileHover={{ y: -5, scale: 1.02 }}
-              className="card p-6 bg-gradient-to-br from-accent-50 to-accent-100/50 dark:from-accent-900/20 dark:to-accent-800/20 border-2 border-accent-200 dark:border-accent-700"
+              className="card p-4 sm:p-5 md:p-6 bg-gradient-to-br from-accent-50 to-accent-100/50 dark:from-accent-900/20 dark:to-accent-800/20 border-2 border-accent-200 dark:border-accent-700"
             >
-              <div className="text-4xl font-bold gradient-text mb-2">🌍</div>
-              <h3 className="text-lg font-bold text-secondary-900 dark:text-white mb-2">
+              <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-3 sm:mb-4 bg-gradient-to-br from-accent-400 to-accent-500 rounded-xl sm:rounded-2xl shadow-lg">
+                <GlobeAltIcon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold text-secondary-900 dark:text-white mb-1.5 sm:mb-2">
                 {t('home.about.worldwide') || 'Disponible mondialement'}
               </h3>
-              <p className="text-sm text-secondary-600 dark:text-secondary-300">
+              <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 leading-relaxed">
                 {t('home.about.worldwideDesc') || 'Je travaille avec des clients du monde entier, en français et en anglais'}
               </p>
             </motion.div>

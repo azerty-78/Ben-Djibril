@@ -145,7 +145,7 @@ function AddTestimonialForm({ onClose, onSuccess }: AddTestimonialFormProps) {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4 md:space-y-6 overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-secondary-300 dark:scrollbar-thumb-secondary-700 scrollbar-track-transparent">
+        <form onSubmit={handleSubmit} className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4 md:space-y-6 overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-secondary-300 dark:scrollbar-thumb-secondary-700 scrollbar-track-transparent pb-20 sm:pb-24 md:pb-6">
           {/* Success message */}
           <AnimatePresence>
             {status === 'success' && (
@@ -375,18 +375,18 @@ function AddTestimonialForm({ onClose, onSuccess }: AddTestimonialFormProps) {
           </div>
 
           {/* Actions */}
-          <div className="sticky bottom-0 bg-gradient-to-r from-white to-secondary-50 dark:from-secondary-900 dark:to-secondary-800 border-t border-secondary-200 dark:border-secondary-700 px-3 sm:px-4 md:px-6 py-3 sm:py-4 -mx-3 sm:-mx-4 md:-mx-6 -mb-3 sm:-mb-4 md:-mb-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 backdrop-blur-md bg-white/98 dark:bg-secondary-900/98 shadow-lg">
+          <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-r from-white via-white to-secondary-50 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800 border-t-2 border-secondary-200 dark:border-secondary-700 px-3 sm:px-4 md:px-6 py-3 sm:py-3.5 md:py-4 -mx-3 sm:-mx-4 md:-mx-6 -mb-3 sm:-mb-4 md:-mb-6 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 backdrop-blur-md bg-white/98 dark:bg-secondary-900/98 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.3)] z-20">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl border border-secondary-300 dark:border-secondary-600 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-50 dark:hover:bg-secondary-800 transition-colors font-medium text-xs sm:text-sm md:text-base order-2 sm:order-1"
+              className="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-3 rounded-lg sm:rounded-xl border-2 border-secondary-300 dark:border-secondary-600 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-50 dark:hover:bg-secondary-800 active:bg-secondary-100 dark:active:bg-secondary-700 transition-all font-semibold text-xs sm:text-sm md:text-base flex-1 sm:flex-initial min-w-0"
             >
               {getTranslation('testimonials.form.cancel', 'Annuler')}
             </button>
             <button
               type="submit"
               disabled={status === 'submitting' || status === 'success'}
-              className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm md:text-base order-1 sm:order-2"
+              className="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-3 rounded-lg sm:rounded-xl bg-primary-600 hover:bg-primary-500 active:bg-primary-700 text-white font-semibold shadow-lg hover:shadow-xl active:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary-600 text-xs sm:text-sm md:text-base flex-1 sm:flex-initial min-w-0"
             >
               {status === 'submitting' 
                 ? getTranslation('testimonials.form.submitting', 'Ajout en cours...')
