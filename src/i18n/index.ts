@@ -109,6 +109,7 @@ export const resources = {
           sport: 'Sport & Fitness',
           beauty: 'Beauty & Care',
           realEstate: 'Real Estate & Rentals',
+          hr: 'HR & Human Resources',
           marketplace: 'Marketplace',
           mobility: 'Mobility & Parking',
           education: 'Education'
@@ -613,6 +614,7 @@ export const resources = {
           sport: 'Sport & Fitness',
           beauty: 'Beauté & Bien-être',
           realEstate: 'Immobilier & Location',
+          hr: 'RH & Ressources humaines',
           marketplace: 'Marketplace',
           mobility: 'Mobilité & Parking',
           education: 'Éducation'
