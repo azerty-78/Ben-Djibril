@@ -114,7 +114,7 @@ function TestimonialsSection() {
           >
             <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1">{stats.total}+</div>
             <div className="text-[10px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
-              Témoignages
+              {t('testimonials.stats.total') || 'Témoignages'}
             </div>
           </motion.div>
 
@@ -128,7 +128,7 @@ function TestimonialsSection() {
               ))}
             </div>
             <div className="text-[10px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
-              {stats.averageRating}/5
+              {stats.averageRating}/5 {t('testimonials.stats.averageRating') || ''}
             </div>
           </motion.div>
 
@@ -138,13 +138,13 @@ function TestimonialsSection() {
           >
             <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1">{stats.satisfaction}%</div>
             <div className="text-[10px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
-              Satisfaction
+              {t('testimonials.stats.satisfaction') || 'Satisfaction'}
             </div>
           </motion.div>
         </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 max-w-7xl mx-auto">
           {allTestimonials.map((testimonial, index) => (
             <TestimonialCard
               key={testimonial.id}
@@ -190,7 +190,6 @@ function TestimonialsSection() {
           />
         )}
       </AnimatePresence>
-      </div>
     </section>
   )
 }

@@ -24,22 +24,22 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
         stiffness: 100
       }}
       whileHover={{ y: -8, scale: 1.02 }}
-      className="card relative overflow-hidden group cursor-pointer"
+      className="card relative overflow-hidden group cursor-pointer h-full flex flex-col shadow-md hover:shadow-xl transition-shadow duration-300"
     >
       {/* Gradient background on hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-primary-500/10 to-accent-500/10" />
       
       {/* Decorative corner */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary-400/20 to-accent-400/10 rounded-bl-full opacity-50" />
+      <div className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-primary-400/20 to-accent-400/10 rounded-bl-full opacity-50" />
       
       {/* Quote icon */}
-      <div className="absolute top-4 right-4 opacity-10 group-hover:opacity-20 transition-opacity">
-        <div className="text-6xl md:text-7xl font-serif text-primary-600 dark:text-primary-400">
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none">
+        <div className="text-5xl sm:text-6xl md:text-7xl font-serif text-primary-600 dark:text-primary-400 leading-none">
           "
         </div>
       </div>
 
-      <div className="relative p-4 sm:p-5 md:p-6 lg:p-8">
+      <div className="relative p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col flex-1">
         {/* Rating */}
         <motion.div
           initial={{ scale: 0 }}
@@ -77,15 +77,15 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: index * 0.15 + 0.3 }}
-          className="text-secondary-700 dark:text-secondary-300 mb-6 sm:mb-8 leading-relaxed text-sm sm:text-base md:text-lg relative z-10"
+          className="text-secondary-700 dark:text-secondary-300 mb-4 sm:mb-6 md:mb-8 leading-relaxed text-sm sm:text-base md:text-lg relative z-10 flex-1"
         >
-          <span className="text-primary-600 dark:text-primary-400 text-xl sm:text-2xl font-bold leading-none">"</span>
-          {content}
-          <span className="text-primary-600 dark:text-primary-400 text-xl sm:text-2xl font-bold leading-none">"</span>
+          <span className="text-primary-600 dark:text-primary-400 text-xl sm:text-2xl md:text-3xl font-bold leading-none inline-block mr-1">"</span>
+          <span className="inline">{content}</span>
+          <span className="text-primary-600 dark:text-primary-400 text-xl sm:text-2xl md:text-3xl font-bold leading-none inline-block ml-1">"</span>
         </motion.p>
 
         {/* Author */}
-        <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+        <div className="flex items-center gap-3 sm:gap-4 relative z-10 pt-4 border-t border-secondary-200/50 dark:border-secondary-700/50">
           <motion.div
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
@@ -93,8 +93,8 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
             transition={{ delay: index * 0.15 + 0.4, type: "spring" }}
             className="relative flex-shrink-0"
           >
-            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-primary-400 via-primary-500 to-accent-400 p-0.5 shadow-lg">
-              <div className="w-full h-full rounded-full bg-white dark:bg-secondary-800 flex items-center justify-center">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-primary-400 via-primary-500 to-accent-400 p-0.5 shadow-lg ring-2 ring-primary-200/50 dark:ring-primary-700/50">
+              <div className="w-full h-full rounded-full bg-white dark:bg-secondary-800 flex items-center justify-center overflow-hidden">
                 {image ? (
                   <img 
                     src={image} 
@@ -102,7 +102,7 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
                     className="w-full h-full rounded-full object-cover" 
                   />
                 ) : (
-                  <div className="w-full h-full rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white text-lg sm:text-xl md:text-2xl font-bold">
+                  <div className="w-full h-full rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white text-base sm:text-lg md:text-xl font-bold">
                     {name.charAt(0).toUpperCase()}
                   </div>
                 )}
@@ -128,7 +128,7 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15 + 0.5 }}
-              className="font-bold text-base sm:text-lg text-secondary-900 dark:text-white mb-1"
+              className="font-bold text-sm sm:text-base md:text-lg text-secondary-900 dark:text-white mb-1 truncate"
             >
               {name}
             </motion.h4>
@@ -137,7 +137,7 @@ function TestimonialCard({ name, role, company, image, content, rating, index = 
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15 + 0.6 }}
-              className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-400"
+              className="text-[11px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 line-clamp-2"
             >
               {role}
               {company && (

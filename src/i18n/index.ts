@@ -499,6 +499,11 @@ export const resources = {
         testimonials: {
           title: 'What Clients Say About Working With Me',
           subtitle: 'Real feedback from clients who have experienced my communication and service',
+          stats: {
+            total: 'Testimonials',
+            averageRating: 'Average rating',
+            satisfaction: 'Satisfaction'
+          },
           addTestimonial: 'Add a testimonial',
           addTestimonialDesc: 'Worked with me? Share your experience!',
           form: {
@@ -519,6 +524,8 @@ export const resources = {
             submit: 'Add testimonial',
             submitting: 'Adding...',
             success: 'Testimonial added successfully!',
+            close: 'Close',
+            removeImage: 'Remove image',
             errors: {
               nameRequired: 'Name is required',
               roleRequired: 'Job/Position is required',
@@ -1087,6 +1094,11 @@ export const resources = {
         testimonials: {
           title: 'Ce Que Disent les Clients de Mon Travail',
           subtitle: 'Vrais témoignages de clients qui ont expérimenté ma communication et mon service',
+          stats: {
+            total: 'Témoignages',
+            averageRating: 'Note moyenne',
+            satisfaction: 'Satisfaction'
+          },
           addTestimonial: 'Ajouter un témoignage',
           addTestimonialDesc: 'Vous avez travaillé avec moi ? Partagez votre expérience !',
           form: {
@@ -1107,6 +1119,8 @@ export const resources = {
             submit: 'Ajouter le témoignage',
             submitting: 'Ajout en cours...',
             success: 'Témoignage ajouté avec succès !',
+            close: 'Fermer',
+            removeImage: 'Supprimer l\'image',
             errors: {
               nameRequired: 'Le nom est requis',
               roleRequired: 'La fonction est requise',
