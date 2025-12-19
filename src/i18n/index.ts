@@ -676,7 +676,164 @@ export const resources = {
           responseTime: 'Temps de réponse',
           responseTimeDesc: 'Je réponds à toutes les demandes sous 24h, souvent beaucoup plus rapidement',
           worldwide: 'Disponible mondialement',
-          worldwideDesc: 'Je travaille avec des clients du monde entier, en français et en anglais'
+          worldwideDesc: 'Je travaille avec des clients du monde entier, en français et en anglais',
+          // Nouvelles sections
+          story: {
+            title: 'Mon Histoire',
+            subtitle: 'Un parcours passionné par la technologie et l\'innovation',
+            content: 'Mon parcours dans le développement logiciel a commencé par une passion pour la résolution de problèmes complexes. Diplômé en génie logiciel, j\'ai rapidement évolué vers le DevOps, attiré par l\'aspect systémique et l\'optimisation des processus. Mon expérience internationale et ma capacité à travailler avec des équipes multiculturelles font de moi un développeur adaptable et polyvalent.',
+            whyDevOps: 'Pourquoi DevOps ?',
+            whyDevOpsContent: 'Le DevOps représente pour moi la convergence parfaite entre le développement et les opérations. J\'aime créer des solutions qui non seulement fonctionnent, mais qui sont également déployables, maintenables et scalables. Cette approche me permet de livrer de la valeur rapidement tout en maintenant une qualité élevée.',
+            whyInternational: 'Pourquoi l\'international ?',
+            whyInternationalContent: 'Travailler avec des clients du monde entier me permet de découvrir différentes cultures, méthodologies et défis techniques. Cette diversité enrichit mon approche et me permet d\'apporter des solutions innovantes adaptées à chaque contexte.'
+          },
+          identity: {
+            role: 'Rôle',
+            roleValue: 'Ingénieur DevOps / Développeur Full-Stack',
+            location: 'Localisation',
+            locationValue: 'Yaoundé, Cameroun',
+            timezone: 'Fuseau horaire',
+            timezoneValue: 'WAT (UTC+1)',
+            availability: 'Disponibilité',
+            availabilityValue: 'Lundi - Vendredi, 9h - 18h',
+            languageNative: 'Natif',
+            languageIntermediate: 'Intermédiaire'
+          },
+          values: {
+            title: 'Mes Valeurs',
+            subtitle: 'Les principes qui guident mon travail',
+            transparency: {
+              title: 'Transparence',
+              desc: 'Communication claire et honnête à chaque étape du projet'
+            },
+            communication: {
+              title: 'Communication',
+              desc: 'Échanges réguliers et feedback constructif pour garantir la réussite'
+            },
+            pedagogy: {
+              title: 'Pédagogie',
+              desc: 'Partage de connaissances et formation pour une autonomie durable'
+            },
+            rigor: {
+              title: 'Rigueur',
+              desc: 'Code propre, tests complets et documentation exhaustive'
+            },
+            innovation: {
+              title: 'Innovation',
+              desc: 'Adoption des meilleures pratiques et technologies modernes'
+            },
+            collaboration: {
+              title: 'Collaboration',
+              desc: 'Travail en équipe et écoute active pour des solutions optimales'
+            }
+          },
+          workflow: {
+            title: 'Ma Façon de Travailler',
+            subtitle: 'Un processus structuré pour garantir la qualité',
+            discovery: {
+              title: 'Découverte & Analyse',
+              desc: 'Compréhension approfondie des besoins et des contraintes'
+            },
+            design: {
+              title: 'Design & Architecture',
+              desc: 'Conception de solutions robustes et scalables'
+            },
+            development: {
+              title: 'Développement',
+              desc: 'Implémentation avec les meilleures pratiques et standards'
+            },
+            testing: {
+              title: 'Tests & QA',
+              desc: 'Validation complète et assurance qualité'
+            },
+            deployment: {
+              title: 'Déploiement',
+              desc: 'Mise en production sécurisée et automatisée'
+            },
+            support: {
+              title: 'Support & Maintenance',
+              desc: 'Accompagnement continu et amélioration continue'
+            }
+          },
+          softSkills: {
+            title: 'Compétences Transversales',
+            subtitle: 'Au-delà de la technique',
+            communication: {
+              title: 'Communication',
+              desc: 'Écoute active et expression claire'
+            },
+            rigor: {
+              title: 'Rigueur',
+              desc: 'Précision et attention aux détails'
+            },
+            pedagogy: {
+              title: 'Pédagogie',
+              desc: 'Transmission de connaissances efficace'
+            },
+            problemSolving: {
+              title: 'Résolution de problèmes',
+              desc: 'Analyse et solutions créatives'
+            },
+            timeManagement: {
+              title: 'Gestion du temps',
+              desc: 'Organisation et respect des délais'
+            },
+            teamwork: {
+              title: 'Travail en équipe',
+              desc: 'Collaboration et synergie'
+            }
+          },
+          timeline: {
+            title: 'Parcours & Formations',
+            subtitle: 'Mon évolution professionnelle et académique',
+            education: {
+              title: 'Formation',
+              iai: {
+                title: 'Diplôme d\'Ingénieur des Travaux Informatique',
+                subtitle: 'Option Génie Logiciel',
+                institution: 'Institut Africain d\'Informatique (IAI)',
+                period: 'Années d\'études',
+                desc: 'Formation complète en génie logiciel avec spécialisation en développement d\'applications et systèmes informatiques.'
+              }
+            },
+            achievements: {
+              title: 'Réalisations',
+              canam2023: {
+                title: 'Lauréat - Concours CANAM 2023',
+                subtitle: 'Programmation Java',
+                period: 'Novembre 2023 - Mars 2024',
+                desc: 'Lauréat du concours interuniversitaire organisé par CANAM (firme canadienne de construction internationale) dans la catégorie programmation en langage Java. Distinction obtenue parmi 492 candidats à travers tout le pays.',
+                imageAlt: 'Certificat Concours CANAM 2023'
+              }
+            }
+          },
+          techStack: {
+            daily: 'Utilisé au quotidien',
+            mastered: 'Bien maîtrisé',
+            known: 'Connaissance solide',
+            filterAll: 'Toutes',
+            filterDaily: 'Quotidiennes',
+            filterMastered: 'Maîtrisées',
+            filterKnown: 'Connues'
+          },
+          cta: {
+            downloadCV: 'Télécharger mon CV',
+            downloadCVDesc: 'Version FR et EN disponible',
+            bookCall: 'Réserver un appel',
+            bookCallDesc: '15 minutes gratuites, sans engagement',
+            viewProjects: 'Voir mes projets',
+            viewProjectsDesc: 'Découvrez mes réalisations',
+            contact: 'Me contacter',
+            contactDesc: 'Discutons de votre projet'
+          },
+          gallery: {
+            title: 'En Contexte',
+            subtitle: 'Quelques moments de mon quotidien professionnel',
+            setup: 'Setup de travail',
+            whiteboard: 'Architecture & Design',
+            conference: 'Conférence & Meetup',
+            environment: 'Environnement de travail'
+          }
         }
       },
       services: {
