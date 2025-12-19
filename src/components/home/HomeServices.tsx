@@ -13,10 +13,11 @@ function HomeServices() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   
-  const scrollToServiceSection = (sectionId: string) => {
-    navigate('/services')
+  const scrollToServiceSection = (serviceType: string) => {
+    navigate(`/services?type=${serviceType}`)
     setTimeout(() => {
-      const section = document.querySelector(`[data-section="${sectionId}"]`)
+      // Scroll to services list section
+      const section = document.querySelector('[data-section="services"]')
       if (section) {
         const offset = 80
         const elementPosition = section.getBoundingClientRect().top
@@ -26,7 +27,7 @@ function HomeServices() {
           behavior: 'smooth'
         })
       }
-    }, 200)
+    }, 300)
   }
   
   const services = [
@@ -38,7 +39,7 @@ function HomeServices() {
       bgColor: 'bg-primary-100 dark:bg-primary-900/30',
       textColor: 'text-primary-600 dark:text-primary-400',
       link: '/services?type=mobile',
-      sectionId: 'services',
+      serviceType: 'mobile',
       tag: 'popular' as const,
       tagLabel: t('services.mostPopular'),
     },
@@ -50,7 +51,7 @@ function HomeServices() {
       bgColor: 'bg-accent-100 dark:bg-accent-900/30',
       textColor: 'text-accent-600 dark:text-accent-400',
       link: '/services?type=web',
-      sectionId: 'services',
+      serviceType: 'web',
       tag: 'new' as const,
       tagLabel: t('home.services.newTag') || 'New',
     },
@@ -62,7 +63,7 @@ function HomeServices() {
       bgColor: 'bg-success-100 dark:bg-success-900/30',
       textColor: 'text-success-600 dark:text-success-400',
       link: '/services?type=ecommerce',
-      sectionId: 'services',
+      serviceType: 'ecommerce',
     },
   ]
 
@@ -95,7 +96,7 @@ function HomeServices() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                onClick={() => scrollToServiceSection(service.sectionId || 'services')}
+                onClick={() => scrollToServiceSection(service.serviceType || 'web')}
                 className="card hover:shadow-xl transition-all duration-300 cursor-pointer group relative overflow-visible"
               >
                 {/* Tag badge */}

@@ -38,8 +38,19 @@ function TestimonialsSection() {
             className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6"
           >
             <div className="relative">
-              <div className="absolute inset-0 bg-primary-400 rounded-full blur-xl opacity-50" />
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
+              <motion.div
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.5, 0.7, 0.5],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                className="absolute inset-0 bg-primary-400 rounded-full blur-xl"
+              />
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-xl border-2 border-white/20 dark:border-secondary-700/50">
                 <motion.div
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, repeatDelay: 2 }}
@@ -67,7 +78,7 @@ function TestimonialsSection() {
         >
           <motion.div
             whileHover={{ scale: 1.05, y: -5 }}
-            className="card text-center p-3 sm:p-4 md:p-6 bg-white/80 dark:bg-secondary-800/80 backdrop-blur-sm border border-secondary-200 dark:border-secondary-700"
+            className="card text-center p-3 sm:p-4 md:p-6 bg-white/90 dark:bg-secondary-800/90 backdrop-blur-sm border-2 border-secondary-200/80 dark:border-secondary-700/80 shadow-md hover:shadow-lg transition-all duration-300"
           >
             <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1">{stats.total}+</div>
             <div className="text-[10px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
@@ -77,7 +88,7 @@ function TestimonialsSection() {
 
           <motion.div
             whileHover={{ scale: 1.05, y: -5 }}
-            className="card text-center p-3 sm:p-4 md:p-6 bg-white/80 dark:bg-secondary-800/80 backdrop-blur-sm border border-secondary-200 dark:border-secondary-700"
+            className="card text-center p-3 sm:p-4 md:p-6 bg-white/90 dark:bg-secondary-800/90 backdrop-blur-sm border-2 border-secondary-200/80 dark:border-secondary-700/80 shadow-md hover:shadow-lg transition-all duration-300"
           >
             <div className="flex items-center justify-center gap-0.5 sm:gap-1 mb-1">
               {[...Array(5)].map((_, i) => (
@@ -91,7 +102,7 @@ function TestimonialsSection() {
 
           <motion.div
             whileHover={{ scale: 1.05, y: -5 }}
-            className="card text-center p-3 sm:p-4 md:p-6 bg-white/80 dark:bg-secondary-800/80 backdrop-blur-sm border border-secondary-200 dark:border-secondary-700"
+            className="card text-center p-3 sm:p-4 md:p-6 bg-white/90 dark:bg-secondary-800/90 backdrop-blur-sm border-2 border-secondary-200/80 dark:border-secondary-700/80 shadow-md hover:shadow-lg transition-all duration-300"
           >
             <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1">{stats.satisfaction}%</div>
             <div className="text-[10px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">

@@ -16,23 +16,51 @@ function AboutSection() {
   const { t } = useTranslation()
 
   return (
-    <section className="py-16 bg-white dark:bg-secondary-900/50">
-      <div className="container mx-auto px-4">
+    <section className="py-16 md:py-20 bg-gradient-to-br from-white via-primary-50/30 to-accent-50/20 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-30 dark:opacity-20 pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, ease: 'easeOut' }}
+          className="absolute top-20 -right-20 w-64 h-64 bg-primary-200 dark:bg-primary-600 rounded-full blur-3xl"
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, delay: 0.3, ease: 'easeOut' }}
+          className="absolute bottom-20 -left-20 w-72 h-72 bg-accent-200 dark:bg-accent-600 rounded-full blur-3xl"
+        />
+      </div>
+
+      <div className="container mx-auto px-4 relative">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-secondary-900 dark:text-white">{t('home.about.title')}</h2>
-            <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-primary-50 dark:bg-primary-900/40 border border-primary-200 dark:border-primary-700 mb-4 sm:mb-5"
+            >
+              <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
+              <span className="text-[10px] xs:text-xs sm:text-sm font-medium text-primary-700 dark:text-primary-300">
+                À propos de moi
+              </span>
+            </motion.div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-secondary-900 dark:text-white">{t('home.about.title')}</h2>
+            <p className="text-lg md:text-xl text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto leading-relaxed">
               {t('home.about.subtitle')}
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-20">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -40,12 +68,27 @@ function AboutSection() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="w-full aspect-square max-w-md mx-auto">
-                <div className="w-full h-full rounded-2xl bg-gradient-to-br from-primary-400 via-primary-500 to-accent-500 p-1">
-                  <div className="w-full h-full rounded-2xl bg-white dark:bg-secondary-800 flex items-center justify-center">
-                    <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white text-4xl md:text-5xl font-bold">
+              <motion.div
+                animate={{
+                  scale: [1, 1.02, 1],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                className="absolute -inset-4 bg-gradient-to-br from-primary-400/20 via-primary-500/20 to-accent-500/20 rounded-3xl blur-2xl"
+              />
+              <div className="relative w-full aspect-square max-w-md mx-auto">
+                <div className="w-full h-full rounded-3xl bg-gradient-to-br from-primary-400 via-primary-500 to-accent-500 p-1.5 shadow-2xl">
+                  <div className="w-full h-full rounded-3xl bg-white dark:bg-secondary-800 flex items-center justify-center">
+                    <motion.div
+                      whileHover={{ scale: 1.05, rotate: 5 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white text-4xl md:text-5xl font-bold shadow-xl"
+                    >
                       BD
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
@@ -58,51 +101,65 @@ function AboutSection() {
               transition={{ duration: 0.6 }}
               className="space-y-6"
             >
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-sm font-semibold text-secondary-500 dark:text-secondary-400 mb-1">
+              <div className="space-y-4 mb-6">
+                <div className="card p-4 bg-gradient-to-br from-primary-50 to-primary-100/50 dark:from-primary-900/30 dark:to-primary-800/20 border border-primary-200 dark:border-primary-700">
+                  <h3 className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 mb-1.5 uppercase tracking-wide">
                     {t('home.about.realName')}
                   </h3>
-                  <p className="text-base font-medium text-secondary-900 dark:text-secondary-100">
+                  <p className="text-base md:text-lg font-semibold text-secondary-900 dark:text-secondary-100">
                     Kone Djibril Benjamin
                   </p>
                 </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-secondary-500 dark:text-secondary-400 mb-1">
+                <div className="card p-4 bg-gradient-to-br from-accent-50 to-accent-100/50 dark:from-accent-900/30 dark:to-accent-800/20 border border-accent-200 dark:border-accent-700">
+                  <h3 className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 mb-1.5 uppercase tracking-wide">
                     {t('home.about.publicName')}
                   </h3>
-                  <p className="text-base font-medium text-primary-600 dark:text-primary-400">
+                  <p className="text-base md:text-lg font-semibold text-primary-600 dark:text-primary-400">
                     Ben Djibril
                   </p>
                 </div>
               </div>
 
-              <p className="text-lg text-secondary-700 dark:text-secondary-300 leading-relaxed">
+              <p className="text-base md:text-lg text-secondary-700 dark:text-secondary-300 leading-relaxed mb-6">
                 {t('home.about.bio')}
               </p>
               
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="bg-primary-50 dark:bg-primary-900/20 rounded-lg p-4">
-                  <div className="text-2xl font-bold gradient-text mb-1">4</div>
-                  <div className="text-sm text-secondary-600 dark:text-secondary-400">{t('home.about.experience')}</div>
-                </div>
-                <div className="bg-accent-50 dark:bg-accent-900/20 rounded-lg p-4">
-                  <div className="text-2xl font-bold gradient-text mb-1">{t('home.about.level')}</div>
-                  <div className="text-sm text-secondary-600 dark:text-secondary-400">Médior</div>
-                </div>
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="card p-4 bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 border border-primary-200 dark:border-primary-700"
+                >
+                  <div className="text-3xl md:text-4xl font-bold gradient-text mb-1">4</div>
+                  <div className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-400 font-medium">{t('home.about.experience')}</div>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="card p-4 bg-gradient-to-br from-accent-50 to-accent-100 dark:from-accent-900/20 dark:to-accent-800/20 border border-accent-200 dark:border-accent-700"
+                >
+                  <div className="text-xl md:text-2xl font-bold gradient-text mb-1">{t('home.about.level')}</div>
+                  <div className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-400 font-medium">Médior</div>
+                </motion.div>
               </div>
 
-              <div className="space-y-3 pt-2">
-                <h3 className="text-sm font-semibold text-secondary-500 dark:text-secondary-400">
+              <div className="card p-4 bg-gradient-to-br from-success-50 to-success-100/50 dark:from-success-900/20 dark:to-success-800/20 border border-success-200 dark:border-success-700">
+                <h3 className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 mb-3 uppercase tracking-wide">
                   {t('home.about.languages')}
                 </h3>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1.5 bg-success-100 dark:bg-success-900/30 text-success-700 dark:text-success-300 rounded-lg text-sm font-medium">
-                    🇫🇷 Français (Natif)
-                  </span>
-                  <span className="px-3 py-1.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium">
-                    🇬🇧 Anglais (Intermédiaire)
-                  </span>
+                <div className="flex flex-wrap gap-2.5">
+                  <motion.span
+                    whileHover={{ scale: 1.05 }}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-success-100 dark:bg-success-900/40 text-success-700 dark:text-success-300 rounded-xl text-sm font-semibold shadow-sm"
+                  >
+                    <span className="text-lg">🇫🇷</span>
+                    <span>Français (Natif)</span>
+                  </motion.span>
+                  <motion.span
+                    whileHover={{ scale: 1.05 }}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 rounded-xl text-sm font-semibold shadow-sm"
+                  >
+                    <span className="text-lg">🇬🇧</span>
+                    <span>Anglais (Intermédiaire)</span>
+                  </motion.span>
                 </div>
               </div>
             </motion.div>
