@@ -1,4 +1,4 @@
-import { useState, type FormEvent, useRef } from 'react'
+import { useState, type FormEvent, useRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
@@ -22,12 +22,6 @@ function AddTestimonialForm({ onClose, onSuccess }: AddTestimonialFormProps) {
   const { t } = useTranslation()
   const fileInputRef = useRef<HTMLInputElement>(null)
   
-  // Helper pour obtenir les traductions avec fallback
-  const getTranslation = (key: string, fallback: string) => {
-    const translation = t(key)
-    return translation && translation !== key ? translation : fallback
-  }
-  
   const [formData, setFormData] = useState({
     name: '',
     role: '',
@@ -40,6 +34,12 @@ function AddTestimonialForm({ onClose, onSuccess }: AddTestimonialFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
+
+  // Helper pour obtenir les traductions avec fallback
+  const getTranslation = useCallback((key: string, fallback: string) => {
+    const translation = t(key)
+    return translation && translation !== key ? translation : fallback
+  }, [t])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
