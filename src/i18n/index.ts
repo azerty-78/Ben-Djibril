@@ -632,7 +632,8 @@ export const resources = {
           certifications: 'Certifications',
           contactMe: 'Intéressé par mon profil ?',
           contactDesc: 'Discutons de votre projet et voyons comment je peux vous aider',
-          contactBtn: 'Me contacter'
+          contactBtn: 'Me contacter',
+          downloadCV: 'Télécharger mon CV'
         }
       },
       services: {

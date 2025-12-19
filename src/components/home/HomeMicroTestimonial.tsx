@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ChatBubbleLeftRightIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 

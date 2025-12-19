@@ -86,7 +86,7 @@ function ContactForm() {
 
   const [formData, setFormData] = useState(loadSavedData)
   const [preferredContact, setPreferredContact] = useState<string>('email')
-  const [subjectSuggestions, setSubjectSuggestions] = useState<string[]>([])
+  const [subjectSuggestions] = useState<string[]>([]) // Suggestions basées sur le contenu du message (à implémenter si nécessaire)
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')

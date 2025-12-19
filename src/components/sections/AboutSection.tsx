@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { CodeBracketIcon, RocketLaunchIcon, AcademicCapIcon } from '@heroicons/react/24/solid'
+import { Link } from 'react-router-dom'
+import { CodeBracketIcon, RocketLaunchIcon, AcademicCapIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid'
 import TechStack from '../ui/TechStack'
 import {
   programmingLanguages,
@@ -162,6 +163,23 @@ function AboutSection() {
                   </motion.span>
                 </div>
               </div>
+
+              {/* CTA Download CV */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mt-6"
+              >
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
+                >
+                  <ArrowDownTrayIcon className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" />
+                  <span>{t('home.about.downloadCV') || 'Télécharger mon CV'}</span>
+                </Link>
+              </motion.div>
             </motion.div>
           </div>
 
