@@ -16,7 +16,7 @@ function Contact() {
       <ContactHero />
       <div className="container mx-auto px-4 sm:px-6">
         <ContactAvailability />
-      </div>
+          </div>
       <ContactStats />
       <ContactWhyChoose />
       <ContactForm />
