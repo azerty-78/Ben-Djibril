@@ -140,35 +140,49 @@ function HeroSection() {
             ))}
           </div>
 
-          <div className="mt-12 md:mt-16">
-            <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 mb-4 sm:mb-6">
-              Trusted by companies worldwide
+          {/* Clients logos banner - animated */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mt-12 md:mt-16"
+          >
+            <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 mb-4 sm:mb-6 text-center">
+              {t('home.clients.title') || 'Trusted by companies worldwide'}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 opacity-70 hover:opacity-100 transition-opacity">
-              {companies.map((company, i) => (
-                <a
-                  key={i}
-                  href={company.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="h-12 sm:h-16 w-24 sm:w-32 bg-white dark:bg-secondary-800 rounded-lg flex items-center justify-center hover:scale-110 transition-transform duration-200 shadow-sm hover:shadow-md border border-secondary-200 dark:border-secondary-700"
-                  title={company.name}
-                >
-                  {company.logo ? (
-                    <img
-                      src={company.logo}
-                      alt={company.name}
-                      className="h-8 sm:h-10 w-auto max-w-full object-contain px-2"
-                    />
-                  ) : (
-                    <span className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 font-medium text-center px-2">
-                      {company.name.split(' ')[0]}
-                    </span>
-                  )}
-                </a>
-              ))}
+            <div className="relative overflow-hidden">
+              <div className="flex items-center justify-center gap-6 sm:gap-8 md:gap-12 flex-wrap">
+                {companies.map((company, i) => (
+                  <motion.a
+                    key={i}
+                    href={company.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
+                    whileHover={{ scale: 1.15, y: -2 }}
+                    className="h-12 sm:h-16 w-24 sm:w-32 bg-white dark:bg-secondary-800 rounded-xl flex items-center justify-center hover:shadow-lg transition-all duration-300 shadow-md border border-secondary-200 dark:border-secondary-700 grayscale hover:grayscale-0 opacity-70 hover:opacity-100"
+                    title={company.name}
+                  >
+                    {company.logo ? (
+                      <img
+                        src={company.logo}
+                        alt={company.name}
+                        className="h-8 sm:h-10 w-auto max-w-full object-contain px-2"
+                      />
+                    ) : (
+                      <span className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 font-semibold text-center px-2">
+                        {company.name.split(' ')[0]}
+                      </span>
+                    )}
+                  </motion.a>
+                ))}
+              </div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -1,14 +1,33 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { 
   GlobeAltIcon, 
   DevicePhoneMobileIcon, 
   ShoppingBagIcon,
+  SparklesIcon,
+  FireIcon,
 } from '@heroicons/react/24/solid'
 
 function HomeServices() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  
+  const scrollToServiceSection = (sectionId: string) => {
+    navigate('/services')
+    setTimeout(() => {
+      const section = document.querySelector(`[data-section="${sectionId}"]`)
+      if (section) {
+        const offset = 80
+        const elementPosition = section.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - offset
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      }
+    }, 200)
+  }
   
   const services = [
     { 
@@ -18,7 +37,10 @@ function HomeServices() {
       color: 'from-primary-500 to-primary-600',
       bgColor: 'bg-primary-100 dark:bg-primary-900/30',
       textColor: 'text-primary-600 dark:text-primary-400',
-      link: '/services?type=mobile'
+      link: '/services?type=mobile',
+      sectionId: 'services',
+      tag: 'popular' as const,
+      tagLabel: t('services.mostPopular'),
     },
     { 
       title: t('home.card2.title'), 
@@ -27,7 +49,10 @@ function HomeServices() {
       color: 'from-accent-500 to-accent-600',
       bgColor: 'bg-accent-100 dark:bg-accent-900/30',
       textColor: 'text-accent-600 dark:text-accent-400',
-      link: '/services?type=web'
+      link: '/services?type=web',
+      sectionId: 'services',
+      tag: 'new' as const,
+      tagLabel: t('home.services.newTag') || 'New',
     },
     { 
       title: t('home.card3.title'), 
@@ -36,7 +61,8 @@ function HomeServices() {
       color: 'from-success-500 to-success-600',
       bgColor: 'bg-success-100 dark:bg-success-900/30',
       textColor: 'text-success-600 dark:text-success-400',
-      link: '/services?type=ecommerce'
+      link: '/services?type=ecommerce',
+      sectionId: 'services',
     },
   ]
 
@@ -50,9 +76,11 @@ function HomeServices() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-secondary-900 dark:text-white">Mes Services</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-secondary-900 dark:text-white">
+            {t('home.services.title') || 'Mes Services'}
+          </h2>
           <p className="text-lg text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto">
-            Solutions complètes pour vos besoins digitaux
+            {t('home.services.subtitle') || 'Solutions complètes pour vos besoins digitaux'}
           </p>
         </motion.div>
 
@@ -66,9 +94,34 @@ function HomeServices() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="card hover:shadow-xl transition-all duration-300 cursor-pointer group"
+                whileHover={{ y: -5, scale: 1.02 }}
+                onClick={() => scrollToServiceSection(service.sectionId || 'services')}
+                className="card hover:shadow-xl transition-all duration-300 cursor-pointer group relative overflow-visible"
               >
+                {/* Tag badge */}
+                {service.tag && (
+                  <div className="absolute -top-2 -right-2 z-10">
+                    <motion.div
+                      initial={{ scale: 0, rotate: -180 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.2, type: "spring" }}
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-lg ${
+                        service.tag === 'popular'
+                          ? 'bg-primary-600 text-white'
+                          : 'bg-accent-500 text-white'
+                      }`}
+                    >
+                      {service.tag === 'popular' ? (
+                        <FireIcon className="w-3 h-3" />
+                      ) : (
+                        <SparklesIcon className="w-3 h-3" />
+                      )}
+                      <span>{service.tagLabel}</span>
+                    </motion.div>
+                  </div>
+                )}
+
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
                   whileInView={{ scale: 1, rotate: 0 }}
@@ -102,13 +155,10 @@ function HomeServices() {
                 <p className="text-secondary-600 dark:text-secondary-300 mb-6 leading-relaxed">
                   {service.desc}
                 </p>
-                <Link 
-                  to={service.link} 
-                  className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium group-hover:gap-3 transition-all"
-                >
-                  En savoir plus
+                <div className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium group-hover:gap-3 transition-all">
+                  {t('home.services.learnMore') || 'En savoir plus'}
                   <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                </Link>
+                </div>
               </motion.div>
             )
           })}
@@ -122,7 +172,7 @@ function HomeServices() {
           className="text-center"
         >
           <Link to="/services" className="btn-primary text-lg px-8 py-3 inline-block">
-            Voir tous les services
+            {t('home.services.viewAll') || 'Voir tous les services'}
           </Link>
         </motion.div>
       </div>

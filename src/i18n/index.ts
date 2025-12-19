@@ -40,6 +40,31 @@ export const resources = {
           subtitle: 'Understand how I work, the type of projects I take on, and what you can expect from our collaboration.',
           cta: 'Watch the short intro',
         },
+        services: {
+          title: 'My Services',
+          subtitle: 'Complete solutions for your digital needs',
+          learnMore: 'Learn more',
+          viewAll: 'View all services',
+          newTag: 'New',
+        },
+        microTestimonial: {
+          quote: 'Ben quickly understood our needs and delivered a solution that exceeded our expectations. Excellent communication and on-time delivery.',
+          author: 'Satisfied Client',
+          role: 'E-commerce Project',
+          cta: 'See all testimonials',
+        },
+        cta: {
+          title: 'Ready to start your project?',
+          description: 'Let\'s discuss your project and create something amazing together',
+          contactBtn: 'Contact Me',
+          projectsBtn: 'View My Work',
+          responseTime: 'Response under 24h',
+          freeQuote: 'Free quote',
+          freeConsultation: 'Free consultation',
+        },
+        clients: {
+          title: 'Trusted by companies worldwide',
+        },
         metrics: { clients: 'Clients', projects: 'Projects', satisfaction: 'Satisfaction', delivery: 'Avg Delivery' },
         about: {
           title: 'About Me',
@@ -559,6 +584,31 @@ export const resources = {
           title: 'Découvre mon profil en 30 secondes',
           subtitle: 'Comprends rapidement comment je travaille, les types de projets que je prends et ce que tu peux attendre de notre collaboration.',
           cta: 'Voir la courte présentation',
+        },
+        services: {
+          title: 'Mes Services',
+          subtitle: 'Solutions complètes pour vos besoins digitaux',
+          learnMore: 'En savoir plus',
+          viewAll: 'Voir tous les services',
+          newTag: 'Nouveau',
+        },
+        microTestimonial: {
+          quote: 'Ben a su comprendre nos besoins rapidement et livrer une solution qui dépasse nos attentes. Communication excellente et livraison dans les temps.',
+          author: 'Client satisfait',
+          role: 'Projet e-commerce',
+          cta: 'Voir tous les témoignages',
+        },
+        cta: {
+          title: 'Prêt à démarrer votre projet ?',
+          description: 'Discutons de votre projet et créons ensemble quelque chose d\'extraordinaire',
+          contactBtn: 'Me contacter',
+          projectsBtn: 'Voir mes réalisations',
+          responseTime: 'Réponse sous 24h',
+          freeQuote: 'Devis gratuit',
+          freeConsultation: 'Consultation gratuite',
+        },
+        clients: {
+          title: 'Recommandé par des entreprises du monde entier',
         },
         metrics: { clients: 'Clients', projects: 'Projets', satisfaction: 'Satisfaction', delivery: 'Délai moyen' },
         about: {

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { 
   RocketLaunchIcon,
   ArrowRightIcon,
@@ -7,6 +8,7 @@ import {
 } from '@heroicons/react/24/solid'
 
 function HomeCTA() {
+  const { t } = useTranslation()
   return (
     <section className="py-16 md:py-24 bg-gradient-to-br from-primary-600 via-primary-500 to-accent-500 relative overflow-hidden">
       {/* Background decoration */}
@@ -89,7 +91,7 @@ function HomeCTA() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white leading-tight"
           >
-            Prêt à démarrer votre projet ?
+            {t('home.cta.title') || 'Prêt à démarrer votre projet ?'}
           </motion.h2>
 
           {/* Description */}
@@ -100,7 +102,7 @@ function HomeCTA() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-base sm:text-lg md:text-xl text-white/90 mb-8 sm:mb-10 md:mb-12 leading-relaxed max-w-2xl mx-auto px-4"
           >
-            Discutons de votre projet et créons ensemble quelque chose d'extraordinaire
+            {t('home.cta.description') || 'Discutons de votre projet et créons ensemble quelque chose d\'extraordinaire'}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -121,7 +123,7 @@ function HomeCTA() {
               >
                 <StarIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </motion.div>
-              <span>Me contacter</span>
+              <span>{t('home.cta.contactBtn') || 'Me contacter'}</span>
               <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
 
@@ -129,7 +131,7 @@ function HomeCTA() {
               to="/projects"
               className="group relative inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 w-full sm:w-auto"
             >
-              <span>Voir mes réalisations</span>
+              <span>{t('home.cta.projectsBtn') || 'Voir mes réalisations'}</span>
               <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
@@ -144,17 +146,17 @@ function HomeCTA() {
           >
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-white/60 animate-pulse" />
-              <span>Réponse sous 24h</span>
+              <span>{t('home.cta.responseTime') || 'Réponse sous 24h'}</span>
             </div>
             <div className="hidden sm:block w-1 h-1 rounded-full bg-white/40" />
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-white/60 animate-pulse" />
-              <span>Devis gratuit</span>
+              <span>{t('home.cta.freeQuote') || 'Devis gratuit'}</span>
             </div>
             <div className="hidden sm:block w-1 h-1 rounded-full bg-white/40" />
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-white/60 animate-pulse" />
-              <span>Consultation gratuite</span>
+              <span>{t('home.cta.freeConsultation') || 'Consultation gratuite'}</span>
             </div>
           </motion.div>
         </motion.div>
