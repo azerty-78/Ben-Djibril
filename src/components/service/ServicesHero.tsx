@@ -216,7 +216,7 @@ function ServicesHero() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-6 sm:mb-8"
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-4 sm:mb-6"
             >
               <button
                 type="button"
@@ -232,6 +232,34 @@ function ServicesHero() {
               >
                 {t('services.heroCtaFull')}
               </button>
+            </motion.div>
+
+            {/* Trust indicators */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.55 }}
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 mb-6 sm:mb-8 text-[10px] xs:text-xs sm:text-sm text-secondary-600 dark:text-secondary-300"
+            >
+              <div className="inline-flex items-center gap-2">
+                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+                <span className="font-medium">
+                  {t('contact.hero.responseTime')}
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2">
+                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-primary-500 dark:bg-primary-400" />
+                <span className="font-medium">
+                  {t('contact.hero.freeQuote')}
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2">
+                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-accent-500 dark:bg-accent-400" />
+                <span className="font-medium">
+                  {t('contact.hero.available')}
+                </span>
+              </div>
             </motion.div>
 
             {/* Mini comparaison SaaS vs Full Control */}
