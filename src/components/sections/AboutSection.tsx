@@ -1,17 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { CodeBracketIcon, RocketLaunchIcon, AcademicCapIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid'
-import TechStack from '../ui/TechStack'
-import {
-  programmingLanguages,
-  frameworks,
-  databases,
-  technologies,
-  hosting,
-  design,
-  versioning,
-} from '../../data/techStack'
+import { CodeBracketIcon, RocketLaunchIcon, AcademicCapIcon, ArrowDownTrayIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 
 function AboutSection() {
   const { t } = useTranslation()
@@ -164,104 +154,128 @@ function AboutSection() {
                 </div>
               </div>
 
-              {/* CTA Download CV */}
+              {/* CTAs */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="mt-6"
+                className="mt-6 flex flex-col sm:flex-row gap-3"
               >
                 <Link
                   to="/about"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
                 >
                   <ArrowDownTrayIcon className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" />
                   <span>{t('home.about.downloadCV') || 'Télécharger mon CV'}</span>
+                </Link>
+                <Link
+                  to="/about"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-2 border-primary-600 dark:border-primary-500 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 font-semibold transition-all duration-300"
+                >
+                  <span>{t('home.about.viewFullProfile') || 'Voir mon profil complet'}</span>
+                  <ArrowRightIcon className="w-5 h-5" />
                 </Link>
               </motion.div>
             </motion.div>
           </div>
 
-          {/* Technologies complètes */}
-          <div className="space-y-8 mb-12">
-            <div>
-              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Langages de programmation</h3>
-              <TechStack
-                title=""
-                items={programmingLanguages}
-                columns={5}
-              />
-            </div>
+          {/* Informations pour convaincre les clients */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="grid md:grid-cols-3 gap-6 mb-12"
+          >
+            <motion.div
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="card p-6 bg-gradient-to-br from-emerald-50 to-emerald-100/50 dark:from-emerald-900/20 dark:to-emerald-800/20 border-2 border-emerald-200 dark:border-emerald-700"
+            >
+              <div className="text-4xl font-bold gradient-text mb-2">100%</div>
+              <h3 className="text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                {t('home.about.clientSatisfaction') || 'Satisfaction client'}
+              </h3>
+              <p className="text-sm text-secondary-600 dark:text-secondary-300">
+                {t('home.about.clientSatisfactionDesc') || 'Tous mes clients sont satisfaits de mes services et recommandent mon travail'}
+              </p>
+            </motion.div>
 
-            <div className="card">
-              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Frameworks</h3>
-              <div className="space-y-6">
+            <motion.div
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="card p-6 bg-gradient-to-br from-primary-50 to-primary-100/50 dark:from-primary-900/20 dark:to-primary-800/20 border-2 border-primary-200 dark:border-primary-700"
+            >
+              <div className="text-4xl font-bold gradient-text mb-2">&lt; 24h</div>
+              <h3 className="text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                {t('home.about.responseTime') || 'Temps de réponse'}
+              </h3>
+              <p className="text-sm text-secondary-600 dark:text-secondary-300">
+                {t('home.about.responseTimeDesc') || 'Je réponds à toutes les demandes sous 24h, souvent beaucoup plus rapidement'}
+              </p>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="card p-6 bg-gradient-to-br from-accent-50 to-accent-100/50 dark:from-accent-900/20 dark:to-accent-800/20 border-2 border-accent-200 dark:border-accent-700"
+            >
+              <div className="text-4xl font-bold gradient-text mb-2">🌍</div>
+              <h3 className="text-lg font-bold text-secondary-900 dark:text-white mb-2">
+                {t('home.about.worldwide') || 'Disponible mondialement'}
+              </h3>
+              <p className="text-sm text-secondary-600 dark:text-secondary-300">
+                {t('home.about.worldwideDesc') || 'Je travaille avec des clients du monde entier, en français et en anglais'}
+              </p>
+            </motion.div>
+          </motion.div>
+
+          {/* Technologies résumées - Rediriger vers /about pour les détails */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
+            <div className="card p-6 bg-gradient-to-br from-primary-50 to-accent-50/30 dark:from-primary-900/20 dark:to-accent-900/20 border-2 border-primary-200 dark:border-primary-700">
+              <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
-                  <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">Backend</h4>
-                  <TechStack items={frameworks.backend} title="" columns={3} />
+                  <h3 className="text-xl font-bold text-secondary-900 dark:text-white mb-2">
+                    {t('home.about.techStack')}
+                  </h3>
+                  <p className="text-sm text-secondary-600 dark:text-secondary-300">
+                    {t('home.about.techStackDesc')}
+                  </p>
                 </div>
-                <div>
-                  <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">Frontend</h4>
-                  <TechStack items={frameworks.frontend} title="" columns={3} />
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-sm font-semibold shadow-md hover:shadow-lg transition-all whitespace-nowrap"
+                >
+                  {t('home.about.viewFullStack') || 'Voir le stack complet'}
+                  <ArrowRightIcon className="w-4 h-4" />
+                </Link>
+              </div>
+              
+              {/* Aperçu rapide des principales technologies */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="text-center p-3 bg-white/60 dark:bg-secondary-800/60 rounded-lg">
+                  <p className="text-xs font-semibold text-secondary-600 dark:text-secondary-400 mb-1">Backend</p>
+                  <p className="text-sm font-bold text-secondary-900 dark:text-white">Spring Boot</p>
                 </div>
-                <div>
-                  <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">Mobile</h4>
-                  <TechStack items={frameworks.mobile} title="" columns={3} />
+                <div className="text-center p-3 bg-white/60 dark:bg-secondary-800/60 rounded-lg">
+                  <p className="text-xs font-semibold text-secondary-600 dark:text-secondary-400 mb-1">Mobile</p>
+                  <p className="text-sm font-bold text-secondary-900 dark:text-white">Kotlin</p>
+                </div>
+                <div className="text-center p-3 bg-white/60 dark:bg-secondary-800/60 rounded-lg">
+                  <p className="text-xs font-semibold text-secondary-600 dark:text-secondary-400 mb-1">Frontend</p>
+                  <p className="text-sm font-bold text-secondary-900 dark:text-white">React</p>
+                </div>
+                <div className="text-center p-3 bg-white/60 dark:bg-secondary-800/60 rounded-lg">
+                  <p className="text-xs font-semibold text-secondary-600 dark:text-secondary-400 mb-1">DevOps</p>
+                  <p className="text-sm font-bold text-secondary-900 dark:text-white">Docker</p>
                 </div>
               </div>
             </div>
-
-            <div className="card">
-              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Bases de données</h3>
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">SQL</h4>
-                  <TechStack items={databases.sql} title="" columns={3} />
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium mb-3 text-secondary-700 dark:text-secondary-300">NoSQL</h4>
-                  <TechStack items={databases.nosql} title="" columns={3} />
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Technologies DevOps</h3>
-              <TechStack
-                title=""
-                items={technologies}
-                columns={3}
-              />
-            </div>
-
-            <div>
-              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Hébergement & Cloud</h3>
-              <TechStack
-                title=""
-                items={hosting}
-                columns={5}
-              />
-            </div>
-
-            <div>
-              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Design</h3>
-              <TechStack
-                title=""
-                items={design}
-                columns={2}
-              />
-            </div>
-
-            <div>
-              <h3 className="text-xl font-semibold mb-4 text-secondary-900 dark:text-white">Versioning</h3>
-              <TechStack
-                title=""
-                items={versioning}
-                columns={2}
-              />
-            </div>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6">
             <motion.div

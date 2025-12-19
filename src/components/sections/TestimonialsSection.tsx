@@ -1,16 +1,48 @@
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import TestimonialCard from '../ui/TestimonialCard'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { mockTestimonials } from '../../data/mockData'
-import { ChatBubbleLeftRightIcon, StarIcon } from '@heroicons/react/24/solid'
+import { loadTestimonials, type Testimonial } from '../../utils/testimonials'
+import AddTestimonialForm from '../testimonials/AddTestimonialForm'
+import { ChatBubbleLeftRightIcon, StarIcon, PlusIcon } from '@heroicons/react/24/solid'
 
 function TestimonialsSection() {
   const { t } = useTranslation()
+  const [customTestimonials, setCustomTestimonials] = useState<Testimonial[]>([])
+  const [showAddForm, setShowAddForm] = useState(false)
+
+  // Charger les témoignages depuis localStorage
+  useEffect(() => {
+    const loaded = loadTestimonials()
+    setCustomTestimonials(loaded)
+  }, [])
+
+  // Fusionner mockTestimonials avec les témoignages personnalisés
+  const allTestimonials = [
+    ...mockTestimonials.map((t, i) => ({
+      id: `mock-${i}`,
+      name: t.name,
+      role: t.role,
+      company: t.company,
+      content: t.content,
+      rating: t.rating,
+      createdAt: new Date().toISOString(),
+    })),
+    ...customTestimonials,
+  ]
 
   const stats = {
-    total: mockTestimonials.length,
-    averageRating: 5,
+    total: allTestimonials.length,
+    averageRating: allTestimonials.length > 0 
+      ? Math.round((allTestimonials.reduce((sum, t) => sum + t.rating, 0) / allTestimonials.length) * 10) / 10
+      : 5,
     satisfaction: 95
+  }
+
+  const handleTestimonialAdded = () => {
+    const loaded = loadTestimonials()
+    setCustomTestimonials(loaded)
   }
 
   return (
@@ -113,20 +145,21 @@ function TestimonialsSection() {
 
         {/* Testimonials Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
-          {mockTestimonials.map((testimonial, index) => (
+          {allTestimonials.map((testimonial, index) => (
             <TestimonialCard
-              key={index}
+              key={testimonial.id}
               name={testimonial.name}
               role={testimonial.role}
               company={testimonial.company}
               content={testimonial.content}
               rating={testimonial.rating}
+              image={testimonial.image}
               index={index}
             />
           ))}
         </div>
 
-        {/* CTA */}
+        {/* CTA Add Testimonial */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -134,10 +167,29 @@ function TestimonialsSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-8 sm:mt-12"
         >
-          <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 px-4">
-            Vous avez travaillé avec moi ? <span className="text-primary-600 dark:text-primary-400 font-medium cursor-pointer hover:underline">Laissez un témoignage</span>
+          <button
+            type="button"
+            onClick={() => setShowAddForm(true)}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <PlusIcon className="w-5 h-5" />
+            <span>{t('testimonials.addTestimonial') || 'Ajouter un témoignage'}</span>
+          </button>
+          <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 mt-4 px-4">
+            {t('testimonials.addTestimonialDesc') || 'Vous avez travaillé avec moi ? Partagez votre expérience !'}
           </p>
         </motion.div>
+      </div>
+
+      {/* Modal Add Testimonial */}
+      <AnimatePresence>
+        {showAddForm && (
+          <AddTestimonialForm
+            onClose={() => setShowAddForm(false)}
+            onSuccess={handleTestimonialAdded}
+          />
+        )}
+      </AnimatePresence>
       </div>
     </section>
   )

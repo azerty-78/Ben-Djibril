@@ -499,6 +499,38 @@ export const resources = {
         testimonials: {
           title: 'What Clients Say About Working With Me',
           subtitle: 'Real feedback from clients who have experienced my communication and service',
+          addTestimonial: 'Add a testimonial',
+          addTestimonialDesc: 'Worked with me? Share your experience!',
+          form: {
+            title: 'Add a testimonial',
+            name: 'Name *',
+            namePlaceholder: 'Your full name',
+            role: 'Job / Position *',
+            rolePlaceholder: 'Ex: CEO, Developer, Director...',
+            company: 'Company (optional)',
+            companyPlaceholder: 'Your company name',
+            rating: 'Rating *',
+            content: 'Message *',
+            contentPlaceholder: 'Your testimonial...',
+            image: 'Photo (optional)',
+            selectImage: 'Select an image',
+            minLength: '10',
+            cancel: 'Cancel',
+            submit: 'Add testimonial',
+            submitting: 'Adding...',
+            success: 'Testimonial added successfully!',
+            errors: {
+              nameRequired: 'Name is required',
+              roleRequired: 'Job/Position is required',
+              contentRequired: 'Message is required',
+              contentTooShort: 'Message must contain at least 10 characters',
+              ratingInvalid: 'Rating must be between 1 and 5',
+              imageTooLarge: 'Image must not exceed 2MB',
+              imageInvalid: 'File must be an image',
+              imageError: 'Error loading image',
+              submitError: 'An error occurred while adding the testimonial'
+            }
+          },
           items: {
             client1: {
               name: 'Sarah M.',
@@ -633,7 +665,15 @@ export const resources = {
           contactMe: 'Intéressé par mon profil ?',
           contactDesc: 'Discutons de votre projet et voyons comment je peux vous aider',
           contactBtn: 'Me contacter',
-          downloadCV: 'Télécharger mon CV'
+          downloadCV: 'Télécharger mon CV',
+          viewFullStack: 'Voir le stack complet',
+          viewFullProfile: 'Voir mon profil complet',
+          clientSatisfaction: 'Satisfaction client',
+          clientSatisfactionDesc: 'Tous mes clients sont satisfaits de mes services et recommandent mon travail',
+          responseTime: 'Temps de réponse',
+          responseTimeDesc: 'Je réponds à toutes les demandes sous 24h, souvent beaucoup plus rapidement',
+          worldwide: 'Disponible mondialement',
+          worldwideDesc: 'Je travaille avec des clients du monde entier, en français et en anglais'
         }
       },
       services: {
@@ -1047,6 +1087,38 @@ export const resources = {
         testimonials: {
           title: 'Ce Que Disent les Clients de Mon Travail',
           subtitle: 'Vrais témoignages de clients qui ont expérimenté ma communication et mon service',
+          addTestimonial: 'Ajouter un témoignage',
+          addTestimonialDesc: 'Vous avez travaillé avec moi ? Partagez votre expérience !',
+          form: {
+            title: 'Ajouter un témoignage',
+            name: 'Nom *',
+            namePlaceholder: 'Votre nom complet',
+            role: 'Fonction / Poste *',
+            rolePlaceholder: 'Ex: CEO, Développeur, Directeur...',
+            company: 'Entreprise (optionnel)',
+            companyPlaceholder: 'Nom de votre entreprise',
+            rating: 'Note *',
+            content: 'Message *',
+            contentPlaceholder: 'Votre témoignage...',
+            image: 'Photo (optionnel)',
+            selectImage: 'Sélectionner une image',
+            minLength: '10',
+            cancel: 'Annuler',
+            submit: 'Ajouter le témoignage',
+            submitting: 'Ajout en cours...',
+            success: 'Témoignage ajouté avec succès !',
+            errors: {
+              nameRequired: 'Le nom est requis',
+              roleRequired: 'La fonction est requise',
+              contentRequired: 'Le message est requis',
+              contentTooShort: 'Le message doit contenir au moins 10 caractères',
+              ratingInvalid: 'La note doit être entre 1 et 5',
+              imageTooLarge: 'L\'image ne doit pas dépasser 2MB',
+              imageInvalid: 'Le fichier doit être une image',
+              imageError: 'Erreur lors du chargement de l\'image',
+              submitError: 'Une erreur est survenue lors de l\'ajout du témoignage'
+            }
+          },
           items: {
             client1: {
               name: 'Sarah M.',
