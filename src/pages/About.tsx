@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import SEO from '../components/seo/SEO'
 import TechStack from '../components/ui/TechStack'
 import CertificationsSection from '../components/sections/CertificationsSection'
 import {
@@ -28,6 +29,7 @@ function About() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-secondary-900">
+      <SEO />
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800">
         <div className="container mx-auto px-4">

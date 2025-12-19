@@ -784,13 +784,11 @@ function ServicesList() {
       </div>
 
       <Suspense fallback={null}>
-      <Suspense fallback={null}>
         <ServiceInfoDialog
           open={selectedServiceId !== null}
           serviceId={selectedServiceId as any}
           onClose={() => setSelectedServiceId(null)}
         />
-      </Suspense>
       </Suspense>
     </section>
   )

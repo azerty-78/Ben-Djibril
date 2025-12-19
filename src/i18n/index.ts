@@ -478,6 +478,38 @@ export const resources = {
           }
         }
       },
+      seo: {
+        default: {
+          title: 'Ben Djibril - DevOps Engineer | Professional Portfolio',
+          description: 'Professional portfolio of Ben Djibril - DevOps Engineer specialized in backend, mobile, and DevOps development. International quality services.',
+          keywords: 'DevOps, Backend, Mobile, Kotlin, Spring Boot, React, Portfolio, Developer, Full Stack'
+        },
+        home: {
+          title: 'Ben Djibril - DevOps Engineer | Professional Portfolio',
+          description: 'DevOps Engineer with 4 years of experience. Specialized in backend development with Spring Boot and mobile development with Kotlin Multiplatform. Creating robust, scalable digital solutions.',
+          keywords: 'DevOps Engineer, Backend Developer, Mobile Developer, Spring Boot, Kotlin, Full Stack Developer, Portfolio'
+        },
+        services: {
+          title: 'Services - Ben Djibril | Web, Mobile & DevOps Solutions',
+          description: 'Professional development services: Web applications, Mobile apps, E-commerce, APIs, DevOps & Cloud. SaaS and Full Control billing models. Free quotes available.',
+          keywords: 'Web Development, Mobile Apps, E-commerce, API Development, DevOps, Cloud Services, SaaS, Full Stack Development'
+        },
+        projects: {
+          title: 'Projects - Ben Djibril | Portfolio of Realized Projects',
+          description: 'Discover my portfolio of completed projects: web applications, mobile apps, e-commerce platforms, and DevOps solutions. Real client testimonials included.',
+          keywords: 'Portfolio, Projects, Web Applications, Mobile Apps, E-commerce, Case Studies, Client Testimonials'
+        },
+        about: {
+          title: 'About - Ben Djibril | DevOps Engineer Profile',
+          description: 'Learn more about Ben Djibril: Medior Developer with 4 years of experience, specialized in backend and mobile development. Technology stack, certifications, and expertise.',
+          keywords: 'About, Developer Profile, DevOps Engineer, Technology Stack, Certifications, Experience, Skills'
+        },
+        contact: {
+          title: 'Contact - Ben Djibril | Get in Touch',
+          description: 'Contact Ben Djibril for your development projects. Free quotes, 24h response time. Available worldwide. Discuss your web, mobile, or DevOps project.',
+          keywords: 'Contact, Quote, Development Services, Consultation, Project Discussion, Get in Touch'
+        }
+      },
       notFound: { title: 'Page not found', back: 'Back to home' },
     }
   },
@@ -948,6 +980,38 @@ export const resources = {
               content: 'La réactivité de Ben et son attention aux détails ont rendu notre collaboration fluide. Il était toujours disponible pour répondre aux questions et fournir des mises à jour.'
             }
           }
+        }
+      },
+      seo: {
+        default: {
+          title: 'Ben Djibril - Ingénieur DevOps | Portfolio Professionnel',
+          description: 'Portfolio professionnel de Ben Djibril - Ingénieur DevOps spécialisé en développement backend, mobile et DevOps. Services internationaux de qualité.',
+          keywords: 'DevOps, Backend, Mobile, Kotlin, Spring Boot, React, Portfolio, Développeur, Full Stack'
+        },
+        home: {
+          title: 'Ben Djibril - Ingénieur DevOps | Portfolio Professionnel',
+          description: 'Ingénieur DevOps avec 4 ans d\'expérience. Spécialisé en développement backend avec Spring Boot et développement mobile avec Kotlin Multiplatform. Création de solutions digitales robustes et scalables.',
+          keywords: 'Ingénieur DevOps, Développeur Backend, Développeur Mobile, Spring Boot, Kotlin, Développeur Full Stack, Portfolio'
+        },
+        services: {
+          title: 'Services - Ben Djibril | Solutions Web, Mobile & DevOps',
+          description: 'Services de développement professionnels : Applications web, Apps mobiles, E-commerce, APIs, DevOps & Cloud. Modèles de facturation SaaS et Full Control. Devis gratuits disponibles.',
+          keywords: 'Développement Web, Applications Mobiles, E-commerce, Développement API, DevOps, Services Cloud, SaaS, Développement Full Stack'
+        },
+        projects: {
+          title: 'Projets - Ben Djibril | Portfolio de Projets Réalisés',
+          description: 'Découvrez mon portfolio de projets réalisés : applications web, apps mobiles, plateformes e-commerce et solutions DevOps. Témoignages clients inclus.',
+          keywords: 'Portfolio, Projets, Applications Web, Applications Mobiles, E-commerce, Études de Cas, Témoignages Clients'
+        },
+        about: {
+          title: 'À propos - Ben Djibril | Profil Ingénieur DevOps',
+          description: 'En savoir plus sur Ben Djibril : Développeur Medior avec 4 ans d\'expérience, spécialisé en développement backend et mobile. Stack technologique, certifications et expertise.',
+          keywords: 'À propos, Profil Développeur, Ingénieur DevOps, Stack Technologique, Certifications, Expérience, Compétences'
+        },
+        contact: {
+          title: 'Contact - Ben Djibril | Me Contacter',
+          description: 'Contactez Ben Djibril pour vos projets de développement. Devis gratuits, réponse sous 24h. Disponible dans le monde entier. Discutez de votre projet web, mobile ou DevOps.',
+          keywords: 'Contact, Devis, Services de Développement, Consultation, Discussion de Projet, Me Contacter'
         }
       },
       notFound: { title: 'Page introuvable', back: 'Retour à l\'accueil' },
