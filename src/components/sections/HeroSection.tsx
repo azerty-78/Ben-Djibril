@@ -63,7 +63,7 @@ function HeroSection() {
                 {t('home.segmentedCta.business')}
               </span>
               <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs opacity-90">
-                <span>Services & offres sur mesure</span>
+                <span>{t('home.segmentedCta.businessSubtext')}</span>
                 <ArrowRightIcon className="w-4 h-4" />
               </span>
             </Link>
@@ -75,7 +75,7 @@ function HeroSection() {
                 {t('home.segmentedCta.individual')}
               </span>
               <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs text-secondary-600 dark:text-secondary-300">
-                <span>Portfolio, sites persos, petites structures</span>
+                <span>{t('home.segmentedCta.individualSubtext')}</span>
               </span>
             </Link>
           </div>

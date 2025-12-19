@@ -12,7 +12,7 @@ function CertificationsSection() {
   const totalCount = certifications.length
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden">
+    <section data-section="certifications" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5 dark:opacity-10">
         <div className="absolute top-20 left-10 w-48 sm:w-72 h-48 sm:h-72 bg-primary-400 rounded-full blur-3xl" />

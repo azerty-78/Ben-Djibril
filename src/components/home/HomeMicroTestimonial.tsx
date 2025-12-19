@@ -72,13 +72,25 @@ function HomeMicroTestimonial() {
                       {t('home.microTestimonial.role') || 'Projet e-commerce'}
                     </p>
                   </div>
-                  <Link
-                    to="/contact"
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const testimonialsSection = document.querySelector('[data-section="testimonials"]')
+                      if (testimonialsSection) {
+                        const offset = 80
+                        const elementPosition = testimonialsSection.getBoundingClientRect().top
+                        const offsetPosition = elementPosition + window.pageYOffset - offset
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth'
+                        })
+                      }
+                    }}
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary-50 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/60 text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md"
                   >
                     <span>{t('home.microTestimonial.cta') || 'Voir tous les témoignages'}</span>
                     <ArrowRightIcon className="w-4 h-4" />
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>

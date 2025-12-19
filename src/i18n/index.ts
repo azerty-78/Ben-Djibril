@@ -27,7 +27,9 @@ export const resources = {
         ctaPrimary: 'Get Started', ctaSecondary: 'View Projects',
         segmentedCta: {
           business: 'I am a company / organization',
+          businessSubtext: 'Custom services & offers',
           individual: 'I am an individual / freelancer',
+          individualSubtext: 'Portfolio, personal sites, small structures',
         },
         trustBar: {
           experience: '4+ years of experience',
@@ -572,7 +574,9 @@ export const resources = {
         ctaPrimary: 'Commencer', ctaSecondary: 'Voir les projets',
         segmentedCta: {
           business: 'Je suis une entreprise / organisation',
+          businessSubtext: 'Services & offres sur mesure',
           individual: 'Je suis un particulier / freelance',
+          individualSubtext: 'Portfolio, sites persos, petites structures',
         },
         trustBar: {
           experience: '4+ ans d’expérience',

@@ -15,19 +15,23 @@ function HomeServices() {
   
   const scrollToServiceSection = (serviceType: string) => {
     navigate(`/services?type=${serviceType}`)
+    // Use a longer timeout to ensure the page has loaded
     setTimeout(() => {
       // Scroll to services list section
       const section = document.querySelector('[data-section="services"]')
       if (section) {
-        const offset = 80
+        const offset = 100
         const elementPosition = section.getBoundingClientRect().top
         const offsetPosition = elementPosition + window.pageYOffset - offset
         window.scrollTo({
           top: offsetPosition,
           behavior: 'smooth'
         })
+      } else {
+        // Fallback: scroll to top if section not found
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       }
-    }, 300)
+    }, 500)
   }
   
   const services = [
@@ -68,7 +72,7 @@ function HomeServices() {
   ]
 
   return (
-    <section className="py-16 md:py-20 bg-secondary-50/50 dark:bg-secondary-900/30">
+    <section data-section="home-services" className="py-16 md:py-20 bg-secondary-50/50 dark:bg-secondary-900/30">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
