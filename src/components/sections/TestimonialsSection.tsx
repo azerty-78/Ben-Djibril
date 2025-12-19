@@ -11,6 +11,12 @@ function TestimonialsSection() {
   const { t } = useTranslation()
   const [customTestimonials, setCustomTestimonials] = useState<Testimonial[]>([])
   const [showAddForm, setShowAddForm] = useState(false)
+  
+  // Helper pour obtenir les traductions avec fallback
+  const getTranslation = (key: string, fallback: string) => {
+    const translation = t(key)
+    return translation && translation !== key ? translation : fallback
+  }
 
   // Charger les témoignages depuis localStorage
   useEffect(() => {
@@ -27,6 +33,7 @@ function TestimonialsSection() {
       company: t.company,
       content: t.content,
       rating: t.rating,
+      image: undefined,
       createdAt: new Date().toISOString(),
     })),
     ...customTestimonials,
@@ -92,11 +99,11 @@ function TestimonialsSection() {
               </div>
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 dark:text-white">
-              {t('testimonials.title')}
+              {getTranslation('testimonials.title', 'Ce Que Disent les Clients de Mon Travail')}
             </h2>
           </motion.div>
           <p className="text-base sm:text-lg md:text-xl text-secondary-600 dark:text-secondary-300 max-w-2xl mx-auto px-2">
-            {t('testimonials.subtitle')}
+            {getTranslation('testimonials.subtitle', 'Vrais témoignages de clients qui ont expérimenté ma communication et mon service')}
           </p>
         </motion.div>
 
@@ -106,7 +113,7 @@ function TestimonialsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 max-w-2xl mx-auto mb-8 sm:mb-12"
+          className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:gap-6 max-w-2xl mx-auto mb-8 sm:mb-10 md:mb-12"
         >
           <motion.div
             whileHover={{ scale: 1.05, y: -5 }}
@@ -114,7 +121,7 @@ function TestimonialsSection() {
           >
             <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1">{stats.total}+</div>
             <div className="text-[10px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
-              {t('testimonials.stats.total') || 'Témoignages'}
+              {getTranslation('testimonials.stats.total', 'Témoignages')}
             </div>
           </motion.div>
 
@@ -128,7 +135,7 @@ function TestimonialsSection() {
               ))}
             </div>
             <div className="text-[10px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
-              {stats.averageRating}/5 {t('testimonials.stats.averageRating') || ''}
+              {stats.averageRating}/5 {getTranslation('testimonials.stats.averageRating', 'Note moyenne')}
             </div>
           </motion.div>
 
@@ -138,7 +145,7 @@ function TestimonialsSection() {
           >
             <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1">{stats.satisfaction}%</div>
             <div className="text-[10px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
-              {t('testimonials.stats.satisfaction') || 'Satisfaction'}
+              {getTranslation('testimonials.stats.satisfaction', 'Satisfaction')}
             </div>
           </motion.div>
         </motion.div>
@@ -173,10 +180,10 @@ function TestimonialsSection() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <PlusIcon className="w-5 h-5" />
-            <span>{t('testimonials.addTestimonial') || 'Ajouter un témoignage'}</span>
+            <span>{getTranslation('testimonials.addTestimonial', 'Ajouter un témoignage')}</span>
           </button>
           <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 mt-4 px-4">
-            {t('testimonials.addTestimonialDesc') || 'Vous avez travaillé avec moi ? Partagez votre expérience !'}
+            {getTranslation('testimonials.addTestimonialDesc', 'Vous avez travaillé avec moi ? Partagez votre expérience !')}
           </p>
         </motion.div>
       </div>

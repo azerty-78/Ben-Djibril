@@ -273,10 +273,6 @@ export const resources = {
           button: 'Get in Touch'
         }
       },
-      testimonials: {
-        title: 'What clients say',
-        subtitle: 'Trusted by businesses worldwide'
-      },
       contact: {
         hero: {
           title: 'Get in Touch',
@@ -868,10 +864,6 @@ export const resources = {
           button: 'Me contacter'
         }
       },
-      testimonials: {
-        title: 'Ce que disent les clients',
-        subtitle: 'Recommandé par des entreprises du monde entier'
-      },
       contact: {
         hero: {
           title: 'Contactez-moi',
@@ -1126,6 +1118,7 @@ export const resources = {
               roleRequired: 'La fonction est requise',
               contentRequired: 'Le message est requis',
               contentTooShort: 'Le message doit contenir au moins 10 caractères',
+              contentTooLong: 'Le message ne doit pas dépasser 500 caractères',
               ratingInvalid: 'La note doit être entre 1 et 5',
               imageTooLarge: 'L\'image ne doit pas dépasser 2MB',
               imageInvalid: 'Le fichier doit être une image',
