@@ -25,6 +25,21 @@ export const resources = {
         card2: { title: 'Web apps', desc: 'Scalable, secure, business‑oriented.' },
         card3: { title: 'E‑commerce', desc: 'Conversion, performance, internationalization.' },
         ctaPrimary: 'Get Started', ctaSecondary: 'View Projects',
+        segmentedCta: {
+          business: 'I am a company / organization',
+          individual: 'I am an individual / freelancer',
+        },
+        trustBar: {
+          experience: '4+ years of experience',
+          satisfaction: '100% client satisfaction',
+          responseTime: 'Response under 24h',
+        },
+        videoTeaser: {
+          badge: 'New',
+          title: 'Discover my profile in 30 seconds',
+          subtitle: 'Understand how I work, the type of projects I take on, and what you can expect from our collaboration.',
+          cta: 'Watch the short intro',
+        },
         metrics: { clients: 'Clients', projects: 'Projects', satisfaction: 'Satisfaction', delivery: 'Avg Delivery' },
         about: {
           title: 'About Me',
@@ -530,6 +545,21 @@ export const resources = {
         card2: { title: 'Apps web', desc: 'Scalables, sécurisées, orientées business.' },
         card3: { title: 'E‑commerce', desc: 'Conversion, performance, internationalisation.' },
         ctaPrimary: 'Commencer', ctaSecondary: 'Voir les projets',
+        segmentedCta: {
+          business: 'Je suis une entreprise / organisation',
+          individual: 'Je suis un particulier / freelance',
+        },
+        trustBar: {
+          experience: '4+ ans d’expérience',
+          satisfaction: '100% de satisfaction client',
+          responseTime: 'Réponse sous 24h',
+        },
+        videoTeaser: {
+          badge: 'Nouveau',
+          title: 'Découvre mon profil en 30 secondes',
+          subtitle: 'Comprends rapidement comment je travaille, les types de projets que je prends et ce que tu peux attendre de notre collaboration.',
+          cta: 'Voir la courte présentation',
+        },
         metrics: { clients: 'Clients', projects: 'Projets', satisfaction: 'Satisfaction', delivery: 'Délai moyen' },
         about: {
           title: 'À propos de moi',
