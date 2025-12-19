@@ -52,6 +52,33 @@ export const resources = {
         title: 'Services',
         subtitle: 'Tailored solutions for your digital needs',
         heroDescription: 'I offer two flexible billing models to suit your needs: SaaS for monthly subscriptions with managed infrastructure, or Full Control for complete ownership of your project.',
+        heroCtaSaas: 'View SaaS offers',
+        heroCtaFull: 'View Full Control offers',
+        heroCompare: {
+          title: 'Which model is best for you?',
+          rows: {
+            ownership: {
+              label: 'Code & project ownership',
+              saas: 'I manage the infrastructure and code',
+              full: 'You fully own the code and project'
+            },
+            billing: {
+              label: 'Billing',
+              saas: 'Monthly subscription',
+              full: 'One-time project fee'
+            },
+            hosting: {
+              label: 'Hosting & maintenance',
+              saas: 'Included and fully managed',
+              full: 'You choose where and how to host'
+            },
+            ideal: {
+              label: 'Ideal for',
+              saas: 'Startups & flexible budgets',
+              full: 'Long-term projects & full control'
+            }
+          }
+        },
         packagesTitle: 'Our Offers',
         packagesSubtitle: 'Two billing models adapted to how you want to manage your project',
         allServicesTitle: 'All Our Services',
@@ -223,10 +250,10 @@ export const resources = {
           emailPlaceholder: 'john@example.com',
           subject: 'Subject',
           subjectPlaceholder: 'Project inquiry',
-          message: 'Message',
+        message: 'Message',
           messagePlaceholder: 'Tell me about your project...',
           send: 'Send Message',
-          sending: 'Sending...',
+        sending: 'Sending...',
           success: 'Message sent successfully! I\'ll get back to you soon.',
           error: 'Error sending message. Please try again or contact me directly.',
           serviceContextTitle: 'You selected a specific service',
@@ -234,7 +261,7 @@ export const resources = {
           defaultSubjectPrefix: 'Request a quote for',
           defaultMessagePrefix: 'Hello, I would like to discuss a project about',
           errors: {
-            required: 'This field is required',
+        required: 'This field is required',
             invalidEmail: 'Please enter a valid email address',
             messageTooShort: 'Message must be at least 10 characters',
             messageTooLong: 'Message is too long (max 2000 characters)',
@@ -496,6 +523,33 @@ export const resources = {
         title: 'Services',
         subtitle: 'Solutions sur mesure pour vos besoins digitaux',
         heroDescription: 'Je propose deux modèles de facturation flexibles adaptés à vos besoins : SaaS pour des abonnements mensuels avec infrastructure gérée, ou Full Control pour une propriété complète de votre projet.',
+        heroCtaSaas: 'Voir les offres SaaS',
+        heroCtaFull: 'Voir les offres Full Control',
+        heroCompare: {
+          title: 'Quel modèle est fait pour vous ?',
+          rows: {
+            ownership: {
+              label: 'Propriété du code & du projet',
+              saas: 'Je gère l’infrastructure et le code',
+              full: 'Vous possédez totalement le code et le projet'
+            },
+            billing: {
+              label: 'Facturation',
+              saas: 'Abonnement mensuel',
+              full: 'Paiement unique de projet'
+            },
+            hosting: {
+              label: 'Hébergement & maintenance',
+              saas: 'Inclus et entièrement géré',
+              full: 'Vous choisissez où et comment héberger'
+            },
+            ideal: {
+              label: 'Idéal pour',
+              saas: 'Startups & budgets flexibles',
+              full: 'Projets long terme & contrôle total'
+            }
+          }
+        },
         packagesTitle: 'Nos Offres',
         packagesSubtitle: 'Deux modèles de facturation selon la façon dont vous voulez gérer votre projet',
         allServicesTitle: 'Tous nos Services',
@@ -667,10 +721,10 @@ export const resources = {
           emailPlaceholder: 'jean@exemple.com',
           subject: 'Sujet',
           subjectPlaceholder: 'Demande de projet',
-          message: 'Message',
+        message: 'Message',
           messagePlaceholder: 'Parlez-moi de votre projet...',
           send: 'Envoyer le message',
-          sending: 'Envoi en cours...',
+        sending: 'Envoi en cours...',
           success: 'Message envoyé avec succès ! Je vous répondrai bientôt.',
           error: 'Erreur lors de l\'envoi. Veuillez réessayer ou me contacter directement.',
           serviceContextTitle: 'Service sélectionné',
@@ -678,7 +732,7 @@ export const resources = {
           defaultSubjectPrefix: 'Demande de devis pour',
           defaultMessagePrefix: 'Bonjour, je souhaite discuter d\'un projet concernant',
           errors: {
-            required: 'Ce champ est requis',
+        required: 'Ce champ est requis',
             invalidEmail: 'Veuillez entrer une adresse email valide',
             messageTooShort: 'Le message doit contenir au moins 10 caractères',
             messageTooLong: 'Le message est trop long (maximum 2000 caractères)',

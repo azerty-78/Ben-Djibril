@@ -167,12 +167,14 @@ function ServicesHero() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-8"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-4 sm:mb-6"
             >
-              <motion.div
+              <motion.button
+                type="button"
+                onClick={() => scrollToSubSection('saas')}
                 whileHover={{ scale: 1.02, y: -2 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-secondary-900/70 shadow-md hover:shadow-lg border border-primary-100 dark:border-primary-700/60 transition-all duration-300"
+                className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-secondary-900/70 shadow-md hover:shadow-lg border border-primary-100 dark:border-primary-700/60 transition-all duration-300 cursor-pointer"
               >
                 <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-primary-50 dark:bg-primary-900/40 flex items-center justify-center flex-shrink-0">
                   <CloudIcon className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-primary-300" />
@@ -185,12 +187,14 @@ function ServicesHero() {
                     {t('services.saasSubtitle')}
                   </p>
                 </div>
-              </motion.div>
+              </motion.button>
 
-              <motion.div
+              <motion.button
+                type="button"
+                onClick={() => scrollToSubSection('fullControl')}
                 whileHover={{ scale: 1.02, y: -2 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-secondary-900/70 shadow-md hover:shadow-lg border border-accent-100 dark:border-accent-700/60 transition-all duration-300"
+                className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-secondary-900/70 shadow-md hover:shadow-lg border border-accent-100 dark:border-accent-700/60 transition-all duration-300 cursor-pointer"
               >
                 <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-accent-50 dark:bg-accent-900/40 flex items-center justify-center flex-shrink-0">
                   <CodeBracketIcon className="w-4 h-4 sm:w-5 sm:h-5 text-accent-600 dark:text-accent-300" />
@@ -203,7 +207,69 @@ function ServicesHero() {
                     {t('services.fullControlSubtitle')}
                   </p>
                 </div>
-              </motion.div>
+              </motion.button>
+            </motion.div>
+
+            {/* CTA buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-6 sm:mb-8"
+            >
+              <button
+                type="button"
+                onClick={() => scrollToSubSection('saas')}
+                className="w-full sm:w-auto btn-primary inline-flex items-center justify-center gap-2 px-5 py-3 text-sm sm:text-base"
+              >
+                {t('services.heroCtaSaas')}
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToSubSection('fullControl')}
+                className="w-full sm:w-auto btn-secondary inline-flex items-center justify-center gap-2 px-5 py-3 text-sm sm:text-base"
+              >
+                {t('services.heroCtaFull')}
+              </button>
+            </motion.div>
+
+            {/* Mini comparaison SaaS vs Full Control */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="hidden md:block"
+            >
+              <div className="rounded-2xl border border-secondary-200 dark:border-secondary-700 bg-white/80 dark:bg-secondary-900/70 backdrop-blur-sm p-4 sm:p-5">
+                <p className="text-xs sm:text-sm font-semibold text-secondary-700 dark:text-secondary-200 mb-3">
+                  {t('services.heroCompare.title')}
+                </p>
+                <div className="grid grid-cols-[1.2fr,1fr,1fr] gap-3 text-xs sm:text-sm text-secondary-700 dark:text-secondary-200">
+                  <div />
+                  <div className="font-semibold text-center text-primary-700 dark:text-primary-300">
+                    SaaS
+                  </div>
+                  <div className="font-semibold text-center text-accent-700 dark:text-accent-300">
+                    Full Control
+                  </div>
+
+                  {(['ownership', 'billing', 'hosting', 'ideal'] as const).map((rowKey) => (
+                    <React.Fragment key={rowKey}>
+                      <div className="py-1 border-t border-secondary-100 dark:border-secondary-800 text-left">
+                        {t(`services.heroCompare.rows.${rowKey}.label`)}
+                      </div>
+                      <div className="py-1 border-t border-secondary-100 dark:border-secondary-800 text-[11px] leading-snug text-secondary-700 dark:text-secondary-300">
+                        {t(`services.heroCompare.rows.${rowKey}.saas`)}
+                      </div>
+                      <div className="py-1 border-t border-secondary-100 dark:border-secondary-800 text-[11px] leading-snug text-secondary-700 dark:text-secondary-300">
+                        {t(`services.heroCompare.rows.${rowKey}.full`)}
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           </motion.div>
 
