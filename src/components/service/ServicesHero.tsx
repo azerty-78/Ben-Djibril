@@ -256,17 +256,17 @@ function ServicesHero() {
                   </div>
 
                   {(['ownership', 'billing', 'hosting', 'ideal'] as const).map((rowKey) => (
-                    <React.Fragment key={rowKey}>
-                      <div className="py-1 border-t border-secondary-100 dark:border-secondary-800 text-left">
+                    <>
+                      <div key={`${rowKey}-label`} className="py-1 border-t border-secondary-100 dark:border-secondary-800 text-left">
                         {t(`services.heroCompare.rows.${rowKey}.label`)}
                       </div>
-                      <div className="py-1 border-t border-secondary-100 dark:border-secondary-800 text-[11px] leading-snug text-secondary-700 dark:text-secondary-300">
+                      <div key={`${rowKey}-saas`} className="py-1 border-t border-secondary-100 dark:border-secondary-800 text-[11px] leading-snug text-secondary-700 dark:text-secondary-300">
                         {t(`services.heroCompare.rows.${rowKey}.saas`)}
                       </div>
-                      <div className="py-1 border-t border-secondary-100 dark:border-secondary-800 text-[11px] leading-snug text-secondary-700 dark:text-secondary-300">
+                      <div key={`${rowKey}-full`} className="py-1 border-t border-secondary-100 dark:border-secondary-800 text-[11px] leading-snug text-secondary-700 dark:text-secondary-300">
                         {t(`services.heroCompare.rows.${rowKey}.full`)}
                       </div>
-                    </React.Fragment>
+                    </>
                   ))}
                 </div>
               </div>

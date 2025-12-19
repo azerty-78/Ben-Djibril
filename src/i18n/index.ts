@@ -119,6 +119,7 @@ export const resources = {
         },
         packageStarter: 'Starter', packagePro: 'Professional', packageEnterprise: 'Enterprise',
         features: 'Features', getStarted: 'Get Started', mostPopular: 'Most Popular', bestValue: 'Best value',
+        idealForLabel: 'Ideal for',
         details: {
           saas: {
             ...saasTranslations.en.details.saas,
@@ -590,6 +591,7 @@ export const resources = {
         },
         packageStarter: 'Starter', packagePro: 'Professionnel', packageEnterprise: 'Enterprise',
         features: 'Fonctionnalités', getStarted: 'Commencer', mostPopular: 'Le plus populaire', bestValue: 'Meilleur rapport qualité / prix',
+        idealForLabel: 'Idéal pour',
         details: {
           saas: {
             ...saasTranslations.fr.details.saas,

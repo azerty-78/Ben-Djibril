@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useState, useEffect, useCallback, lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -17,11 +17,13 @@ import {
   CurrencyDollarIcon
 } from '@heroicons/react/24/solid'
 import PackageCard from '../ui/PackageCard'
-import ServiceDetailsDialog from './ServiceDetailsDialog'
-import SaaSComparisonTable from './SaaSComparisonTable'
-import FullControlComparisonTable from './FullControlComparisonTable'
-import SaaSVsFullControlComparison from './SaaSVsFullControlComparison'
 import type { PlanId } from './ServiceDetailsDialog'
+
+// Lazy load heavy components
+const ServiceDetailsDialog = lazy(() => import('./ServiceDetailsDialog'))
+const SaaSComparisonTable = lazy(() => import('./SaaSComparisonTable'))
+const FullControlComparisonTable = lazy(() => import('./FullControlComparisonTable'))
+const SaaSVsFullControlComparison = lazy(() => import('./SaaSVsFullControlComparison'))
 
 const VALID_PLANS: PlanId[] = [
   'saas-goodDeal',
@@ -369,7 +371,13 @@ function ServicesPackages() {
               </motion.span>
             </button>
           </div>
-          <SaaSComparisonTable open={showSaaSComparison} highlightedPlan={highlightedPlan} />
+          <Suspense fallback={
+            <div className="mt-8 text-center py-8">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 dark:border-primary-400"></div>
+            </div>
+          }>
+            <SaaSComparisonTable open={showSaaSComparison} highlightedPlan={highlightedPlan} />
+          </Suspense>
         </motion.div>
 
         {/* Full Control category */}
@@ -545,18 +553,32 @@ function ServicesPackages() {
               </motion.span>
             </button>
           </div>
-          <FullControlComparisonTable open={showFullControlComparison} />
+          <Suspense fallback={
+            <div className="mt-8 text-center py-8">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 dark:border-primary-400"></div>
+            </div>
+          }>
+            <FullControlComparisonTable open={showFullControlComparison} />
+          </Suspense>
 
           {/* SaaS vs Full Control Comparison */}
-          <SaaSVsFullControlComparison />
+          <Suspense fallback={
+            <div className="mt-8 text-center py-8">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 dark:border-primary-400"></div>
+            </div>
+          }>
+            <SaaSVsFullControlComparison />
+          </Suspense>
         </motion.div>
       </div>
 
-      <ServiceDetailsDialog
-        open={selectedPlan !== null}
-        planId={selectedPlan}
-        onClose={() => setSelectedPlan(null)}
-      />
+      <Suspense fallback={null}>
+        <ServiceDetailsDialog
+          open={selectedPlan !== null}
+          planId={selectedPlan}
+          onClose={() => setSelectedPlan(null)}
+        />
+      </Suspense>
     </section>
   )
 }

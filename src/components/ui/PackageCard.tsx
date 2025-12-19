@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { CheckIcon, InformationCircleIcon } from '@heroicons/react/24/solid'
 import { motion } from 'framer-motion'
 
@@ -45,6 +46,8 @@ function PackageCard({
   onCompare,
   compareLabel,
 }: PackageCardProps) {
+  const { t } = useTranslation()
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -54,12 +57,15 @@ function PackageCard({
       whileTap={{ scale: 0.98, zIndex: 5 }}
       transition={{ duration: 0.5 }}
       className={`card relative w-full overflow-visible ${
-        popular ? 'ring-2 ring-primary-500 dark:ring-primary-400 md:scale-105 pt-6 md:pt-6' : ''
+        popular ? 'ring-2 ring-primary-500 dark:ring-primary-400 md:scale-105 pt-6 md:pt-6 before:absolute before:inset-0 before:rounded-2xl before:bg-primary-500/5 before:blur-2xl before:-z-10' : ''
       } ${className ?? ''}`}
     >
       {popular && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-semibold px-4 py-1.5 rounded-full z-10 shadow-lg whitespace-nowrap">
-          {popularLabel}
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+          <div className="relative bg-primary-600 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-xl whitespace-nowrap">
+            {popularLabel}
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-primary-600 rotate-45" />
+          </div>
         </div>
       )}
       <div className="mb-6">
@@ -94,6 +100,9 @@ function PackageCard({
                 {priceUnit}
               </span>
             )}
+            <span className="text-[10px] sm:text-xs text-secondary-500 dark:text-secondary-400 font-medium ml-auto">
+              HT
+            </span>
           </div>
           {deliveryTime && (
             <div className="mt-2">
@@ -181,12 +190,14 @@ function PackageCard({
       </ul>
 
       {idealFor && (
-        <div className="mb-6 p-3 sm:p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg border border-primary-200/50 dark:border-primary-800/50">
-          <div className="flex items-start gap-2">
-            <InformationCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-primary-400 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="text-xs sm:text-sm font-semibold text-primary-900 dark:text-primary-100 mb-1">
-                Idéal pour
+        <div className="mb-6 p-3 sm:p-4 bg-gradient-to-br from-primary-50 to-primary-100/50 dark:from-primary-900/30 dark:to-primary-800/20 rounded-xl border-2 border-primary-200 dark:border-primary-700 shadow-sm">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center">
+              <InformationCircleIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs sm:text-sm font-bold text-primary-900 dark:text-primary-100 mb-1.5 uppercase tracking-wide">
+                {t('services.idealForLabel')}
               </p>
               <p className="text-xs sm:text-sm text-secondary-700 dark:text-secondary-300 leading-relaxed">
                 {idealFor}

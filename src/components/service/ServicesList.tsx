@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, lazy, Suspense } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ServiceInfoDialog from './ServiceInfoDialog'
+
+// Lazy load heavy component
+const ServiceInfoDialog = lazy(() => import('./ServiceInfoDialog'))
 import {
   GlobeAltIcon,
   DevicePhoneMobileIcon,
@@ -781,11 +783,15 @@ function ServicesList() {
         </div>
       </div>
 
-      <ServiceInfoDialog
-        open={selectedServiceId !== null}
-        serviceId={selectedServiceId as any}
-        onClose={() => setSelectedServiceId(null)}
-      />
+      <Suspense fallback={null}>
+      <Suspense fallback={null}>
+        <ServiceInfoDialog
+          open={selectedServiceId !== null}
+          serviceId={selectedServiceId as any}
+          onClose={() => setSelectedServiceId(null)}
+        />
+      </Suspense>
+      </Suspense>
     </section>
   )
 }

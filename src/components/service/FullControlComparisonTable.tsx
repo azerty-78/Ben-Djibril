@@ -254,9 +254,12 @@ function FullControlComparisonTable({ open }: FullControlComparisonTableProps) {
                     >
                       <div className="text-center">
                         {/* Price */}
-                        <div className="mb-3">
+                        <div className="mb-3 flex items-baseline justify-center gap-1.5">
                           <span className="text-lg sm:text-xl md:text-2xl font-bold text-secondary-900 dark:text-white">
                             {plan.price}
+                          </span>
+                          <span className="text-[10px] sm:text-xs text-secondary-500 dark:text-secondary-400 font-medium">
+                            HT
                           </span>
                         </div>
 

@@ -294,7 +294,9 @@ function SaaSComparisonTable({ open, highlightedPlan }: SaaSComparisonTableProps
                   </th>
 
                   {/* Plan Headers */}
-                  {plans.map((plan, idx) => (
+                  {plans.map((plan, idx) => {
+                    const isPopular = plan.id === 'goodDeal'
+                    return (
                     <th
                       key={plan.id}
                       className={`px-4 sm:px-6 py-6 md:py-8 ${getColorClasses(plan.color, 'bg')} ${
@@ -303,6 +305,8 @@ function SaaSComparisonTable({ open, highlightedPlan }: SaaSComparisonTableProps
                           : ''
                       } ${idx === 0 ? 'md:border-l-2 border-secondary-200 dark:border-secondary-700' : ''} ${
                         highlightedPlan === plan.id ? 'ring-4 ring-primary-400 dark:ring-primary-500 ring-offset-2' : ''
+                      } ${
+                        isPopular ? 'relative before:absolute before:inset-0 before:rounded-lg before:bg-primary-500/10 before:blur-xl before:-z-10' : ''
                       } transition-all duration-500`}
                     >
                       <div className="text-center">
@@ -323,6 +327,9 @@ function SaaSComparisonTable({ open, highlightedPlan }: SaaSComparisonTableProps
                               {plan.priceUnit}
                             </span>
                           )}
+                          <span className="text-[10px] sm:text-xs text-secondary-500 dark:text-secondary-400 font-medium">
+                            HT
+                          </span>
                         </div>
 
                         {/* CTA Button */}
@@ -343,7 +350,8 @@ function SaaSComparisonTable({ open, highlightedPlan }: SaaSComparisonTableProps
                         </p>
                       </div>
                     </th>
-                  ))}
+                    )
+                  })}
                 </tr>
               </thead>
 
@@ -395,6 +403,7 @@ function SaaSComparisonTable({ open, highlightedPlan }: SaaSComparisonTableProps
                       {/* Plan Values */}
                       {plans.map((plan, planIdx) => {
                         const value = values[planIdx]
+                        const isPopular = plan.id === 'goodDeal'
                         return (
                           <td
                             key={plan.id}
@@ -407,6 +416,8 @@ function SaaSComparisonTable({ open, highlightedPlan }: SaaSComparisonTableProps
                                 : ''
                             } ${
                               highlightedPlan === plan.id ? 'ring-2 ring-primary-400 dark:ring-primary-500' : ''
+                            } ${
+                              isPopular ? 'bg-primary-50/50 dark:bg-primary-900/30' : ''
                             } transition-all duration-500`}
                           >
                             {value === 'CHECK' ? (
