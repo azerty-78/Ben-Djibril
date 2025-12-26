@@ -1,6 +1,6 @@
 import SEO from '../components/seo/SEO'
 import ProjectsHero from '../components/projects/ProjectsHero'
-import ProjectsGrid from '../components/projects/ProjectsGrid'
+import ProjectsComingSoon from '../components/projects/ProjectsComingSoon'
 import ProjectsCTA from '../components/projects/ProjectsCTA'
 
 function Projects() {
@@ -8,7 +8,7 @@ function Projects() {
     <div className="min-h-screen bg-white dark:bg-secondary-900">
       <SEO />
       <ProjectsHero />
-      <ProjectsGrid />
+      <ProjectsComingSoon />
       <ProjectsCTA />
     </div>
   )

@@ -437,6 +437,14 @@ export const resources = {
           subtitle: 'Let\'s work together to bring your vision to life',
           description: 'I\'m always excited to take on new challenges and create innovative solutions.',
           button: 'Get in Touch'
+        },
+        comingSoon: {
+          title: 'Projects Under Update',
+          message: 'I\'m currently updating my projects with complete details. They will be available soon!',
+          working: 'Work in progress...',
+          soon: 'Coming soon',
+          cta: 'In the meantime, feel free to contact me to discuss your projects!',
+          contactButton: 'Contact Me'
         }
       },
       contact: {
@@ -1185,6 +1193,14 @@ export const resources = {
           subtitle: 'Travaillons ensemble pour donner vie à votre vision',
           description: 'Je suis toujours ravi de relever de nouveaux défis et de créer des solutions innovantes.',
           button: 'Me contacter'
+        },
+        comingSoon: {
+          title: 'Projets en cours de mise à jour',
+          message: 'Je suis en train de mettre à jour mes projets avec des détails complets. Ils seront bientôt disponibles !',
+          working: 'Travail en cours...',
+          soon: 'Bientôt disponible',
+          cta: 'En attendant, n\'hésitez pas à me contacter pour discuter de vos projets !',
+          contactButton: 'Me contacter'
         }
       },
       contact: {

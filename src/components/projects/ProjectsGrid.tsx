@@ -1,7 +1,8 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import ProjectCard from '../ui/ProjectCard'
+import ProjectCardSkeleton from '../ui/ProjectCardSkeleton'
 import CustomSelect from '../ui/CustomSelect'
 import { projects, getProjectTypes, type ProjectType, getProjectByLang } from '../../data/projects'
 import { 
@@ -111,6 +112,17 @@ function ProjectsGrid() {
   const { t, i18n } = useTranslation()
   const currentLang = i18n.language as 'en' | 'fr'
   const [selectedFilter, setSelectedFilter] = useState<ProjectType | 'all'>('all')
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Simuler le chargement des projets
+  useEffect(() => {
+    // Simuler un délai de chargement
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1500) // 1.5 secondes de chargement
+
+    return () => clearTimeout(timer)
+  }, [])
 
   // Memoize project types
   const projectTypes = useMemo(() => getProjectTypes(), [])
@@ -245,7 +257,19 @@ function ProjectsGrid() {
         {/* Projects Grid or Empty State */}
         <div id="projects-grid-content" className="relative z-10">
           <AnimatePresence mode="wait">
-            {filteredProjects.length > 0 ? (
+            {isLoading ? (
+              <motion.div
+                key="loading"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+              >
+                {[...Array(6)].map((_, index) => (
+                  <ProjectCardSkeleton key={index} />
+                ))}
+              </motion.div>
+            ) : filteredProjects.length > 0 ? (
               <motion.div
                 key={selectedFilter}
                 variants={containerVariants}
