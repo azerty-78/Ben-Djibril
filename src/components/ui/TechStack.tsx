@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import type { TechLevel } from '../../data/techStack'
 
 type TechItem = {
   name: string
   slug: string
   category?: string
+  level?: TechLevel
 }
 
 type TechStackProps = {
   title: string
   items: TechItem[]
   columns?: 2 | 3 | 4 | 5 | 6
+  showLevelBadge?: boolean
 }
 
 // Couleurs officielles des technologies
@@ -47,7 +51,8 @@ const iconColors: Record<string, string> = {
 // Icônes qui n'existent pas dans simple-icons - utiliser directement le fallback
 const missingIcons = new Set(['hostinger'])
 
-function TechItemCard({ item, index }: { item: TechItem; index: number }) {
+function TechItemCard({ item, index, showLevelBadge = false }: { item: TechItem; index: number; showLevelBadge?: boolean }) {
+  const { t } = useTranslation()
   const iconName = item.slug.toLowerCase().replace(/\s+/g, '')
   const iconColor = iconColors[iconName] || iconColors[item.slug.toLowerCase()] || '#6366f1'
   const shouldUseFallback = missingIcons.has(iconName)
@@ -55,6 +60,12 @@ function TechItemCard({ item, index }: { item: TechItem; index: number }) {
   const [hasError, setHasError] = useState(shouldUseFallback)
   const [svgContent, setSvgContent] = useState<string | null>(null)
   const iconUrl = `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${iconName}.svg`
+
+  const levelBadgeClasses = {
+    daily: 'bg-success-100 dark:bg-success-900/30 text-success-700 dark:text-success-300 border-success-200 dark:border-success-700',
+    mastered: 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border-primary-200 dark:border-primary-700',
+    known: 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 border-secondary-200 dark:border-secondary-700'
+  }
 
   // Charger et colorer le SVG avec la couleur officielle
   useEffect(() => {
@@ -134,13 +145,13 @@ function TechItemCard({ item, index }: { item: TechItem; index: number }) {
   )
 }
 
-function TechStack({ title, items, columns = 4 }: TechStackProps) {
+function TechStack({ title, items, columns = 4, showLevelBadge = false }: TechStackProps) {
   return (
     <div className="space-y-4">
       {title && <h3 className="text-xl font-semibold text-secondary-900 dark:text-secondary-100">{title}</h3>}
       <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-${columns} gap-4`}>
         {items.map((item, index) => (
-          <TechItemCard key={item.name} item={item} index={index} />
+          <TechItemCard key={item.name} item={item} index={index} showLevelBadge={showLevelBadge} />
         ))}
       </div>
     </div>

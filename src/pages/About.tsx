@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import SEO from '../components/seo/SEO'
 import TechStack from '../components/ui/TechStack'
+import TechStackFilterable from '../components/about/TechStackFilterable'
 import CertificationsSection from '../components/sections/CertificationsSection'
 import AboutStory from '../components/about/AboutStory'
 import AboutValues from '../components/about/AboutValues'
@@ -299,24 +300,14 @@ function About() {
 
           <div className="max-w-7xl mx-auto space-y-8">
             {/* Programming Languages */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="card p-6 md:p-8"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center">
-                  <CodeBracketIcon className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-secondary-900 dark:text-white">Langages de programmation</h3>
-                  <p className="text-sm text-secondary-500 dark:text-secondary-400">Classés par ordre de compétence</p>
-                </div>
-              </div>
-              <TechStack items={programmingLanguages} title="" columns={5} />
-            </motion.div>
+            <TechStackFilterable
+              title="Langages de programmation"
+              description="Classés par ordre de compétence"
+              items={programmingLanguages}
+              columns={5}
+              icon={<CodeBracketIcon className="w-6 h-6 text-primary-600 dark:text-primary-400" />}
+              iconBg="bg-primary-100 dark:bg-primary-900/30"
+            />
 
             {/* Frameworks */}
             <motion.div
@@ -338,15 +329,15 @@ function About() {
               <div className="space-y-8">
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-secondary-900 dark:text-white">Backend</h4>
-                  <TechStack items={frameworks.backend} title="" columns={3} />
+                  <TechStack items={frameworks.backend.map(item => ({ name: item.name, slug: item.slug, level: item.level }))} title="" columns={3} showLevelBadge={true} />
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-secondary-900 dark:text-white">Frontend</h4>
-                  <TechStack items={frameworks.frontend} title="" columns={3} />
+                  <TechStack items={frameworks.frontend.map(item => ({ name: item.name, slug: item.slug, level: item.level }))} title="" columns={3} showLevelBadge={true} />
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-secondary-900 dark:text-white">Mobile</h4>
-                  <TechStack items={frameworks.mobile} title="" columns={3} />
+                  <TechStack items={frameworks.mobile.map(item => ({ name: item.name, slug: item.slug, level: item.level }))} title="" columns={3} showLevelBadge={true} />
                 </div>
               </div>
             </motion.div>
@@ -371,94 +362,54 @@ function About() {
               <div className="space-y-8">
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-secondary-900 dark:text-white">SQL</h4>
-                  <TechStack items={databases.sql} title="" columns={3} />
+                  <TechStack items={databases.sql.map(item => ({ name: item.name, slug: item.slug, level: item.level }))} title="" columns={3} showLevelBadge={true} />
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-secondary-900 dark:text-white">NoSQL</h4>
-                  <TechStack items={databases.nosql} title="" columns={3} />
+                  <TechStack items={databases.nosql.map(item => ({ name: item.name, slug: item.slug, level: item.level }))} title="" columns={3} showLevelBadge={true} />
                 </div>
               </div>
             </motion.div>
 
             {/* DevOps Technologies */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="card p-6 md:p-8"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-warning-100 dark:bg-warning-900/30 rounded-xl flex items-center justify-center">
-                  <CommandLineIcon className="w-6 h-6 text-warning-600 dark:text-warning-400" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-secondary-900 dark:text-white">Technologies DevOps</h3>
-                  <p className="text-sm text-secondary-500 dark:text-secondary-400">Conteneurisation & Orchestration</p>
-                </div>
-              </div>
-              <TechStack items={technologies} title="" columns={3} />
-            </motion.div>
+            <TechStackFilterable
+              title="Technologies DevOps"
+              description="Conteneurisation & Orchestration"
+              items={technologies}
+              columns={3}
+              icon={<CommandLineIcon className="w-6 h-6 text-warning-600 dark:text-warning-400" />}
+              iconBg="bg-warning-100 dark:bg-warning-900/30"
+            />
 
             {/* Hosting & Cloud */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="card p-6 md:p-8"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center">
-                  <CloudIcon className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-secondary-900 dark:text-white">Hébergement & Cloud</h3>
-                  <p className="text-sm text-secondary-500 dark:text-secondary-400">Cloud providers & Hosting platforms</p>
-                </div>
-              </div>
-              <TechStack items={hosting} title="" columns={4} />
-            </motion.div>
+            <TechStackFilterable
+              title="Hébergement & Cloud"
+              description="Cloud providers & Hosting platforms"
+              items={hosting}
+              columns={4}
+              icon={<CloudIcon className="w-6 h-6 text-primary-600 dark:text-primary-400" />}
+              iconBg="bg-primary-100 dark:bg-primary-900/30"
+            />
 
             {/* Design Tools */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="card p-6 md:p-8"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-xl flex items-center justify-center">
-                  <PaintBrushIcon className="w-6 h-6 text-accent-600 dark:text-accent-400" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-secondary-900 dark:text-white">Design</h3>
-                  <p className="text-sm text-secondary-500 dark:text-secondary-400">UI/UX Design tools</p>
-                </div>
-              </div>
-              <TechStack items={design} title="" columns={2} />
-            </motion.div>
+            <TechStackFilterable
+              title="Design"
+              description="UI/UX Design tools"
+              items={design}
+              columns={2}
+              icon={<PaintBrushIcon className="w-6 h-6 text-accent-600 dark:text-accent-400" />}
+              iconBg="bg-accent-100 dark:bg-accent-900/30"
+            />
 
             {/* Versioning */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="card p-6 md:p-8"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-secondary-100 dark:bg-secondary-800 rounded-xl flex items-center justify-center">
-                  <CodeBracketIcon className="w-6 h-6 text-secondary-600 dark:text-secondary-400" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-secondary-900 dark:text-white">Versioning</h3>
-                  <p className="text-sm text-secondary-500 dark:text-secondary-400">Code versioning & Collaboration</p>
-                </div>
-              </div>
-              <TechStack items={versioning} title="" columns={2} />
-            </motion.div>
+            <TechStackFilterable
+              title="Versioning"
+              description="Code versioning & Collaboration"
+              items={versioning}
+              columns={2}
+              icon={<CodeBracketIcon className="w-6 h-6 text-secondary-600 dark:text-secondary-400" />}
+              iconBg="bg-secondary-100 dark:bg-secondary-800"
+            />
           </div>
         </div>
       </section>
