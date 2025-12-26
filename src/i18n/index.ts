@@ -225,7 +225,7 @@ export const resources = {
               }
             }
           },
-          techStack: {
+          techStackFilters: {
             daily: 'Used daily',
             mastered: 'Well mastered',
             known: 'Solid knowledge',
@@ -973,7 +973,7 @@ export const resources = {
               }
             }
           },
-          techStack: {
+          techStackFilters: {
             daily: 'Utilisé au quotidien',
             mastered: 'Bien maîtrisé',
             known: 'Connaissance solide',

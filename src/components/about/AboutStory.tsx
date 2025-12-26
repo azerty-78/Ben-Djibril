@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { BookOpenIcon, LightBulbIcon, GlobeAltIcon } from '@heroicons/react/24/solid'
+import { LightBulbIcon, GlobeAltIcon } from '@heroicons/react/24/solid'
 
 function AboutStory() {
   const { t } = useTranslation()
