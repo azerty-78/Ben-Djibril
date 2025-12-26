@@ -1,20 +1,25 @@
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Docker Compose reference guide at
-# https://docs.docker.com/go/compose-spec-reference/
+# Docker Compose configuration pour l'application ben-djibril
+# Utilise le fichier .env dans le même répertoire pour les variables d'environnement
 
-# Here the instructions define your application as a service called "server".
-# This service is built from the Dockerfile in the current directory.
-# You can add other services your application may depend on here, such as a
-# database or a cache. For examples, see the Awesome Compose repository:
-# https://github.com/docker/awesome-compose
 services:
   server:
     build:
-      context: .
+      context: ..
+      dockerfile: setup-front/Dockerfile
+      args:
+        # Variables d'environnement pour le build (Vite les nécessite au moment du build)
+        VITE_EMAILJS_PUBLIC_KEY: ${VITE_EMAILJS_PUBLIC_KEY}
+        VITE_EMAILJS_SERVICE_ID: ${VITE_EMAILJS_SERVICE_ID}
+        VITE_EMAILJS_CONTACT_TEMPLATE_ID: ${VITE_EMAILJS_CONTACT_TEMPLATE_ID}
+        VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID: ${VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID}
+    env_file:
+      - .env
     environment:
       NODE_ENV: production
     ports:
-      - 5180:5180
+      - "5180:5180"
+    restart: unless-stopped
+    container_name: ben-djibril-app
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
