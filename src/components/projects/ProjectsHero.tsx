@@ -31,7 +31,7 @@ function ProjectsHero() {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: 'easeInOut',
+        ease: [0.4, 0, 0.2, 1],
       },
     },
   }), [])
@@ -44,7 +44,7 @@ function ProjectsHero() {
       rotate: 0,
       transition: {
         duration: 0.7,
-        ease: 'easeInOut',
+        ease: [0.4, 0, 0.2, 1],
       },
     },
   }), [])

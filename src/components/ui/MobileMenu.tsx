@@ -3,6 +3,7 @@ import { Disclosure } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
 
 type MobileMenuProps = {
   onNavigate?: () => void
@@ -11,6 +12,7 @@ type MobileMenuProps = {
 function MobileMenu({ onNavigate }: MobileMenuProps) {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
   
   const linkBase = 'px-3 py-2.5 rounded-lg font-medium transition-colors'
   const linkClass = (isActive: boolean) =>
@@ -18,6 +20,7 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
 
   const handleNavigation = (callback: () => void) => {
     callback()
+    setIsSubMenuOpen(false)
     onNavigate?.()
   }
 
@@ -58,6 +61,7 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
   }
 
   const handleNavLinkClick = () => {
+    setIsSubMenuOpen(false)
     onNavigate?.()
   }
 
@@ -90,7 +94,7 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
         {t('nav.home')}
       </NavLink>
 
-      <Disclosure as="div">
+      <Disclosure open={isSubMenuOpen} onChange={setIsSubMenuOpen} as="div">
         {({ open }) => (
           <>
             <Disclosure.Button className={`${linkBase} flex items-center justify-between text-secondary-700 dark:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-700 font-medium`}>
@@ -101,6 +105,7 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
               {open && (
                 <Disclosure.Panel
                   as={motion.div}
+                  static
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}

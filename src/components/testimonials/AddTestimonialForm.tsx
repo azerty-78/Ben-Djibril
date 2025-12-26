@@ -11,7 +11,7 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon
 } from '@heroicons/react/24/solid'
-import { addTestimonial, imageToBase64 } from '../../utils/testimonials'
+import { addTestimonial, imageToBase64, type Testimonial } from '../../utils/testimonials'
 
 type AddTestimonialFormProps = {
   onClose: () => void

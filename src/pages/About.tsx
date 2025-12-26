@@ -280,18 +280,6 @@ function About() {
         </div>
       </section>
 
-      {/* Story Section */}
-      <AboutStory />
-
-      {/* Values Section */}
-      <AboutValues />
-
-      {/* Workflow Section */}
-      <AboutWorkflow />
-
-      {/* Soft Skills Section */}
-      <AboutSoftSkills />
-
       {/* Technology Stack Section */}
       <section className="py-16 md:py-20 bg-white dark:bg-secondary-900">
         <div className="container mx-auto px-4">

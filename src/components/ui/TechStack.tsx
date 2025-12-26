@@ -61,12 +61,6 @@ function TechItemCard({ item, index, showLevelBadge = false }: { item: TechItem;
   const [svgContent, setSvgContent] = useState<string | null>(null)
   const iconUrl = `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${iconName}.svg`
 
-  const levelBadgeClasses = {
-    daily: 'bg-success-100 dark:bg-success-900/30 text-success-700 dark:text-success-300 border-success-200 dark:border-success-700',
-    mastered: 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border-primary-200 dark:border-primary-700',
-    known: 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 border-secondary-200 dark:border-secondary-700'
-  }
-
   // Charger et colorer le SVG avec la couleur officielle
   useEffect(() => {
     if (svgContent || hasError || shouldUseFallback) return // Déjà chargé, erreur gérée, ou icône manquante
@@ -142,11 +136,18 @@ function TechItemCard({ item, index, showLevelBadge = false }: { item: TechItem;
         <span className="text-sm font-medium text-secondary-700 dark:text-secondary-300 text-center">
           {item.name}
         </span>
-        {showLevelBadge && item.level && (
-          <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${levelBadgeClasses[item.level]}`}>
-            {t(`home.about.techStackFilters.${item.level}`)}
-          </span>
-        )}
+        {showLevelBadge && item.level && (() => {
+          const levelBadgeClasses = {
+            daily: 'bg-success-100 dark:bg-success-900/30 text-success-700 dark:text-success-300 border-success-200 dark:border-success-700',
+            mastered: 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border-primary-200 dark:border-primary-700',
+            known: 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 border-secondary-200 dark:border-secondary-700'
+          }
+          return (
+            <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${levelBadgeClasses[item.level]}`}>
+              {t(`home.about.techStackFilters.${item.level}`)}
+            </span>
+          )
+        })()}
       </div>
     </motion.div>
   )
