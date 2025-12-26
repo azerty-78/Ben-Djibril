@@ -85,7 +85,173 @@ export const resources = {
           certifications: 'Certifications',
           contactMe: 'Interested in my profile?',
           contactDesc: 'Let\'s discuss your project and see how I can help you',
-          contactBtn: 'Contact Me'
+          contactBtn: 'Contact Me',
+          downloadCV: 'Download my CV',
+          viewFullStack: 'View full stack',
+          viewFullProfile: 'View my full profile',
+          clientSatisfaction: 'Client satisfaction',
+          clientSatisfactionDesc: 'All my clients are satisfied with my services and recommend my work',
+          responseTime: 'Response time',
+          responseTimeDesc: 'I respond to all requests within 24h, often much faster',
+          worldwide: 'Available worldwide',
+          worldwideDesc: 'I work with clients from around the world, in French and English',
+          // New sections
+          story: {
+            title: 'My Story',
+            subtitle: 'A journey passionate about technology and innovation',
+            content: 'My journey in software development began with a passion for solving complex problems. Graduated in software engineering, I quickly evolved towards DevOps, attracted by the systemic aspect and process optimization. My international experience and ability to work with multicultural teams make me an adaptable and versatile developer.',
+            whyDevOps: 'Why DevOps?',
+            whyDevOpsContent: 'DevOps represents for me the perfect convergence between development and operations. I love creating solutions that not only work, but are also deployable, maintainable, and scalable. This approach allows me to deliver value quickly while maintaining high quality.',
+            whyInternational: 'Why international?',
+            whyInternationalContent: 'Working with clients from around the world allows me to discover different cultures, methodologies, and technical challenges. This diversity enriches my approach and enables me to bring innovative solutions adapted to each context.'
+          },
+          identity: {
+            role: 'Role',
+            roleValue: 'DevOps Engineer / Full-Stack Developer',
+            location: 'Location',
+            locationValue: 'Yaoundé, Cameroon',
+            timezone: 'Timezone',
+            timezoneValue: 'WAT (UTC+1)',
+            availability: 'Availability',
+            availabilityValue: 'Monday - Friday, 9am - 6pm',
+            languageNative: 'Native',
+            languageIntermediate: 'Intermediate'
+          },
+          values: {
+            title: 'My Values',
+            subtitle: 'The principles that guide my work',
+            transparency: {
+              title: 'Transparency',
+              desc: 'Clear and honest communication at every stage of the project'
+            },
+            communication: {
+              title: 'Communication',
+              desc: 'Regular exchanges and constructive feedback to ensure success'
+            },
+            pedagogy: {
+              title: 'Pedagogy',
+              desc: 'Knowledge sharing and training for sustainable autonomy'
+            },
+            rigor: {
+              title: 'Rigor',
+              desc: 'Clean code, comprehensive tests, and exhaustive documentation'
+            },
+            innovation: {
+              title: 'Innovation',
+              desc: 'Adoption of best practices and modern technologies'
+            },
+            collaboration: {
+              title: 'Collaboration',
+              desc: 'Teamwork and active listening for optimal solutions'
+            }
+          },
+          workflow: {
+            title: 'My Work Process',
+            subtitle: 'A structured process to ensure quality',
+            discovery: {
+              title: 'Discovery & Analysis',
+              desc: 'Deep understanding of needs and constraints'
+            },
+            design: {
+              title: 'Design & Architecture',
+              desc: 'Design of robust and scalable solutions'
+            },
+            development: {
+              title: 'Development',
+              desc: 'Implementation with best practices and standards'
+            },
+            testing: {
+              title: 'Testing & QA',
+              desc: 'Complete validation and quality assurance'
+            },
+            deployment: {
+              title: 'Deployment',
+              desc: 'Secure and automated production deployment'
+            },
+            support: {
+              title: 'Support & Maintenance',
+              desc: 'Continuous support and continuous improvement'
+            }
+          },
+          softSkills: {
+            title: 'Soft Skills',
+            subtitle: 'Beyond the technical',
+            communication: {
+              title: 'Communication',
+              desc: 'Active listening and clear expression'
+            },
+            rigor: {
+              title: 'Rigor',
+              desc: 'Precision and attention to detail'
+            },
+            pedagogy: {
+              title: 'Pedagogy',
+              desc: 'Effective knowledge transmission'
+            },
+            problemSolving: {
+              title: 'Problem Solving',
+              desc: 'Analysis and creative solutions'
+            },
+            timeManagement: {
+              title: 'Time Management',
+              desc: 'Organization and respect for deadlines'
+            },
+            teamwork: {
+              title: 'Teamwork',
+              desc: 'Collaboration and synergy'
+            }
+          },
+          timeline: {
+            title: 'Career & Education',
+            subtitle: 'My professional and academic evolution',
+            education: {
+              title: 'Education',
+              iai: {
+                title: 'Computer Engineering Degree',
+                subtitle: 'Software Engineering Option',
+                institution: 'African Institute of Computer Science (IAI)',
+                period: 'Study years',
+                desc: 'Complete training in software engineering with specialization in application and computer systems development.'
+              }
+            },
+            achievements: {
+              title: 'Achievements',
+              canam2023: {
+                title: 'Winner - CANAM Contest 2023',
+                subtitle: 'Java Programming',
+                period: 'November 2023 - March 2024',
+                desc: 'Winner of the inter-university contest organized by CANAM (renowned Canadian international construction firm) in the Java programming category. Distinction obtained among 492 candidates across the entire country.',
+                imageAlt: 'CANAM Contest 2023 Certificate'
+              }
+            }
+          },
+          techStack: {
+            daily: 'Used daily',
+            mastered: 'Well mastered',
+            known: 'Solid knowledge',
+            filterAll: 'All',
+            filterDaily: 'Daily',
+            filterMastered: 'Mastered',
+            filterKnown: 'Known'
+          },
+          cta: {
+            downloadCV: 'Download my CV',
+            downloadCVDesc: 'FR and EN versions available',
+            bookCall: 'Book a call',
+            bookCallDesc: '15 minutes free, no commitment',
+            viewProjects: 'View my projects',
+            viewProjectsDesc: 'Discover my achievements',
+            contact: 'Contact me',
+            contactDesc: 'Let\'s discuss your project'
+          },
+          gallery: {
+            title: 'In Context',
+            subtitle: 'Some moments from my professional daily life',
+            setup: 'Work setup',
+            whiteboard: 'Architecture & Design',
+            conference: 'Conference & Meetup',
+            environment: 'Work environment'
+          }
         }
       },
       services: {

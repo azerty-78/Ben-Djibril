@@ -1,9 +1,15 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import SEO from '../components/seo/SEO'
 import TechStack from '../components/ui/TechStack'
 import CertificationsSection from '../components/sections/CertificationsSection'
+import AboutStory from '../components/about/AboutStory'
+import AboutValues from '../components/about/AboutValues'
+import AboutWorkflow from '../components/about/AboutWorkflow'
+import AboutSoftSkills from '../components/about/AboutSoftSkills'
+import AboutTimeline from '../components/about/AboutTimeline'
+import AboutGallery from '../components/about/AboutGallery'
+import AboutCTAs from '../components/about/AboutCTAs'
 import {
   programmingLanguages,
   frameworks,
@@ -21,7 +27,11 @@ import {
   PaintBrushIcon, 
   CommandLineIcon,
   UserIcon,
-  StarIcon
+  StarIcon,
+  MapPinIcon,
+  ClockIcon,
+  GlobeAltIcon,
+  BriefcaseIcon
 } from '@heroicons/react/24/solid'
 
 function About() {
@@ -31,14 +41,43 @@ function About() {
     <div className="min-h-screen bg-white dark:bg-secondary-900">
       <SEO />
       {/* Hero Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800">
-        <div className="container mx-auto px-4">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-30 dark:opacity-20 pointer-events-none">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, ease: 'easeOut' }}
+            className="absolute top-20 -right-20 w-64 h-64 bg-primary-200 dark:bg-primary-600 rounded-full blur-3xl"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, delay: 0.3, ease: 'easeOut' }}
+            className="absolute bottom-20 -left-20 w-72 h-72 bg-accent-200 dark:bg-accent-600 rounded-full blur-3xl"
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center max-w-4xl mx-auto mb-12"
           >
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-primary-50 dark:bg-primary-900/40 border border-primary-200 dark:border-primary-700 mb-4 sm:mb-5"
+            >
+              <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
+              <span className="text-[10px] xs:text-xs sm:text-sm font-medium text-primary-700 dark:text-primary-300">
+                À propos de moi
+              </span>
+            </motion.div>
+
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-secondary-900 dark:text-white">
               {t('home.about.title')}
             </h1>
@@ -78,24 +117,86 @@ function About() {
                 transition={{ duration: 0.6 }}
                 className="space-y-6"
               >
-                {/* Identity Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  <div className="card p-4">
+                {/* Identity Cards - Enhanced */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="card p-4 bg-gradient-to-br from-white to-secondary-50 dark:from-secondary-800 dark:to-secondary-800/50 border border-secondary-200 dark:border-secondary-700"
+                  >
                     <h3 className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 mb-2 uppercase tracking-wide">
                       {t('home.about.realName')}
                     </h3>
-                    <p className="text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+                    <p className="text-base sm:text-lg font-semibold text-secondary-900 dark:text-secondary-100">
                       Kone Djibril Benjamin
                     </p>
-                  </div>
-                  <div className="card p-4 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900/20 dark:to-accent-900/20">
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="card p-4 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900/20 dark:to-accent-900/20 border border-primary-200 dark:border-primary-700"
+                  >
                     <h3 className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 mb-2 uppercase tracking-wide">
                       {t('home.about.publicName')}
                     </h3>
-                    <p className="text-lg font-semibold text-primary-600 dark:text-primary-400">
+                    <p className="text-base sm:text-lg font-semibold text-primary-600 dark:text-primary-400">
                       Ben Djibril
                     </p>
-                  </div>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="card p-4 bg-gradient-to-br from-white to-secondary-50 dark:from-secondary-800 dark:to-secondary-800/50 border border-secondary-200 dark:border-secondary-700"
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <BriefcaseIcon className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+                      <h3 className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 uppercase tracking-wide">
+                        {t('home.about.identity.role')}
+                      </h3>
+                    </div>
+                    <p className="text-base sm:text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+                      {t('home.about.identity.roleValue')}
+                    </p>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="card p-4 bg-gradient-to-br from-white to-secondary-50 dark:from-secondary-800 dark:to-secondary-800/50 border border-secondary-200 dark:border-secondary-700"
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <MapPinIcon className="w-4 h-4 text-accent-600 dark:text-accent-400" />
+                      <h3 className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 uppercase tracking-wide">
+                        {t('home.about.identity.location')}
+                      </h3>
+                    </div>
+                    <p className="text-base sm:text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+                      {t('home.about.identity.locationValue')}
+                    </p>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="card p-4 bg-gradient-to-br from-white to-secondary-50 dark:from-secondary-800 dark:to-secondary-800/50 border border-secondary-200 dark:border-secondary-700"
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <ClockIcon className="w-4 h-4 text-warning-600 dark:text-warning-400" />
+                      <h3 className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 uppercase tracking-wide">
+                        {t('home.about.identity.timezone')}
+                      </h3>
+                    </div>
+                    <p className="text-base sm:text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+                      {t('home.about.identity.timezoneValue')}
+                    </p>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="card p-4 bg-gradient-to-br from-white to-secondary-50 dark:from-secondary-800 dark:to-secondary-800/50 border border-secondary-200 dark:border-secondary-700"
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <GlobeAltIcon className="w-4 h-4 text-success-600 dark:text-success-400" />
+                      <h3 className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 uppercase tracking-wide">
+                        {t('home.about.identity.availability')}
+                      </h3>
+                    </div>
+                    <p className="text-base sm:text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+                      {t('home.about.identity.availabilityValue')}
+                    </p>
+                  </motion.div>
                 </div>
 
                 {/* Extended Bio */}
@@ -111,26 +212,42 @@ function About() {
                   </div>
                 </div>
 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="card text-center p-4 bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20">
+                {/* Stats Grid - Enhanced with icons */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    className="card text-center p-4 bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 border border-primary-200 dark:border-primary-700"
+                  >
                     <div className="text-3xl md:text-4xl font-bold gradient-text mb-1">4</div>
                     <div className="text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
                       {t('home.about.experience')}
                     </div>
-                  </div>
-                  <div className="card text-center p-4 bg-gradient-to-br from-accent-50 to-accent-100 dark:from-accent-900/20 dark:to-accent-800/20">
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    className="card text-center p-4 bg-gradient-to-br from-accent-50 to-accent-100 dark:from-accent-900/20 dark:to-accent-800/20 border border-accent-200 dark:border-accent-700"
+                  >
                     <div className="text-lg md:text-xl font-bold gradient-text mb-1">{t('home.about.level')}</div>
                     <div className="text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">Médior</div>
-                  </div>
-                  <div className="card text-center p-4 bg-gradient-to-br from-success-50 to-success-100 dark:from-success-900/20 dark:to-success-800/20">
-                    <div className="text-2xl mb-1">🇫🇷</div>
-                    <div className="text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">Natif</div>
-                  </div>
-                  <div className="card text-center p-4 bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20">
-                    <div className="text-2xl mb-1">🇬🇧</div>
-                    <div className="text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">Intermédiaire</div>
-                  </div>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    className="card text-center p-4 bg-gradient-to-br from-success-50 to-success-100 dark:from-success-900/20 dark:to-success-800/20 border border-success-200 dark:border-success-700"
+                  >
+                    <GlobeAltIcon className="w-8 h-8 md:w-10 md:h-10 mx-auto mb-1 text-success-600 dark:text-success-400" />
+                    <div className="text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
+                      {t('home.about.identity.languageNative')}
+                    </div>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    className="card text-center p-4 bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 border border-primary-200 dark:border-primary-700"
+                  >
+                    <GlobeAltIcon className="w-8 h-8 md:w-10 md:h-10 mx-auto mb-1 text-primary-600 dark:text-primary-400" />
+                    <div className="text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
+                      {t('home.about.identity.languageIntermediate')}
+                    </div>
+                  </motion.div>
                 </div>
 
                 {/* Specialties */}
@@ -367,31 +484,14 @@ function About() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 md:py-20 bg-gradient-to-br from-primary-600 via-primary-500 to-accent-500">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-              {t('home.about.contactMe')}
-            </h2>
-            <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed">
-              {t('home.about.contactDesc')}
-            </p>
-            <Link
-              to="/contact"
-              className="inline-block bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-secondary-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
-            >
-              {t('home.about.contactBtn')}
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+      {/* Timeline Section */}
+      <AboutTimeline />
+
+      {/* Gallery Section */}
+      <AboutGallery />
+
+      {/* CTAs Section */}
+      <AboutCTAs />
     </div>
   )
 }
