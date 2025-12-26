@@ -65,9 +65,35 @@ docker push votre-registry.com/ben-djibril-app
 
 Le Dockerfile utilise un build multi-stage :
 - **Stage 1 (builder)** : Installe les dépendances et build l'application avec Vite
-- **Stage 2 (production)** : Copie uniquement les fichiers buildés et sert l'application avec `vite preview`
+- **Stage 2 (production)** : Copie uniquement les fichiers buildés et sert l'application avec un serveur Node.js personnalisé
 
 Cela permet d'obtenir une image finale plus légère et optimisée pour la production.
+
+## Configuration du domaine
+
+L'application est configurée pour fonctionner avec le domaine **www.ben-djibril.com**. 
+
+### Headers HTTP configurés
+
+Le serveur personnalisé inclut les headers suivants pour garantir la sécurité et le bon fonctionnement :
+- **CORS** : Headers Access-Control-Allow-* pour permettre les requêtes cross-origin
+- **Sécurité** : X-Content-Type-Options, X-Frame-Options, X-XSS-Protection
+- **Cache** : Cache-Control optimisé pour les assets statiques (images, CSS, JS)
+- **Referrer Policy** : strict-origin-when-cross-origin
+
+### Chargement des images
+
+Les images et assets statiques sont correctement servis depuis le dossier `public/` et `src/assets/` :
+- Les fichiers du dossier `public/` sont automatiquement copiés dans `dist/` lors du build
+- Les images sont servies avec les bons types MIME et headers de cache
+- Le serveur gère correctement les chemins relatifs et absolus
+
+### Vérification
+
+Pour vérifier que tout fonctionne correctement :
+1. Vérifiez que les images se chargent : ouvrez les DevTools et vérifiez l'onglet Network
+2. Vérifiez les headers : utilisez `curl -I http://localhost:5180` ou les DevTools
+3. Testez les requêtes CORS si nécessaire
 
 ## Références
 

@@ -47,11 +47,18 @@ RUN --mount=type=cache,target=/root/.npm \
 # Copy built files from builder stage
 COPY --from=builder /usr/src/app/dist ./dist
 
+# Copy server script
+COPY --from=builder /usr/src/app/server.js ./server.js
+
 # Run as non-root user
 USER node
 
 # Expose the port
 EXPOSE 5180
 
-# Run preview server (serves the built static files)
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "5180"]
+# Set environment variables for the server
+ENV PORT=5180
+ENV HOST=0.0.0.0
+
+# Run custom server (serves the built static files with proper headers)
+CMD ["node", "server.js"]

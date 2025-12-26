@@ -3,13 +3,13 @@ node_modules
 npm-debug.log
 yarn-error.log
 
-# Build outputs
+# Build outputs (will be built in container)
 dist
 build
 .next
 out
 
-# Environment files (on garde .env.example si nécessaire)
+# Environment files
 .env.local
 .env.*.local
 
@@ -28,18 +28,10 @@ Thumbs.db
 .git
 .gitignore
 
-# Docker
-Dockerfile*
-docker-compose*.yml
-compose.yaml
-.dockerignore
-
-# Keep server.js for production
-!server.js
-
 # Documentation
 *.md
 docs
+!README.md
 
 # Tests
 coverage
@@ -52,3 +44,7 @@ logs
 # Misc
 .ngrok
 ngrok.yml
+
+# Keep server.js for production
+!server.js
+

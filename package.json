@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "serve": "node server.js",
     "ngrok": "ngrok start --config ngrok.yml web",
     "dev:ngrok": "concurrently \"npm run dev\" \"npm run ngrok\""
   },
