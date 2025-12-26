@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { useInView } from 'framer-motion/hooks'
+import { useInView } from 'framer-motion'
 
 type CountUpProps = {
   end: number
