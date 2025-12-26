@@ -29,7 +29,6 @@ import {
   BeakerIcon,
   HeartIcon,
   ScissorsIcon,
-  BuildingOfficeIcon,
   HomeIcon,
   BanknotesIcon,
   CurrencyDollarIcon,

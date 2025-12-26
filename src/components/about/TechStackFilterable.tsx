@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { TechItemWithLevel, TechLevel } from '../../data/techStack'
+import type { TechItemWithLevel, TechLevel } from '../../data/techStack'
 import TechStack from '../ui/TechStack'
 
 type TechStackFilterableProps = {

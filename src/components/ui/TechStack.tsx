@@ -138,9 +138,16 @@ function TechItemCard({ item, index, showLevelBadge = false }: { item: TechItem;
           {item.name.charAt(0)}
         </div>
       )}
-      <span className="text-sm font-medium text-secondary-700 dark:text-secondary-300 text-center">
-        {item.name}
-      </span>
+      <div className="flex flex-col items-center gap-1 w-full">
+        <span className="text-sm font-medium text-secondary-700 dark:text-secondary-300 text-center">
+          {item.name}
+        </span>
+        {showLevelBadge && item.level && (
+          <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${levelBadgeClasses[item.level]}`}>
+            {t(`home.about.techStackFilters.${item.level}`)}
+          </span>
+        )}
+      </div>
     </motion.div>
   )
 }

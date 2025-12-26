@@ -93,7 +93,6 @@ const clientTypeIcons: Record<ProjectClient['type'], typeof BuildingOfficeIcon> 
 }
 
 function ProjectCard({
-  id,
   name,
   description,
   problem,
@@ -129,9 +128,8 @@ function ProjectCard({
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      whileHover={{ y: -10, scale: 1.01 }}
-      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+        whileHover={{ y: -10, scale: 1.01 }}
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
       className="group relative bg-white dark:bg-secondary-900 rounded-2xl sm:rounded-3xl shadow-lg hover:shadow-2xl border border-secondary-100 dark:border-secondary-800 overflow-hidden transition-all duration-300 h-full flex flex-col"
       >
         {/* Image/Header Section */}
@@ -258,7 +256,7 @@ function ProjectCard({
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 leading-relaxed">
-                  {client.description}
+                  {client.translations[t('projects.lang') as 'en' | 'fr']?.description || client.translations.en.description}
                 </p>
               </div>
             </div>
