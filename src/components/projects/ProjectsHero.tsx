@@ -12,6 +12,9 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 function ProjectsHero() {
   const { t } = useTranslation()
 
+  // Define easing tuple separately to ensure proper typing
+  const easeInOut = [0.4, 0, 0.2, 1] as const
+
   // Memoize variants to prevent re-creation on each render
   const containerVariants = useMemo(() => ({
     hidden: { opacity: 0 },
@@ -31,7 +34,7 @@ function ProjectsHero() {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: [0.4, 0, 0.2, 1] as const,
+        ease: easeInOut,
       },
     },
   }), [])
@@ -44,7 +47,7 @@ function ProjectsHero() {
       rotate: 0,
       transition: {
         duration: 0.7,
-        ease: [0.4, 0, 0.2, 1] as const,
+        ease: easeInOut,
       },
     },
   }), [])

@@ -17,7 +17,7 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - "5180:5180"
+      - "3003:3003"
     restart: unless-stopped
     container_name: ben-djibril-app
 

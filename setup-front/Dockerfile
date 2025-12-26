@@ -54,10 +54,10 @@ COPY --from=builder /usr/src/app/server.js ./server.js
 USER node
 
 # Expose the port
-EXPOSE 5180
+EXPOSE 3003
 
 # Set environment variables for the server
-ENV PORT=5180
+ENV PORT=3003
 ENV HOST=0.0.0.0
 
 # Run custom server (serves the built static files with proper headers)

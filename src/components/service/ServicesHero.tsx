@@ -35,6 +35,9 @@ function ServicesHero() {
     }, 200)
   }
 
+  // Define easing tuple separately to ensure proper typing
+  const easeInOut = [0.4, 0, 0.2, 1] as const
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -53,7 +56,7 @@ function ServicesHero() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.4, 0, 0.2, 1] as const,
+        ease: easeInOut,
       },
     },
   }
@@ -66,7 +69,7 @@ function ServicesHero() {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: [0.4, 0, 0.2, 1] as const,
+        ease: easeInOut,
       },
     },
   }

@@ -105,7 +105,6 @@ function ProjectCard({
   visibility,
   images,
 }: ProjectCardProps) {
-  // id is part of the type but not used in the component
   const { t } = useTranslation()
   
   // Memoize expensive computations
