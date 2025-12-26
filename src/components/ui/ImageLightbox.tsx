@@ -149,7 +149,7 @@ function ImageLightbox({ images, currentIndex: initialIndex, isOpen, onClose }: 
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
-          transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
           className="relative max-w-7xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col items-center"
           onClick={(e) => e.stopPropagation()}
         >
@@ -161,7 +161,7 @@ function ImageLightbox({ images, currentIndex: initialIndex, isOpen, onClose }: 
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
                 src={images[currentIndex]}
                 alt={`Image ${currentIndex + 1} of ${images.length}`}
                 className="max-w-full max-h-[80vh] object-contain rounded-lg will-change-transform"

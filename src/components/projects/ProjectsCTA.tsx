@@ -93,7 +93,7 @@ function ProjectsCTA() {
             initial={{ opacity: 0, scale: 0.9, rotate: -180 }}
             whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.7, ease: 'easeInOut' }}
             className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 mb-6 sm:mb-8 rounded-2xl bg-white/20 backdrop-blur-sm text-white shadow-lg"
             aria-hidden="true"
           >
