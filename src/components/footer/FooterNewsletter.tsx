@@ -180,13 +180,13 @@ function FooterNewsletter() {
             viewport={{ once: true }}
             transition={{ duration: 0.3, delay: 0.4 }}
           >
-            <Link 
-              to="#" 
-              className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors inline-flex items-center gap-2 group"
+            <span 
+              className="text-secondary-400 dark:text-secondary-500 text-sm cursor-not-allowed inline-flex items-center gap-2"
+              title="Bientôt disponible"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <span className="w-1.5 h-1.5 rounded-full bg-secondary-300 dark:bg-secondary-600" />
               {t('footer.legal')}
-            </Link>
+            </span>
           </motion.li>
           <motion.li
             initial={{ opacity: 0 }}
@@ -194,13 +194,13 @@ function FooterNewsletter() {
             viewport={{ once: true }}
             transition={{ duration: 0.3, delay: 0.5 }}
           >
-            <Link 
-              to="#" 
-              className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors inline-flex items-center gap-2 group"
+            <span 
+              className="text-secondary-400 dark:text-secondary-500 text-sm cursor-not-allowed inline-flex items-center gap-2"
+              title="Bientôt disponible"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <span className="w-1.5 h-1.5 rounded-full bg-secondary-300 dark:bg-secondary-600" />
               {t('footer.privacy')}
-            </Link>
+            </span>
           </motion.li>
         </ul>
       </div>

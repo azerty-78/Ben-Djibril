@@ -18,28 +18,15 @@ function FooterServices() {
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault()
     navigate(path)
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }, 100)
+    // Scroll instantané vers le haut (pas de transition)
+    window.scrollTo(0, 0)
   }
 
   const handleViewAllServices = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     navigate('/services')
-    setTimeout(() => {
-      const servicesSection = document.querySelector('[data-section="services"]')
-      if (servicesSection) {
-        const offset = 80
-        const elementPosition = servicesSection.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.pageYOffset - offset
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        })
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }
-    }, 200)
+    // Scroll instantané vers le haut (la section services sera visible en haut de page)
+    window.scrollTo(0, 0)
   }
 
   return (

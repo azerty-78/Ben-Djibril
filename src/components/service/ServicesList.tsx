@@ -56,6 +56,7 @@ type Service = {
 function ServicesList() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<'all' | ServiceCategory>('all')
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null)
@@ -572,6 +573,22 @@ function ServicesList() {
       sector: t('services.sectors.health'),
     },
   ]
+
+  // Liste des IDs de services valides pour la vérification
+  const validServiceIds = useMemo(() => 
+    allServices.map(service => service.id),
+    [allServices]
+  )
+
+  // Gérer le paramètre type dans l'URL pour ouvrir automatiquement le service
+  useEffect(() => {
+    const typeParam = searchParams.get('type')
+    if (typeParam && validServiceIds.includes(typeParam)) {
+      setSelectedServiceId(typeParam)
+      // Nettoyer l'URL après ouverture
+      setSearchParams({}, { replace: true })
+    }
+  }, [searchParams, setSearchParams, validServiceIds])
 
   const filteredServices = useMemo(() => {
     const query = searchQuery.trim().toLowerCase()

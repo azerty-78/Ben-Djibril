@@ -15,9 +15,8 @@ function FooterPages() {
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault()
     navigate(path)
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }, 100)
+    // Scroll instantané vers le haut (pas de transition)
+    window.scrollTo(0, 0)
   }
 
   return (
