@@ -7,22 +7,6 @@ function ServicesHero() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   
-  const scrollToSection = (sectionId: string) => {
-    navigate('/services')
-    setTimeout(() => {
-      const section = document.querySelector(`[data-section="${sectionId}"]`)
-      if (section) {
-        const offset = 80
-        const elementPosition = section.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.pageYOffset - offset
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        })
-      }
-    }, 200)
-  }
-  
   const scrollToSubSection = (subsectionId: string) => {
     navigate('/services')
     setTimeout(() => {
@@ -69,7 +53,7 @@ function ServicesHero() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.4, 0, 0.2, 1],
+        ease: [0.4, 0, 0.2, 1] as const,
       },
     },
   }
@@ -82,7 +66,7 @@ function ServicesHero() {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: [0.4, 0, 0.2, 1],
+        ease: [0.4, 0, 0.2, 1] as const,
       },
     },
   }

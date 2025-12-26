@@ -105,6 +105,7 @@ function ProjectCard({
   visibility,
   images,
 }: ProjectCardProps) {
+  // id is part of the type but not used in the component
   const { t } = useTranslation()
   
   // Memoize expensive computations
@@ -129,8 +130,8 @@ function ProjectCard({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         whileHover={{ y: -10, scale: 1.01 }}
-        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-      className="group relative bg-white dark:bg-secondary-900 rounded-2xl sm:rounded-3xl shadow-lg hover:shadow-2xl border border-secondary-100 dark:border-secondary-800 overflow-hidden transition-all duration-300 h-full flex flex-col"
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] as const }}
+        className="group relative bg-white dark:bg-secondary-900 rounded-2xl sm:rounded-3xl shadow-lg hover:shadow-2xl border border-secondary-100 dark:border-secondary-800 overflow-hidden transition-all duration-300 h-full flex flex-col"
       >
         {/* Image/Header Section */}
         <div 

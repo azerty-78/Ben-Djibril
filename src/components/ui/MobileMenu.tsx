@@ -1,5 +1,4 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { Disclosure } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
@@ -94,41 +93,38 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
         {t('nav.home')}
       </NavLink>
 
-      <Disclosure open={isSubMenuOpen} onChange={setIsSubMenuOpen} as="div">
-        {({ open }) => (
-          <>
-            <Disclosure.Button className={`${linkBase} flex items-center justify-between text-secondary-700 dark:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-700 font-medium`}>
-              <span>{t('nav.services')}</span>
-              <ChevronDownIcon className={`w-4 h-4 transition-transform duration-300 ease-in-out ${open ? 'rotate-180' : ''} text-secondary-600 dark:text-secondary-400`} />
-            </Disclosure.Button>
-            <AnimatePresence>
-              {open && (
-                <Disclosure.Panel
-                  as={motion.div}
-                  static
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: 'easeInOut' }}
-                  className="overflow-hidden"
-                >
-                  <div className="pl-4 space-y-1.5 mt-2 border-l-2 border-secondary-200 dark:border-secondary-700">
-                    {serviceLinks.map((link, index) => (
-                      <button
-                        key={index}
-                        onClick={link.onClick}
-                        className={`${linkBase} text-sm w-full text-left bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-200 hover:bg-secondary-50 dark:hover:bg-secondary-700 hover:text-primary-600 dark:hover:text-primary-400`}
-                      >
-                        {link.label}
-                      </button>
-                    ))}
-                  </div>
-                </Disclosure.Panel>
-              )}
-            </AnimatePresence>
-          </>
-        )}
-      </Disclosure>
+      <div>
+        <button
+          onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}
+          className={`${linkBase} flex items-center justify-between text-secondary-700 dark:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-700 font-medium w-full`}
+        >
+          <span>{t('nav.services')}</span>
+          <ChevronDownIcon className={`w-4 h-4 transition-transform duration-300 ease-in-out ${isSubMenuOpen ? 'rotate-180' : ''} text-secondary-600 dark:text-secondary-400`} />
+        </button>
+        <AnimatePresence>
+          {isSubMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] as const }}
+              className="overflow-hidden"
+            >
+              <div className="pl-4 space-y-1.5 mt-2 border-l-2 border-secondary-200 dark:border-secondary-700">
+                {serviceLinks.map((link, index) => (
+                  <button
+                    key={index}
+                    onClick={link.onClick}
+                    className={`${linkBase} text-sm w-full text-left bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-200 hover:bg-secondary-50 dark:hover:bg-secondary-700 hover:text-primary-600 dark:hover:text-primary-400`}
+                  >
+                    {link.label}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       <NavLink 
         to="/projects" 
