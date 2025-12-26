@@ -364,7 +364,7 @@ function ServicesHero() {
                     </div>
                     <div className="text-right flex-shrink-0">
                       <p className="text-[9px] xs:text-xs text-secondary-500 dark:text-secondary-400 line-through">
-                        18 500 F HT
+                        200 000 f (HT)
                       </p>
                       <p className="text-lg sm:text-xl md:text-2xl font-extrabold text-primary-700 dark:text-primary-300">
                         15 500 F

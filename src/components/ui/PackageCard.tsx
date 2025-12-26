@@ -95,14 +95,16 @@ function PackageCard({
             <span className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text break-words overflow-wrap-anywhere max-w-full">
               {price}
             </span>
-            {priceUnit && (
+            {priceUnit && !price.includes('/an') && (
               <span className="text-sm sm:text-base text-secondary-600 dark:text-secondary-400 font-normal">
                 {priceUnit}
               </span>
             )}
-            <span className="text-[10px] sm:text-xs text-secondary-500 dark:text-secondary-400 font-medium ml-auto">
-              HT
-            </span>
+            {!price.includes('(HT)') && !price.includes('HT') && (
+              <span className="text-[10px] sm:text-xs text-secondary-500 dark:text-secondary-400 font-medium ml-auto">
+                HT
+              </span>
+            )}
           </div>
           {deliveryTime && (
             <div className="mt-2">
