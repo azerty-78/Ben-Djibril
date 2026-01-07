@@ -669,6 +669,11 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                               </p>
                             </div>
                           </div>
+                          <div className="mt-3 p-3 bg-amber-50/60 dark:bg-amber-900/20 rounded-lg border border-amber-200/50 dark:border-amber-700/50">
+                            <p className="text-xs text-secondary-700 dark:text-secondary-300 leading-relaxed">
+                              {t('services.saasComparison.evolutionPeriodGood')}
+                            </p>
+                          </div>
                         </>
                       )}
                       {planId === 'saas-pro' && (
@@ -686,6 +691,11 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                               </p>
                             </div>
                           </div>
+                          <div className="mt-3 p-3 bg-amber-50/60 dark:bg-amber-900/20 rounded-lg border border-amber-200/50 dark:border-amber-700/50">
+                            <p className="text-xs text-secondary-700 dark:text-secondary-300 leading-relaxed">
+                              {t('services.saasComparison.evolutionPeriodPro')}
+                            </p>
+                          </div>
                         </>
                       )}
                       {planId === 'saas-ultra' && (
@@ -702,6 +712,11 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                                 {t('services.saas.ultra.cadence')} - 1 nouvelle fonctionnalité
                               </p>
                             </div>
+                          </div>
+                          <div className="mt-3 p-3 bg-amber-50/60 dark:bg-amber-900/20 rounded-lg border border-amber-200/50 dark:border-amber-700/50">
+                            <p className="text-xs text-secondary-700 dark:text-secondary-300 leading-relaxed">
+                              {t('services.saasComparison.evolutionPeriodUltra')}
+                            </p>
                           </div>
                         </>
                       )}

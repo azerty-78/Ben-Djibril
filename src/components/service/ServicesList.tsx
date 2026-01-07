@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { useState, useMemo, lazy, Suspense } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useMemo, lazy, Suspense, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 // Lazy load heavy component
 const ServiceInfoDialog = lazy(() => import('./ServiceInfoDialog'))
