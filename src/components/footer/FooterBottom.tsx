@@ -15,7 +15,7 @@ function FooterBottom() {
     >
       <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-4 text-sm">
         <p className="text-secondary-600 dark:text-secondary-300 text-center md:text-left">
-          © {currentYear} <span className="font-semibold text-primary-600 dark:text-primary-400">Ben Djibril</span>. {t('footer.rights')}
+          © 2025 <span className="font-semibold text-primary-600 dark:text-primary-400">KOBE Corporation</span>. Tous droits réservés.
         </p>
         <motion.p
           initial={{ opacity: 0 }}

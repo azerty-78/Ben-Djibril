@@ -14,6 +14,7 @@ function Navbar() {
   const location = useLocation()
   const [scrolled, setScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isProfileImageOpen, setIsProfileImageOpen] = useState(false)
 
   // Fermer le menu quand la route change
   useEffect(() => {
@@ -53,12 +54,23 @@ function Navbar() {
               className="flex items-center gap-2 sm:gap-2.5 hover:scale-105 transition-transform duration-200"
               onClick={() => setIsMenuOpen(false)}
             >
-              <img 
-                src={profileImage} 
-                alt="Ben Djibril" 
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-primary-500/30 dark:border-primary-400/30 shadow-sm"
-                loading="eager"
-              />
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setIsProfileImageOpen(true)
+                }}
+                className="relative group"
+                aria-label="Voir la photo de profil"
+              >
+                <img 
+                  src={profileImage} 
+                  alt="Ben Djibril" 
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-primary-500/30 dark:border-primary-400/30 shadow-sm cursor-pointer hover:scale-110 transition-transform duration-200"
+                  loading="eager"
+                />
+                <div className="absolute inset-0 rounded-full bg-primary-500/0 group-hover:bg-primary-500/10 transition-colors duration-200" />
+              </button>
               <span className="text-xl sm:text-2xl font-bold gradient-text whitespace-nowrap">
                 Ben Djibril
               </span>
@@ -187,6 +199,58 @@ function Navbar() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* Profile Image Lightbox */}
+      <AnimatePresence>
+        {isProfileImageOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] bg-black/80 dark:bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setIsProfileImageOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 30 }}
+              className="relative max-w-2xl w-full max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setIsProfileImageOpen(false)}
+                className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 dark:bg-white/20 hover:bg-white/20 dark:hover:bg-white/30 backdrop-blur-sm flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10"
+                aria-label="Fermer"
+              >
+                <XMarkIcon className="w-6 h-6" />
+              </button>
+
+              {/* Image */}
+              <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl bg-white dark:bg-secondary-800">
+                <img
+                  src={profileImage}
+                  alt="Ben Djibril - Photo de profil"
+                  className="w-full h-full object-contain"
+                  loading="eager"
+                />
+              </div>
+
+              {/* Close hint */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-white/70 text-sm text-center"
+              >
+                Cliquez en dehors ou sur ✕ pour fermer
+              </motion.p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
