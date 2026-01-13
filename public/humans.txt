@@ -1,0 +1,38 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Kone Djibril Benjamin (Ben Djibril) -- DevOps Engineer -- @kobecorporation
+    Site: https://ben-djibril.kobecorporation.com
+    Email: contact@kobecorporation.com
+    Location: Cameroon
+
+# THANKS
+
+    ENS Y (École Normale Supérieure de Yaoundé)
+    UY2 SOA (Université de Yaoundé 2)
+    Kobe Corporation
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3, JavaScript (ES6+)
+    React 19.2.0
+    TypeScript
+    Vite
+    Tailwind CSS
+    Framer Motion
+    React Router
+    i18next (Internationalization)
+    EmailJS
+    Nginx
+    Docker
+    Traefik
+
+# SITE
+
+    Last update: 2024/12/19
+    Standards: HTML5, CSS3, JavaScript ES6+
+    Components: React, TypeScript
+    Software: Vite, Node.js, Docker
+    Language: French, English

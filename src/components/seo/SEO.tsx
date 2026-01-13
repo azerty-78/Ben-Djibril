@@ -121,13 +121,18 @@ function SEO({
     updateMetaTag('distribution', 'global')
     updateMetaTag('rating', 'general')
 
-    // Open Graph
+    // Open Graph - Enrichi
     updateMetaTag('og:title', ogTitle || document.title, 'property')
     updateMetaTag('og:description', ogDescription || metaDescription, 'property')
     updateMetaTag('og:image', `${baseUrl}${ogImage}`, 'property')
+    updateMetaTag('og:image:width', '1200', 'property')
+    updateMetaTag('og:image:height', '630', 'property')
+    updateMetaTag('og:image:alt', 'Ben Djibril (Kone Djibril Benjamin) - DevOps Engineer Portfolio', 'property')
     updateMetaTag('og:url', ogUrl || currentUrl, 'property')
     updateMetaTag('og:type', 'website', 'property')
     updateMetaTag('og:locale', lang === 'fr' ? 'fr_FR' : 'en_US', 'property')
+    updateMetaTag('og:site_name', 'Ben Djibril Portfolio', 'property')
+    updateMetaTag('og:updated_time', new Date().toISOString(), 'property')
 
     // Twitter Card
     updateMetaTag('twitter:card', twitterCard)
@@ -157,6 +162,25 @@ function SEO({
     
     // Sitemap reference
     updateLinkTag('sitemap', `${baseUrl}/sitemap.xml`)
+    
+    // Preconnect pour améliorer les performances
+    const preconnectUrls = [
+      'https://fonts.googleapis.com',
+      'https://fonts.gstatic.com'
+    ]
+    
+    preconnectUrls.forEach(url => {
+      let preconnect = document.querySelector(`link[rel="preconnect"][href="${url}"]`)
+      if (!preconnect) {
+        preconnect = document.createElement('link')
+        preconnect.setAttribute('rel', 'preconnect')
+        preconnect.setAttribute('href', url)
+        if (url.includes('fonts.gstatic.com')) {
+          preconnect.setAttribute('crossorigin', 'anonymous')
+        }
+        document.head.appendChild(preconnect)
+      }
+    })
 
     // Alternate languages
     const alternateLinks = document.querySelectorAll('link[rel="alternate"][hreflang]')
@@ -172,10 +196,9 @@ function SEO({
     })
 
     // Structured Data (JSON-LD) pour améliorer le référencement
-    let existingJsonLd = document.querySelector('script[type="application/ld+json"]')
-    if (existingJsonLd) {
-      existingJsonLd.remove()
-    }
+    // Supprimer tous les scripts JSON-LD existants
+    const existingJsonLd = document.querySelectorAll('script[type="application/ld+json"]')
+    existingJsonLd.forEach(script => script.remove())
     
     // Person Schema - Principal
     const personSchema = {
@@ -252,16 +275,68 @@ function SEO({
       }
     }
     
-    // Créer et ajouter les scripts JSON-LD
-    const personScript = document.createElement('script')
-    personScript.type = 'application/ld+json'
-    personScript.textContent = JSON.stringify(personSchema)
-    document.head.appendChild(personScript)
+    // Breadcrumb Schema - Pour améliorer la navigation
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Accueil',
+          item: baseUrl
+        },
+        ...(location.pathname !== '/' ? [{
+          '@type': 'ListItem',
+          position: 2,
+          name: document.title.split(' - ')[0] || document.title,
+          item: currentUrl
+        }] : [])
+      ]
+    }
     
-    const websiteScript = document.createElement('script')
-    websiteScript.type = 'application/ld+json'
-    websiteScript.textContent = JSON.stringify(websiteSchema)
-    document.head.appendChild(websiteScript)
+    // ProfessionalService Schema - Pour les services
+    const professionalServiceSchema = location.pathname === '/services' ? {
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: 'Ben Djibril - Services de Développement',
+      alternateName: 'Kone Djibril Benjamin - Development Services',
+      description: metaDescription,
+      url: currentUrl,
+      provider: {
+        '@type': 'Person',
+        name: 'Kone Djibril Benjamin',
+        alternateName: 'Ben Djibril',
+        jobTitle: 'DevOps Engineer'
+      },
+      areaServed: {
+        '@type': 'Country',
+        name: 'Worldwide'
+      },
+      serviceType: [
+        'Web Development',
+        'Mobile Development',
+        'DevOps',
+        'Backend Development',
+        'E-commerce',
+        'API Development'
+      ]
+    } : null
+    
+    // Créer et ajouter tous les scripts JSON-LD
+    const schemas = [
+      personSchema,
+      websiteSchema,
+      breadcrumbSchema,
+      ...(professionalServiceSchema ? [professionalServiceSchema] : [])
+    ]
+    
+    schemas.forEach(schema => {
+      const script = document.createElement('script')
+      script.type = 'application/ld+json'
+      script.textContent = JSON.stringify(schema)
+      document.head.appendChild(script)
+    })
   }, [title, description, keywords, ogTitle, ogDescription, ogImage, ogUrl, twitterCard, location, t, i18n.language])
 
   return null
