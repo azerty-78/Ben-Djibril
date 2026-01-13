@@ -17,8 +17,6 @@ function HeroSection() {
 
   return (
     <section className="relative pt-4 sm:pt-6 md:pt-8 pb-16 md:pb-24 overflow-visible">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-transparent to-accent-50/30 dark:from-primary-900/20 dark:via-transparent dark:to-accent-900/20" />
-      
       <div className="relative container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -140,7 +138,7 @@ function HeroSection() {
             ))}
           </div>
 
-          {/* Clients logos banner - animated */}
+          {/* Clients logos banner - circular images */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -148,39 +146,41 @@ function HeroSection() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-12 md:mt-16"
           >
-            <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 mb-4 sm:mb-6 text-center">
+            <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 mb-6 sm:mb-8 text-center font-medium">
               {t('home.clients.title') || 'Trusted by companies worldwide'}
             </p>
-            <div className="relative overflow-hidden">
-              <div className="flex items-center justify-center gap-6 sm:gap-8 md:gap-12 flex-wrap">
-                {companies.map((company, i) => (
-                  <motion.a
-                    key={i}
-                    href={company.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
-                    whileHover={{ scale: 1.15, y: -2 }}
-                    className="h-12 sm:h-16 w-24 sm:w-32 bg-white dark:bg-secondary-800 rounded-xl flex items-center justify-center hover:shadow-lg transition-all duration-300 shadow-md border border-secondary-200 dark:border-secondary-700 grayscale hover:grayscale-0 opacity-70 hover:opacity-100"
-                    title={company.name}
-                  >
-                    {company.logo ? (
-                      <img
-                        src={company.logo}
-                        alt={company.name}
-                        className="h-8 sm:h-10 w-auto max-w-full object-contain px-2"
-                      />
-                    ) : (
-                      <span className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 font-semibold text-center px-2">
-                        {company.name.split(' ')[0]}
+            <div className="flex items-center justify-center gap-8 sm:gap-10 md:gap-12 lg:gap-16 flex-wrap">
+              {companies.map((company, i) => (
+                <motion.a
+                  key={i}
+                  href={company.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
+                  whileHover={{ scale: 1.1 }}
+                  className="group relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-white dark:bg-secondary-800 flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-lg"
+                  title={company.name}
+                >
+                  {company.logo ? (
+                    <img
+                      src={company.logo}
+                      alt={company.name}
+                      className="w-[85%] h-[85%] object-contain transition-all duration-300 group-hover:scale-110"
+                      loading="lazy"
+                      style={{ imageRendering: 'crisp-edges' }}
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
+                      <span className="text-sm sm:text-base md:text-lg text-white font-bold">
+                        {company.name.charAt(0)}
                       </span>
-                    )}
-                  </motion.a>
-                ))}
-              </div>
+                    </div>
+                  )}
+                </motion.a>
+              ))}
             </div>
           </motion.div>
         </motion.div>
