@@ -150,37 +150,39 @@ function HeroSection() {
               {t('home.clients.title') || 'Trusted by companies worldwide'}
             </p>
             <div className="flex items-center justify-center gap-8 sm:gap-10 md:gap-12 lg:gap-16 flex-wrap">
-              {companies.map((company, i) => (
-                <motion.a
-                  key={i}
-                  href={company.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
-                  whileHover={{ scale: 1.1 }}
-                  className="group relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-white dark:bg-secondary-800 flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-lg"
-                  title={company.name}
-                >
-                  {company.logo ? (
-                    <img
-                      src={company.logo}
-                      alt={company.name}
-                      className="w-[85%] h-[85%] object-contain transition-all duration-300 group-hover:scale-110"
-                      loading="lazy"
-                      style={{ imageRendering: 'crisp-edges' }}
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
-                      <span className="text-sm sm:text-base md:text-lg text-white font-bold">
-                        {company.name.charAt(0)}
-                      </span>
-                    </div>
-                  )}
-                </motion.a>
-              ))}
+              {companies.map((company, i) => {
+                const isENS = company.name.toLowerCase().includes('ens')
+                return (
+                  <motion.a
+                    key={i}
+                    href={company.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
+                    whileHover={{ scale: 1.1 }}
+                    className={`group relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden transition-all duration-300 ${isENS ? 'bg-white dark:bg-secondary-800' : ''}`}
+                    title={company.name}
+                  >
+                    {company.logo ? (
+                      <img
+                        src={company.logo}
+                        alt={company.name}
+                        className={`w-full h-full transition-all duration-300 group-hover:scale-110 ${isENS ? 'object-contain p-2' : 'object-cover'}`}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
+                        <span className="text-sm sm:text-base md:text-lg text-white font-bold">
+                          {company.name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+                  </motion.a>
+                )
+              })}
             </div>
           </motion.div>
         </motion.div>
