@@ -73,31 +73,48 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
       
-      # Étape 2: Nettoyer complètement buildx pour éviter les erreurs
-      - name: 🧹 Clean Docker Buildx
+      # Étape 2: Nettoyer et recréer les contextes Docker correctement
+      - name: 🧹 Setup Docker Properly
         run: |
-          # Supprimer complètement buildx pour éviter les erreurs "is a directory"
-          echo "🧹 Nettoyage complet de Docker buildx..."
+          # Supprimer buildx et contextes corrompus
           rm -rf ~/.docker/buildx 2>/dev/null || true
           rm -rf ~/.docker/contexts 2>/dev/null || true
           
-          # Supprimer tous les répertoires et fichiers activity qui pourraient causer des problèmes
-          if [ -d ~/.docker ]; then
-            find ~/.docker -type d -name "activity" -exec rm -rf {} + 2>/dev/null || true
-            find ~/.docker -type f -name "activity" -delete 2>/dev/null || true
-          fi
+          # Recréer la structure de contextes correctement
+          mkdir -p ~/.docker/contexts/meta
           
-          echo "✅ Nettoyage terminé"
+          # Créer le répertoire pour le contexte "." (hash de l'erreur)
+          CONTEXT_DIR=~/.docker/contexts/meta/cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8
+          mkdir -p "$CONTEXT_DIR"
+          
+          # Créer le fichier meta.json pour le contexte "."
+          cat > "$CONTEXT_DIR/meta.json" <<'EOF'
+          {
+            "Name": ".",
+            "Metadata": {
+              "Description": "Default context"
+            },
+            "Endpoints": {
+              "docker": {
+                "Host": "unix:///var/run/docker.sock",
+                "SkipTLSVerify": false
+              }
+            }
+          }
+          EOF
+          
+          # Vérifier que le fichier a été créé
+          if [ -f "$CONTEXT_DIR/meta.json" ]; then
+            echo "✅ Contexte Docker '.' créé avec succès"
+          else
+            echo "❌ Erreur: Impossible de créer le contexte"
+            exit 1
+          fi
       
       # Étape 3: Login à DockerHub (TOUJOURS nécessaire pour pull les images de base)
       - name: 🔐 Login to DockerHub
         run: |
-          # Nettoyer complètement buildx avant le login pour éviter les conflits
-          rm -rf ~/.docker/buildx 2>/dev/null || true
-          find ~/.docker -type d -name "activity" -exec rm -rf {} + 2>/dev/null || true
-          find ~/.docker -type f -name "activity" -delete 2>/dev/null || true
-          
-          # Utiliser docker login directement
+          # Utiliser docker login directement (le contexte "." existe maintenant)
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           
           # Vérifier le login en testant un pull d'image publique
@@ -195,12 +212,11 @@ jobs:
       # Étape 6: Build Docker Image (le contexte "." existe maintenant)
       - name: 🔨 Build Docker Image
         env:
-          DOCKER_BUILDKIT: 1
+          DOCKER_BUILDKIT: 0
         run: |
-          # Nettoyer complètement buildx avant toute opération Docker
-          echo "🧹 Nettoyage final avant le build..."
-          rm -rf ~/.docker/buildx 2>/dev/null || true
-          find ~/.docker -type d -name "activity" -exec rm -rf {} + 2>/dev/null || true
+          # Vérifier que le login fonctionne
+          echo "Vérification de l'authentification DockerHub..."
+          docker info | grep -i "username" || echo "⚠️ Pas de username dans docker info (peut être normal)"
           
           # Préparer les tags
           TAGS="${{ steps.meta.outputs.tags }}"
@@ -218,9 +234,7 @@ jobs:
           # Construire l'image (le contexte "." devrait maintenant exister)
           # Utiliser --pull pour forcer le pull des images de base avec authentification
           # Les variables EmailJS sont maintenant dans l'environnement depuis l'étape précédente
-          # Utiliser DOCKER_BUILDKIT=1 explicitement dans la commande
-          echo "🔨 Construction de l'image Docker..."
-          DOCKER_BUILDKIT=1 docker build \
+          docker build \
             --pull \
             --file ${{ env.DOCKERFILE_PATH }} \
             $TAG_ARGS \
@@ -232,7 +246,6 @@ jobs:
           
           # Push l'image si ce n'est pas une PR
           if [ "${{ github.event_name }}" != "pull_request" ]; then
-            echo "📤 Push de l'image vers DockerHub..."
             for tag in $TAGS; do
               echo "Pushing $tag..."
               docker push $tag
@@ -265,21 +278,9 @@ jobs:
       # Étape 2: Nettoyer et recréer les contextes Docker correctement
       - name: 🧹 Setup Docker Properly
         run: |
-          # Supprimer complètement buildx et contextes corrompus
-          echo "🧹 Nettoyage des répertoires Docker corrompus..."
+          # Supprimer buildx et contextes corrompus
           rm -rf ~/.docker/buildx 2>/dev/null || true
           rm -rf ~/.docker/contexts 2>/dev/null || true
-          
-          # Supprimer spécifiquement le répertoire activity s'il existe et cause des problèmes
-          if [ -d ~/.docker/buildx/activity ]; then
-            echo "⚠️  Suppression du répertoire buildx/activity corrompu..."
-            rm -rf ~/.docker/buildx/activity 2>/dev/null || true
-          fi
-          
-          # Nettoyer complètement le répertoire .docker si nécessaire
-          if [ -d ~/.docker ]; then
-            find ~/.docker -type d -name "activity" -exec rm -rf {} + 2>/dev/null || true
-          fi
           
           # Recréer la structure de contextes correctement
           mkdir -p ~/.docker/contexts/meta
@@ -311,10 +312,6 @@ jobs:
             echo "❌ Erreur: Impossible de créer le contexte"
             exit 1
           fi
-          
-          # Initialiser buildx proprement
-          echo "🔧 Initialisation de Docker Buildx..."
-          docker buildx version || echo "⚠️  Buildx non disponible, utilisation du builder par défaut"
       
       # Étape 3: Login à DockerHub
       - name: 🔐 Login to DockerHub
