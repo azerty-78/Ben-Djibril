@@ -732,34 +732,34 @@ export const resources = {
       },
       seo: {
         default: {
-          title: 'Ben Djibril - DevOps Engineer | Professional Portfolio',
-          description: 'Professional portfolio of Ben Djibril - DevOps Engineer specialized in backend, mobile, and DevOps development. International quality services.',
-          keywords: 'DevOps, Backend, Mobile, Kotlin, Spring Boot, React, Portfolio, Developer, Full Stack'
+          title: 'Ben Djibril (Kone Djibril Benjamin) - DevOps Engineer | Professional Portfolio',
+          description: 'Professional portfolio of Ben Djibril (Kone Djibril Benjamin) - DevOps Engineer specialized in backend, mobile, and DevOps development. International quality services.',
+          keywords: 'Ben Djibril, Kone Djibril Benjamin, Benjamin Kone Djibril, Djibril Benjamin, Ben Djibril Portfolio, Kone Djibril Benjamin Portfolio, Ben Djibril Developer, Kone Djibril Benjamin Developer, DevOps, Backend, Mobile, Kotlin, Spring Boot, React, Portfolio, Developer, Full Stack'
         },
         home: {
-          title: 'Ben Djibril - DevOps Engineer | Professional Portfolio',
-          description: 'DevOps Engineer with 4 years of experience. Specialized in backend development with Spring Boot and mobile development with Kotlin Multiplatform. Creating robust, scalable digital solutions.',
-          keywords: 'DevOps Engineer, Backend Developer, Mobile Developer, Spring Boot, Kotlin, Full Stack Developer, Portfolio'
+          title: 'Ben Djibril (Kone Djibril Benjamin) - DevOps Engineer | Professional Portfolio',
+          description: 'Ben Djibril (Kone Djibril Benjamin) - DevOps Engineer with 4 years of experience. Specialized in backend development with Spring Boot and mobile development with Kotlin Multiplatform. Creating robust, scalable digital solutions.',
+          keywords: 'Ben Djibril, Kone Djibril Benjamin, Benjamin Kone Djibril, Djibril Benjamin, Ben Djibril Portfolio, Kone Djibril Benjamin Portfolio, Ben Djibril Developer, Kone Djibril Benjamin Developer, DevOps Engineer, Backend Developer, Mobile Developer, Spring Boot, Kotlin, Full Stack Developer, Portfolio'
         },
         services: {
-          title: 'Services - Ben Djibril | Web, Mobile & DevOps Solutions',
-          description: 'Professional development services: Web applications, Mobile apps, E-commerce, APIs, DevOps & Cloud. SaaS and Full Control billing models. Free quotes available.',
-          keywords: 'Web Development, Mobile Apps, E-commerce, API Development, DevOps, Cloud Services, SaaS, Full Stack Development'
+          title: 'Services - Ben Djibril (Kone Djibril Benjamin) | Web, Mobile & DevOps Solutions',
+          description: 'Ben Djibril (Kone Djibril Benjamin) - Professional development services: Web applications, Mobile apps, E-commerce, APIs, DevOps & Cloud. SaaS and Full Control billing models. Free quotes available.',
+          keywords: 'Ben Djibril Services, Kone Djibril Benjamin Services, Ben Djibril Developer Services, Kone Djibril Benjamin Developer Services, Web Development, Mobile Apps, E-commerce, API Development, DevOps, Cloud Services, SaaS, Full Stack Development'
         },
         projects: {
-          title: 'Projects - Ben Djibril | Portfolio of Realized Projects',
-          description: 'Discover my portfolio of completed projects: web applications, mobile apps, e-commerce platforms, and DevOps solutions. Real client testimonials included.',
-          keywords: 'Portfolio, Projects, Web Applications, Mobile Apps, E-commerce, Case Studies, Client Testimonials'
+          title: 'Projects - Ben Djibril (Kone Djibril Benjamin) | Portfolio of Realized Projects',
+          description: 'Ben Djibril (Kone Djibril Benjamin) - Discover my portfolio of completed projects: web applications, mobile apps, e-commerce platforms, and DevOps solutions. Real client testimonials included.',
+          keywords: 'Ben Djibril Projects, Kone Djibril Benjamin Projects, Ben Djibril Portfolio, Kone Djibril Benjamin Portfolio, Portfolio, Projects, Web Applications, Mobile Apps, E-commerce, Case Studies, Client Testimonials'
         },
         about: {
-          title: 'About - Ben Djibril | DevOps Engineer Profile',
-          description: 'Learn more about Ben Djibril: Medior Developer with 4 years of experience, specialized in backend and mobile development. Technology stack, certifications, and expertise.',
-          keywords: 'About, Developer Profile, DevOps Engineer, Technology Stack, Certifications, Experience, Skills'
+          title: 'About - Ben Djibril (Kone Djibril Benjamin) | DevOps Engineer Profile',
+          description: 'Learn more about Ben Djibril (Kone Djibril Benjamin): Medior Developer with 4 years of experience, specialized in backend and mobile development. Technology stack, certifications, and expertise.',
+          keywords: 'Ben Djibril About, Kone Djibril Benjamin About, Ben Djibril Profile, Kone Djibril Benjamin Profile, About, Developer Profile, DevOps Engineer, Technology Stack, Certifications, Experience, Skills'
         },
         contact: {
-          title: 'Contact - Ben Djibril | Get in Touch',
-          description: 'Contact Ben Djibril for your development projects. Free quotes, 24h response time. Available worldwide. Discuss your web, mobile, or DevOps project.',
-          keywords: 'Contact, Quote, Development Services, Consultation, Project Discussion, Get in Touch'
+          title: 'Contact - Ben Djibril (Kone Djibril Benjamin) | Get in Touch',
+          description: 'Contact Ben Djibril (Kone Djibril Benjamin) for your development projects. Free quotes, 24h response time. Available worldwide. Discuss your web, mobile, or DevOps project.',
+          keywords: 'Ben Djibril Contact, Kone Djibril Benjamin Contact, Contact Ben Djibril, Contact Kone Djibril Benjamin, Contact, Quote, Development Services, Consultation, Project Discussion, Get in Touch'
         }
       },
       notFound: { title: 'Page not found', back: 'Back to home' },
@@ -1489,34 +1489,34 @@ export const resources = {
       },
       seo: {
         default: {
-          title: 'Ben Djibril - Ingénieur DevOps | Portfolio Professionnel',
-          description: 'Portfolio professionnel de Ben Djibril - Ingénieur DevOps spécialisé en développement backend, mobile et DevOps. Services internationaux de qualité.',
-          keywords: 'DevOps, Backend, Mobile, Kotlin, Spring Boot, React, Portfolio, Développeur, Full Stack'
+          title: 'Ben Djibril (Kone Djibril Benjamin) - Ingénieur DevOps | Portfolio Professionnel',
+          description: 'Portfolio professionnel de Ben Djibril (Kone Djibril Benjamin) - Ingénieur DevOps spécialisé en développement backend, mobile et DevOps. Services internationaux de qualité.',
+          keywords: 'Ben Djibril, Kone Djibril Benjamin, Benjamin Kone Djibril, Djibril Benjamin, Ben Djibril Portfolio, Kone Djibril Benjamin Portfolio, Ben Djibril Développeur, Kone Djibril Benjamin Développeur, DevOps, Backend, Mobile, Kotlin, Spring Boot, React, Portfolio, Développeur, Full Stack'
         },
         home: {
-          title: 'Ben Djibril - Ingénieur DevOps | Portfolio Professionnel',
-          description: 'Ingénieur DevOps avec 4 ans d\'expérience. Spécialisé en développement backend avec Spring Boot et développement mobile avec Kotlin Multiplatform. Création de solutions digitales robustes et scalables.',
-          keywords: 'Ingénieur DevOps, Développeur Backend, Développeur Mobile, Spring Boot, Kotlin, Développeur Full Stack, Portfolio'
+          title: 'Ben Djibril (Kone Djibril Benjamin) - Ingénieur DevOps | Portfolio Professionnel',
+          description: 'Ben Djibril (Kone Djibril Benjamin) - Ingénieur DevOps avec 4 ans d\'expérience. Spécialisé en développement backend avec Spring Boot et développement mobile avec Kotlin Multiplatform. Création de solutions digitales robustes et scalables.',
+          keywords: 'Ben Djibril, Kone Djibril Benjamin, Benjamin Kone Djibril, Djibril Benjamin, Ben Djibril Portfolio, Kone Djibril Benjamin Portfolio, Ben Djibril Développeur, Kone Djibril Benjamin Développeur, Ingénieur DevOps, Développeur Backend, Développeur Mobile, Spring Boot, Kotlin, Développeur Full Stack, Portfolio'
         },
         services: {
-          title: 'Services - Ben Djibril | Solutions Web, Mobile & DevOps',
-          description: 'Services de développement professionnels : Applications web, Apps mobiles, E-commerce, APIs, DevOps & Cloud. Modèles de facturation SaaS et Full Control. Devis gratuits disponibles.',
-          keywords: 'Développement Web, Applications Mobiles, E-commerce, Développement API, DevOps, Services Cloud, SaaS, Développement Full Stack'
+          title: 'Services - Ben Djibril (Kone Djibril Benjamin) | Solutions Web, Mobile & DevOps',
+          description: 'Ben Djibril (Kone Djibril Benjamin) - Services de développement professionnels : Applications web, Apps mobiles, E-commerce, APIs, DevOps & Cloud. Modèles de facturation SaaS et Full Control. Devis gratuits disponibles.',
+          keywords: 'Ben Djibril Services, Kone Djibril Benjamin Services, Ben Djibril Développeur Services, Kone Djibril Benjamin Développeur Services, Développement Web, Applications Mobiles, E-commerce, Développement API, DevOps, Services Cloud, SaaS, Développement Full Stack'
         },
         projects: {
-          title: 'Projets - Ben Djibril | Portfolio de Projets Réalisés',
-          description: 'Découvrez mon portfolio de projets réalisés : applications web, apps mobiles, plateformes e-commerce et solutions DevOps. Témoignages clients inclus.',
-          keywords: 'Portfolio, Projets, Applications Web, Applications Mobiles, E-commerce, Études de Cas, Témoignages Clients'
+          title: 'Projets - Ben Djibril (Kone Djibril Benjamin) | Portfolio de Projets Réalisés',
+          description: 'Ben Djibril (Kone Djibril Benjamin) - Découvrez mon portfolio de projets réalisés : applications web, apps mobiles, plateformes e-commerce et solutions DevOps. Témoignages clients inclus.',
+          keywords: 'Ben Djibril Projets, Kone Djibril Benjamin Projets, Ben Djibril Portfolio, Kone Djibril Benjamin Portfolio, Portfolio, Projets, Applications Web, Applications Mobiles, E-commerce, Études de Cas, Témoignages Clients'
         },
         about: {
-          title: 'À propos - Ben Djibril | Profil Ingénieur DevOps',
-          description: 'En savoir plus sur Ben Djibril : Développeur Medior avec 4 ans d\'expérience, spécialisé en développement backend et mobile. Stack technologique, certifications et expertise.',
-          keywords: 'À propos, Profil Développeur, Ingénieur DevOps, Stack Technologique, Certifications, Expérience, Compétences'
+          title: 'À propos - Ben Djibril (Kone Djibril Benjamin) | Profil Ingénieur DevOps',
+          description: 'En savoir plus sur Ben Djibril (Kone Djibril Benjamin) : Développeur Medior avec 4 ans d\'expérience, spécialisé en développement backend et mobile. Stack technologique, certifications et expertise.',
+          keywords: 'Ben Djibril À propos, Kone Djibril Benjamin À propos, Ben Djibril Profil, Kone Djibril Benjamin Profil, À propos, Profil Développeur, Ingénieur DevOps, Stack Technologique, Certifications, Expérience, Compétences'
         },
         contact: {
-          title: 'Contact - Ben Djibril | Me Contacter',
-          description: 'Contactez Ben Djibril pour vos projets de développement. Devis gratuits, réponse sous 24h. Disponible dans le monde entier. Discutez de votre projet web, mobile ou DevOps.',
-          keywords: 'Contact, Devis, Services de Développement, Consultation, Discussion de Projet, Me Contacter'
+          title: 'Contact - Ben Djibril (Kone Djibril Benjamin) | Me Contacter',
+          description: 'Contactez Ben Djibril (Kone Djibril Benjamin) pour vos projets de développement. Devis gratuits, réponse sous 24h. Disponible dans le monde entier. Discutez de votre projet web, mobile ou DevOps.',
+          keywords: 'Ben Djibril Contact, Kone Djibril Benjamin Contact, Contacter Ben Djibril, Contacter Kone Djibril Benjamin, Contact, Devis, Services de Développement, Consultation, Discussion de Projet, Me Contacter'
         }
       },
       notFound: { title: 'Page introuvable', back: 'Retour à l\'accueil' },

@@ -102,6 +102,9 @@ function SEO({
     updateMetaTag('author', 'Kone Djibril Benjamin (Ben Djibril)')
     updateMetaTag('name', 'Ben Djibril - Kone Djibril Benjamin')
     updateMetaTag('application-name', 'Ben Djibril Portfolio')
+    updateMetaTag('robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')
+    updateMetaTag('googlebot', 'index, follow')
+    updateMetaTag('bingbot', 'index, follow')
 
     // Open Graph
     updateMetaTag('og:title', ogTitle || document.title, 'property')
@@ -123,14 +126,19 @@ function SEO({
       document.documentElement.setAttribute('lang', lang)
     }
 
-    // Canonical URL
-    let canonical = document.querySelector('link[rel="canonical"]')
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.setAttribute('rel', 'canonical')
-      document.head.appendChild(canonical)
+    // Fonction helper pour les balises link
+    const updateLinkTag = (rel: string, href: string) => {
+      let link = document.querySelector(`link[rel="${rel}"]`)
+      if (!link) {
+        link = document.createElement('link')
+        link.setAttribute('rel', rel)
+        document.head.appendChild(link)
+      }
+      link.setAttribute('href', href)
     }
-    canonical.setAttribute('href', currentUrl)
+
+    // Canonical URL
+    updateLinkTag('canonical', currentUrl)
 
     // Alternate languages
     const alternateLinks = document.querySelectorAll('link[rel="alternate"][hreflang]')
