@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/24/solid'
 import setupWorkImage from '../../assets/ben-djibirl/ben-djibril-setup-work.JPG'
 import graduationImage from '../../assets/ben-djibirl/ben-djibirl-graduation.JPG'
-import workImage from '../../assets/ben-djibirl/ben-djibril-work.jpeg'
+import workImage from '../../assets/ben-djibirl/ben-djibril-work.JPG'
 import officialImage from '../../assets/ben-djibirl/ben-djibril-official-with-glass.jpeg'
 
 function AboutGallery() {

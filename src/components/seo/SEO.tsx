@@ -19,7 +19,7 @@ function SEO({
   keywords,
   ogTitle,
   ogDescription,
-  ogImage = '/favicon.jpg',
+  ogImage = '/favicon.png',
   ogUrl,
   twitterCard = 'summary',
 }: SEOProps) {
