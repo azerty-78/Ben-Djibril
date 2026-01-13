@@ -1,102 +1,130 @@
+# Configuration Docker pour Ben Djibril Site
+
+Ce répertoire contient la configuration Docker pour le site web de Ben Djibril.
+
 ## Configuration
 
-### 1. Créer le fichier .env
+- **Image Docker** : `ben-djibril-site:latest`
+- **Nom du container** : `ben-djibril-site`
+- **Réseau Docker** : `kobecorp-network` (réseau externe)
+- **Nom de domaine** : `ben-djibril.kobecorporation.com`
+- **Port** : `80` (Nginx)
 
-Avant de lancer le container, vous devez créer un fichier `.env` dans le dossier `setup-front` avec vos variables d'environnement :
+## Prérequis
 
-```env
-# Configuration EmailJS
-VITE_EMAILJS_PUBLIC_KEY=votre_public_key_ici
-VITE_EMAILJS_SERVICE_ID=votre_service_id_ici
-VITE_EMAILJS_CONTACT_TEMPLATE_ID=votre_template_contact_id_ici
-VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=votre_template_newsletter_id_ici
+1. **Réseau Docker** : Le réseau `kobecorp-network` doit être créé au préalable :
+   ```bash
+   docker network create kobecorp-network
+   ```
 
-# Configuration du serveur
-NODE_ENV=production
-PORT=5180
+2. **Fichier .env** : Le fichier `.env` a été créé dans le répertoire `setup-front/`. 
+   
+   **⚠️ IMPORTANT** : Vous devez remplacer toutes les valeurs `your_xxx_here` par vos vraies valeurs EmailJS :
+   
+   ```env
+   VITE_EMAILJS_PUBLIC_KEY=votre_vraie_public_key
+   VITE_EMAILJS_SERVICE_ID=votre_vrai_service_id
+   VITE_EMAILJS_CONTACT_TEMPLATE_ID=votre_vrai_template_contact_id
+   VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=votre_vrai_template_newsletter_id
+   ```
+   
+   Pour obtenir ces valeurs :
+   - Consultez le guide dans `docs/EMAILJS_SETUP.md`
+   - Ou allez sur https://www.emailjs.com/ et suivez les instructions dans le dashboard
+
+## Utilisation
+
+### Test de la configuration
+
+Avant de construire l'image, vous pouvez tester la configuration Nginx :
+
+**Sur Linux/Mac :**
+```bash
+cd setup-front
+./test-nginx.sh
 ```
 
-**Important** : Remplacez les valeurs `votre_*_ici` par vos vraies clés EmailJS. Pour obtenir ces clés, consultez le fichier `docs/EMAILJS_SETUP.md`.
+**Sur Windows (PowerShell) :**
+```powershell
+cd setup-front
+.\test-nginx.ps1
+```
 
-### 2. Construire et lancer l'application
-
-Une fois le fichier `.env` créé, lancez l'application avec :
+### Construction de l'image
 
 ```bash
 cd setup-front
-docker compose up --build
+docker compose build
 ```
 
-L'application sera disponible à l'adresse : **http://localhost:5180**
+### Démarrage du container
 
-### 3. Arrêter l'application
+```bash
+docker compose up -d
+```
 
-Pour arrêter le container :
+### Arrêt du container
 
 ```bash
 docker compose down
 ```
 
-## Déploiement en production
-
-### Build de l'image
-
-Pour construire l'image Docker :
+### Voir les logs
 
 ```bash
-cd setup-front
-docker build -t ben-djibril-app -f Dockerfile ..
+docker compose logs -f
 ```
 
-Si votre serveur utilise une architecture différente (ex: amd64 sur un Mac M1) :
+### Reconstruire et redémarrer
 
 ```bash
-docker build --platform=linux/amd64 -t ben-djibril-app -f Dockerfile ..
+docker compose up -d --build
 ```
 
-### Push vers un registry
+### Test manuel de Nginx
+
+Pour tester uniquement la configuration Nginx :
 
 ```bash
-docker tag ben-djibril-app votre-registry.com/ben-djibril-app
-docker push votre-registry.com/ben-djibril-app
+docker run --rm -v "$(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro" nginx:alpine nginx -t
 ```
 
-## Architecture du Dockerfile
+## Configuration Traefik
 
-Le Dockerfile utilise un build multi-stage :
-- **Stage 1 (builder)** : Installe les dépendances et build l'application avec Vite
-- **Stage 2 (production)** : Copie uniquement les fichiers buildés et sert l'application avec un serveur Node.js personnalisé
+Le fichier `compose.yaml` inclut des labels Traefik pour la configuration automatique du reverse proxy :
 
-Cela permet d'obtenir une image finale plus légère et optimisée pour la production.
+- **Router** : `ben-djibril`
+- **Rule** : `Host(\`ben-djibril.kobecorporation.com\`)`
+- **Entrypoint** : `websecure` (HTTPS)
+- **Certificat SSL** : Géré par Let's Encrypt via Traefik
 
-## Configuration du domaine
+Assurez-vous que Traefik est configuré et connecté au même réseau `kobecorp-network`.
 
-L'application est configurée pour fonctionner avec le domaine **www.ben-djibril.com**. 
+## Structure
 
-### Headers HTTP configurés
+```
+setup-front/
+├── Dockerfile          # Configuration de l'image Docker
+├── compose.yaml        # Configuration Docker Compose
+├── .dockerignore       # Fichiers à exclure du build
+└── README.Docker.md    # Ce fichier
+```
 
-Le serveur personnalisé inclut les headers suivants pour garantir la sécurité et le bon fonctionnement :
-- **CORS** : Headers Access-Control-Allow-* pour permettre les requêtes cross-origin
-- **Sécurité** : X-Content-Type-Options, X-Frame-Options, X-XSS-Protection
-- **Cache** : Cache-Control optimisé pour les assets statiques (images, CSS, JS)
-- **Referrer Policy** : strict-origin-when-cross-origin
+## Configuration Nginx
 
-### Chargement des images
+Le fichier `nginx.conf` configure Nginx pour :
+- Servir les fichiers statiques de l'application React
+- Gérer le routing SPA (toutes les routes pointent vers `index.html`)
+- Compression Gzip pour les assets
+- Headers de sécurité (X-Frame-Options, X-Content-Type-Options, etc.)
+- Cache optimisé pour les assets statiques (1 an)
+- Pas de cache pour les fichiers HTML
+- Health check endpoint sur `/health`
 
-Les images et assets statiques sont correctement servis depuis le dossier `public/` et `src/assets/` :
-- Les fichiers du dossier `public/` sont automatiquement copiés dans `dist/` lors du build
-- Les images sont servies avec les bons types MIME et headers de cache
-- Le serveur gère correctement les chemins relatifs et absolus
+## Notes
 
-### Vérification
-
-Pour vérifier que tout fonctionne correctement :
-1. Vérifiez que les images se chargent : ouvrez les DevTools et vérifiez l'onglet Network
-2. Vérifiez les headers : utilisez `curl -I http://localhost:5180` ou les DevTools
-3. Testez les requêtes CORS si nécessaire
-
-## Références
-
-* [Documentation Docker](https://docs.docker.com/go/get-started-sharing/)
-* [Guide Docker pour Node.js](https://docs.docker.com/language/nodejs/)
-* [Documentation Vite](https://vitejs.dev/)
+- L'application est construite en deux étapes : build et production
+- Nginx sert les fichiers statiques sur le port 80
+- Configuration optimisée pour les performances et la sécurité
+- Support du routing SPA (React Router)
+- Health check disponible sur `/health`

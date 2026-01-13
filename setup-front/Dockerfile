@@ -32,33 +32,27 @@ ENV VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=${VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID}
 # Build the application
 RUN npm run build
 
-# Stage 2: Production
-FROM node:${NODE_VERSION}-alpine AS production
+# Stage 2: Production avec Nginx
+FROM nginx:alpine AS production
 
-ENV NODE_ENV=production
+# Copier les fichiers buildés depuis le stage builder
+COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
 
-WORKDIR /usr/src/app
+# Copier la configuration Nginx
+COPY setup-front/nginx.conf /etc/nginx/nginx.conf
 
-# Install only production dependencies for preview server
-COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm \
-    npm ci --omit=dev
+# Créer les répertoires pour les logs
+RUN mkdir -p /var/log/nginx && \
+    chown -R nginx:nginx /var/log/nginx && \
+    chown -R nginx:nginx /usr/share/nginx/html && \
+    chown -R nginx:nginx /etc/nginx/nginx.conf
 
-# Copy built files from builder stage
-COPY --from=builder /usr/src/app/dist ./dist
+# Exposer le port 80
+EXPOSE 80
 
-# Copy server script
-COPY --from=builder /usr/src/app/server.js ./server.js
+# Health check (utilise wget qui est disponible dans nginx:alpine)
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost/health || exit 1
 
-# Run as non-root user
-USER node
-
-# Expose the port
-EXPOSE 3003
-
-# Set environment variables for the server
-ENV PORT=3003
-ENV HOST=0.0.0.0
-
-# Run custom server (serves the built static files with proper headers)
-CMD ["node", "server.js"]
+# Démarrer Nginx
+CMD ["nginx", "-g", "daemon off;"]
