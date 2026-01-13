@@ -7,6 +7,7 @@ import ThemeToggle from './ThemeToggle'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
 import { motion, AnimatePresence } from 'framer-motion'
 import MobileMenu from '../components/ui/MobileMenu'
+import profileImage from '../assets/bendjibril.jpg'
 
 function Navbar() {
   const { t } = useTranslation()
@@ -49,10 +50,18 @@ function Navbar() {
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
             <NavLink 
               to="/" 
-              className="text-xl sm:text-2xl font-bold gradient-text whitespace-nowrap hover:scale-105 transition-transform duration-200"
+              className="flex items-center gap-2 sm:gap-2.5 hover:scale-105 transition-transform duration-200"
               onClick={() => setIsMenuOpen(false)}
             >
-              Ben Djibril
+              <img 
+                src={profileImage} 
+                alt="Ben Djibril" 
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-primary-500/30 dark:border-primary-400/30 shadow-sm"
+                loading="eager"
+              />
+              <span className="text-xl sm:text-2xl font-bold gradient-text whitespace-nowrap">
+                Ben Djibril
+              </span>
             </NavLink>
           </div>
 

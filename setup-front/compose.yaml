@@ -1,6 +1,3 @@
-# Docker Compose configuration pour l'application ben-djibril
-# Utilise le fichier .env dans le même répertoire pour les variables d'environnement
-
 services:
   server:
     build:
@@ -17,19 +14,15 @@ services:
       - .env
     environment:
       NODE_ENV: production
-    ports:
-      - "80:80"
+    # Port interne uniquement - blogpress-nginx fera le reverse proxy
+    expose:
+      - "80"
     restart: unless-stopped
     container_name: ben-djibril-site
     networks:
       - kobecorp-network
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.ben-djibril.rule=Host(`ben-djibril.kobecorporation.com`)"
-      - "traefik.http.routers.ben-djibril.entrypoints=websecure"
-      - "traefik.http.routers.ben-djibril.tls.certresolver=letsencrypt"
-      - "traefik.http.services.ben-djibril.loadbalancer.server.port=80"
 
 networks:
   kobecorp-network:
+    name: kobecorp-network
     external: true
