@@ -102,9 +102,24 @@ function SEO({
     updateMetaTag('author', 'Kone Djibril Benjamin (Ben Djibril)')
     updateMetaTag('name', 'Ben Djibril - Kone Djibril Benjamin')
     updateMetaTag('application-name', 'Ben Djibril Portfolio')
+    
+    // Robots et crawlers - autoriser tous les robots à indexer
     updateMetaTag('robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')
-    updateMetaTag('googlebot', 'index, follow')
-    updateMetaTag('bingbot', 'index, follow')
+    updateMetaTag('googlebot', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')
+    updateMetaTag('bingbot', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')
+    
+    // Autoriser les IA et crawlers modernes
+    updateMetaTag('GPTBot', 'index, follow')
+    updateMetaTag('ChatGPT-User', 'index, follow')
+    updateMetaTag('CCBot', 'index, follow')
+    updateMetaTag('anthropic-ai', 'index, follow')
+    updateMetaTag('Claude-Web', 'index, follow')
+    updateMetaTag('PerplexityBot', 'index, follow')
+    
+    // Balises pour améliorer la découverte par les robots
+    updateMetaTag('revisit-after', '7 days')
+    updateMetaTag('distribution', 'global')
+    updateMetaTag('rating', 'general')
 
     // Open Graph
     updateMetaTag('og:title', ogTitle || document.title, 'property')
@@ -139,6 +154,9 @@ function SEO({
 
     // Canonical URL
     updateLinkTag('canonical', currentUrl)
+    
+    // Sitemap reference
+    updateLinkTag('sitemap', `${baseUrl}/sitemap.xml`)
 
     // Alternate languages
     const alternateLinks = document.querySelectorAll('link[rel="alternate"][hreflang]')
@@ -159,11 +177,12 @@ function SEO({
       existingJsonLd.remove()
     }
     
-    const jsonLd = {
+    // Person Schema - Principal
+    const personSchema = {
       '@context': 'https://schema.org',
       '@type': 'Person',
       name: 'Kone Djibril Benjamin',
-      alternateName: ['Ben Djibril', 'Benjamin Kone Djibril', 'Djibril Benjamin'],
+      alternateName: ['Ben Djibril', 'Benjamin Kone Djibril', 'Djibril Benjamin', 'Ben Djibril Developer', 'Kone Djibril Benjamin Developer'],
       jobTitle: 'DevOps Engineer',
       description: metaDescription,
       url: currentUrl,
@@ -178,28 +197,71 @@ function SEO({
         'Spring Boot',
         'Kotlin',
         'React',
-        'Full Stack Development'
+        'Full Stack Development',
+        'Web Development',
+        'E-commerce',
+        'API Development',
+        'Cloud Services'
       ],
       alumniOf: [
         {
           '@type': 'Organization',
-          name: 'ENS Y'
+          name: 'ENS Y',
+          url: 'https://www.ens-yaounde.cm'
         },
         {
           '@type': 'Organization',
-          name: 'UY2 SOA'
+          name: 'UY2 SOA',
+          url: 'https://www.univ-yaounde2.cm'
         }
       ],
       worksFor: {
         '@type': 'Organization',
-        name: 'Kobe Corporation'
+        name: 'Kobe Corporation',
+        url: 'https://www.kobecorporation.com'
+      },
+      // Ajouter des informations pour améliorer la découverte
+      identifier: {
+        '@type': 'PropertyValue',
+        name: 'Portfolio Website',
+        value: currentUrl
       }
     }
     
-    const script = document.createElement('script')
-    script.type = 'application/ld+json'
-    script.textContent = JSON.stringify(jsonLd)
-    document.head.appendChild(script)
+    // Website Schema - Pour améliorer la découverte du site
+    const websiteSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Ben Djibril - Portfolio Professionnel',
+      alternateName: ['Kone Djibril Benjamin Portfolio', 'Ben Djibril Developer Portfolio'],
+      url: baseUrl,
+      description: metaDescription,
+      author: {
+        '@type': 'Person',
+        name: 'Kone Djibril Benjamin',
+        alternateName: 'Ben Djibril'
+      },
+      inLanguage: ['fr', 'en'],
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${baseUrl}/?q={search_term_string}`
+        },
+        'query-input': 'required name=search_term_string'
+      }
+    }
+    
+    // Créer et ajouter les scripts JSON-LD
+    const personScript = document.createElement('script')
+    personScript.type = 'application/ld+json'
+    personScript.textContent = JSON.stringify(personSchema)
+    document.head.appendChild(personScript)
+    
+    const websiteScript = document.createElement('script')
+    websiteScript.type = 'application/ld+json'
+    websiteScript.textContent = JSON.stringify(websiteSchema)
+    document.head.appendChild(websiteScript)
   }, [title, description, keywords, ogTitle, ogDescription, ogImage, ogUrl, twitterCard, location, t, i18n.language])
 
   return null

@@ -1,0 +1,72 @@
+# robots.txt pour Ben Djibril (Kone Djibril Benjamin) - Portfolio Professionnel
+# Site: https://ben-djibril.kobecorporation.com
+
+User-agent: *
+Allow: /
+
+# Autoriser tous les robots à indexer toutes les pages
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Autoriser les IA et les crawlers modernes
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# Sitemap
+Sitemap: https://ben-djibril.kobecorporation.com/sitemap.xml
+
+# Pas de restrictions - tout le site est indexable
+# Les pages importantes sont :
+# - / (Accueil)
+# - /about (À propos)
+# - /services (Services)
+# - /projects (Projets)
+# - /contact (Contact)
