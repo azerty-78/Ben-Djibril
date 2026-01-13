@@ -6,6 +6,10 @@ import {
   UserGroupIcon,
   BuildingOfficeIcon
 } from '@heroicons/react/24/solid'
+import setupWorkImage from '../../assets/ben-djibirl/ben-djibril-setup-work.JPG'
+import graduationImage from '../../assets/ben-djibirl/ben-djibirl-graduation.JPG'
+import workImage from '../../assets/ben-djibirl/ben-djibril-work.jpeg'
+import officialImage from '../../assets/ben-djibirl/ben-djibril-official-with-glass.jpeg'
 
 function AboutGallery() {
   const { t } = useTranslation()
@@ -14,22 +18,26 @@ function AboutGallery() {
     {
       key: 'setup',
       icon: ComputerDesktopIcon,
-      color: 'primary'
+      color: 'primary',
+      image: setupWorkImage
     },
     {
       key: 'whiteboard',
       icon: PresentationChartBarIcon,
-      color: 'accent'
+      color: 'accent',
+      image: graduationImage
     },
     {
       key: 'conference',
       icon: UserGroupIcon,
-      color: 'success'
+      color: 'success',
+      image: workImage
     },
     {
       key: 'environment',
       icon: BuildingOfficeIcon,
-      color: 'warning'
+      color: 'warning',
+      image: officialImage
     }
   ]
 
@@ -86,30 +94,38 @@ function AboutGallery() {
                   className="card overflow-hidden border-2 border-secondary-200 dark:border-secondary-700"
                 >
                   <div className="relative aspect-video bg-gradient-to-br from-secondary-100 to-secondary-200 dark:from-secondary-800 dark:to-secondary-900">
-                    <PatternSVG color={color} />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className={`w-16 h-16 mx-auto mb-4 rounded-xl flex items-center justify-center ${
-                          item.color === 'primary' ? 'bg-primary-100 dark:bg-primary-900/30' :
-                          item.color === 'accent' ? 'bg-accent-100 dark:bg-accent-900/30' :
-                          item.color === 'success' ? 'bg-success-100 dark:bg-success-900/30' :
-                          'bg-warning-100 dark:bg-warning-900/30'
-                        }`}>
-                          <Icon className={`w-8 h-8 ${
-                            item.color === 'primary' ? 'text-primary-600 dark:text-primary-400' :
-                            item.color === 'accent' ? 'text-accent-600 dark:text-accent-400' :
-                            item.color === 'success' ? 'text-success-600 dark:text-success-400' :
-                            'text-warning-600 dark:text-warning-400'
-                          }`} />
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={t(`home.about.gallery.${item.key}`)}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <>
+                        <PatternSVG color={color} />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className={`w-16 h-16 mx-auto mb-4 rounded-xl flex items-center justify-center ${
+                              item.color === 'primary' ? 'bg-primary-100 dark:bg-primary-900/30' :
+                              item.color === 'accent' ? 'bg-accent-100 dark:bg-accent-900/30' :
+                              item.color === 'success' ? 'bg-success-100 dark:bg-success-900/30' :
+                              'bg-warning-100 dark:bg-warning-900/30'
+                            }`}>
+                              <Icon className={`w-8 h-8 ${
+                                item.color === 'primary' ? 'text-primary-600 dark:text-primary-400' :
+                                item.color === 'accent' ? 'text-accent-600 dark:text-accent-400' :
+                                item.color === 'success' ? 'text-success-600 dark:text-success-400' :
+                                'text-warning-600 dark:text-warning-400'
+                              }`} />
+                            </div>
+                            <p className="text-sm font-semibold text-secondary-700 dark:text-secondary-300 px-4">
+                              {t(`home.about.gallery.${item.key}`)}
+                            </p>
+                          </div>
                         </div>
-                        <p className="text-sm font-semibold text-secondary-700 dark:text-secondary-300 px-4">
-                          {t(`home.about.gallery.${item.key}`)}
-                        </p>
-                        <p className="text-xs text-secondary-500 dark:text-secondary-400 mt-2">
-                          Image à venir
-                        </p>
-                      </div>
-                    </div>
+                      </>
+                    )}
                   </div>
                 </motion.div>
               )

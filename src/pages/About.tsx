@@ -7,6 +7,7 @@ import CertificationsSection from '../components/sections/CertificationsSection'
 import AboutTimeline from '../components/about/AboutTimeline'
 import AboutGallery from '../components/about/AboutGallery'
 import AboutCTAs from '../components/about/AboutCTAs'
+import profileImage from '../assets/ben-djibirl/ben-djibril-official-with-glass.jpeg'
 import {
   programmingLanguages,
   frameworks,
@@ -98,10 +99,13 @@ function About() {
               >
                 <div className="w-full aspect-square max-w-md mx-auto">
                   <div className="w-full h-full rounded-3xl bg-gradient-to-br from-primary-400 via-primary-500 to-accent-500 p-1.5 shadow-2xl">
-                    <div className="w-full h-full rounded-3xl bg-white dark:bg-secondary-800 flex items-center justify-center">
-                      <div className="w-48 h-48 md:w-56 md:h-56 rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white text-6xl md:text-7xl font-bold shadow-lg">
-                        BD
-                      </div>
+                    <div className="w-full h-full rounded-3xl bg-white dark:bg-secondary-800 overflow-hidden">
+                      <img
+                        src={profileImage}
+                        alt="Ben Djibril"
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
                     </div>
                   </div>
                 </div>

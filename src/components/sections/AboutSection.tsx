@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { CodeBracketIcon, RocketLaunchIcon, AcademicCapIcon, ArrowDownTrayIcon, ArrowRightIcon, GlobeAltIcon } from '@heroicons/react/24/solid'
+import profileImage from '../../assets/ben-djibirl/ben-djibril-official-no-glass.jpeg'
 
 function AboutSection() {
   const { t } = useTranslation()
@@ -72,14 +73,15 @@ function AboutSection() {
               />
               <div className="relative w-full aspect-square max-w-md mx-auto">
                 <div className="w-full h-full rounded-3xl bg-gradient-to-br from-primary-400 via-primary-500 to-accent-500 p-1.5 shadow-2xl">
-                  <div className="w-full h-full rounded-3xl bg-white dark:bg-secondary-800 flex items-center justify-center">
-                    <motion.div
-                      whileHover={{ scale: 1.05, rotate: 5 }}
+                  <div className="w-full h-full rounded-3xl bg-white dark:bg-secondary-800 overflow-hidden">
+                    <motion.img
+                      src={profileImage}
+                      alt="Ben Djibril"
+                      whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.3 }}
-                      className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white text-4xl md:text-5xl font-bold shadow-xl"
-                    >
-                      BD
-                    </motion.div>
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
                 </div>
               </div>
