@@ -143,16 +143,28 @@ Pour tester uniquement la configuration Nginx :
 docker run --rm -v "$(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro" nginx:alpine nginx -t
 ```
 
-## Configuration Traefik
+## Configuration Reverse Proxy (blogpress-nginx)
 
-Le fichier `compose.yaml` inclut des labels Traefik pour la configuration automatique du reverse proxy :
+Le container expose uniquement le port 80 en interne. Le reverse proxy est géré par **blogpress-nginx** :
 
-- **Router** : `ben-djibril`
-- **Rule** : `Host(\`ben-djibril.kobecorporation.com\`)`
-- **Entrypoint** : `websecure` (HTTPS)
-- **Certificat SSL** : Géré par Let's Encrypt via Traefik
+- **Container** : `ben-djibril-site` (nom exact requis)
+- **Port interne** : `80`
+- **Réseau** : `kobecorp-network`
+- **Domaine** : `ben-djibril.kobecorporation.com`
+- **SSL** : Géré par certbot via blogpress-nginx
 
-Assurez-vous que Traefik est configuré et connecté au même réseau `kobecorp-network`.
+### Vérification de l'intégration
+
+```bash
+# Vérifier que le container est sur le réseau
+docker network inspect kobecorp-network
+
+# Vérifier que blogpress-nginx peut accéder au container
+docker exec blogpress-nginx ping -c 2 ben-djibril-site
+
+# Tester depuis l'intérieur du réseau
+docker run --rm --network kobecorp-network curlimages/curl:latest curl -I http://ben-djibril-site/health
+```
 
 ## Structure
 
