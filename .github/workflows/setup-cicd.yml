@@ -76,9 +76,21 @@ jobs:
       # Étape 2: Nettoyer et recréer les contextes Docker correctement
       - name: 🧹 Setup Docker Properly
         run: |
-          # Supprimer buildx et contextes corrompus
+          # Supprimer complètement buildx et contextes corrompus
+          echo "🧹 Nettoyage des répertoires Docker corrompus..."
           rm -rf ~/.docker/buildx 2>/dev/null || true
           rm -rf ~/.docker/contexts 2>/dev/null || true
+          
+          # Supprimer spécifiquement le répertoire activity s'il existe et cause des problèmes
+          if [ -d ~/.docker/buildx/activity ]; then
+            echo "⚠️  Suppression du répertoire buildx/activity corrompu..."
+            rm -rf ~/.docker/buildx/activity 2>/dev/null || true
+          fi
+          
+          # Nettoyer complètement le répertoire .docker si nécessaire
+          if [ -d ~/.docker ]; then
+            find ~/.docker -type d -name "activity" -exec rm -rf {} + 2>/dev/null || true
+          fi
           
           # Recréer la structure de contextes correctement
           mkdir -p ~/.docker/contexts/meta
@@ -110,10 +122,17 @@ jobs:
             echo "❌ Erreur: Impossible de créer le contexte"
             exit 1
           fi
+          
+          # Initialiser buildx proprement
+          echo "🔧 Initialisation de Docker Buildx..."
+          docker buildx version || echo "⚠️  Buildx non disponible, utilisation du builder par défaut"
       
       # Étape 3: Login à DockerHub (TOUJOURS nécessaire pour pull les images de base)
       - name: 🔐 Login to DockerHub
         run: |
+          # Nettoyer à nouveau avant le login pour éviter les conflits
+          rm -rf ~/.docker/buildx/activity 2>/dev/null || true
+          
           # Utiliser docker login directement (le contexte "." existe maintenant)
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           
@@ -231,10 +250,14 @@ jobs:
             TAG_ARGS="$TAG_ARGS --tag $tag"
           done
           
+          # Nettoyer le répertoire activity avant le build pour éviter les erreurs
+          rm -rf ~/.docker/buildx/activity 2>/dev/null || true
+          
           # Construire l'image (le contexte "." devrait maintenant exister)
           # Utiliser --pull pour forcer le pull des images de base avec authentification
           # Les variables EmailJS sont maintenant dans l'environnement depuis l'étape précédente
-          docker build \
+          # Utiliser DOCKER_BUILDKIT=1 explicitement dans la commande
+          DOCKER_BUILDKIT=1 docker build \
             --pull \
             --file ${{ env.DOCKERFILE_PATH }} \
             $TAG_ARGS \
@@ -278,9 +301,21 @@ jobs:
       # Étape 2: Nettoyer et recréer les contextes Docker correctement
       - name: 🧹 Setup Docker Properly
         run: |
-          # Supprimer buildx et contextes corrompus
+          # Supprimer complètement buildx et contextes corrompus
+          echo "🧹 Nettoyage des répertoires Docker corrompus..."
           rm -rf ~/.docker/buildx 2>/dev/null || true
           rm -rf ~/.docker/contexts 2>/dev/null || true
+          
+          # Supprimer spécifiquement le répertoire activity s'il existe et cause des problèmes
+          if [ -d ~/.docker/buildx/activity ]; then
+            echo "⚠️  Suppression du répertoire buildx/activity corrompu..."
+            rm -rf ~/.docker/buildx/activity 2>/dev/null || true
+          fi
+          
+          # Nettoyer complètement le répertoire .docker si nécessaire
+          if [ -d ~/.docker ]; then
+            find ~/.docker -type d -name "activity" -exec rm -rf {} + 2>/dev/null || true
+          fi
           
           # Recréer la structure de contextes correctement
           mkdir -p ~/.docker/contexts/meta
@@ -312,6 +347,10 @@ jobs:
             echo "❌ Erreur: Impossible de créer le contexte"
             exit 1
           fi
+          
+          # Initialiser buildx proprement
+          echo "🔧 Initialisation de Docker Buildx..."
+          docker buildx version || echo "⚠️  Buildx non disponible, utilisation du builder par défaut"
       
       # Étape 3: Login à DockerHub
       - name: 🔐 Login to DockerHub
