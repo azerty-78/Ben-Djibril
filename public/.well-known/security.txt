@@ -1,0 +1,7 @@
+# Security.txt pour Ben Djibril (Kone Djibril Benjamin) - Portfolio Professionnel
+# Ce fichier aide les robots de sécurité à comprendre comment contacter en cas de problème de sécurité
+
+Contact: mailto:contact@kobecorporation.com
+Expires: 2025-12-31T23:59:59.000Z
+Preferred-Languages: fr, en
+Canonical: https://ben-djibril.kobecorporation.com/.well-known/security.txt
