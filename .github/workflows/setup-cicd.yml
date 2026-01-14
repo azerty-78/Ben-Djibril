@@ -22,7 +22,7 @@ on:
 # VARIABLES GLOBALES
 # ==========================================
 env:
-  DOCKER_IMAGE: azerty78/blogpress-frontend
+  DOCKER_IMAGE: azerty78/ben-djibril-site
   DOCKERFILE_PATH: setup-front/Dockerfile
   DOCKER_CONTEXT: .
 
