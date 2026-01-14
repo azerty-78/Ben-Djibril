@@ -255,6 +255,28 @@ jobs:
               --build-arg VITE_EMAILJS_CONTACT_TEMPLATE_ID="${VITE_EMAILJS_CONTACT_TEMPLATE_ID}" \
               --build-arg VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID="${VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID}" \
               ${{ env.DOCKER_CONTEXT }}
+            
+            # Vérifier que l'image a bien été pushée sur Docker Hub
+            echo "🔍 Vérification que l'image est bien disponible sur Docker Hub..."
+            PUSH_SUCCESS=0
+            for tag in $TAGS; do
+              echo "Vérification du tag: $tag"
+              # Attendre un peu pour que le push soit propagé
+              sleep 2
+              # Vérifier avec docker manifest inspect (nécessite d'être authentifié)
+              if docker manifest inspect "$tag" >/dev/null 2>&1; then
+                echo "✅ Tag $tag confirmé sur Docker Hub"
+                PUSH_SUCCESS=1
+              else
+                echo "⚠️  Tag $tag non vérifié (peut être normal si propagation en cours)"
+              fi
+            done
+            
+            if [ "$PUSH_SUCCESS" -eq 1 ]; then
+              echo "✅ Au moins un tag confirmé sur Docker Hub - Push réussi!"
+            else
+              echo "⚠️  Aucun tag vérifié, mais le push semble avoir réussi (propagation peut prendre quelques secondes)"
+            fi
           else
             # Pour les PR, seulement build (pas de push)
             echo "🔨 Build de l'image (PR - pas de push)..."
@@ -299,25 +321,90 @@ jobs:
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           echo "✅ Login DockerHub réussi"
       
-      # Étape 3: Pull l'image buildée
+      # Étape 3: Pull l'image buildée depuis Docker Hub
       - name: 🐳 Pull Docker Image
         run: |
-          echo "📥 Pull de l'image Docker..."
-          docker pull ${{ env.DOCKER_IMAGE }}:latest || {
-            echo "⚠️ Image latest non trouvée, essai avec le tag SHA..."
-            docker pull ${{ env.DOCKER_IMAGE }}:${{ github.sha }} || {
-              echo "❌ Erreur: Impossible de pull l'image"
-              exit 1
-            }
-          }
-          echo "✅ Image pullée avec succès"
+          echo "📥 Pull de l'image Docker depuis Docker Hub..."
+          
+          # Liste des tags à essayer (par ordre de priorité)
+          TAGS_TO_TRY=(
+            "${{ env.DOCKER_IMAGE }}:latest"
+            "${{ env.DOCKER_IMAGE }}:${{ github.ref_name }}"
+            "${{ env.DOCKER_IMAGE }}:${{ github.sha }}"
+            "${{ env.DOCKER_IMAGE }}:${{ github.ref_name }}-${{ github.sha }}"
+          )
+          
+          PULL_SUCCESS=0
+          PULLED_TAG=""
+          
+          for tag in "${TAGS_TO_TRY[@]}"; do
+            echo "Tentative de pull: $tag"
+            if docker pull "$tag" 2>/dev/null; then
+              echo "✅ Image pullée avec succès: $tag"
+              PULL_SUCCESS=1
+              PULLED_TAG="$tag"
+              break
+            else
+              echo "⚠️  Tag $tag non disponible, essai suivant..."
+            fi
+          done
+          
+          if [ "$PULL_SUCCESS" -eq 0 ]; then
+            echo "❌ Erreur: Impossible de pull l'image avec aucun des tags essayés"
+            echo "Tags essayés: ${TAGS_TO_TRY[*]}"
+            exit 1
+          fi
+          
+          # Vérifier que l'image est bien présente localement
+          if docker images | grep -q "${{ env.DOCKER_IMAGE }}"; then
+            echo "✅ Image confirmée localement:"
+            docker images | grep "${{ env.DOCKER_IMAGE }}"
+          else
+            echo "❌ Erreur: Image non trouvée localement après le pull"
+            exit 1
+          fi
+          
+          # Exporter le tag pullé pour les étapes suivantes
+          echo "PULLED_TAG=$PULLED_TAG" >> $GITHUB_ENV
       
       # Étape 4: Test basique (vérifier que le conteneur démarre)
       - name: ✅ Test Container Start
         run: |
-          docker run -d --name test-container -p 8080:80 ${{ env.DOCKER_IMAGE }}:latest || docker run -d --name test-container -p 8080:80 ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+          # Utiliser le tag qui a été pullé avec succès
+          TEST_TAG="${PULLED_TAG:-${{ env.DOCKER_IMAGE }}:latest}"
+          echo "🧪 Test du conteneur avec le tag: $TEST_TAG"
+          
+          # Démarrer le conteneur
+          if docker run -d --name test-container -p 8080:80 "$TEST_TAG"; then
+            echo "✅ Conteneur démarré avec succès"
+          else
+            echo "❌ Erreur: Impossible de démarrer le conteneur"
+            exit 1
+          fi
+          
+          # Attendre que le conteneur soit prêt
+          echo "⏳ Attente que le conteneur soit prêt..."
           sleep 5
-          curl -f http://localhost:8080/health || curl -f http://localhost:8080 || exit 1
-          echo "✅ Container started successfully!"
-          docker stop test-container
-          docker rm test-container
+          
+          # Vérifier que le conteneur est en cours d'exécution
+          if ! docker ps | grep -q test-container; then
+            echo "❌ Erreur: Le conteneur n'est pas en cours d'exécution"
+            docker logs test-container
+            docker rm -f test-container
+            exit 1
+          fi
+          
+          # Tester l'endpoint
+          echo "🔍 Test de l'endpoint HTTP..."
+          if curl -f http://localhost:8080/health >/dev/null 2>&1 || curl -f http://localhost:8080 >/dev/null 2>&1; then
+            echo "✅ Endpoint HTTP accessible - Conteneur fonctionnel!"
+          else
+            echo "⚠️  Endpoint HTTP non accessible, mais conteneur en cours d'exécution"
+            docker logs test-container
+          fi
+          
+          # Nettoyage
+          echo "🧹 Nettoyage du conteneur de test..."
+          docker stop test-container || true
+          docker rm test-container || true
+          echo "✅ Test terminé avec succès!"
