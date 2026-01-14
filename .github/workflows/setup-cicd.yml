@@ -109,16 +109,6 @@ jobs:
             echo "❌ Erreur: Impossible de créer le contexte"
             exit 1
           fi
-          
-          # Nettoyer buildx/activity seulement s'il est un répertoire (corrompu)
-          # Docker attend un fichier, pas un répertoire
-          if [ -d ~/.docker/buildx/activity ]; then
-            echo "⚠️  Détection de buildx/activity comme répertoire (corrompu), nettoyage..."
-            rm -rf ~/.docker/buildx/activity 2>/dev/null || true
-          fi
-          
-          # S'assurer que le répertoire buildx existe
-          mkdir -p ~/.docker/buildx 2>/dev/null || true
       
       # Étape 3: Login à DockerHub (TOUJOURS nécessaire pour pull les images de base)
       - name: 🔐 Login to DockerHub
@@ -250,23 +240,34 @@ jobs:
           # Construire l'image avec buildx directement (plus fiable que docker build avec DOCKER_BUILDKIT)
           # Utiliser --pull pour forcer le pull des images de base avec authentification
           # Les variables EmailJS sont maintenant dans l'environnement depuis l'étape précédente
-          docker buildx build \
-            --load \
-            --pull \
-            --file ${{ env.DOCKERFILE_PATH }} \
-            $TAG_ARGS \
-            --build-arg VITE_EMAILJS_PUBLIC_KEY="${VITE_EMAILJS_PUBLIC_KEY}" \
-            --build-arg VITE_EMAILJS_SERVICE_ID="${VITE_EMAILJS_SERVICE_ID}" \
-            --build-arg VITE_EMAILJS_CONTACT_TEMPLATE_ID="${VITE_EMAILJS_CONTACT_TEMPLATE_ID}" \
-            --build-arg VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID="${VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID}" \
-            ${{ env.DOCKER_CONTEXT }}
           
-          # Push l'image si ce n'est pas une PR
+          # Déterminer les options de push
           if [ "${{ github.event_name }}" != "pull_request" ]; then
-            for tag in $TAGS; do
-              echo "Pushing $tag..."
-              docker push $tag
-            done
+            # Push directement avec buildx (plus efficace)
+            echo "🚀 Build et push de l'image..."
+            docker buildx build \
+              --push \
+              --pull \
+              --file ${{ env.DOCKERFILE_PATH }} \
+              $TAG_ARGS \
+              --build-arg VITE_EMAILJS_PUBLIC_KEY="${VITE_EMAILJS_PUBLIC_KEY}" \
+              --build-arg VITE_EMAILJS_SERVICE_ID="${VITE_EMAILJS_SERVICE_ID}" \
+              --build-arg VITE_EMAILJS_CONTACT_TEMPLATE_ID="${VITE_EMAILJS_CONTACT_TEMPLATE_ID}" \
+              --build-arg VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID="${VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID}" \
+              ${{ env.DOCKER_CONTEXT }}
+          else
+            # Pour les PR, seulement build (pas de push)
+            echo "🔨 Build de l'image (PR - pas de push)..."
+            docker buildx build \
+              --load \
+              --pull \
+              --file ${{ env.DOCKERFILE_PATH }} \
+              $TAG_ARGS \
+              --build-arg VITE_EMAILJS_PUBLIC_KEY="${VITE_EMAILJS_PUBLIC_KEY}" \
+              --build-arg VITE_EMAILJS_SERVICE_ID="${VITE_EMAILJS_SERVICE_ID}" \
+              --build-arg VITE_EMAILJS_CONTACT_TEMPLATE_ID="${VITE_EMAILJS_CONTACT_TEMPLATE_ID}" \
+              --build-arg VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID="${VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID}" \
+              ${{ env.DOCKER_CONTEXT }}
           fi
       
       # Étape 7: Afficher les informations de l'image
@@ -292,65 +293,26 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
       
-      # Étape 2: Nettoyer et recréer les contextes Docker correctement
-      - name: 🧹 Setup Docker Properly
-        run: |
-          # Supprimer seulement les contextes corrompus (pas buildx car BuildKit en a besoin)
-          rm -rf ~/.docker/contexts 2>/dev/null || true
-          
-          # Recréer la structure de contextes correctement
-          mkdir -p ~/.docker/contexts/meta
-          
-          # Créer le répertoire pour le contexte "." (hash de l'erreur)
-          CONTEXT_DIR=~/.docker/contexts/meta/cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8
-          mkdir -p "$CONTEXT_DIR"
-          
-          # Créer le fichier meta.json pour le contexte "."
-          cat > "$CONTEXT_DIR/meta.json" <<'EOF'
-          {
-            "Name": ".",
-            "Metadata": {
-              "Description": "Default context"
-            },
-            "Endpoints": {
-              "docker": {
-                "Host": "unix:///var/run/docker.sock",
-                "SkipTLSVerify": false
-              }
-            }
-          }
-          EOF
-          
-          # Vérifier que le fichier a été créé
-          if [ -f "$CONTEXT_DIR/meta.json" ]; then
-            echo "✅ Contexte Docker '.' créé avec succès"
-          else
-            echo "❌ Erreur: Impossible de créer le contexte"
-            exit 1
-          fi
-          
-          # Nettoyer buildx/activity seulement s'il est un répertoire (corrompu)
-          # Docker attend un fichier, pas un répertoire
-          if [ -d ~/.docker/buildx/activity ]; then
-            echo "⚠️  Détection de buildx/activity comme répertoire (corrompu), nettoyage..."
-            rm -rf ~/.docker/buildx/activity 2>/dev/null || true
-          fi
-          
-          # S'assurer que le répertoire buildx existe
-          mkdir -p ~/.docker/buildx 2>/dev/null || true
-      
-      # Étape 3: Login à DockerHub
+      # Étape 2: Login à DockerHub
       - name: 🔐 Login to DockerHub
         run: |
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           echo "✅ Login DockerHub réussi"
       
-      # Étape 4: Pull l'image buildée
+      # Étape 3: Pull l'image buildée
       - name: 🐳 Pull Docker Image
         run: |
-          docker pull ${{ env.DOCKER_IMAGE }}:latest || echo "Image not found, will build locally"
+          echo "📥 Pull de l'image Docker..."
+          docker pull ${{ env.DOCKER_IMAGE }}:latest || {
+            echo "⚠️ Image latest non trouvée, essai avec le tag SHA..."
+            docker pull ${{ env.DOCKER_IMAGE }}:${{ github.sha }} || {
+              echo "❌ Erreur: Impossible de pull l'image"
+              exit 1
+            }
+          }
+          echo "✅ Image pullée avec succès"
       
-      # Étape 5: Test basique (vérifier que le conteneur démarre)
+      # Étape 4: Test basique (vérifier que le conteneur démarre)
       - name: ✅ Test Container Start
         run: |
           docker run -d --name test-container -p 8080:80 ${{ env.DOCKER_IMAGE }}:latest || docker run -d --name test-container -p 8080:80 ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
