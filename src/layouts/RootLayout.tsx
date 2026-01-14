@@ -90,7 +90,6 @@ function RootLayout() {
                     alt="Ben Djibril - Photo de profil"
                     className="max-w-full max-h-full w-auto h-auto object-contain object-center"
                     style={{
-                      imageRendering: 'auto',
                       imageRendering: '-webkit-optimize-contrast',
                     }}
                     loading="eager"

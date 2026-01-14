@@ -212,7 +212,7 @@ jobs:
       # Étape 6: Build Docker Image (le contexte "." existe maintenant)
       - name: 🔨 Build Docker Image
         env:
-          DOCKER_BUILDKIT: 0
+          DOCKER_BUILDKIT: 1
         run: |
           # Vérifier que le login fonctionne
           echo "Vérification de l'authentification DockerHub..."
