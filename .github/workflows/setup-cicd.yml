@@ -76,8 +76,7 @@ jobs:
       # Étape 2: Nettoyer et recréer les contextes Docker correctement
       - name: 🧹 Setup Docker Properly
         run: |
-          # Supprimer buildx et contextes corrompus
-          rm -rf ~/.docker/buildx 2>/dev/null || true
+          # Supprimer seulement les contextes corrompus (pas buildx car BuildKit en a besoin)
           rm -rf ~/.docker/contexts 2>/dev/null || true
           
           # Recréer la structure de contextes correctement
@@ -110,6 +109,16 @@ jobs:
             echo "❌ Erreur: Impossible de créer le contexte"
             exit 1
           fi
+          
+          # Nettoyer buildx/activity seulement s'il est un répertoire (corrompu)
+          # Docker attend un fichier, pas un répertoire
+          if [ -d ~/.docker/buildx/activity ]; then
+            echo "⚠️  Détection de buildx/activity comme répertoire (corrompu), nettoyage..."
+            rm -rf ~/.docker/buildx/activity 2>/dev/null || true
+          fi
+          
+          # S'assurer que le répertoire buildx existe
+          mkdir -p ~/.docker/buildx 2>/dev/null || true
       
       # Étape 3: Login à DockerHub (TOUJOURS nécessaire pour pull les images de base)
       - name: 🔐 Login to DockerHub
@@ -214,9 +223,15 @@ jobs:
         env:
           DOCKER_BUILDKIT: 1
         run: |
-          # Vérifier que le login fonctionne
+          # Nettoyer buildx/activity si c'est un répertoire (corrompu) avant toute opération Docker
+          if [ -d ~/.docker/buildx/activity ]; then
+            echo "⚠️  Nettoyage de buildx/activity corrompu..."
+            rm -rf ~/.docker/buildx/activity 2>/dev/null || true
+          fi
+          
+          # Vérifier que le login fonctionne (optionnel, ne pas échouer si ça échoue)
           echo "Vérification de l'authentification DockerHub..."
-          docker info | grep -i "username" || echo "⚠️ Pas de username dans docker info (peut être normal)"
+          docker info 2>&1 | grep -i "username" || echo "⚠️ Pas de username dans docker info (peut être normal)"
           
           # Préparer les tags
           TAGS="${{ steps.meta.outputs.tags }}"
@@ -278,8 +293,7 @@ jobs:
       # Étape 2: Nettoyer et recréer les contextes Docker correctement
       - name: 🧹 Setup Docker Properly
         run: |
-          # Supprimer buildx et contextes corrompus
-          rm -rf ~/.docker/buildx 2>/dev/null || true
+          # Supprimer seulement les contextes corrompus (pas buildx car BuildKit en a besoin)
           rm -rf ~/.docker/contexts 2>/dev/null || true
           
           # Recréer la structure de contextes correctement
@@ -312,6 +326,16 @@ jobs:
             echo "❌ Erreur: Impossible de créer le contexte"
             exit 1
           fi
+          
+          # Nettoyer buildx/activity seulement s'il est un répertoire (corrompu)
+          # Docker attend un fichier, pas un répertoire
+          if [ -d ~/.docker/buildx/activity ]; then
+            echo "⚠️  Détection de buildx/activity comme répertoire (corrompu), nettoyage..."
+            rm -rf ~/.docker/buildx/activity 2>/dev/null || true
+          fi
+          
+          # S'assurer que le répertoire buildx existe
+          mkdir -p ~/.docker/buildx 2>/dev/null || true
       
       # Étape 3: Login à DockerHub
       - name: 🔐 Login to DockerHub
