@@ -220,23 +220,18 @@ jobs:
       
       # Étape 6: Build Docker Image (le contexte "." existe maintenant)
       - name: 🔨 Build Docker Image
-        env:
-          DOCKER_BUILDKIT: 1
         run: |
-          # Nettoyer buildx/activity si c'est un répertoire (corrompu) avant toute opération Docker
-          # Cette vérification doit être faite avant docker build car BuildKit utilise buildx
-          if [ -d ~/.docker/buildx/activity ]; then
-            echo "⚠️  Nettoyage de buildx/activity corrompu..."
-            rm -rf ~/.docker/buildx/activity 2>/dev/null || true
-          fi
+          # Supprimer complètement buildx pour éviter les conflits
+          # Docker buildx le recréera automatiquement
+          echo "🧹 Nettoyage de buildx avant le build..."
+          rm -rf ~/.docker/buildx 2>/dev/null || true
           
-          # Nettoyer aussi d'autres fichiers buildx potentiellement corrompus
-          if [ -d ~/.docker/buildx ] && [ ! -f ~/.docker/buildx/current ]; then
-            echo "⚠️  Nettoyage complet de buildx pour réinitialisation..."
-            rm -rf ~/.docker/buildx/* 2>/dev/null || true
-          fi
+          # Créer un builder buildx par défaut si nécessaire
+          echo "🔧 Initialisation de buildx..."
+          docker buildx create --name builder --use 2>/dev/null || docker buildx use builder 2>/dev/null || echo "⚠️  Builder buildx déjà existant ou création échouée"
+          docker buildx inspect --bootstrap >/dev/null 2>&1 || echo "⚠️  Bootstrap buildx (peut être normal)"
           
-          # Le login a déjà été vérifié dans l'étape précédente, pas besoin de le revérifier ici
+          # Le login a déjà été vérifié dans l'étape précédente
           echo "✅ Prêt pour le build Docker (login vérifié dans l'étape précédente)"
           
           # Préparer les tags
@@ -252,10 +247,11 @@ jobs:
             TAG_ARGS="$TAG_ARGS --tag $tag"
           done
           
-          # Construire l'image (le contexte "." devrait maintenant exister)
+          # Construire l'image avec buildx directement (plus fiable que docker build avec DOCKER_BUILDKIT)
           # Utiliser --pull pour forcer le pull des images de base avec authentification
           # Les variables EmailJS sont maintenant dans l'environnement depuis l'étape précédente
-          docker build \
+          docker buildx build \
+            --load \
             --pull \
             --file ${{ env.DOCKERFILE_PATH }} \
             $TAG_ARGS \
