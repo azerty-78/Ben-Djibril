@@ -299,7 +299,9 @@ jobs:
           echo "✅ Image buildée avec succès!"
           echo "📦 Image: ${{ env.DOCKER_IMAGE }}"
           echo "🏷️  Tags: ${{ steps.meta.outputs.tags }}"
-          docker images | grep "${{ env.DOCKER_IMAGE }}"
+          echo ""
+          echo "📋 Images Docker disponibles:"
+          docker images | grep "${{ env.DOCKER_IMAGE }}" || echo "⚠️  Aucune image locale trouvée (normal si --push a été utilisé)"
   
   # ==========================================
   # JOB 3: Test Docker Image (optionnel pour l'instant)
