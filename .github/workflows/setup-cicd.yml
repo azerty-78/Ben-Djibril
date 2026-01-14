@@ -224,14 +224,20 @@ jobs:
           DOCKER_BUILDKIT: 1
         run: |
           # Nettoyer buildx/activity si c'est un répertoire (corrompu) avant toute opération Docker
+          # Cette vérification doit être faite avant docker build car BuildKit utilise buildx
           if [ -d ~/.docker/buildx/activity ]; then
             echo "⚠️  Nettoyage de buildx/activity corrompu..."
             rm -rf ~/.docker/buildx/activity 2>/dev/null || true
           fi
           
-          # Vérifier que le login fonctionne (optionnel, ne pas échouer si ça échoue)
-          echo "Vérification de l'authentification DockerHub..."
-          docker info 2>&1 | grep -i "username" || echo "⚠️ Pas de username dans docker info (peut être normal)"
+          # Nettoyer aussi d'autres fichiers buildx potentiellement corrompus
+          if [ -d ~/.docker/buildx ] && [ ! -f ~/.docker/buildx/current ]; then
+            echo "⚠️  Nettoyage complet de buildx pour réinitialisation..."
+            rm -rf ~/.docker/buildx/* 2>/dev/null || true
+          fi
+          
+          # Le login a déjà été vérifié dans l'étape précédente, pas besoin de le revérifier ici
+          echo "✅ Prêt pour le build Docker (login vérifié dans l'étape précédente)"
           
           # Préparer les tags
           TAGS="${{ steps.meta.outputs.tags }}"
