@@ -19,6 +19,13 @@ on:
   workflow_dispatch:  # Permet de déclencher manuellement depuis GitHub
 
 # ==========================================
+# PERMISSIONS
+# ==========================================
+permissions:
+  contents: write  # Nécessaire pour créer des releases et pousser des tags
+  packages: write  # Nécessaire pour pousser des images Docker (si utilisé)
+
+# ==========================================
 # VARIABLES GLOBALES
 # ==========================================
 env:
@@ -36,6 +43,14 @@ jobs:
   tags:
     name: 🏷️ Create Git Tags
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag_created: ${{ steps.tag.outputs.created }}
+      tag_name: ${{ steps.tag.outputs.name }}
+      tag_type: ${{ steps.tag.outputs.type }}
+      is_release: ${{ steps.tag.outputs.is_release }}
+      semantic_version: ${{ steps.tag.outputs.semantic_version }}
+    
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
@@ -43,22 +58,197 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: 📋 Tag Info
+      - name: ⚙️ Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: 📋 Extract Version & Info
+        id: version
         run: |
           echo "✅ Informations sur les tags Git"
-          echo "Ref: ${{ github.ref }}"
-          echo "SHA: ${{ github.sha }}"
-          echo "Branch: ${{ github.ref_name }}"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📌 Ref: ${{ github.ref }}"
+          echo "🔖 SHA: ${{ github.sha }}"
+          echo "🌿 Branch: ${{ github.ref_name }}"
+          echo "👤 Auteur: $(git log -1 --pretty=%an)"
+          echo "📅 Date: $(git log -1 --pretty=%cd --date=format:%Y-%m-%d\ %H:%M:%S)"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           
-          # Afficher les tags existants
-          git tag -l | head -10 || echo "Aucun tag trouvé"
-          
-          # Si c'est un push sur main ou master, afficher les informations
-          if [ "${{ github.ref }}" == "refs/heads/master" ] || [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "📌 Push sur ${{ github.ref_name }} détecté"
-            echo "Commit: ${{ github.sha }}"
-            echo "Message: $(git log -1 --pretty=%B)"
+          # Lire la version depuis package.json (méthode bash pure)
+          if [ -f "package.json" ]; then
+            # Extraire la version avec grep et sed (méthode simple et fiable)
+            PACKAGE_VERSION=$(grep -m 1 '"version"' package.json | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+            if [ -z "$PACKAGE_VERSION" ]; then
+              PACKAGE_VERSION="0.0.0"
+            fi
+            echo "📦 Version package.json: $PACKAGE_VERSION"
+            echo "version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ package.json non trouvé, utilisation de la version par défaut"
+            echo "version=0.0.0" >> $GITHUB_OUTPUT
           fi
+          
+          # Afficher les 10 derniers tags
+          echo ""
+          echo "📋 Tags existants (10 derniers):"
+          git tag -l --sort=-version:refname | head -10 || echo "  Aucun tag trouvé"
+          
+          # Afficher les informations du commit
+          echo ""
+          echo "📝 Dernier commit:"
+          echo "  SHA: $(git log -1 --pretty=%H)"
+          COMMIT_MSG_FIRST_LINE=$(git log -1 --pretty=%B | head -n 1)
+          echo "  Message: $COMMIT_MSG_FIRST_LINE"
+          echo "  Auteur: $(git log -1 --pretty='%an <%ae>')"
+      
+      - name: 📊 Analyze Changes
+        id: changes
+        run: |
+          echo "📊 Analyse des changements:"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          
+          # Compter les fichiers modifiés
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            FILES_CHANGED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | wc -l)
+            echo "📁 Fichiers modifiés: $FILES_CHANGED"
+            
+            # Afficher les types de changements
+            echo ""
+            echo "📝 Types de changements:"
+            git diff --name-status ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | \
+              awk '{print "  " $1 " " $2}' | head -20 || echo "  Aucun changement détecté"
+          else
+            # Pour les pushes, comparer avec le commit précédent
+            PREV_SHA=$(git rev-parse HEAD~1 2>/dev/null || echo "")
+            if [ -n "$PREV_SHA" ]; then
+              FILES_CHANGED=$(git diff --name-only $PREV_SHA ${{ github.sha }} | wc -l)
+              echo "📁 Fichiers modifiés: $FILES_CHANGED"
+              
+              echo ""
+              echo "📝 Types de changements:"
+              git diff --name-status $PREV_SHA ${{ github.sha }} | \
+                awk '{print "  " $1 " " $2}' | head -20 || echo "  Aucun changement détecté"
+            else
+              echo "ℹ️ Premier commit de la branche"
+            fi
+          fi
+          
+          # Détecter le type de changement (feat, fix, etc.)
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          if echo "$COMMIT_MSG" | grep -qiE "^(feat|feature)"; then
+            CHANGE_TYPE="✨ Feature"
+          elif echo "$COMMIT_MSG" | grep -qiE "^(fix|bugfix)"; then
+            CHANGE_TYPE="🐛 Fix"
+          elif echo "$COMMIT_MSG" | grep -qiE "^(refactor)"; then
+            CHANGE_TYPE="♻️ Refactor"
+          elif echo "$COMMIT_MSG" | grep -qiE "^(docs|documentation)"; then
+            CHANGE_TYPE="📚 Documentation"
+          elif echo "$COMMIT_MSG" | grep -qiE "^(test)"; then
+            CHANGE_TYPE="🧪 Test"
+          elif echo "$COMMIT_MSG" | grep -qiE "^(chore)"; then
+            CHANGE_TYPE="🔧 Chore"
+          else
+            CHANGE_TYPE="📝 Update"
+          fi
+          
+          echo ""
+          echo "🏷️ Type de changement détecté: $CHANGE_TYPE"
+          echo "change_type=$CHANGE_TYPE" >> $GITHUB_OUTPUT
+      
+      - name: 🏷️ Create Git Tag
+        id: tag
+        if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          SHA="${{ github.sha }}"
+          BRANCH="${{ github.ref_name }}"
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          AUTHOR=$(git log -1 --pretty=%an)
+          DATE=$(git log -1 --pretty=%cd --date=format:%Y-%m-%d\ %H:%M:%S)
+          SHORT_SHA=$(echo $SHA | cut -c1-7)
+          
+          # Détecter le type de changement pour déterminer le type de tag
+          CHANGE_TYPE="${{ steps.changes.outputs.change_type }}"
+          
+          # Si la version est 0.0.0, créer un tag de développement
+          # Sinon, créer un tag sémantique (v1.0.0, v1.1.0, etc.)
+          if [ "$VERSION" = "0.0.0" ]; then
+            # Tag de développement avec SHA et timestamp
+            TIMESTAMP=$(date +%Y%m%d%H%M%S)
+            TAG_NAME="dev-${SHORT_SHA}-${TIMESTAMP}"
+            TAG_TYPE="development"
+            echo "🔧 Création d'un tag de développement: $TAG_NAME"
+          else
+            # Tag sémantique basé sur la version (v1.0.0, v1.1.0, etc.)
+            TAG_NAME="v${VERSION}"
+            TAG_TYPE="semantic"
+            
+            # Vérifier si le tag sémantique existe déjà
+            if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+              echo "⚠️ Le tag sémantique $TAG_NAME existe déjà"
+              echo "ℹ️ Utilisation d'un tag de développement à la place"
+              TIMESTAMP=$(date +%Y%m%d%H%M%S)
+              TAG_NAME="dev-${SHORT_SHA}-${TIMESTAMP}"
+              TAG_TYPE="development"
+            else
+              echo "🎉 Création d'un tag sémantique: $TAG_NAME"
+            fi
+          fi
+          
+          # Créer le message du tag enrichi (format simplifié pour éviter les problèmes YAML)
+          TAG_MESSAGE="Release $TAG_NAME - Version: $VERSION - Commit: $SHA - Branch: $BRANCH - Auteur: $AUTHOR - Date: $DATE - Type: $TAG_TYPE - Changement: $CHANGE_TYPE - Message: $COMMIT_MSG - Généré automatiquement par GitHub Actions"
+          
+          # Créer le tag annoté
+          git tag -a "$TAG_NAME" -m "$TAG_MESSAGE" "$SHA"
+          
+          echo "✅ Tag créé: $TAG_NAME"
+          echo "name=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "created=true" >> $GITHUB_OUTPUT
+          echo "type=$TAG_TYPE" >> $GITHUB_OUTPUT
+          
+          # Détecter si c'est une release sémantique (version != 0.0.0 et tag sémantique)
+          if [ "$VERSION" != "0.0.0" ] && [ "$TAG_TYPE" = "semantic" ]; then
+            echo "is_release=true" >> $GITHUB_OUTPUT
+            echo "semantic_version=$VERSION" >> $GITHUB_OUTPUT
+            echo "🎉 Release sémantique détectée (version: $VERSION)"
+          else
+            echo "is_release=false" >> $GITHUB_OUTPUT
+            echo "semantic_version=" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 🚀 Push Tags
+        if: steps.tag.outputs.created == 'true'
+        run: |
+          TAG_NAME="${{ steps.tag.outputs.name }}"
+          echo "🚀 Push du tag $TAG_NAME vers le dépôt..."
+          git push origin "$TAG_NAME" || {
+            echo "⚠️ Erreur lors du push du tag, peut-être qu'il existe déjà sur le serveur"
+            exit 0  # Ne pas faire échouer le workflow si le tag existe déjà
+          }
+          echo "✅ Tag $TAG_NAME poussé avec succès"
+      
+      - name: 📋 Summary
+        run: |
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📋 RÉSUMÉ DU JOB TAGS"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "✅ Version: ${{ steps.version.outputs.version }}"
+          if [ "${{ steps.tag.outputs.created }}" == "true" ]; then
+            echo "✅ Tag créé: ${{ steps.tag.outputs.name }}"
+            echo "🏷️  Type de tag: ${{ steps.tag.outputs.type }}"
+            if [ "${{ steps.tag.outputs.is_release }}" == "true" ]; then
+              echo "🎉 Release sémantique: ${{ steps.tag.outputs.semantic_version }}"
+              echo "📦 L'image Docker sera taggée avec: ${{ steps.tag.outputs.name }}"
+              echo "🚀 Une release GitHub sera créée automatiquement"
+            else
+              echo "🔧 Tag de développement créé"
+            fi
+          else
+            echo "ℹ️ Aucun tag créé (PR ou branche non principale)"
+          fi
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   
   # ==========================================
   # JOB 2: Build Docker Image
@@ -129,84 +319,112 @@ jobs:
           }
           echo "✅ Pull de node:22.13.1-alpine réussi"
       
-      # Étape 4: Extract metadata (tags, labels)
+      # Étape 4: Extract metadata (tags, labels) avec intégration des tags Git
       - name: 📋 Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.DOCKER_IMAGE }}
           tags: |
+            # Tags Git (prioritaires si disponibles)
+            type=raw,value=${{ needs.tags.outputs.tag_name }},enable=${{ needs.tags.outputs.tag_created }}
+            # Tags sémantiques basés sur la version
+            type=semver,pattern={{version}},enable=${{ needs.tags.outputs.is_release }}
+            type=semver,pattern={{major}}.{{minor}},enable=${{ needs.tags.outputs.is_release }}
+            # Tags de branche et SHA (fallback)
             type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
             type=sha,prefix={{branch}}-
+            # Tag latest uniquement sur la branche principale
             type=raw,value=latest,enable={{is_default_branch}}
+            # Tags pour les PRs
+            type=ref,event=pr
       
       # Étape 5: Lire les variables depuis le fichier .env
-      - name: 📄 Read .env file
-        id: env_vars
+      - name: 📄 Load environment variables
+        id: env
         run: |
-          # Vérifier que le fichier .env existe
-          if [ ! -f "setup-front/.env" ]; then
-            echo "❌ Erreur: Le fichier setup-front/.env n'existe pas"
-            echo "💡 Assurez-vous que le fichier setup-front/.env est présent dans le repository"
-            exit 1
-          fi
+          # Fonction pour extraire une variable d'un fichier .env
+          extract_env_var() {
+            local var_name=$1
+            local file_path=$2
+            if [ -f "$file_path" ]; then
+              # Extraire la variable (ignorer les commentaires, gérer les espaces, guillemets, etc.)
+              grep -E "^${var_name}=" "$file_path" | sed -E "s/^${var_name}=['\"]?([^'\"]*)['\"]?$/\1/" | head -1 | xargs || echo ""
+            else
+              echo ""
+            fi
+          }
           
-          echo "✅ Fichier setup-front/.env trouvé"
-          
-          # Extraire les variables EmailJS depuis le fichier .env
-          # Utiliser grep pour trouver les lignes et cut pour extraire les valeurs (après le =)
-          # Supprimer les guillemets et espaces
-          VITE_EMAILJS_PUBLIC_KEY=$(grep "^VITE_EMAILJS_PUBLIC_KEY=" setup-front/.env | cut -d '=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sed "s/^['\"]//;s/['\"]$//" || echo "")
-          VITE_EMAILJS_SERVICE_ID=$(grep "^VITE_EMAILJS_SERVICE_ID=" setup-front/.env | cut -d '=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sed "s/^['\"]//;s/['\"]$//" || echo "")
-          VITE_EMAILJS_CONTACT_TEMPLATE_ID=$(grep "^VITE_EMAILJS_CONTACT_TEMPLATE_ID=" setup-front/.env | cut -d '=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sed "s/^['\"]//;s/['\"]$//" || echo "")
-          VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=$(grep "^VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=" setup-front/.env | cut -d '=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sed "s/^['\"]//;s/['\"]$//" || echo "")
-          
-          # Vérifier que les variables ne sont pas vides
-          MISSING_VARS=0
-          if [ -z "$VITE_EMAILJS_PUBLIC_KEY" ]; then
-            echo "❌ VITE_EMAILJS_PUBLIC_KEY est vide ou manquant"
-            MISSING_VARS=1
+          # Lire les variables depuis setup-front/.env si le fichier existe
+          if [ -f "setup-front/.env" ]; then
+            echo "✅ Fichier .env trouvé, lecture des variables..."
+            
+            # Extraire les variables EmailJS
+            VITE_EMAILJS_PUBLIC_KEY=$(extract_env_var "VITE_EMAILJS_PUBLIC_KEY" "setup-front/.env")
+            VITE_EMAILJS_SERVICE_ID=$(extract_env_var "VITE_EMAILJS_SERVICE_ID" "setup-front/.env")
+            VITE_EMAILJS_CONTACT_TEMPLATE_ID=$(extract_env_var "VITE_EMAILJS_CONTACT_TEMPLATE_ID" "setup-front/.env")
+            VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=$(extract_env_var "VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID" "setup-front/.env")
+            
+            # Afficher les variables (masquer les valeurs sensibles)
+            if [ -n "$VITE_EMAILJS_PUBLIC_KEY" ]; then
+              echo "VITE_EMAILJS_PUBLIC_KEY=${VITE_EMAILJS_PUBLIC_KEY:0:10}..."
+            else
+              echo "VITE_EMAILJS_PUBLIC_KEY=(vide)"
+            fi
+            if [ -n "$VITE_EMAILJS_SERVICE_ID" ]; then
+              echo "VITE_EMAILJS_SERVICE_ID=${VITE_EMAILJS_SERVICE_ID:0:10}..."
+            else
+              echo "VITE_EMAILJS_SERVICE_ID=(vide)"
+            fi
+            if [ -n "$VITE_EMAILJS_CONTACT_TEMPLATE_ID" ]; then
+              echo "VITE_EMAILJS_CONTACT_TEMPLATE_ID=${VITE_EMAILJS_CONTACT_TEMPLATE_ID:0:10}..."
+            else
+              echo "VITE_EMAILJS_CONTACT_TEMPLATE_ID=(vide)"
+            fi
+            if [ -n "$VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID" ]; then
+              echo "VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=${VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID:0:10}..."
+            else
+              echo "VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=(vide)"
+            fi
+            
+            # Vérifier que les variables ne sont pas vides
+            MISSING_VARS=0
+            if [ -z "$VITE_EMAILJS_PUBLIC_KEY" ]; then
+              echo "❌ VITE_EMAILJS_PUBLIC_KEY est vide ou manquant"
+              MISSING_VARS=1
+            fi
+            if [ -z "$VITE_EMAILJS_SERVICE_ID" ]; then
+              echo "❌ VITE_EMAILJS_SERVICE_ID est vide ou manquant"
+              MISSING_VARS=1
+            fi
+            if [ -z "$VITE_EMAILJS_CONTACT_TEMPLATE_ID" ]; then
+              echo "❌ VITE_EMAILJS_CONTACT_TEMPLATE_ID est vide ou manquant"
+              MISSING_VARS=1
+            fi
+            if [ -z "$VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID" ]; then
+              echo "❌ VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID est vide ou manquant"
+              MISSING_VARS=1
+            fi
+            
+            if [ "$MISSING_VARS" -eq 1 ]; then
+              echo "❌ Erreur: Certaines variables EmailJS sont manquantes dans setup-front/.env"
+              echo "💡 Vérifiez que toutes les variables EmailJS sont définies dans le fichier .env"
+              exit 1
+            fi
+            
+            # Exporter pour les prochaines étapes
+            echo "VITE_EMAILJS_PUBLIC_KEY=${VITE_EMAILJS_PUBLIC_KEY}" >> $GITHUB_ENV
+            echo "VITE_EMAILJS_SERVICE_ID=${VITE_EMAILJS_SERVICE_ID}" >> $GITHUB_ENV
+            echo "VITE_EMAILJS_CONTACT_TEMPLATE_ID=${VITE_EMAILJS_CONTACT_TEMPLATE_ID}" >> $GITHUB_ENV
+            echo "VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=${VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID}" >> $GITHUB_ENV
+            echo "✅ Toutes les variables EmailJS ont été extraites avec succès"
           else
-            echo "✅ VITE_EMAILJS_PUBLIC_KEY: ${VITE_EMAILJS_PUBLIC_KEY:0:10}... (masqué)"
+            echo "⚠️ Fichier setup-front/.env non trouvé, utilisation de valeurs vides"
+            echo "VITE_EMAILJS_PUBLIC_KEY=" >> $GITHUB_ENV
+            echo "VITE_EMAILJS_SERVICE_ID=" >> $GITHUB_ENV
+            echo "VITE_EMAILJS_CONTACT_TEMPLATE_ID=" >> $GITHUB_ENV
+            echo "VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=" >> $GITHUB_ENV
           fi
-          
-          if [ -z "$VITE_EMAILJS_SERVICE_ID" ]; then
-            echo "❌ VITE_EMAILJS_SERVICE_ID est vide ou manquant"
-            MISSING_VARS=1
-          else
-            echo "✅ VITE_EMAILJS_SERVICE_ID: ${VITE_EMAILJS_SERVICE_ID:0:10}... (masqué)"
-          fi
-          
-          if [ -z "$VITE_EMAILJS_CONTACT_TEMPLATE_ID" ]; then
-            echo "❌ VITE_EMAILJS_CONTACT_TEMPLATE_ID est vide ou manquant"
-            MISSING_VARS=1
-          else
-            echo "✅ VITE_EMAILJS_CONTACT_TEMPLATE_ID: ${VITE_EMAILJS_CONTACT_TEMPLATE_ID:0:10}... (masqué)"
-          fi
-          
-          if [ -z "$VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID" ]; then
-            echo "❌ VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID est vide ou manquant"
-            MISSING_VARS=1
-          else
-            echo "✅ VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID: ${VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID:0:10}... (masqué)"
-          fi
-          
-          if [ "$MISSING_VARS" -eq 1 ]; then
-            echo "❌ Erreur: Certaines variables EmailJS sont manquantes dans setup-front/.env"
-            echo "💡 Vérifiez que toutes les variables EmailJS sont définies dans le fichier .env"
-            exit 1
-          fi
-          
-          echo "✅ Toutes les variables EmailJS ont été extraites avec succès du fichier .env"
-          
-          # Sauvegarder dans des variables d'environnement pour les étapes suivantes
-          echo "VITE_EMAILJS_PUBLIC_KEY=$VITE_EMAILJS_PUBLIC_KEY" >> $GITHUB_ENV
-          echo "VITE_EMAILJS_SERVICE_ID=$VITE_EMAILJS_SERVICE_ID" >> $GITHUB_ENV
-          echo "VITE_EMAILJS_CONTACT_TEMPLATE_ID=$VITE_EMAILJS_CONTACT_TEMPLATE_ID" >> $GITHUB_ENV
-          echo "VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=$VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID" >> $GITHUB_ENV
       
       # Étape 6: Build Docker Image (le contexte "." existe maintenant)
       - name: 🔨 Build Docker Image
@@ -447,3 +665,133 @@ jobs:
           docker stop test-container || true
           docker rm test-container || true
           echo "✅ Test terminé avec succès!"
+
+  # ==========================================
+  # JOB 4: Create GitHub Release
+  # ==========================================
+  release:
+    name: 🚀 Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: [tags, build]
+    if: |
+      github.event_name != 'pull_request' && 
+      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') &&
+      needs.tags.outputs.tag_created == 'true'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 🔍 Verify Tag Exists
+        run: |
+          TAG_NAME="${{ needs.tags.outputs.tag_name }}"
+          echo "🔍 Vérification que le tag $TAG_NAME existe sur le dépôt distant..."
+          
+          # Récupérer les tags du dépôt distant
+          git fetch --tags
+          
+          # Vérifier que le tag existe
+          if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+            echo "✅ Tag $TAG_NAME trouvé localement"
+          else
+            echo "⚠️ Tag $TAG_NAME non trouvé localement, tentative de récupération..."
+            git fetch origin tag "$TAG_NAME" || {
+              echo "❌ Erreur: Le tag $TAG_NAME n'existe pas sur le dépôt distant"
+              echo "ℹ️ Le tag doit être poussé avant de créer la release"
+              exit 1
+            }
+          fi
+          
+          # Afficher les informations du tag
+          echo "📋 Informations du tag:"
+          git show "$TAG_NAME" --no-patch --format="  SHA: %H%n  Auteur: %an%n  Date: %ad" || echo "  Impossible d'afficher les informations"
+      
+      - name: 📋 Generate Release Notes
+        id: release_notes
+        run: |
+          TAG_NAME="${{ needs.tags.outputs.tag_name }}"
+          VERSION="${{ needs.tags.outputs.semantic_version }}"
+          TAG_TYPE="${{ needs.tags.outputs.tag_type }}"
+          IS_RELEASE="${{ needs.tags.outputs.is_release }}"
+          
+          # Déterminer si c'est une release sémantique ou un tag de développement
+          if [ "$IS_RELEASE" = "true" ] && [ -n "$VERSION" ]; then
+            RELEASE_TYPE="🎉 Release Sémantique"
+            IS_PRERELEASE="false"
+            # Récupérer les commits depuis le dernier tag sémantique
+            LAST_TAG=$(git describe --tags --abbrev=0 --match "v[0-9]*" 2>/dev/null || echo "")
+            if [ -n "$LAST_TAG" ]; then
+              echo "📝 Génération des notes depuis le tag $LAST_TAG"
+              COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+            else
+              echo "📝 Premier tag sémantique, récupération des 10 derniers commits"
+              COMMITS=$(git log -10 --pretty=format:"- %s (%h)" --no-merges)
+            fi
+          else
+            RELEASE_TYPE="🔧 Release de Développement"
+            IS_PRERELEASE="true"
+            # Pour les tags de développement, récupérer les 10 derniers commits
+            echo "📝 Tag de développement, récupération des 10 derniers commits"
+            COMMITS=$(git log -10 --pretty=format:"- %s (%h)" --no-merges)
+          fi
+          
+          # Créer le body de la release en écrivant directement dans le fichier
+          {
+            if [ "$IS_RELEASE" = "true" ] && [ -n "$VERSION" ]; then
+              echo "## $RELEASE_TYPE"
+              echo ""
+              echo "**Version:** $VERSION"
+              echo "**Tag:** $TAG_NAME"
+              echo "**Type:** $TAG_TYPE"
+              echo ""
+              echo "### 📦 Image Docker"
+              echo "L'image Docker est disponible sur Docker Hub :"
+              echo "\`\`\`"
+              echo "docker pull ${{ env.DOCKER_IMAGE }}:$TAG_NAME"
+              echo "docker pull ${{ env.DOCKER_IMAGE }}:latest"
+              echo "\`\`\`"
+            else
+              echo "## $RELEASE_TYPE"
+              echo ""
+              echo "**Tag:** $TAG_NAME"
+              echo "**Type:** $TAG_TYPE"
+              echo ""
+              echo "⚠️ **Note:** Ceci est une release de développement. Pour une release de production, mettez à jour la version dans \`package.json\`."
+              echo ""
+              echo "### 📦 Image Docker"
+              echo "L'image Docker est disponible sur Docker Hub :"
+              echo "\`\`\`"
+              echo "docker pull ${{ env.DOCKER_IMAGE }}:$TAG_NAME"
+              echo "\`\`\`"
+            fi
+            echo ""
+            echo "### 📝 Changements"
+            echo "$COMMITS"
+            echo ""
+            echo "### 🔗 Liens"
+            echo "- **Docker Hub:** https://hub.docker.com/r/${{ env.DOCKER_IMAGE }}"
+            echo "- **Commit:** [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})"
+            echo ""
+            echo "---"
+            echo "*Généré automatiquement par GitHub Actions*"
+          } > release_notes.md
+          echo "is_prerelease=$IS_PRERELEASE" >> $GITHUB_OUTPUT
+          echo "✅ Notes de release générées (Prerelease: $IS_PRERELEASE)"
+          
+          # Afficher un aperçu
+          echo "📄 Aperçu des notes de release:"
+          head -20 release_notes.md
+      
+      - name: 🚀 Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.tags.outputs.tag_name }}
+          name: Release ${{ needs.tags.outputs.tag_name }}
+          body_path: release_notes.md
+          draft: false
+          prerelease: ${{ steps.release_notes.outputs.is_prerelease }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generate_release_notes: false
