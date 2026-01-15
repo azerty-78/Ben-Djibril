@@ -795,3 +795,677 @@ jobs:
           prerelease: ${{ steps.release_notes.outputs.is_prerelease }}
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: false
+
+  # ==========================================
+  # JOB 5: Deploy to VPS
+  # ==========================================
+  deploy:
+    name: 🚀 Deploy to VPS
+    runs-on: ubuntu-latest
+    needs: [build, test]
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 🔑 Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+      
+      - name: 🔍 Test SSH Connection
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT || 22 }} ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "echo '✅ Connexion SSH réussie'"
+      
+      - name: 🐳 Check & Setup Docker on Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT || 22 }} \
+            ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'DOCKER_SETUP'
+          set -e
+          
+          echo "🔍 Vérification de Docker..."
+          
+          # Détecter la distribution (nécessaire pour les installations)
+          if [ -f /etc/os-release ]; then
+            . /etc/os-release
+            OS=$ID
+          else
+            OS="unknown"
+          fi
+          
+          # Vérifier si Docker est installé
+          if ! command -v docker &> /dev/null; then
+            echo "⚠️ Docker n'est pas installé, installation en cours..."
+            
+            if [ "$OS" = "unknown" ]; then
+              echo "❌ Impossible de détecter la distribution"
+              exit 1
+            fi
+            
+            # Installation selon la distribution
+            if [ "$OS" = "ubuntu" ] || [ "$OS" = "debian" ]; then
+              echo "📦 Installation Docker pour Ubuntu/Debian..."
+              sudo apt-get update -qq
+              sudo apt-get install -y ca-certificates curl gnupg lsb-release
+              sudo mkdir -p /etc/apt/keyrings
+              curl -fsSL https://download.docker.com/linux/$OS/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+              echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/$OS $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+              sudo apt-get update -qq
+              sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+            elif [ "$OS" = "centos" ] || [ "$OS" = "rhel" ] || [ "$OS" = "fedora" ]; then
+              echo "📦 Installation Docker pour CentOS/RHEL/Fedora..."
+              sudo yum install -y yum-utils
+              sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+              sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+            else
+              echo "❌ Distribution non supportée: $OS"
+              exit 1
+            fi
+          else
+            echo "✅ Docker est déjà installé"
+            docker --version
+          fi
+          
+          # Vérifier si Docker Compose est installé
+          if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
+            echo "⚠️ Docker Compose n'est pas installé, installation en cours..."
+            if [ "$OS" = "ubuntu" ] || [ "$OS" = "debian" ]; then
+              sudo apt-get install -y docker-compose-plugin
+            elif [ "$OS" = "centos" ] || [ "$OS" = "rhel" ] || [ "$OS" = "fedora" ]; then
+              sudo yum install -y docker-compose-plugin
+            fi
+          else
+            echo "✅ Docker Compose est déjà installé"
+            docker-compose --version 2>/dev/null || docker compose version
+          fi
+          
+          # Vérifier si le service Docker est démarré
+          if ! sudo systemctl is-active --quiet docker 2>/dev/null; then
+            echo "⚠️ Le service Docker n'est pas démarré, démarrage en cours..."
+            sudo systemctl start docker
+            sudo systemctl enable docker
+          else
+            echo "✅ Le service Docker est démarré"
+          fi
+          
+          # Vérifier que l'utilisateur peut utiliser Docker (sans sudo)
+          if ! docker ps &> /dev/null; then
+            echo "⚠️ L'utilisateur ne peut pas utiliser Docker sans sudo, ajout au groupe docker..."
+            CURRENT_USER=$(whoami)
+            sudo usermod -aG docker "$CURRENT_USER"
+            echo "✅ Utilisateur $CURRENT_USER ajouté au groupe docker"
+            echo "⚠️ Note: Un redémarrage de session SSH peut être nécessaire pour que les changements prennent effet"
+            echo "⚠️ Pour l'instant, nous utiliserons sudo docker si nécessaire"
+          else
+            echo "✅ L'utilisateur peut utiliser Docker"
+          fi
+          
+          # Vérifier/créer le réseau Docker kobecorp-network
+          echo "🌐 Vérification du réseau Docker kobecorp-network..."
+          if ! docker network ls | grep -q "kobecorp-network"; then
+            echo "📦 Création du réseau kobecorp-network..."
+            docker network create kobecorp-network || sudo docker network create kobecorp-network
+            echo "✅ Réseau kobecorp-network créé"
+          else
+            echo "✅ Réseau kobecorp-network existe déjà"
+          fi
+          
+          # Test final
+          echo "🧪 Test final de Docker..."
+          if docker ps &> /dev/null; then
+            docker ps
+            echo "✅ Docker est prêt et fonctionne sans sudo!"
+          elif sudo docker ps &> /dev/null; then
+            sudo docker ps
+            echo "✅ Docker est prêt (utilise sudo pour l'instant)"
+          else
+            echo "❌ Erreur: Docker ne fonctionne pas"
+            exit 1
+          fi
+          DOCKER_SETUP
+      
+      - name: 📦 Prepare deployment files
+        run: |
+          # Créer un dossier temporaire pour les fichiers de déploiement
+          mkdir -p .deploy
+          
+          # Copier les fichiers nécessaires pour le build Docker
+          # Le docker-compose.yml utilise context: . donc tous les fichiers doivent être dans setup-front/
+          cp -r setup-front .deploy/
+          cp package.json .deploy/
+          cp package-lock.json .deploy/ 2>/dev/null || echo "package-lock.json non trouvé, ignoré"
+          cp index.html .deploy/ 2>/dev/null || echo "index.html non trouvé"
+          cp vite.config.ts .deploy/ 2>/dev/null || echo "vite.config.ts non trouvé"
+          cp tsconfig.json .deploy/ 2>/dev/null || echo "tsconfig.json non trouvé"
+          cp tsconfig.app.json .deploy/ 2>/dev/null || echo "tsconfig.app.json non trouvé"
+          cp tsconfig.node.json .deploy/ 2>/dev/null || echo "tsconfig.node.json non trouvé"
+          cp tailwind.config.js .deploy/ 2>/dev/null || echo "tailwind.config.js non trouvé"
+          cp postcss.config.js .deploy/ 2>/dev/null || echo "postcss.config.js non trouvé"
+          cp eslint.config.js .deploy/ 2>/dev/null || echo "eslint.config.js non trouvé"
+          
+          # Copier les dossiers essentiels
+          cp -r src .deploy/ 2>/dev/null || echo "src/ non trouvé"
+          cp -r public .deploy/ 2>/dev/null || echo "public/ non trouvé"
+          
+          # Copier le fichier .env depuis setup-front/ (important pour le déploiement)
+          if [ -f "setup-front/.env" ]; then
+            cp setup-front/.env .deploy/setup-front/.env
+            echo "✅ Fichier .env copié dans .deploy/setup-front/"
+          else
+            echo "⚠️ Fichier setup-front/.env non trouvé"
+          fi
+          
+          # Vérifier que nginx.conf est bien dans setup-front/
+          if [ ! -f ".deploy/setup-front/nginx.conf" ]; then
+            echo "❌ Erreur: nginx.conf n'est pas dans .deploy/setup-front/"
+            echo "📋 Contenu de .deploy/setup-front/:"
+            ls -la .deploy/setup-front/ || echo "Répertoire non trouvé"
+            echo "📋 Recherche de nginx.conf:"
+            find .deploy -name "nginx.conf" 2>/dev/null || echo "nginx.conf non trouvé"
+            exit 1
+          fi
+          
+          # Vérifier que Dockerfile est bien dans setup-front/
+          if [ ! -f ".deploy/setup-front/Dockerfile" ]; then
+            echo "❌ Erreur: Dockerfile n'est pas dans .deploy/setup-front/"
+            echo "📋 Contenu de .deploy/setup-front/:"
+            ls -la .deploy/setup-front/ || echo "Répertoire non trouvé"
+            exit 1
+          fi
+          
+          echo "✅ Fichiers de déploiement préparés"
+          echo "✅ nginx.conf vérifié dans .deploy/setup-front/"
+          echo "✅ Dockerfile vérifié dans .deploy/setup-front/"
+      
+      - name: 🔧 Configure SSH
+        run: |
+          # Créer le fichier de config SSH
+          mkdir -p ~/.ssh
+          cat >> ~/.ssh/config << EOF
+          Host vps-deploy
+            HostName ${{ secrets.VPS_HOST }}
+            User ${{ secrets.VPS_USERNAME }}
+            Port ${{ secrets.VPS_PORT || 22 }}
+            StrictHostKeyChecking no
+            UserKnownHostsFile=/dev/null
+          EOF
+          
+          # Ajouter le serveur aux known hosts
+          ssh-keyscan -p ${{ secrets.VPS_PORT || 22 }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+      
+      - name: 🧹 Clean old deployment files
+        run: |
+          # Recréer le fichier de config SSH pour cette étape
+          mkdir -p ~/.ssh
+          cat > ~/.ssh/config << EOF
+          Host vps-deploy
+            HostName ${{ secrets.VPS_HOST }}
+            User ${{ secrets.VPS_USERNAME }}
+            Port ${{ secrets.VPS_PORT || 22 }}
+            StrictHostKeyChecking no
+            UserKnownHostsFile=/dev/null
+          EOF
+          chmod 600 ~/.ssh/config
+          
+          ssh -F ~/.ssh/config vps-deploy << 'EOF'
+            set -e
+            
+            echo "🧹 Nettoyage des anciens fichiers de déploiement..."
+            
+            # Arrêter et supprimer les anciens conteneurs ben-djibril
+            if docker ps -a --format '{{.Names}}' | grep -q "ben-djibril-site"; then
+              echo "🛑 Arrêt des anciens conteneurs ben-djibril..."
+              docker stop ben-djibril-site 2>/dev/null || sudo docker stop ben-djibril-site 2>/dev/null || true
+              docker rm ben-djibril-site 2>/dev/null || sudo docker rm ben-djibril-site 2>/dev/null || true
+            fi
+            
+            # Supprimer les anciens dossiers de déploiement
+            if [ -d "/opt/ben-djibril" ]; then
+              echo "🗑️ Suppression de l'ancien répertoire /opt/ben-djibril..."
+              sudo rm -rf /opt/ben-djibril || true
+            fi
+            
+            # Créer la structure de dossiers pour ben-djibril dans kobe-corporation
+            echo "📁 Création de la structure de dossiers..."
+            mkdir -p ~/kobe-corporation/ben-djibril/setup-front
+            
+            echo "✅ Nettoyage terminé"
+          EOF
+      
+      - name: 📤 Copy files to VPS
+        run: |
+          echo "📤 Copie des fichiers vers le serveur..."
+          
+          # Créer le répertoire .ssh s'il n'existe pas
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          
+          # Ajouter le serveur aux known hosts
+          ssh-keyscan -p ${{ secrets.VPS_PORT || 22 }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+          chmod 600 ~/.ssh/known_hosts 2>/dev/null || true
+          
+          # Copier setup-front/ vers le serveur
+          # IMPORTANT: Utiliser --include pour s'assurer que nginx.conf et .env sont copiés
+          rsync -avz --delete \
+            --include="nginx.conf" \
+            --include=".env" \
+            -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
+            .deploy/setup-front/ \
+            ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/setup-front/
+          
+          # Copier les fichiers nécessaires pour le build Docker à la racine de ~/kobe-corporation/ben-djibril/
+          # Le docker-compose.yml utilise context: .. donc le contexte est ~/kobe-corporation/ben-djibril/ (parent de setup-front/)
+          echo "📦 Copie des fichiers de build à la racine..."
+          
+          # Copier package.json (obligatoire)
+          if [ -f ".deploy/package.json" ]; then
+            rsync -avz \
+              -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
+              .deploy/package.json \
+              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/
+          else
+            echo "❌ Erreur: package.json n'existe pas dans .deploy/"
+            exit 1
+          fi
+          
+          # Copier package-lock.json si disponible
+          if [ -f ".deploy/package-lock.json" ]; then
+            rsync -avz \
+              -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
+              .deploy/package-lock.json \
+              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/
+          fi
+          
+          # Copier les fichiers de configuration nécessaires
+          for file in index.html vite.config.ts tsconfig.json tsconfig.app.json tsconfig.node.json tailwind.config.js postcss.config.js eslint.config.js; do
+            if [ -f ".deploy/$file" ]; then
+              rsync -avz \
+                -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
+                .deploy/$file \
+                ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/
+            fi
+          done
+          
+          # Copier les dossiers src/ et public/ (obligatoires)
+          if [ -d ".deploy/src" ]; then
+            rsync -avz \
+              -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
+              .deploy/src/ \
+              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/src/
+          else
+            echo "❌ Erreur: src/ n'existe pas dans .deploy/"
+            exit 1
+          fi
+          
+          if [ -d ".deploy/public" ]; then
+            rsync -avz \
+              -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
+              .deploy/public/ \
+              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/public/
+          else
+            echo "❌ Erreur: public/ n'existe pas dans .deploy/"
+            exit 1
+          fi
+          
+          echo "✅ Tous les fichiers ont été copiés vers le serveur"
+          
+          # Vérifier que les fichiers sont bien copiés sur le serveur
+          echo "🔍 Vérification des fichiers copiés sur le serveur..."
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT || 22 }} \
+            ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'VERIFY_FILES'
+          set -e
+          
+          DEPLOY_PATH="$HOME/kobe-corporation/ben-djibril"
+          
+          echo "📋 Vérification de $DEPLOY_PATH/package.json:"
+          if [ -f "$DEPLOY_PATH/package.json" ]; then
+            echo "✅ package.json trouvé"
+            ls -lh "$DEPLOY_PATH/package.json"
+          else
+            echo "❌ ERREUR: package.json n'est pas présent dans $DEPLOY_PATH"
+            echo "📋 Contenu de $DEPLOY_PATH:"
+            ls -la "$DEPLOY_PATH" | head -20
+            exit 1
+          fi
+          
+          echo "📋 Vérification de $DEPLOY_PATH/src:"
+          if [ -d "$DEPLOY_PATH/src" ]; then
+            echo "✅ src/ trouvé"
+            ls -ld "$DEPLOY_PATH/src"
+          else
+            echo "❌ ERREUR: src/ n'est pas présent dans $DEPLOY_PATH"
+            exit 1
+          fi
+          
+          echo "📋 Vérification de $DEPLOY_PATH/public:"
+          if [ -d "$DEPLOY_PATH/public" ]; then
+            echo "✅ public/ trouvé"
+            ls -ld "$DEPLOY_PATH/public"
+          else
+            echo "❌ ERREUR: public/ n'est pas présent dans $DEPLOY_PATH"
+            exit 1
+          fi
+          
+          echo "✅ Tous les fichiers nécessaires sont présents sur le serveur"
+          VERIFY_FILES
+      
+      - name: 🐳 Deploy Docker Containers
+        run: |
+          # Recréer le fichier de config SSH pour cette étape
+          mkdir -p ~/.ssh
+          cat > ~/.ssh/config << EOF
+          Host vps-deploy
+            HostName ${{ secrets.VPS_HOST }}
+            User ${{ secrets.VPS_USERNAME }}
+            Port ${{ secrets.VPS_PORT || 22 }}
+            StrictHostKeyChecking no
+            UserKnownHostsFile=/dev/null
+          EOF
+          chmod 600 ~/.ssh/config
+          
+          ssh -F ~/.ssh/config vps-deploy << 'DEPLOY_DOCKER'
+          set -e
+          
+          # Fonction pour déterminer la commande Docker à utiliser
+          get_docker_cmd() {
+            if docker ps &> /dev/null 2>&1; then
+              echo "docker"
+            else
+              echo "sudo docker"
+            fi
+          }
+          
+          DOCKER_CMD=$(get_docker_cmd)
+          
+          # Fonction pour exécuter docker-compose (utilise sudo si nécessaire)
+          get_compose_cmd() {
+            if docker ps &> /dev/null 2>&1; then
+              if command -v docker-compose &> /dev/null; then
+                echo "docker-compose"
+              else
+                echo "docker compose"
+              fi
+            else
+              if command -v docker-compose &> /dev/null; then
+                echo "sudo docker-compose"
+              else
+                echo "sudo docker compose"
+              fi
+            fi
+          }
+          
+          COMPOSE_CMD=$(get_compose_cmd)
+          
+          DEPLOY_PATH="$HOME/kobe-corporation/ben-djibril"
+          DOCKER_COMPOSE_PATH="$DEPLOY_PATH/setup-front"
+          
+          # Vérifier que les fichiers nécessaires sont présents dans le contexte Docker (DEPLOY_PATH)
+          echo "🔍 Vérification des fichiers nécessaires pour le build Docker..."
+          echo "📁 Contexte Docker: $DEPLOY_PATH"
+          echo "📋 Contenu de $DEPLOY_PATH:"
+          ls -la "$DEPLOY_PATH" | head -20 || echo "⚠️ Répertoire non trouvé ou vide"
+          
+          # Vérifier package.json (obligatoire)
+          if [ ! -f "$DEPLOY_PATH/package.json" ]; then
+            echo "❌ ERREUR: package.json n'est pas présent dans $DEPLOY_PATH"
+            echo "📋 Recherche de package.json:"
+            find "$DEPLOY_PATH" -name "package.json" 2>/dev/null || echo "❌ package.json non trouvé"
+            exit 1
+          else
+            echo "✅ package.json trouvé dans $DEPLOY_PATH"
+          fi
+          
+          # Vérifier src/ (obligatoire)
+          if [ ! -d "$DEPLOY_PATH/src" ]; then
+            echo "❌ ERREUR: src/ n'est pas présent dans $DEPLOY_PATH"
+            exit 1
+          else
+            echo "✅ src/ trouvé dans $DEPLOY_PATH"
+          fi
+          
+          # Vérifier public/ (obligatoire)
+          if [ ! -d "$DEPLOY_PATH/public" ]; then
+            echo "❌ ERREUR: public/ n'est pas présent dans $DEPLOY_PATH"
+            exit 1
+          else
+            echo "✅ public/ trouvé dans $DEPLOY_PATH"
+          fi
+          
+          cd "$DOCKER_COMPOSE_PATH"
+          
+          # Vérifier que nginx.conf existe
+          if [ ! -f "nginx.conf" ]; then
+            echo "❌ Erreur: nginx.conf n'est pas présent dans $DOCKER_COMPOSE_PATH"
+            exit 1
+          fi
+          
+          # Vérifier que compose.yaml existe
+          if [ ! -f "compose.yaml" ]; then
+            echo "❌ Erreur: compose.yaml n'est pas présent dans $DOCKER_COMPOSE_PATH"
+            exit 1
+          fi
+          
+          # Vérifier le .dockerignore dans le contexte Docker (DEPLOY_PATH) et s'assurer qu'il n'exclut pas package.json
+          echo "📋 Vérification du .dockerignore dans le contexte Docker ($DEPLOY_PATH):"
+          if [ -f "$DEPLOY_PATH/.dockerignore" ]; then
+            echo "✅ .dockerignore trouvé dans $DEPLOY_PATH"
+            echo "📄 Contenu du .dockerignore:"
+            cat "$DEPLOY_PATH/.dockerignore" | head -30
+            if grep -E "^package\.json$|^package-lock\.json$" "$DEPLOY_PATH/.dockerignore" 2>/dev/null; then
+              echo "❌ ERREUR: package.json est exclu par .dockerignore!"
+              echo "🔧 Correction du .dockerignore..."
+              # Retirer package.json du .dockerignore s'il y est
+              grep -v -E "^package\.json$|^package-lock\.json$" "$DEPLOY_PATH/.dockerignore" > "$DEPLOY_PATH/.dockerignore.tmp" && mv "$DEPLOY_PATH/.dockerignore.tmp" "$DEPLOY_PATH/.dockerignore"
+              echo "✅ .dockerignore corrigé"
+            else
+              echo "✅ package.json n'est PAS exclu par .dockerignore"
+            fi
+          else
+            echo "⚠️ .dockerignore non trouvé dans $DEPLOY_PATH (ce n'est pas grave, Docker n'utilisera pas de .dockerignore)"
+          fi
+          
+          # Vérifier le .dockerignore dans setup-front/ et s'assurer qu'il n'exclut pas nginx.conf
+          echo "📋 Vérification du .dockerignore dans setup-front/:"
+          if [ -f ".dockerignore" ]; then
+            echo "✅ .dockerignore trouvé dans setup-front/"
+            echo "📄 Contenu du .dockerignore:"
+            cat .dockerignore | head -20
+            if grep -E "^nginx\.conf$|^setup-front/nginx\.conf$" .dockerignore 2>/dev/null; then
+              echo "❌ ERREUR: nginx.conf est exclu par .dockerignore!"
+              echo "🔧 Correction du .dockerignore..."
+              # Retirer nginx.conf du .dockerignore s'il y est
+              grep -v -E "^nginx\.conf$|^setup-front/nginx\.conf$" .dockerignore > .dockerignore.tmp && mv .dockerignore.tmp .dockerignore
+              echo "✅ .dockerignore corrigé"
+            else
+              echo "✅ nginx.conf n'est PAS exclu par .dockerignore"
+            fi
+          else
+            echo "⚠️ .dockerignore non trouvé dans setup-front/ (ce n'est pas grave)"
+          fi
+          
+          # Vérifier que le fichier .env existe dans setup-front/
+          echo "📋 Vérification du fichier .env dans setup-front/:"
+          if [ ! -f ".env" ]; then
+            echo "⚠️ Fichier .env non trouvé dans setup-front/, création d'un fichier .env par défaut..."
+            cat > .env << 'ENV_FILE'
+          APP_DOMAIN=ben-djibril.kobecorporation.com
+          APP_URL=https://ben-djibril.kobecorporation.com
+          VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
+          VITE_EMAILJS_SERVICE_ID=your_service_id_here
+          VITE_EMAILJS_CONTACT_TEMPLATE_ID=your_contact_template_id_here
+          VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=your_newsletter_template_id_here
+          ENV_FILE
+            echo "⚠️ IMPORTANT: Vous devez configurer les variables EmailJS dans setup-front/.env sur le serveur!"
+          else
+            echo "✅ Fichier .env trouvé dans setup-front/"
+            echo "📋 Vérification du domaine dans .env:"
+            if grep -q "ben-djibril.kobecorporation.com" .env; then
+              echo "✅ Domaine ben-djibril.kobecorporation.com trouvé dans .env"
+            else
+              echo "⚠️ Domaine ben-djibril.kobecorporation.com non trouvé dans .env"
+            fi
+          fi
+          
+          # Build et démarrer les conteneurs
+          echo ""
+          echo "🔨 Build et démarrage des conteneurs..."
+          # Utiliser -f pour spécifier explicitement le fichier compose.yaml
+          if echo "$COMPOSE_CMD" | grep -q "docker compose"; then
+            # Pour docker compose (v2)
+            $COMPOSE_CMD -f compose.yaml pull || echo "⚠️ Pull échoué, utilisation de l'image locale"
+            $COMPOSE_CMD -f compose.yaml up -d --build --force-recreate
+          else
+            # Pour docker-compose (v1)
+            $COMPOSE_CMD -f compose.yaml pull || echo "⚠️ Pull échoué, utilisation de l'image locale"
+            $COMPOSE_CMD -f compose.yaml up -d --build --force-recreate
+          fi
+
+          # Attendre que les conteneurs soient prêts
+          echo "⏳ Attente du démarrage des conteneurs..."
+          sleep 10
+
+          # Vérifier le statut des conteneurs
+          echo "📊 Statut des conteneurs:"
+          if echo "$COMPOSE_CMD" | grep -q "docker compose"; then
+            $COMPOSE_CMD -f compose.yaml ps
+          else
+            $COMPOSE_CMD -f compose.yaml ps
+          fi
+
+          # Vérifier que le conteneur est bien démarré
+          if echo "$COMPOSE_CMD" | grep -q "docker compose"; then
+            if $COMPOSE_CMD -f compose.yaml ps | grep -q "Up"; then
+              echo "✅ Conteneurs démarrés avec succès!"
+            else
+              echo "❌ Erreur: Les conteneurs ne sont pas démarrés"
+              $COMPOSE_CMD -f compose.yaml logs
+              exit 1
+            fi
+          else
+            if $COMPOSE_CMD -f compose.yaml ps | grep -q "Up"; then
+              echo "✅ Conteneurs démarrés avec succès!"
+            else
+              echo "❌ Erreur: Les conteneurs ne sont pas démarrés"
+              $COMPOSE_CMD -f compose.yaml logs
+              exit 1
+            fi
+          fi
+
+          # Afficher les logs récents
+          echo "📋 Logs récents:"
+          if echo "$COMPOSE_CMD" | grep -q "docker compose"; then
+            $COMPOSE_CMD -f compose.yaml logs --tail=50
+          else
+            $COMPOSE_CMD -f compose.yaml logs --tail=50
+          fi
+          DEPLOY_DOCKER
+
+      - name: ✅ Verify deployment
+        run: |
+          echo "✅ Vérification du déploiement..."
+          
+          # Recréer le fichier de config SSH pour cette étape
+          mkdir -p ~/.ssh
+          cat > ~/.ssh/config << EOF
+          Host vps-deploy
+            HostName ${{ secrets.VPS_HOST }}
+            User ${{ secrets.VPS_USERNAME }}
+            Port ${{ secrets.VPS_PORT || 22 }}
+            StrictHostKeyChecking no
+            UserKnownHostsFile=/dev/null
+          EOF
+          chmod 600 ~/.ssh/config
+          
+          ssh -F ~/.ssh/config vps-deploy << 'VERIFY'
+          set -e
+          
+          # Fonction pour déterminer la commande Docker à utiliser
+          get_docker_cmd() {
+            if docker ps &> /dev/null 2>&1; then
+              echo "docker"
+            else
+              echo "sudo docker"
+            fi
+          }
+          
+          DOCKER_CMD=$(get_docker_cmd)
+          
+          # Fonction pour exécuter docker-compose (utilise sudo si nécessaire)
+          get_compose_cmd() {
+            if docker ps &> /dev/null 2>&1; then
+              if command -v docker-compose &> /dev/null; then
+                echo "docker-compose"
+              else
+                echo "docker compose"
+              fi
+            else
+              if command -v docker-compose &> /dev/null; then
+                echo "sudo docker-compose"
+              else
+                echo "sudo docker compose"
+              fi
+            fi
+          }
+          
+          COMPOSE_CMD=$(get_compose_cmd)
+          
+          DEPLOY_PATH="$HOME/kobe-corporation/ben-djibril"
+          DOCKER_COMPOSE_PATH="$DEPLOY_PATH/setup-front"
+          
+          cd "$DOCKER_COMPOSE_PATH"
+          
+          # Vérifier que le conteneur est en cours d'exécution
+          if $COMPOSE_CMD -f compose.yaml ps | grep -q "Up"; then
+            echo "✅ Déploiement réussi! Le conteneur est en cours d'exécution."
+            
+            # Afficher les informations du conteneur
+            echo ""
+            echo "📊 Informations du conteneur:"
+            $DOCKER_CMD ps --filter "name=ben-djibril-site" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+            
+            # Vérifier que le conteneur est sur le bon réseau
+            echo ""
+            echo "🌐 Vérification du réseau Docker..."
+            if $DOCKER_CMD inspect ben-djibril-site --format '{{range $key, $value := .NetworkSettings.Networks}}{{$key}}{{end}}' 2>/dev/null | grep -q "kobecorp-network"; then
+              echo "✅ Le conteneur est sur le réseau kobecorp-network"
+            else
+              echo "⚠️ Le conteneur n'est pas sur le réseau kobecorp-network"
+              echo "📋 Réseaux du conteneur:"
+              $DOCKER_CMD inspect ben-djibril-site --format '{{range $key, $value := .NetworkSettings.Networks}}{{$key}} {{end}}' 2>/dev/null || echo "Aucun réseau trouvé"
+            fi
+            
+            # Test de santé (optionnel)
+            CONTAINER_IP=$($DOCKER_CMD inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ben-djibril-site 2>/dev/null || echo "")
+            if [ -n "$CONTAINER_IP" ]; then
+              echo ""
+              echo "🌐 IP du conteneur: $CONTAINER_IP"
+              echo "🔍 Test de connectivité..."
+              curl -f http://localhost:80 > /dev/null 2>&1 && echo "✅ L'application répond sur le port 80" || echo "⚠️ L'application ne répond pas encore (peut être normal si elle démarre)"
+            fi
+          else
+            echo "❌ Erreur: Le conteneur n'est pas en cours d'exécution"
+            $COMPOSE_CMD -f compose.yaml ps
+            $COMPOSE_CMD -f compose.yaml logs --tail=100
+            exit 1
+          fi
+          VERIFY
+      
+      - name: 🎉 Deployment Summary
+        if: success()
+        run: |
+          echo ""
+          echo "🎉 =========================================="
+          echo "🎉 DÉPLOIEMENT RÉUSSI!"
+          echo "🎉 =========================================="
+          echo ""
+          echo "📦 Image Docker: ${{ env.DOCKER_IMAGE }}:latest"
+          echo "🌐 Serveur: ${{ secrets.VPS_HOST }}"
+          echo "📁 Chemin de déploiement: ~/kobe-corporation/ben-djibril/setup-front"
+          echo "🐳 Conteneur: ben-djibril-site"
+          echo "🌐 Réseau Docker: kobecorp-network"
+          echo "🔌 Port interne: 80"
+          echo ""
+          echo "✅ L'application est maintenant déployée et accessible!"
+          echo "📝 Note: Le proxy Nginx doit être configuré pour utiliser ben-djibril-site:80"
+          echo ""
