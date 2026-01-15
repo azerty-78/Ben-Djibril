@@ -65,11 +65,11 @@ function FooterBrand() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          href="mailto:contact@bendjibril.dev" 
+          href="mailto:bendjiril789@gmail.com" 
           className="flex items-start gap-3 text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors group"
         >
           <EnvelopeIcon className="w-5 h-5 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-          <span className="text-sm">contact@bendjibril.dev</span>
+          <span className="text-sm">bendjiril789@gmail.com</span>
         </motion.a>
         
         <motion.div

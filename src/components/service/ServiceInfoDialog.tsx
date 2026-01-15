@@ -187,7 +187,7 @@ function ServiceInfoDialog({ open, serviceId, onClose }: ServiceInfoDialogProps)
     } else if (contactMethod === 'email') {
       const subject = encodeURIComponent(`Demande de devis - ${title}`)
       const body = encodeURIComponent(formatEmailMessage())
-      const emailUrl = `mailto:contact@bendjibril.dev?subject=${subject}&body=${body}`
+      const emailUrl = `mailto:bendjiril789@gmail.com?subject=${subject}&body=${body}`
       window.location.href = emailUrl
     }
     

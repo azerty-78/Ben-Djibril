@@ -244,7 +244,7 @@ Les traductions sont dans `src/i18n/index.ts`.
 
 ## 📞 Contact
 
-- **Email** : contact@bendjibril.dev
+- **Email** : bendjiril789@gmail.com
 - **Téléphone** : +237 655 938 501
 - **Localisation** : Yaoundé, Cameroun
 - **WhatsApp** : [Contacter via WhatsApp](https://wa.me/237655938501)
