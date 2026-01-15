@@ -948,6 +948,14 @@ jobs:
           cp -r src .deploy/ 2>/dev/null || echo "src/ non trouvé"
           cp -r public .deploy/ 2>/dev/null || echo "public/ non trouvé"
           
+          # Copier le fichier .env depuis setup-front/ (important pour le déploiement)
+          if [ -f "setup-front/.env" ]; then
+            cp setup-front/.env .deploy/setup-front/.env
+            echo "✅ Fichier .env copié dans .deploy/setup-front/"
+          else
+            echo "⚠️ Fichier setup-front/.env non trouvé"
+          fi
+          
           # Vérifier que nginx.conf est bien dans setup-front/
           if [ ! -f ".deploy/setup-front/nginx.conf" ]; then
             echo "❌ Erreur: nginx.conf n'est pas dans .deploy/setup-front/"
@@ -1018,9 +1026,9 @@ jobs:
               sudo rm -rf /opt/ben-djibril || true
             fi
             
-            # Créer la structure de dossiers pour ben-djibril (à côté de blogpress)
+            # Créer la structure de dossiers pour ben-djibril dans kobe-corporation
             echo "📁 Création de la structure de dossiers..."
-            mkdir -p ~/ben-djibril/setup-front
+            mkdir -p ~/kobe-corporation/ben-djibril/setup-front
             
             echo "✅ Nettoyage terminé"
           EOF
@@ -1038,15 +1046,16 @@ jobs:
           chmod 600 ~/.ssh/known_hosts 2>/dev/null || true
           
           # Copier setup-front/ vers le serveur
-          # IMPORTANT: Utiliser --include pour s'assurer que nginx.conf est copié
+          # IMPORTANT: Utiliser --include pour s'assurer que nginx.conf et .env sont copiés
           rsync -avz --delete \
             --include="nginx.conf" \
+            --include=".env" \
             -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
             .deploy/setup-front/ \
-            ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/ben-djibril/setup-front/
+            ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/setup-front/
           
-          # Copier les fichiers nécessaires pour le build Docker à la racine de ~/ben-djibril/
-          # Le docker-compose.yml utilise context: .. donc le contexte est ~/ben-djibril/ (parent de setup-front/)
+          # Copier les fichiers nécessaires pour le build Docker à la racine de ~/kobe-corporation/ben-djibril/
+          # Le docker-compose.yml utilise context: .. donc le contexte est ~/kobe-corporation/ben-djibril/ (parent de setup-front/)
           echo "📦 Copie des fichiers de build à la racine..."
           
           # Copier package.json (obligatoire)
@@ -1054,7 +1063,7 @@ jobs:
             rsync -avz \
               -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
               .deploy/package.json \
-              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/ben-djibril/
+              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/
           else
             echo "❌ Erreur: package.json n'existe pas dans .deploy/"
             exit 1
@@ -1065,7 +1074,7 @@ jobs:
             rsync -avz \
               -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
               .deploy/package-lock.json \
-              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/ben-djibril/
+              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/
           fi
           
           # Copier les fichiers de configuration nécessaires
@@ -1074,7 +1083,7 @@ jobs:
               rsync -avz \
                 -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
                 .deploy/$file \
-                ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/ben-djibril/
+                ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/
             fi
           done
           
@@ -1083,7 +1092,7 @@ jobs:
             rsync -avz \
               -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
               .deploy/src/ \
-              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/ben-djibril/src/
+              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/src/
           else
             echo "❌ Erreur: src/ n'existe pas dans .deploy/"
             exit 1
@@ -1093,7 +1102,7 @@ jobs:
             rsync -avz \
               -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
               .deploy/public/ \
-              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/ben-djibril/public/
+              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/public/
           else
             echo "❌ Erreur: public/ n'existe pas dans .deploy/"
             exit 1
@@ -1107,7 +1116,7 @@ jobs:
             ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'VERIFY_FILES'
           set -e
           
-          DEPLOY_PATH="$HOME/ben-djibril"
+          DEPLOY_PATH="$HOME/kobe-corporation/ben-djibril"
           
           echo "📋 Vérification de $DEPLOY_PATH/package.json:"
           if [ -f "$DEPLOY_PATH/package.json" ]; then
@@ -1188,7 +1197,7 @@ jobs:
           
           COMPOSE_CMD=$(get_compose_cmd)
           
-          DEPLOY_PATH="$HOME/ben-djibril"
+          DEPLOY_PATH="$HOME/kobe-corporation/ben-djibril"
           DOCKER_COMPOSE_PATH="$DEPLOY_PATH/setup-front"
           
           # Vérifier que les fichiers nécessaires sont présents dans le contexte Docker (DEPLOY_PATH)
@@ -1280,6 +1289,8 @@ jobs:
           if [ ! -f ".env" ]; then
             echo "⚠️ Fichier .env non trouvé dans setup-front/, création d'un fichier .env par défaut..."
             cat > .env << 'ENV_FILE'
+          APP_DOMAIN=ben-djibril.kobecorporation.com
+          APP_URL=https://ben-djibril.kobecorporation.com
           VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
           VITE_EMAILJS_SERVICE_ID=your_service_id_here
           VITE_EMAILJS_CONTACT_TEMPLATE_ID=your_contact_template_id_here
@@ -1288,6 +1299,12 @@ jobs:
             echo "⚠️ IMPORTANT: Vous devez configurer les variables EmailJS dans setup-front/.env sur le serveur!"
           else
             echo "✅ Fichier .env trouvé dans setup-front/"
+            echo "📋 Vérification du domaine dans .env:"
+            if grep -q "ben-djibril.kobecorporation.com" .env; then
+              echo "✅ Domaine ben-djibril.kobecorporation.com trouvé dans .env"
+            else
+              echo "⚠️ Domaine ben-djibril.kobecorporation.com non trouvé dans .env"
+            fi
           fi
           
           # Build et démarrer les conteneurs
@@ -1393,7 +1410,7 @@ jobs:
           
           COMPOSE_CMD=$(get_compose_cmd)
           
-          DEPLOY_PATH="$HOME/ben-djibril"
+          DEPLOY_PATH="$HOME/kobe-corporation/ben-djibril"
           DOCKER_COMPOSE_PATH="$DEPLOY_PATH/setup-front"
           
           cd "$DOCKER_COMPOSE_PATH"
@@ -1444,7 +1461,7 @@ jobs:
           echo ""
           echo "📦 Image Docker: ${{ env.DOCKER_IMAGE }}:latest"
           echo "🌐 Serveur: ${{ secrets.VPS_HOST }}"
-          echo "📁 Chemin de déploiement: ~/ben-djibril/setup-front"
+          echo "📁 Chemin de déploiement: ~/kobe-corporation/ben-djibril/setup-front"
           echo "🐳 Conteneur: ben-djibril-site"
           echo "🌐 Réseau Docker: kobecorp-network"
           echo "🔌 Port interne: 80"
