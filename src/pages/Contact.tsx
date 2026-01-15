@@ -5,7 +5,7 @@ import ContactStats from '../components/contact/ContactStats'
 import ContactWhyChoose from '../components/contact/ContactWhyChoose'
 import ContactForm from '../components/contact/ContactForm'
 import ContactCards from '../components/contact/ContactCards'
-import ContactTestimonials from '../components/contact/ContactTestimonials'
+// import ContactTestimonials from '../components/contact/ContactTestimonials'
 import ContactMap from '../components/contact/ContactMap'
 import ContactFAQ from '../components/contact/ContactFAQ'
 import ContactCTA from '../components/contact/ContactCTA'
@@ -23,7 +23,7 @@ function Contact() {
       <ContactWhyChoose />
       <ContactForm />
       <ContactCards />
-      <ContactTestimonials />
+      {/* <ContactTestimonials /> */}
       <ContactMap />
       <ContactFAQ />
       <ContactCTA />
