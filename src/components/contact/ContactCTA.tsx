@@ -152,7 +152,7 @@ function ContactCTA() {
             </Link>
 
             <a
-              href="mailto:contact@bendjibril.dev"
+              href="mailto:bendjiril789@gmail.com"
               className="group relative inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 w-full sm:w-auto"
             >
               <span>{t('contact.cta.emailDirect')}</span>

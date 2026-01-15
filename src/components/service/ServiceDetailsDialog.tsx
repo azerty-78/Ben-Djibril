@@ -754,7 +754,7 @@ function ServiceDetailsDialog({ open, planId, onClose }: ServiceDetailsDialogPro
                       WhatsApp
                     </a>
                     <a
-                      href="mailto:contact@bendjibril.dev"
+                      href="mailto:bendjiril789@gmail.com"
                       className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-secondary-600 hover:bg-secondary-700 text-white text-sm font-semibold rounded-lg transition-colors"
                     >
                       <InformationCircleIcon className="w-5 h-5" />
