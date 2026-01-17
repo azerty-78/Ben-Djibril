@@ -277,6 +277,11 @@ function SEO({
         name: 'Kone Djibril Benjamin',
         alternateName: 'Ben Djibril'
       },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Kobe Corporation',
+        url: 'https://www.kobecorporation.com'
+      },
       inLanguage: ['fr', 'en'],
       potentialAction: {
         '@type': 'SearchAction',
@@ -285,6 +290,29 @@ function SEO({
           urlTemplate: `${baseUrl}/?q={search_term_string}`
         },
         'query-input': 'required name=search_term_string'
+      }
+    }
+    
+    // Organization Schema - Pour Kobe Corporation
+    const organizationSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Kobe Corporation',
+      url: 'https://www.kobecorporation.com',
+      logo: `${baseUrl}/favicon.png`,
+      sameAs: [
+        'https://www.facebook.com/share/1apyznqNgf/',
+        'https://www.instagram.com/le_bendji',
+        'https://x.com/le_bendji',
+        'https://www.linkedin.com/in/Ben-Djibril',
+        'https://github.com/azerty-78',
+      ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+237-655-938-501',
+        contactType: 'Customer Service',
+        areaServed: 'Worldwide',
+        availableLanguage: ['fr', 'en']
       }
     }
     
