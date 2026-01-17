@@ -143,12 +143,19 @@ npm run lint
 
 ```
 ben-djibril/
-├── public/                 # Fichiers statiques
-│   ├── favicon.jpg        # Favicon du site
-│   └── vite.svg           # (remplacé par favicon)
+├── public/                 # Fichiers statiques et SEO
+│   ├── favicon.png        # Favicon du site
+│   ├── sitemap.xml        # Plan du site XML pour le référencement
+│   ├── robots.txt         # Instructions pour les robots d'indexation
+│   ├── manifest.json      # Web App Manifest (PWA)
+│   ├── google-site-verification.html  # Vérification Google Search Console
+│   ├── humans.txt         # Informations sur le site et l'équipe
+│   └── .well-known/       # Fichiers de sécurité
+│       └── security.txt   # Politique de sécurité
 ├── src/
 │   ├── assets/            # Assets (images, etc.)
-│   │   └── bendjibril.jpg # Photo de profil
+│   │   ├── ben-djibirl/   # Images de profil et portfolio
+│   │   └── trust-company/ # Logos des entreprises de confiance
 │   ├── components/        # Composants réutilisables
 │   │   ├── ui/            # Composants UI de base
 │   │   │   ├── TechStack.tsx
@@ -159,6 +166,8 @@ ben-djibril/
 │   │   │   ├── TestimonialCard.tsx
 │   │   │   ├── CertificationCard.tsx
 │   │   │   └── MobileMenu.tsx
+│   │   ├── seo/           # Composants SEO
+│   │   │   └── SEO.tsx    # Composant SEO avec données structurées JSON-LD
 │   │   └── sections/     # Sections de pages
 │   │       ├── HeroSection.tsx
 │   │       ├── AboutSection.tsx
@@ -220,7 +229,7 @@ Les traductions sont dans `src/i18n/index.ts`.
 - ✅ **Design responsive** - Optimisé pour tous les écrans
 - ✅ **Animations fluides** - Framer Motion pour les interactions
 - ✅ **Formulaire de contact** - Intégration EmailJS
-- ✅ **SEO-friendly** - Meta tags optimisés par page
+- ✅ **SEO-friendly** - Meta tags optimisés, sitemap.xml, robots.txt, données structurées JSON-LD
 - ✅ **Performance optimisée** - Lazy loading, prefetch, images optimisées
 - ✅ **Accessibilité** - Composants Headless UI
 - ✅ **Error Boundary** - Gestion d'erreurs globale
@@ -272,13 +281,27 @@ const TEMPLATE_ID = 'votre-template-id'
 
 ## 🚀 Déploiement
 
-### Vercel (Recommandé)
+### Production
+Le site est déployé sur **ben-djibril.kobecorporation.com** avec :
+- ✅ HTTPS/SSL (Let's Encrypt)
+- ✅ Nginx reverse proxy
+- ✅ Support des fichiers SEO (sitemap.xml, robots.txt, manifest.json)
+- ✅ HSTS activé
+- ✅ Cache des assets statiques
+
+### Build et déploiement
+```bash
+npm run build
+# Les fichiers optimisés seront dans dist/
+```
+
+### Vercel (Alternative)
 ```bash
 npm install -g vercel
 vercel
 ```
 
-### Netlify
+### Netlify (Alternative)
 ```bash
 npm run build
 # Déployer le dossier dist/ sur Netlify
@@ -287,10 +310,68 @@ npm run build
 ### Autres plateformes
 Le build génère un dossier `dist/` statique qui peut être déployé sur n'importe quel hébergeur statique.
 
+## 🔍 Référencement (SEO)
+
+Le site est optimisé pour le référencement avec :
+
+### Fichiers SEO
+- ✅ **sitemap.xml** - Plan du site XML avec toutes les pages importantes
+  - Format conforme sitemap.org 0.9
+  - Support multilingue (hreflang FR/EN)
+  - Dates `lastmod` à jour
+  - Priorités et fréquences définies
+  - URL : `https://ben-djibril.kobecorporation.com/sitemap.xml`
+
+- ✅ **robots.txt** - Instructions pour les robots d'indexation
+  - Autorisation de tous les robots de recherche
+  - Référence au sitemap
+  - Support des robots d'IA modernes (GPTBot, ChatGPT-User, etc.)
+  - URL : `https://ben-djibril.kobecorporation.com/robots.txt`
+
+- ✅ **manifest.json** - Web App Manifest (PWA)
+  - Métadonnées complètes pour PWA
+  - Icônes configurées (192x192, 512x512)
+  - URL : `https://ben-djibril.kobecorporation.com/manifest.json`
+
+### Composant SEO React
+Le composant `SEO.tsx` est utilisé sur toutes les pages et fournit :
+- Meta tags dynamiques (title, description, keywords)
+- Open Graph tags (og:title, og:description, og:image, etc.)
+- Twitter Card tags
+- Données structurées JSON-LD :
+  - `Person` (Kone Djibril Benjamin)
+  - `WebSite`
+  - `BreadcrumbList`
+  - `ProfessionalService` (page Services)
+- Canonical URLs
+- Balises `hreflang` pour le multilingue
+- Meta robots optimisés
+
+### Configuration Nginx
+La configuration nginx proxy inclut :
+- Content-Type corrects pour sitemap.xml, robots.txt, manifest.json
+- Cache configuré pour les fichiers SEO
+- Logs SEO séparés
+- Support des fichiers de vérification Google Search Console
+
+### Tests de référencement
+```bash
+# Vérifier le sitemap
+curl -I https://ben-djibril.kobecorporation.com/sitemap.xml
+
+# Vérifier robots.txt
+curl -I https://ben-djibril.kobecorporation.com/robots.txt
+
+# Valider les données structurées
+# Utiliser Google Rich Results Test : https://search.google.com/test/rich-results
+```
+
 ## 📄 Licence
 
-Propriétaire - Tous droits réservés © 2024 Ben Djibril
+Propriétaire - Tous droits réservés © 2024-2026 Ben Djibril (Kone Djibril Benjamin)
 
 ---
 
-**Développé avec ❤️ par Ben Djibril**
+**Développé avec ❤️ par Ben Djibril (Kone Djibril Benjamin)**
+
+**Site web** : https://ben-djibril.kobecorporation.com
