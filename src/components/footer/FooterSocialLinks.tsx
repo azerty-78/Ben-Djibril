@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaXTwitter, FaWhatsapp } from 'react-icons/fa6'
+import { FaGithub, FaLinkedin, FaXTwitter, FaWhatsapp, FaFacebook, FaInstagram } from 'react-icons/fa6'
 
 interface SocialLink {
   href: string
@@ -18,6 +18,22 @@ const socialLinks: SocialLink[] = [
     bgColor: 'bg-success-500',
     hoverBgColor: 'hover:bg-success-600',
     textColor: 'text-white'
+  },
+  {
+    href: 'https://www.facebook.com/share/1apyznqNgf/',
+    icon: FaFacebook,
+    label: 'Facebook',
+    bgColor: 'bg-secondary-100 dark:bg-secondary-800',
+    hoverBgColor: 'hover:bg-primary-600 dark:hover:bg-primary-600',
+    textColor: 'text-secondary-700 dark:text-secondary-300 hover:text-white'
+  },
+  {
+    href: 'https://www.instagram.com/le_bendji?igsh=MTRmcjlyZTJmdDRncQ==',
+    icon: FaInstagram,
+    label: 'Instagram',
+    bgColor: 'bg-secondary-100 dark:bg-secondary-800',
+    hoverBgColor: 'hover:bg-primary-600 dark:hover:bg-primary-600',
+    textColor: 'text-secondary-700 dark:text-secondary-300 hover:text-white'
   },
   {
     href: 'https://x.com/le_bendji',
