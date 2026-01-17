@@ -102,6 +102,12 @@ function SEO({
     updateMetaTag('author', 'Kone Djibril Benjamin (Ben Djibril)')
     updateMetaTag('name', 'Ben Djibril - Kone Djibril Benjamin')
     updateMetaTag('application-name', 'Ben Djibril Portfolio')
+    updateMetaTag('publisher', 'Kobe Corporation')
+    updateMetaTag('creator', 'Kone Djibril Benjamin (Ben Djibril)')
+    
+    // Vérification des moteurs de recherche (à remplir après création des comptes)
+    // updateMetaTag('google-site-verification', 'VOTRE_CODE_GOOGLE_SEARCH_CONSOLE')
+    // updateMetaTag('msvalidate.01', 'VOTRE_CODE_BING_WEBMASTER')
     
     // Robots et crawlers - autoriser tous les robots à indexer
     updateMetaTag('robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')
@@ -136,6 +142,8 @@ function SEO({
 
     // Twitter Card
     updateMetaTag('twitter:card', twitterCard)
+    updateMetaTag('twitter:site', '@le_bendji')
+    updateMetaTag('twitter:creator', '@le_bendji')
     updateMetaTag('twitter:title', ogTitle || document.title)
     updateMetaTag('twitter:description', ogDescription || metaDescription)
     updateMetaTag('twitter:image', `${baseUrl}${ogImage}`)
@@ -211,7 +219,12 @@ function SEO({
       url: currentUrl,
       image: `${baseUrl}${ogImage}`,
       sameAs: [
-        // Ajoutez vos réseaux sociaux ici si vous en avez
+        'https://www.facebook.com/share/1apyznqNgf/',
+        'https://www.instagram.com/le_bendji',
+        'https://x.com/le_bendji',
+        'https://www.linkedin.com/in/Ben-Djibril',
+        'https://github.com/azerty-78',
+        'https://www.kobecorporation.com',
       ],
       knowsAbout: [
         'DevOps',
@@ -264,6 +277,11 @@ function SEO({
         name: 'Kone Djibril Benjamin',
         alternateName: 'Ben Djibril'
       },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Kobe Corporation',
+        url: 'https://www.kobecorporation.com'
+      },
       inLanguage: ['fr', 'en'],
       potentialAction: {
         '@type': 'SearchAction',
@@ -272,6 +290,29 @@ function SEO({
           urlTemplate: `${baseUrl}/?q={search_term_string}`
         },
         'query-input': 'required name=search_term_string'
+      }
+    }
+    
+    // Organization Schema - Pour Kobe Corporation
+    const organizationSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Kobe Corporation',
+      url: 'https://www.kobecorporation.com',
+      logo: `${baseUrl}/favicon.png`,
+      sameAs: [
+        'https://www.facebook.com/share/1apyznqNgf/',
+        'https://www.instagram.com/le_bendji',
+        'https://x.com/le_bendji',
+        'https://www.linkedin.com/in/Ben-Djibril',
+        'https://github.com/azerty-78',
+      ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+237-655-938-501',
+        contactType: 'Customer Service',
+        areaServed: 'Worldwide',
+        availableLanguage: ['fr', 'en']
       }
     }
     
@@ -327,6 +368,7 @@ function SEO({
     const schemas = [
       personSchema,
       websiteSchema,
+      organizationSchema,
       breadcrumbSchema,
       ...(professionalServiceSchema ? [professionalServiceSchema] : [])
     ]
