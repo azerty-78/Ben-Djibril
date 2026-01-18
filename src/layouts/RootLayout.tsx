@@ -6,12 +6,14 @@ import Navbar from '../shared/Navbar'
 import Footer from '../shared/Footer'
 import Loading from '../components/ui/Loading'
 import { usePrefetch } from '../hooks/usePrefetch'
+import { useHoverPrefetch } from '../hooks/useHoverPrefetch'
 import { useScrollToTop } from '../hooks/useScrollToTop'
 import { useNavigationLoading } from '../hooks/useNavigationLoading'
 import profileImage from '../assets/bendjibril.jpg'
 
 function RootLayout() {
   usePrefetch()
+  useHoverPrefetch() // Préchargement au survol des liens
   useScrollToTop()
   const isLoading = useNavigationLoading()
   const [isProfileImageOpen, setIsProfileImageOpen] = useState(false)

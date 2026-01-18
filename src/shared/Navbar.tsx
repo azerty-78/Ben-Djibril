@@ -24,13 +24,26 @@ function Navbar({ onProfileImageClick }: NavbarProps) {
     setIsMenuOpen(false)
   }, [location.pathname])
 
-  // Détecter le scroll pour améliorer l'effet visuel
+  // Détecter le scroll pour améliorer l'effet visuel (optimisé avec throttle)
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10)
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    
+    // Utiliser requestAnimationFrame pour une meilleure performance
+    let ticking = false
+    const optimizedScrollHandler = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll()
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    window.addEventListener('scroll', optimizedScrollHandler, { passive: true })
+    return () => window.removeEventListener('scroll', optimizedScrollHandler)
   }, [])
 
   const linkBase = 'px-3 xl:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative group'

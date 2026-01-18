@@ -26,36 +26,42 @@ function MobileMenu({ onNavigate }: MobileMenuProps) {
   const scrollToSection = (sectionId: string, path: string = '/services') => {
     handleNavigation(() => {
       navigate(path)
-      setTimeout(() => {
-        const section = document.querySelector(`[data-section="${sectionId}"]`)
-        if (section) {
-          const offset = 80 // Offset for sticky header
-          const elementPosition = section.getBoundingClientRect().top
-          const offsetPosition = elementPosition + window.pageYOffset - offset
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          })
-        }
-      }, 100)
+      // Utiliser requestAnimationFrame pour une meilleure synchronisation avec le rendu React
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const section = document.querySelector(`[data-section="${sectionId}"]`)
+          if (section) {
+            const offset = 80 // Offset for sticky header
+            const elementPosition = section.getBoundingClientRect().top
+            const offsetPosition = elementPosition + window.pageYOffset - offset
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            })
+          }
+        })
+      })
     })
   }
 
   const scrollToSubSection = (sectionId: string, path: string = '/services') => {
     handleNavigation(() => {
       navigate(path)
-      setTimeout(() => {
-        const section = document.querySelector(`[data-subsection="${sectionId}"]`)
-        if (section) {
-          const offset = 80
-          const elementPosition = section.getBoundingClientRect().top
-          const offsetPosition = elementPosition + window.pageYOffset - offset
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          })
-        }
-      }, 100)
+      // Utiliser requestAnimationFrame pour une meilleure synchronisation
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const section = document.querySelector(`[data-subsection="${sectionId}"]`)
+          if (section) {
+            const offset = 80
+            const elementPosition = section.getBoundingClientRect().top
+            const offsetPosition = elementPosition + window.pageYOffset - offset
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            })
+          }
+        })
+      })
     })
   }
 
