@@ -181,6 +181,19 @@ function ProjectsHero() {
             </Link>
             <a
               href="#projects-grid"
+              onClick={(e) => {
+                e.preventDefault()
+                const element = document.getElementById('projects-grid')
+                if (element) {
+                  const offset = 80
+                  const elementPosition = element.getBoundingClientRect().top
+                  const offsetPosition = elementPosition + window.pageYOffset - offset
+                  window.scrollTo({
+                    top: Math.max(0, offsetPosition),
+                    behavior: 'smooth'
+                  })
+                }
+              }}
               className="btn-secondary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-3.5 w-full sm:w-auto text-center transition-all duration-200"
               aria-label={t('projects.ctaSecondary')}
             >

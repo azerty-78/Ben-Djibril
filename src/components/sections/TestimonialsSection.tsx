@@ -53,7 +53,7 @@ function TestimonialsSection() {
   }
 
   return (
-    <section data-section="testimonials" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden">
+    <section id="testimonials" data-section="testimonials" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5 dark:opacity-10">
         <div className="absolute top-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-primary-400 rounded-full blur-3xl" />

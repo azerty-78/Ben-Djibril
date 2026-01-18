@@ -8,7 +8,7 @@ function AboutSection() {
   const { t } = useTranslation()
 
   return (
-    <section data-section="about" className="py-16 md:py-20 bg-gradient-to-br from-white via-primary-50/30 to-accent-50/20 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800 relative overflow-hidden">
+    <section id="about" data-section="about" className="py-16 md:py-20 bg-gradient-to-br from-white via-primary-50/30 to-accent-50/20 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-30 dark:opacity-20 pointer-events-none">
         <motion.div
