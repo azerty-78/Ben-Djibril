@@ -331,9 +331,12 @@ jobs:
             # Tags sémantiques basés sur la version
             type=semver,pattern={{version}},enable=${{ needs.tags.outputs.is_release == 'true' }}
             type=semver,pattern={{major}}.{{minor}},enable=${{ needs.tags.outputs.is_release == 'true' }}
-            # Tags de branche et SHA (fallback)
+            # Tags de branche (fallback pour les branches)
             type=ref,event=branch
-            type=sha,prefix={{branch}}-
+            # Tag SHA avec préfixe de branche (seulement si branche valide)
+            type=sha,prefix={{branch}}-,enable=${{ github.event_name != 'pull_request' && github.ref_name != '' }}
+            # Tag SHA simple (fallback pour PRs et autres cas)
+            type=sha,enable=${{ github.event_name == 'pull_request' || github.ref_name == '' }}
             # Tag latest uniquement sur la branche principale
             type=raw,value=latest,enable={{is_default_branch}}
             # Tags pour les PRs
@@ -449,11 +452,56 @@ jobs:
             TAGS="${{ env.DOCKER_IMAGE }}:latest ${{ env.DOCKER_IMAGE }}:${{ github.sha }}"
           fi
 
+          # Valider et filtrer les tags invalides
+          VALID_TAGS=""
+          for tag in $TAGS; do
+            # Nettoyer le tag (supprimer les espaces)
+            tag=$(echo "$tag" | xargs)
+            
+            # Vérifier que le tag n'est pas vide
+            if [ -z "$tag" ]; then
+              continue
+            fi
+            
+            # Vérifier que le tag ne commence pas par un tiret ou un point
+            if [[ "$tag" =~ ^[-.] ]]; then
+              echo "⚠️ Tag invalide (commence par - ou .): $tag"
+              continue
+            fi
+            
+            # Vérifier que le tag contient au moins un caractère valide après le :
+            if [[ "$tag" =~ : ]]; then
+              # Le tag contient un :, vérifier qu'il y a quelque chose après
+              if [[ "$tag" =~ :[-.] ]] || [[ "$tag" =~ :$ ]]; then
+                echo "⚠️ Tag invalide (format après : invalide): $tag"
+                continue
+              fi
+            fi
+            
+            # Tag valide
+            VALID_TAGS="$VALID_TAGS $tag"
+            echo "✅ Tag valide: $tag"
+          done
+
+          # Si aucun tag valide, utiliser un fallback
+          if [ -z "$VALID_TAGS" ]; then
+            echo "⚠️ Aucun tag valide trouvé, utilisation du fallback"
+            SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+            if [ "${{ github.event_name }}" == "pull_request" ]; then
+              VALID_TAGS="${{ env.DOCKER_IMAGE }}:pr-${{ github.event.pull_request.number }}-${SHORT_SHA}"
+            else
+              VALID_TAGS="${{ env.DOCKER_IMAGE }}:${SHORT_SHA}"
+            fi
+            echo "✅ Utilisation du tag fallback: $VALID_TAGS"
+          fi
+
           # Construire les arguments --tag
           TAG_ARGS=""
-          for tag in $TAGS; do
+          for tag in $VALID_TAGS; do
             TAG_ARGS="$TAG_ARGS --tag $tag"
           done
+
+          echo "📋 Tags finaux à utiliser: $VALID_TAGS"
 
           # Construire l'image avec buildx directement (plus fiable que docker build avec DOCKER_BUILDKIT)
           # Utiliser --pull pour forcer le pull des images de base avec authentification
