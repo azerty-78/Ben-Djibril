@@ -4,13 +4,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import Navbar from '../shared/Navbar'
 import Footer from '../shared/Footer'
+import Loading from '../components/ui/Loading'
 import { usePrefetch } from '../hooks/usePrefetch'
 import { useScrollToTop } from '../hooks/useScrollToTop'
+import { useNavigationLoading } from '../hooks/useNavigationLoading'
 import profileImage from '../assets/bendjibril.jpg'
 
 function RootLayout() {
   usePrefetch()
   useScrollToTop()
+  const isLoading = useNavigationLoading()
   const [isProfileImageOpen, setIsProfileImageOpen] = useState(false)
 
   // Bloquer le scroll du body quand la lightbox est ouverte
@@ -42,6 +45,7 @@ function RootLayout() {
   
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-primary-50 to-secondary-100 dark:from-secondary-900 dark:to-secondary-800">
+      <Loading isLoading={isLoading} />
       <Navbar onProfileImageClick={() => setIsProfileImageOpen(true)} />
       <main className="flex-1">
         <div className="w-full">

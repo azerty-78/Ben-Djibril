@@ -42,13 +42,32 @@ export default defineConfig({
   },
   build: {
     assetsDir: 'assets',
+    // Optimisation des performances mobiles : réduire la taille des chunks
+    chunkSizeWarningLimit: 1000,
+    // Minification optimisée pour la production
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Supprimer les console.log en production
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
       output: {
         assetFileNames: 'assets/[name].[hash].[ext]',
         chunkFileNames: 'assets/[name].[hash].js',
         entryFileNames: 'assets/[name].[hash].js',
+        // Optimisation : séparer les vendors pour un meilleur cache
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'animation-vendor': ['framer-motion'],
+          'i18n-vendor': ['i18next', 'react-i18next'],
+        },
       },
     },
+    // Optimisation pour les performances mobiles
+    cssCodeSplit: true,
+    sourcemap: false, // Désactiver les sourcemaps en production pour réduire la taille
   },
 })
 

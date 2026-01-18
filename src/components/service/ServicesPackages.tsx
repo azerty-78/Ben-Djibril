@@ -284,9 +284,23 @@ function ServicesPackages() {
             <div
               ref={saasScrollRef}
               className="flex gap-4 overflow-x-auto overflow-y-visible pb-4 pt-6 md:pt-6 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0"
+              style={{
+                WebkitOverflowScrolling: 'touch',
+                scrollBehavior: 'smooth',
+                // Optimisation pour le scroll sur mobile
+                willChange: 'scroll-position',
+              }}
             >
               {/* Good Deal – en premier sur mobile, au centre sur desktop */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:-translate-y-2 md:scale-105 md:order-2 relative">
+              <div 
+                className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:-translate-y-2 md:scale-105 md:order-2 relative"
+                style={{
+                  // Optimisation GPU pour le scroll
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
                 <PackageCard
                   name={t('services.saas.goodDeal.name')}
                   price={billingPeriod === 'annual' ? t('services.saas.goodDeal.annualPriceShort') : t('services.saas.goodDeal.price')}
@@ -309,7 +323,14 @@ function ServicesPackages() {
               </div>
 
               {/* Normal */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-1">
+              <div 
+                className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-1"
+                style={{
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
                     <PackageCard
                       name={t('services.saas.pro.name')}
                       price={billingPeriod === 'annual' ? t('services.saas.pro.annualPriceShort') : t('services.saas.pro.price')}
@@ -329,7 +350,14 @@ function ServicesPackages() {
               </div>
 
               {/* Premium */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-3">
+              <div 
+                className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-3"
+                style={{
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
                     <PackageCard
                       name={t('services.saas.ultra.name')}
                       price={billingPeriod === 'annual' ? t('services.saas.ultra.annualPriceShort') : t('services.saas.ultra.price')}
@@ -460,9 +488,21 @@ function ServicesPackages() {
             <div
               ref={fullScrollRef}
               className="flex gap-4 overflow-x-auto overflow-y-visible pb-4 pt-6 snap-x snap-mandatory scrollbar-hide md:pb-0 md:grid md:grid-cols-3 md:gap-8 md:pt-4 md:overflow-visible md:snap-none -mx-4 px-6 md:mx-0 md:px-0"
+              style={{
+                WebkitOverflowScrolling: 'touch',
+                scrollBehavior: 'smooth',
+                willChange: 'scroll-position',
+              }}
             >
               {/* Speed – en premier sur mobile, au centre sur desktop */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:-translate-y-2 md:scale-105 md:order-2 relative">
+              <div 
+                className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:-translate-y-2 md:scale-105 md:order-2 relative"
+                style={{
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
                 <PackageCard
                   name={t('services.fullControl.speed.name')}
                   price={t('services.fullControl.speed.price')}
@@ -487,7 +527,14 @@ function ServicesPackages() {
               </div>
 
               {/* Ultra Speed */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-1">
+              <div 
+                className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-1"
+                style={{
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
                 <PackageCard
                   name={t('services.fullControl.ultraSpeed.name')}
                   price={t('services.fullControl.ultraSpeed.price')}
@@ -509,7 +556,14 @@ function ServicesPackages() {
               </div>
 
               {/* Normal */}
-              <div className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-3">
+              <div 
+                className="min-w-[calc(100vw-3rem)] sm:min-w-[320px] flex-shrink-0 snap-center md:min-w-0 w-full md:w-auto md:translate-y-2 md:order-3"
+                style={{
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
                 <PackageCard
                   name={t('services.fullControl.normal.name')}
                   price={t('services.fullControl.normal.price')}

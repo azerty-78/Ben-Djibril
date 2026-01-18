@@ -7,15 +7,37 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Optimisation des performances mobiles : améliorer le rendu */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   
   body {
     @apply font-sans antialiased;
+    /* Optimisation : réduire les reflows/repaints */
+    -webkit-overflow-scrolling: touch;
+    /* Optimisation du scroll sur mobile */
+    overscroll-behavior-y: contain;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold;
   }
+
+  /* Optimisation des images pour mobile */
+  img {
+    max-width: 100%;
+    height: auto;
+    /* Améliorer le rendu des images sur mobile */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  /* Optimisation : améliorer les performances de scroll */
+  /* Note: on n'applique pas transform: translateZ(0) à tous les éléments
+     car cela peut causer des problèmes de rendu. On l'utilise seulement 
+     sur les éléments animés via will-change ou lors des animations */
 }
 
 @layer components {
