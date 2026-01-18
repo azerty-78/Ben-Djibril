@@ -14,9 +14,17 @@ export function useNavigationLoading() {
   const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
-    // Si le pathname a changé, on démarre le chargement
+    // Si le pathname a changé, on démarre le chargement IMMÉDIATEMENT
     if (location.pathname !== previousPathname.current) {
+      // Afficher le loader AVANT tout pour masquer la transition
       setIsLoading(true)
+      
+      // Forcer le scroll vers le haut IMMÉDIATEMENT pendant que le loader est visible
+      // Cela évite de voir l'effet de scroll désagréable
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      window.scrollTo(0, 0)
+      
       previousPathname.current = location.pathname
 
       // Nettoyer les timeouts et intervalles précédents

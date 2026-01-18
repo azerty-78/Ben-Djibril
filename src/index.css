@@ -34,6 +34,16 @@
     image-rendering: crisp-edges;
   }
 
+  /* Corriger le problème Edge avec les images lazy */
+  img[loading="lazy"] {
+    content-visibility: auto;
+  }
+
+  /* Images eager ne doivent pas être affectées */
+  img[loading="eager"] {
+    content-visibility: visible;
+  }
+
   /* Optimisation : améliorer les performances de scroll */
   /* Note: on n'applique pas transform: translateZ(0) à tous les éléments
      car cela peut causer des problèmes de rendu. On l'utilise seulement 

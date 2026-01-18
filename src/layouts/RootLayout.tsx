@@ -47,11 +47,30 @@ function RootLayout() {
     }
   }, [isProfileImageOpen])
   
+  // Bloquer le scroll pendant le chargement pour éviter l'effet désagréable
+  useEffect(() => {
+    if (isLoading) {
+      // Bloquer le scroll pendant le chargement
+      document.body.style.overflow = 'hidden'
+      // Forcer le scroll vers le haut
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      window.scrollTo(0, 0)
+    } else {
+      // Réactiver le scroll une fois le chargement terminé
+      document.body.style.overflow = ''
+    }
+    
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isLoading])
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-primary-50 to-secondary-100 dark:from-secondary-900 dark:to-secondary-800">
       <Loading isLoading={isLoading} />
       <Navbar onProfileImageClick={() => setIsProfileImageOpen(true)} />
-      <main className="flex-1">
+      <main className="flex-1" style={{ visibility: isLoading ? 'hidden' : 'visible' }}>
         <div className="w-full">
           <Outlet />
         </div>

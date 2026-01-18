@@ -169,7 +169,8 @@ function HeroSection() {
                       src={company.logo}
                       alt={company.name}
                       className="w-full h-full object-cover transition-all duration-300 group-hover:scale-110"
-                      loading="lazy"
+                      loading="eager"
+                      fetchPriority="high"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
