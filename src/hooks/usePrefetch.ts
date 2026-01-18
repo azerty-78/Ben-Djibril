@@ -64,22 +64,28 @@ export function usePrefetch() {
         ROUTES[currentRouteIndex - 1],
       ].filter(Boolean) as string[]
 
-      // Précharger avec un léger délai pour ne pas bloquer le rendu initial
-      setTimeout(() => {
+      // Précharger immédiatement les routes adjacentes (plus agressif)
+      requestAnimationFrame(() => {
         adjacentRoutes.forEach(route => prefetchRoute(route))
-      }, 2000) // Attendre 2 secondes après le chargement de la page
+      })
     }
 
-    // Précharger les routes les plus visitées en arrière-plan
+    // Précharger les routes les plus visitées en arrière-plan (plus rapide)
     // (Home, Services, Contact sont les plus courantes)
     if (!prefetchedRoutes.has('/') && location.pathname !== '/') {
-      setTimeout(() => prefetchRoute('/'), 3000)
+      requestAnimationFrame(() => {
+        setTimeout(() => prefetchRoute('/'), 500)
+      })
     }
     if (!prefetchedRoutes.has('/services') && location.pathname !== '/services') {
-      setTimeout(() => prefetchRoute('/services'), 4000)
+      requestAnimationFrame(() => {
+        setTimeout(() => prefetchRoute('/services'), 700)
+      })
     }
     if (!prefetchedRoutes.has('/contact') && location.pathname !== '/contact') {
-      setTimeout(() => prefetchRoute('/contact'), 5000)
+      requestAnimationFrame(() => {
+        setTimeout(() => prefetchRoute('/contact'), 900)
+      })
     }
   }, [location.pathname, prefetchRoute])
 }

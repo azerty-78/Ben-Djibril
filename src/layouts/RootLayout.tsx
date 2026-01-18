@@ -7,6 +7,7 @@ import Footer from '../shared/Footer'
 import Loading from '../components/ui/Loading'
 import { usePrefetch } from '../hooks/usePrefetch'
 import { useHoverPrefetch } from '../hooks/useHoverPrefetch'
+import { usePreloadRoutes } from '../hooks/usePreloadRoutes'
 import { useScrollToTop } from '../hooks/useScrollToTop'
 import { useNavigationLoading } from '../hooks/useNavigationLoading'
 import profileImage from '../assets/bendjibril.jpg'
@@ -14,6 +15,7 @@ import profileImage from '../assets/bendjibril.jpg'
 function RootLayout() {
   usePrefetch()
   useHoverPrefetch() // Préchargement au survol des liens
+  usePreloadRoutes() // Préchargement agressif des chunks JS
   useScrollToTop()
   const isLoading = useNavigationLoading()
   const [isProfileImageOpen, setIsProfileImageOpen] = useState(false)

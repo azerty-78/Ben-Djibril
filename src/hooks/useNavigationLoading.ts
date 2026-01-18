@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
 /**
- * Hook pour gérer l'état de chargement pendant la navigation
- * Affiche un loader jusqu'à ce que la section hero de la page soit visible
+ * Hook optimisé pour gérer l'état de chargement pendant la navigation
+ * Détection ultra-rapide de la section hero pour une navigation fluide
  */
 export function useNavigationLoading() {
   const location = useLocation()
@@ -11,6 +11,7 @@ export function useNavigationLoading() {
   const previousPathname = useRef(location.pathname)
   const loadingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const checkIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
     // Si le pathname a changé, on démarre le chargement
@@ -25,103 +26,104 @@ export function useNavigationLoading() {
       if (checkIntervalRef.current) {
         clearInterval(checkIntervalRef.current)
       }
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
 
-      // Fonction pour vérifier si la section hero est visible
+      // Fonction optimisée pour vérifier si la section hero est visible
       const checkHeroVisible = (): boolean => {
-        // Essayer plusieurs sélecteurs pour trouver la section hero
+        // Sélecteurs optimisés par ordre de probabilité
         const heroSelectors = [
+          'section:first-of-type',
+          'main > div > section:first-child',
           'section[class*="hero" i]',
           '[data-section="hero"]',
-          '.hero-section',
-          'section:first-of-type',
           '[class*="Hero"]',
-          'main section:first-child',
         ]
 
-        let heroElement: Element | null = null
+        // Utiliser querySelector qui est plus rapide que querySelectorAll
         for (const selector of heroSelectors) {
           try {
-            heroElement = document.querySelector(selector)
-            if (heroElement) break
+            const heroElement = document.querySelector(selector)
+            if (heroElement) {
+              const rect = heroElement.getBoundingClientRect()
+              // Vérification simplifiée : si l'élément existe et est dans le viewport supérieur
+              if (rect.top >= 0 && rect.top < window.innerHeight * 0.6) {
+                return true
+              }
+            }
           } catch (e) {
-            // Ignorer les sélecteurs invalides
             continue
           }
         }
 
-        // Si on trouve un élément hero, vérifier s'il est dans la fenêtre
-        if (heroElement) {
-          const rect = heroElement.getBoundingClientRect()
-          // Vérifier si la section hero est visible (même partiellement)
-          const isVisible = rect.top < window.innerHeight && rect.bottom > 0
-
-          if (isVisible && rect.top >= 0 && rect.top < window.innerHeight * 0.5) {
-            // La section hero est dans la partie supérieure de l'écran
+        // Fallback : vérifier le premier élément principal
+        const firstSection = document.querySelector('section, main > div, [data-section]')
+        if (firstSection) {
+          const rect = firstSection.getBoundingClientRect()
+          if (rect.top >= 0 && rect.top < window.innerHeight * 0.4) {
             return true
-          }
-        } else {
-          // Si pas de hero trouvé, utiliser le premier élément principal visible
-          const firstSection = document.querySelector('section, main > div > section, [data-section]')
-          if (firstSection) {
-            const rect = firstSection.getBoundingClientRect()
-            const isVisible = rect.top >= 0 && rect.top < window.innerHeight * 0.3
-
-            if (isVisible) {
-              return true
-            }
           }
         }
 
         return false
       }
 
-      // Attendre que React ait rendu le nouveau contenu
-      // Utiliser requestAnimationFrame pour s'assurer que le DOM est mis à jour
-      const startChecking = () => {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            // Vérifier immédiatement si la section hero est déjà visible
-            if (checkHeroVisible()) {
-              setTimeout(() => {
-                setIsLoading(false)
-              }, 150)
-              return
-            }
-
-            // Sinon, vérifier périodiquement
-            let attempts = 0
-            const maxAttempts = 40 // 40 * 50ms = 2 secondes max
-
-            checkIntervalRef.current = setInterval(() => {
-              attempts++
-              if (checkHeroVisible() || attempts >= maxAttempts) {
-                if (checkIntervalRef.current) {
-                  clearInterval(checkIntervalRef.current)
-                  checkIntervalRef.current = null
-                }
-                // Petit délai pour s'assurer que tout est bien rendu
-                setTimeout(() => {
-                  setIsLoading(false)
-                }, 150)
-              }
-            }, 50) // Vérifier toutes les 50ms
-          })
-        })
+      // Fonction de vérification optimisée avec requestAnimationFrame
+      const performCheck = () => {
+        if (checkHeroVisible()) {
+          // Détecté ! Masquer immédiatement le loader
+          setIsLoading(false)
+          return true
+        }
+        return false
       }
 
-      startChecking()
+      // Vérification ultra-rapide avec plusieurs tentatives en raf
+      let attempts = 0
+      const maxAttempts = 20 // Réduit de 40 à 20 pour être plus rapide
+      
+      const checkWithRAF = () => {
+        attempts++
+        
+        if (performCheck()) {
+          return // Trouvé, on arrête
+        }
 
-      // Timeout de sécurité : arrêter le chargement après 2.5 secondes maximum
+        if (attempts < maxAttempts) {
+          rafRef.current = requestAnimationFrame(checkWithRAF)
+        } else {
+          // Si après 20 tentatives on n'a rien trouvé, masquer quand même
+          setIsLoading(false)
+        }
+      }
+
+      // Démarrer la vérification immédiatement
+      // Utiliser plusieurs requestAnimationFrame pour s'assurer que le DOM est prêt
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = requestAnimationFrame(() => {
+          if (!performCheck()) {
+            // Si pas trouvé immédiatement, continuer avec les vérifications
+            rafRef.current = requestAnimationFrame(checkWithRAF)
+          }
+        })
+      })
+
+      // Timeout de sécurité réduit : arrêter après 800ms maximum (au lieu de 2.5s)
       loadingTimeoutRef.current = setTimeout(() => {
-        if (checkIntervalRef.current) {
-          clearInterval(checkIntervalRef.current)
-          checkIntervalRef.current = null
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current)
+          rafRef.current = null
         }
         setIsLoading(false)
-      }, 2500)
+      }, 800) // Réduit de 2500ms à 800ms
 
-      // Nettoyer à la destruction du composant
+      // Nettoyer à la destruction
       return () => {
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current)
+          rafRef.current = null
+        }
         if (checkIntervalRef.current) {
           clearInterval(checkIntervalRef.current)
           checkIntervalRef.current = null
