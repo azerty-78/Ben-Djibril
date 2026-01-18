@@ -218,8 +218,6 @@ const Navbar = memo(function Navbar({ onProfileImageClick }: NavbarProps) {
       </div>
     </header>
   )
-}
-
 })
 
 export default Navbar
