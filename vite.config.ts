@@ -44,17 +44,9 @@ export default defineConfig({
     assetsDir: 'assets',
     // Optimisation des performances mobiles : réduire la taille des chunks
     chunkSizeWarningLimit: 1000,
-    // Minification optimisée pour la production
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true, // Supprimer les console.log en production
-        drop_debugger: true,
-      },
-      format: {
-        comments: false, // Supprimer les commentaires
-      },
-    },
+    // Minification optimisée pour la production (esbuild est plus rapide que terser)
+    minify: 'esbuild',
+    // Note: esbuild supprime automatiquement les console.log en production
     rollupOptions: {
       output: {
         assetFileNames: 'assets/[name].[hash].[ext]',
