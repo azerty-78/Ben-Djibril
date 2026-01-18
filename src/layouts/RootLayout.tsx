@@ -9,7 +9,7 @@ import { usePrefetch } from '../hooks/usePrefetch'
 import { useHoverPrefetch } from '../hooks/useHoverPrefetch'
 import { usePreloadRoutes } from '../hooks/usePreloadRoutes'
 import { useScrollToTop } from '../hooks/useScrollToTop'
-import { useNavigationLoading } from '../hooks/useNavigationLoading'
+import { useProgressiveLoading } from '../hooks/useProgressiveLoading'
 import profileImage from '../assets/bendjibril.jpg'
 
 function RootLayout() {
@@ -17,7 +17,7 @@ function RootLayout() {
   useHoverPrefetch() // Préchargement au survol des liens
   usePreloadRoutes() // Préchargement agressif des chunks JS
   useScrollToTop()
-  const isLoading = useNavigationLoading()
+  const { isLoading, progress, loadingStage } = useProgressiveLoading()
   const [isProfileImageOpen, setIsProfileImageOpen] = useState(false)
 
   // Bloquer le scroll du body quand la lightbox est ouverte
@@ -52,13 +52,23 @@ function RootLayout() {
     if (isLoading) {
       // Bloquer le scroll pendant le chargement
       document.body.style.overflow = 'hidden'
-      // Forcer le scroll vers le haut
+      // Forcer le scroll vers le haut immédiatement
       document.documentElement.scrollTop = 0
       document.body.scrollTop = 0
       window.scrollTo(0, 0)
+      
+      // Forcer plusieurs fois pour garantir
+      requestAnimationFrame(() => {
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+        window.scrollTo(0, 0)
+      })
     } else {
       // Réactiver le scroll une fois le chargement terminé
-      document.body.style.overflow = ''
+      // Petit délai pour s'assurer que le rendu est complet
+      requestAnimationFrame(() => {
+        document.body.style.overflow = ''
+      })
     }
     
     return () => {
@@ -68,9 +78,15 @@ function RootLayout() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-primary-50 to-secondary-100 dark:from-secondary-900 dark:to-secondary-800">
-      <Loading isLoading={isLoading} />
+      <Loading isLoading={isLoading} progress={progress} stage={loadingStage} />
+      {/* Navbar et Footer mémorisés - ne se rechargent pas lors de la navigation */}
       <Navbar onProfileImageClick={() => setIsProfileImageOpen(true)} />
-      <main className="flex-1" style={{ visibility: isLoading ? 'hidden' : 'visible' }}>
+      <main className="flex-1" style={{ 
+        // Afficher le contenu dès l'étape 'rendering' pour une transition fluide
+        opacity: isLoading && loadingStage !== 'rendering' && loadingStage !== 'complete' ? 0 : 1,
+        pointerEvents: isLoading && loadingStage !== 'rendering' && loadingStage !== 'complete' ? 'none' : 'auto',
+        transition: 'opacity 0.3s ease-in-out'
+      }}>
         <div className="w-full">
           <Outlet />
         </div>

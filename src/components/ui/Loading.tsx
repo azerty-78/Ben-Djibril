@@ -2,9 +2,26 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 interface LoadingProps {
   isLoading: boolean
+  progress?: number
+  stage?: 'starting' | 'loading' | 'rendering' | 'complete'
 }
 
-function Loading({ isLoading }: LoadingProps) {
+function Loading({ isLoading, progress = 0, stage = 'loading' }: LoadingProps) {
+  const getStageText = () => {
+    switch (stage) {
+      case 'starting':
+        return 'Initialisation...'
+      case 'loading':
+        return 'Chargement...'
+      case 'rendering':
+        return 'Rendu...'
+      case 'complete':
+        return 'Finalisation...'
+      default:
+        return 'Chargement...'
+    }
+  }
+
   return (
     <AnimatePresence mode="wait">
       {isLoading && (
@@ -19,7 +36,7 @@ function Loading({ isLoading }: LoadingProps) {
             style={{ willChange: 'opacity' }}
           />
           
-          {/* Loading Content - Animation optimisée */}
+          {/* Loading Content - Animation optimisée avec progression */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -28,7 +45,7 @@ function Loading({ isLoading }: LoadingProps) {
             className="fixed inset-0 z-[10000] flex items-center justify-center"
             style={{ willChange: 'transform, opacity' }}
           >
-            <div className="flex flex-col items-center gap-3 sm:gap-4">
+            <div className="flex flex-col items-center gap-4 sm:gap-5">
               {/* Spinner optimisé */}
               <div className="relative w-12 h-12 sm:w-16 sm:h-16" style={{ willChange: 'transform' }}>
                 <motion.div
@@ -53,16 +70,36 @@ function Loading({ isLoading }: LoadingProps) {
                 />
               </div>
               
-              {/* Text - Animation plus rapide */}
-              <motion.p
+              {/* Progress Bar */}
+              <div className="w-48 sm:w-64 max-w-full px-4">
+                <div className="h-1.5 sm:h-2 bg-secondary-200 dark:bg-secondary-700 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    className="h-full bg-gradient-to-r from-primary-600 via-primary-500 to-accent-500 rounded-full"
+                    style={{ willChange: 'width' }}
+                  />
+                </div>
+              </div>
+              
+              {/* Text avec étape */}
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.15 }}
-                className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-400 font-medium"
+                className="text-center"
               >
-                Chargement...
-              </motion.p>
+                <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-400 font-medium">
+                  {getStageText()}
+                </p>
+                {progress > 0 && (
+                  <p className="text-[10px] sm:text-xs text-secondary-500 dark:text-secondary-500 mt-1">
+                    {Math.round(progress)}%
+                  </p>
+                )}
+              </motion.div>
             </div>
           </motion.div>
         </>

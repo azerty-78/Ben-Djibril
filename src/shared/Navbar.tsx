@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useState, useEffect } from 'react'
@@ -13,7 +14,7 @@ type NavbarProps = {
   onProfileImageClick?: () => void
 }
 
-function Navbar({ onProfileImageClick }: NavbarProps) {
+const Navbar = memo(function Navbar({ onProfileImageClick }: NavbarProps) {
   const { t } = useTranslation()
   const location = useLocation()
   const [scrolled, setScrolled] = useState(false)
@@ -218,5 +219,7 @@ function Navbar({ onProfileImageClick }: NavbarProps) {
     </header>
   )
 }
+
+})
 
 export default Navbar
