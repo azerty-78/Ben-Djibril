@@ -9,8 +9,8 @@ export function useNavigationLoading() {
   const location = useLocation()
   const [isLoading, setIsLoading] = useState(false)
   const previousPathname = useRef(location.pathname)
-  const loadingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const checkIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const checkIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const rafRef = useRef<number | null>(null)
 
   useEffect(() => {

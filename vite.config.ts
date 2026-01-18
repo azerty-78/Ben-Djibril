@@ -51,6 +51,9 @@ export default defineConfig({
         drop_console: true, // Supprimer les console.log en production
         drop_debugger: true,
       },
+      format: {
+        comments: false, // Supprimer les commentaires
+      },
     },
     rollupOptions: {
       output: {

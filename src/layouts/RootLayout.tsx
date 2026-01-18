@@ -78,7 +78,11 @@ function RootLayout() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-primary-50 to-secondary-100 dark:from-secondary-900 dark:to-secondary-800">
-      <Loading isLoading={isLoading} progress={progress} stage={loadingStage} />
+      <Loading 
+        isLoading={isLoading} 
+        progress={progress} 
+        stage={loadingStage === 'idle' ? 'loading' : loadingStage} 
+      />
       {/* Navbar et Footer mémorisés - ne se rechargent pas lors de la navigation */}
       <Navbar onProfileImageClick={() => setIsProfileImageOpen(true)} />
       <main className="flex-1" style={{ 

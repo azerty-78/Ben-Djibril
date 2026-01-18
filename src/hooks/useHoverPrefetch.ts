@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react'
  */
 export function useHoverPrefetch() {
   const prefetchedOnHover = useRef(new Set<string>())
-  const linkTimeoutsRef = useRef(new Map<Element, NodeJS.Timeout>())
+  const linkTimeoutsRef = useRef(new Map<Element, ReturnType<typeof setTimeout>>())
 
   useEffect(() => {
     const linkTimeouts = linkTimeoutsRef.current

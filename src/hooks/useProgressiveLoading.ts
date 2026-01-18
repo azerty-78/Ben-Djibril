@@ -12,7 +12,7 @@ export function useProgressiveLoading() {
   const [loadingStage, setLoadingStage] = useState<LoadingStage>('idle')
   const [progress, setProgress] = useState(0)
   const previousPathname = useRef(location.pathname)
-  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
