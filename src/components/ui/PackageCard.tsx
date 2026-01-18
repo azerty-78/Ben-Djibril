@@ -53,12 +53,18 @@ function PackageCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
+      // Désactiver les animations hover sur mobile pour améliorer les performances
       whileHover={{ y: -4, scale: 1.015, zIndex: 5 }}
       whileTap={{ scale: 0.98, zIndex: 5 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
       className={`card relative w-full overflow-visible ${
         popular ? 'ring-2 ring-primary-500 dark:ring-primary-400 md:scale-105 pt-6 md:pt-6 before:absolute before:inset-0 before:rounded-2xl before:bg-primary-500/5 before:blur-2xl before:-z-10' : ''
       } ${className ?? ''}`}
+      style={{
+        // Optimisation GPU pour le scroll horizontal
+        willChange: 'transform',
+        transform: 'translateZ(0)',
+      }}
     >
       {popular && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">

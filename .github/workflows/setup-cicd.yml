@@ -16,14 +16,14 @@ on:
     branches:
       - main
       - master
-  workflow_dispatch:  # Permet de déclencher manuellement depuis GitHub
+  workflow_dispatch: # Permet de déclencher manuellement depuis GitHub
 
 # ==========================================
 # PERMISSIONS
 # ==========================================
 permissions:
-  contents: write  # Nécessaire pour créer des releases et pousser des tags
-  packages: write  # Nécessaire pour pousser des images Docker (si utilisé)
+  contents: write # Nécessaire pour créer des releases et pousser des tags
+  packages: write # Nécessaire pour pousser des images Docker (si utilisé)
 
 # ==========================================
 # VARIABLES GLOBALES
@@ -50,19 +50,19 @@ jobs:
       tag_type: ${{ steps.tag.outputs.type }}
       is_release: ${{ steps.tag.outputs.is_release }}
       semantic_version: ${{ steps.tag.outputs.semantic_version }}
-    
+
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: ⚙️ Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-      
+
       - name: 📋 Extract Version & Info
         id: version
         run: |
@@ -74,7 +74,7 @@ jobs:
           echo "👤 Auteur: $(git log -1 --pretty=%an)"
           echo "📅 Date: $(git log -1 --pretty=%cd --date=format:%Y-%m-%d\ %H:%M:%S)"
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          
+
           # Lire la version depuis package.json (méthode bash pure)
           if [ -f "package.json" ]; then
             # Extraire la version avec grep et sed (méthode simple et fiable)
@@ -88,12 +88,12 @@ jobs:
             echo "⚠️ package.json non trouvé, utilisation de la version par défaut"
             echo "version=0.0.0" >> $GITHUB_OUTPUT
           fi
-          
+
           # Afficher les 10 derniers tags
           echo ""
           echo "📋 Tags existants (10 derniers):"
           git tag -l --sort=-version:refname | head -10 || echo "  Aucun tag trouvé"
-          
+
           # Afficher les informations du commit
           echo ""
           echo "📝 Dernier commit:"
@@ -101,13 +101,13 @@ jobs:
           COMMIT_MSG_FIRST_LINE=$(git log -1 --pretty=%B | head -n 1)
           echo "  Message: $COMMIT_MSG_FIRST_LINE"
           echo "  Auteur: $(git log -1 --pretty='%an <%ae>')"
-      
+
       - name: 📊 Analyze Changes
         id: changes
         run: |
           echo "📊 Analyse des changements:"
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          
+
           # Compter les fichiers modifiés
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             FILES_CHANGED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | wc -l)
@@ -133,7 +133,7 @@ jobs:
               echo "ℹ️ Premier commit de la branche"
             fi
           fi
-          
+
           # Détecter le type de changement (feat, fix, etc.)
           COMMIT_MSG=$(git log -1 --pretty=%B)
           if echo "$COMMIT_MSG" | grep -qiE "^(feat|feature)"; then
@@ -151,11 +151,11 @@ jobs:
           else
             CHANGE_TYPE="📝 Update"
           fi
-          
+
           echo ""
           echo "🏷️ Type de changement détecté: $CHANGE_TYPE"
           echo "change_type=$CHANGE_TYPE" >> $GITHUB_OUTPUT
-      
+
       - name: 🏷️ Create Git Tag
         id: tag
         if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
@@ -167,10 +167,10 @@ jobs:
           AUTHOR=$(git log -1 --pretty=%an)
           DATE=$(git log -1 --pretty=%cd --date=format:%Y-%m-%d\ %H:%M:%S)
           SHORT_SHA=$(echo $SHA | cut -c1-7)
-          
+
           # Détecter le type de changement pour déterminer le type de tag
           CHANGE_TYPE="${{ steps.changes.outputs.change_type }}"
-          
+
           # Si la version est 0.0.0, créer un tag de développement
           # Sinon, créer un tag sémantique (v1.0.0, v1.1.0, etc.)
           if [ "$VERSION" = "0.0.0" ]; then
@@ -195,18 +195,18 @@ jobs:
               echo "🎉 Création d'un tag sémantique: $TAG_NAME"
             fi
           fi
-          
+
           # Créer le message du tag enrichi (format simplifié pour éviter les problèmes YAML)
           TAG_MESSAGE="Release $TAG_NAME - Version: $VERSION - Commit: $SHA - Branch: $BRANCH - Auteur: $AUTHOR - Date: $DATE - Type: $TAG_TYPE - Changement: $CHANGE_TYPE - Message: $COMMIT_MSG - Généré automatiquement par GitHub Actions"
-          
+
           # Créer le tag annoté
           git tag -a "$TAG_NAME" -m "$TAG_MESSAGE" "$SHA"
-          
+
           echo "✅ Tag créé: $TAG_NAME"
           echo "name=$TAG_NAME" >> $GITHUB_OUTPUT
           echo "created=true" >> $GITHUB_OUTPUT
           echo "type=$TAG_TYPE" >> $GITHUB_OUTPUT
-          
+
           # Détecter si c'est une release sémantique (version != 0.0.0 et tag sémantique)
           if [ "$VERSION" != "0.0.0" ] && [ "$TAG_TYPE" = "semantic" ]; then
             echo "is_release=true" >> $GITHUB_OUTPUT
@@ -216,7 +216,7 @@ jobs:
             echo "is_release=false" >> $GITHUB_OUTPUT
             echo "semantic_version=" >> $GITHUB_OUTPUT
           fi
-      
+
       - name: 🚀 Push Tags
         if: steps.tag.outputs.created == 'true'
         run: |
@@ -227,7 +227,7 @@ jobs:
             exit 0  # Ne pas faire échouer le workflow si le tag existe déjà
           }
           echo "✅ Tag $TAG_NAME poussé avec succès"
-      
+
       - name: 📋 Summary
         run: |
           echo ""
@@ -249,7 +249,7 @@ jobs:
             echo "ℹ️ Aucun tag créé (PR ou branche non principale)"
           fi
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  
+
   # ==========================================
   # JOB 2: Build Docker Image
   # ==========================================
@@ -257,25 +257,25 @@ jobs:
     needs: tags
     name: 🔨 Build & Push Docker Image
     runs-on: ubuntu-latest
-    
+
     steps:
       # Étape 1: Checkout du code
       - name: 📥 Checkout code
         uses: actions/checkout@v4
-      
+
       # Étape 2: Nettoyer et recréer les contextes Docker correctement
       - name: 🧹 Setup Docker Properly
         run: |
           # Supprimer seulement les contextes corrompus (pas buildx car BuildKit en a besoin)
           rm -rf ~/.docker/contexts 2>/dev/null || true
-          
+
           # Recréer la structure de contextes correctement
           mkdir -p ~/.docker/contexts/meta
-          
+
           # Créer le répertoire pour le contexte "." (hash de l'erreur)
           CONTEXT_DIR=~/.docker/contexts/meta/cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8
           mkdir -p "$CONTEXT_DIR"
-          
+
           # Créer le fichier meta.json pour le contexte "."
           cat > "$CONTEXT_DIR/meta.json" <<'EOF'
           {
@@ -291,7 +291,7 @@ jobs:
             }
           }
           EOF
-          
+
           # Vérifier que le fichier a été créé
           if [ -f "$CONTEXT_DIR/meta.json" ]; then
             echo "✅ Contexte Docker '.' créé avec succès"
@@ -299,16 +299,16 @@ jobs:
             echo "❌ Erreur: Impossible de créer le contexte"
             exit 1
           fi
-      
+
       # Étape 3: Login à DockerHub (TOUJOURS nécessaire pour pull les images de base)
       - name: 🔐 Login to DockerHub
         run: |
           # Utiliser docker login directement (le contexte "." existe maintenant)
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-          
+
           # Vérifier le login en testant un pull d'image publique
           echo "✅ Login DockerHub réussi"
-          
+
           # Test: essayer de pull node:22.13.1-alpine pour vérifier l'authentification
           echo "Test: Pull de node:22.13.1-alpine..."
           docker pull node:22.13.1-alpine || {
@@ -318,7 +318,7 @@ jobs:
             exit 1
           }
           echo "✅ Pull de node:22.13.1-alpine réussi"
-      
+
       # Étape 4: Extract metadata (tags, labels) avec intégration des tags Git
       - name: 📋 Extract metadata
         id: meta
@@ -327,18 +327,21 @@ jobs:
           images: ${{ env.DOCKER_IMAGE }}
           tags: |
             # Tags Git (prioritaires si disponibles)
-            type=raw,value=${{ needs.tags.outputs.tag_name }},enable=${{ needs.tags.outputs.tag_created }}
+            type=raw,value=${{ needs.tags.outputs.tag_name }},enable=${{ needs.tags.outputs.tag_created == 'true' }}
             # Tags sémantiques basés sur la version
-            type=semver,pattern={{version}},enable=${{ needs.tags.outputs.is_release }}
-            type=semver,pattern={{major}}.{{minor}},enable=${{ needs.tags.outputs.is_release }}
-            # Tags de branche et SHA (fallback)
+            type=semver,pattern={{version}},enable=${{ needs.tags.outputs.is_release == 'true' }}
+            type=semver,pattern={{major}}.{{minor}},enable=${{ needs.tags.outputs.is_release == 'true' }}
+            # Tags de branche (fallback pour les branches)
             type=ref,event=branch
-            type=sha,prefix={{branch}}-
+            # Tag SHA avec préfixe de branche (seulement si branche valide)
+            type=sha,prefix={{branch}}-,enable=${{ github.event_name != 'pull_request' && github.ref_name != '' }}
+            # Tag SHA simple (fallback pour PRs et autres cas)
+            type=sha,enable=${{ github.event_name == 'pull_request' || github.ref_name == '' }}
             # Tag latest uniquement sur la branche principale
             type=raw,value=latest,enable={{is_default_branch}}
             # Tags pour les PRs
             type=ref,event=pr
-      
+
       # Étape 5: Lire les variables depuis le fichier .env
       - name: 📄 Load environment variables
         id: env
@@ -354,7 +357,7 @@ jobs:
               echo ""
             fi
           }
-          
+
           # Lire les variables depuis setup-front/.env si le fichier existe
           if [ -f "setup-front/.env" ]; then
             echo "✅ Fichier .env trouvé, lecture des variables..."
@@ -425,7 +428,7 @@ jobs:
             echo "VITE_EMAILJS_CONTACT_TEMPLATE_ID=" >> $GITHUB_ENV
             echo "VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID=" >> $GITHUB_ENV
           fi
-      
+
       # Étape 6: Build Docker Image (le contexte "." existe maintenant)
       - name: 🔨 Build Docker Image
         run: |
@@ -433,32 +436,77 @@ jobs:
           # Docker buildx le recréera automatiquement
           echo "🧹 Nettoyage de buildx avant le build..."
           rm -rf ~/.docker/buildx 2>/dev/null || true
-          
+
           # Créer un builder buildx par défaut si nécessaire
           echo "🔧 Initialisation de buildx..."
           docker buildx create --name builder --use 2>/dev/null || docker buildx use builder 2>/dev/null || echo "⚠️  Builder buildx déjà existant ou création échouée"
           docker buildx inspect --bootstrap >/dev/null 2>&1 || echo "⚠️  Bootstrap buildx (peut être normal)"
-          
+
           # Le login a déjà été vérifié dans l'étape précédente
           echo "✅ Prêt pour le build Docker (login vérifié dans l'étape précédente)"
-          
+
           # Préparer les tags
           TAGS="${{ steps.meta.outputs.tags }}"
           if [ -z "$TAGS" ]; then
             # Fallback si metadata-action ne fonctionne pas
             TAGS="${{ env.DOCKER_IMAGE }}:latest ${{ env.DOCKER_IMAGE }}:${{ github.sha }}"
           fi
-          
+
+          # Valider et filtrer les tags invalides
+          VALID_TAGS=""
+          for tag in $TAGS; do
+            # Nettoyer le tag (supprimer les espaces)
+            tag=$(echo "$tag" | xargs)
+            
+            # Vérifier que le tag n'est pas vide
+            if [ -z "$tag" ]; then
+              continue
+            fi
+            
+            # Vérifier que le tag ne commence pas par un tiret ou un point
+            if [[ "$tag" =~ ^[-.] ]]; then
+              echo "⚠️ Tag invalide (commence par - ou .): $tag"
+              continue
+            fi
+            
+            # Vérifier que le tag contient au moins un caractère valide après le :
+            if [[ "$tag" =~ : ]]; then
+              # Le tag contient un :, vérifier qu'il y a quelque chose après
+              if [[ "$tag" =~ :[-.] ]] || [[ "$tag" =~ :$ ]]; then
+                echo "⚠️ Tag invalide (format après : invalide): $tag"
+                continue
+              fi
+            fi
+            
+            # Tag valide
+            VALID_TAGS="$VALID_TAGS $tag"
+            echo "✅ Tag valide: $tag"
+          done
+
+          # Si aucun tag valide, utiliser un fallback
+          if [ -z "$VALID_TAGS" ]; then
+            echo "⚠️ Aucun tag valide trouvé, utilisation du fallback"
+            SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+            if [ "${{ github.event_name }}" == "pull_request" ]; then
+              VALID_TAGS="${{ env.DOCKER_IMAGE }}:pr-${{ github.event.pull_request.number }}-${SHORT_SHA}"
+            else
+              VALID_TAGS="${{ env.DOCKER_IMAGE }}:${SHORT_SHA}"
+            fi
+            echo "✅ Utilisation du tag fallback: $VALID_TAGS"
+          fi
+
           # Construire les arguments --tag
           TAG_ARGS=""
-          for tag in $TAGS; do
+          for tag in $VALID_TAGS; do
             TAG_ARGS="$TAG_ARGS --tag $tag"
           done
-          
+
+          echo "📋 Tags finaux à utiliser: $VALID_TAGS"
+
           # Construire l'image avec buildx directement (plus fiable que docker build avec DOCKER_BUILDKIT)
           # Utiliser --pull pour forcer le pull des images de base avec authentification
           # Les variables EmailJS sont maintenant dans l'environnement depuis l'étape précédente
-          
+
           # Déterminer les options de push
           if [ "${{ github.event_name }}" != "pull_request" ]; then
             # Push directement avec buildx (plus efficace)
@@ -509,7 +557,7 @@ jobs:
               --build-arg VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID="${VITE_EMAILJS_NEWSLETTER_TEMPLATE_ID}" \
               ${{ env.DOCKER_CONTEXT }}
           fi
-      
+
       # Étape 7: Afficher les informations de l'image
       - name: 📊 Image Info
         if: success()
@@ -520,7 +568,7 @@ jobs:
           echo ""
           echo "📋 Images Docker disponibles:"
           docker images | grep "${{ env.DOCKER_IMAGE }}" || echo "⚠️  Aucune image locale trouvée (normal si --push a été utilisé)"
-  
+
   # ==========================================
   # JOB 3: Test Docker Image (optionnel pour l'instant)
   # ==========================================
@@ -528,26 +576,26 @@ jobs:
     name: 🧪 Test Docker Image
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name != 'pull_request'  # Skip tests sur PR
-    
+    if: github.event_name != 'pull_request' # Skip tests sur PR
+
     steps:
       # Étape 1: Checkout
       - name: 📥 Checkout code
         uses: actions/checkout@v4
-      
+
       # Étape 2: Nettoyer et recréer les contextes Docker correctement
       - name: 🧹 Setup Docker Properly
         run: |
           # Supprimer seulement les contextes corrompus
           rm -rf ~/.docker/contexts 2>/dev/null || true
-          
+
           # Recréer la structure de contextes correctement
           mkdir -p ~/.docker/contexts/meta
-          
+
           # Créer le répertoire pour le contexte "." (hash de l'erreur)
           CONTEXT_DIR=~/.docker/contexts/meta/cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8
           mkdir -p "$CONTEXT_DIR"
-          
+
           # Créer le fichier meta.json pour le contexte "."
           cat > "$CONTEXT_DIR/meta.json" <<'EOF'
           {
@@ -563,7 +611,7 @@ jobs:
             }
           }
           EOF
-          
+
           # Vérifier que le fichier a été créé
           if [ -f "$CONTEXT_DIR/meta.json" ]; then
             echo "✅ Contexte Docker '.' créé avec succès"
@@ -571,18 +619,18 @@ jobs:
             echo "❌ Erreur: Impossible de créer le contexte"
             exit 1
           fi
-      
+
       # Étape 3: Login à DockerHub
       - name: 🔐 Login to DockerHub
         run: |
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           echo "✅ Login DockerHub réussi"
-      
+
       # Étape 4: Pull l'image buildée depuis Docker Hub
       - name: 🐳 Pull Docker Image
         run: |
           echo "📥 Pull de l'image Docker depuis Docker Hub..."
-          
+
           # Liste des tags à essayer (par ordre de priorité)
           TAGS_TO_TRY=(
             "${{ env.DOCKER_IMAGE }}:latest"
@@ -590,10 +638,10 @@ jobs:
             "${{ env.DOCKER_IMAGE }}:${{ github.sha }}"
             "${{ env.DOCKER_IMAGE }}:${{ github.ref_name }}-${{ github.sha }}"
           )
-          
+
           PULL_SUCCESS=0
           PULLED_TAG=""
-          
+
           for tag in "${TAGS_TO_TRY[@]}"; do
             echo "Tentative de pull: $tag"
             if docker pull "$tag" 2>/dev/null; then
@@ -605,13 +653,13 @@ jobs:
               echo "⚠️  Tag $tag non disponible, essai suivant..."
             fi
           done
-          
+
           if [ "$PULL_SUCCESS" -eq 0 ]; then
             echo "❌ Erreur: Impossible de pull l'image avec aucun des tags essayés"
             echo "Tags essayés: ${TAGS_TO_TRY[*]}"
             exit 1
           fi
-          
+
           # Vérifier que l'image est bien présente localement
           if docker images | grep -q "${{ env.DOCKER_IMAGE }}"; then
             echo "✅ Image confirmée localement:"
@@ -620,17 +668,17 @@ jobs:
             echo "❌ Erreur: Image non trouvée localement après le pull"
             exit 1
           fi
-          
+
           # Exporter le tag pullé pour les étapes suivantes
           echo "PULLED_TAG=$PULLED_TAG" >> $GITHUB_ENV
-      
+
       # Étape 5: Test basique (vérifier que le conteneur démarre)
       - name: ✅ Test Container Start
         run: |
           # Utiliser le tag qui a été pullé avec succès
           TEST_TAG="${PULLED_TAG:-${{ env.DOCKER_IMAGE }}:latest}"
           echo "🧪 Test du conteneur avec le tag: $TEST_TAG"
-          
+
           # Démarrer le conteneur
           if docker run -d --name test-container -p 8080:80 "$TEST_TAG"; then
             echo "✅ Conteneur démarré avec succès"
@@ -638,11 +686,11 @@ jobs:
             echo "❌ Erreur: Impossible de démarrer le conteneur"
             exit 1
           fi
-          
+
           # Attendre que le conteneur soit prêt
           echo "⏳ Attente que le conteneur soit prêt..."
           sleep 5
-          
+
           # Vérifier que le conteneur est en cours d'exécution
           if ! docker ps | grep -q test-container; then
             echo "❌ Erreur: Le conteneur n'est pas en cours d'exécution"
@@ -650,7 +698,7 @@ jobs:
             docker rm -f test-container
             exit 1
           fi
-          
+
           # Tester l'endpoint
           echo "🔍 Test de l'endpoint HTTP..."
           if curl -f http://localhost:8080/health >/dev/null 2>&1 || curl -f http://localhost:8080 >/dev/null 2>&1; then
@@ -659,7 +707,7 @@ jobs:
             echo "⚠️  Endpoint HTTP non accessible, mais conteneur en cours d'exécution"
             docker logs test-container
           fi
-          
+
           # Nettoyage
           echo "🧹 Nettoyage du conteneur de test..."
           docker stop test-container || true
@@ -677,22 +725,22 @@ jobs:
       github.event_name != 'pull_request' && 
       (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') &&
       needs.tags.outputs.tag_created == 'true'
-    
+
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: 🔍 Verify Tag Exists
         run: |
           TAG_NAME="${{ needs.tags.outputs.tag_name }}"
           echo "🔍 Vérification que le tag $TAG_NAME existe sur le dépôt distant..."
-          
+
           # Récupérer les tags du dépôt distant
           git fetch --tags
-          
+
           # Vérifier que le tag existe
           if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
             echo "✅ Tag $TAG_NAME trouvé localement"
@@ -704,11 +752,11 @@ jobs:
               exit 1
             }
           fi
-          
+
           # Afficher les informations du tag
           echo "📋 Informations du tag:"
           git show "$TAG_NAME" --no-patch --format="  SHA: %H%n  Auteur: %an%n  Date: %ad" || echo "  Impossible d'afficher les informations"
-      
+
       - name: 📋 Generate Release Notes
         id: release_notes
         run: |
@@ -716,7 +764,7 @@ jobs:
           VERSION="${{ needs.tags.outputs.semantic_version }}"
           TAG_TYPE="${{ needs.tags.outputs.tag_type }}"
           IS_RELEASE="${{ needs.tags.outputs.is_release }}"
-          
+
           # Déterminer si c'est une release sémantique ou un tag de développement
           if [ "$IS_RELEASE" = "true" ] && [ -n "$VERSION" ]; then
             RELEASE_TYPE="🎉 Release Sémantique"
@@ -737,7 +785,7 @@ jobs:
             echo "📝 Tag de développement, récupération des 10 derniers commits"
             COMMITS=$(git log -10 --pretty=format:"- %s (%h)" --no-merges)
           fi
-          
+
           # Créer le body de la release en écrivant directement dans le fichier
           {
             if [ "$IS_RELEASE" = "true" ] && [ -n "$VERSION" ]; then
@@ -780,11 +828,11 @@ jobs:
           } > release_notes.md
           echo "is_prerelease=$IS_PRERELEASE" >> $GITHUB_OUTPUT
           echo "✅ Notes de release générées (Prerelease: $IS_PRERELEASE)"
-          
+
           # Afficher un aperçu
           echo "📄 Aperçu des notes de release:"
           head -20 release_notes.md
-      
+
       - name: 🚀 Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
@@ -804,28 +852,28 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build, test]
     if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
-    
+
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
-      
+
       - name: 🔑 Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
-      
+
       - name: 🔍 Test SSH Connection
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT || 22 }} ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "echo '✅ Connexion SSH réussie'"
-      
+
       - name: 🐳 Check & Setup Docker on Server
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT || 22 }} \
             ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'DOCKER_SETUP'
           set -e
-          
+
           echo "🔍 Vérification de Docker..."
-          
+
           # Détecter la distribution (nécessaire pour les installations)
           if [ -f /etc/os-release ]; then
             . /etc/os-release
@@ -833,7 +881,7 @@ jobs:
           else
             OS="unknown"
           fi
-          
+
           # Vérifier si Docker est installé
           if ! command -v docker &> /dev/null; then
             echo "⚠️ Docker n'est pas installé, installation en cours..."
@@ -866,7 +914,7 @@ jobs:
             echo "✅ Docker est déjà installé"
             docker --version
           fi
-          
+
           # Vérifier si Docker Compose est installé
           if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
             echo "⚠️ Docker Compose n'est pas installé, installation en cours..."
@@ -879,7 +927,7 @@ jobs:
             echo "✅ Docker Compose est déjà installé"
             docker-compose --version 2>/dev/null || docker compose version
           fi
-          
+
           # Vérifier si le service Docker est démarré
           if ! sudo systemctl is-active --quiet docker 2>/dev/null; then
             echo "⚠️ Le service Docker n'est pas démarré, démarrage en cours..."
@@ -888,7 +936,7 @@ jobs:
           else
             echo "✅ Le service Docker est démarré"
           fi
-          
+
           # Vérifier que l'utilisateur peut utiliser Docker (sans sudo)
           if ! docker ps &> /dev/null; then
             echo "⚠️ L'utilisateur ne peut pas utiliser Docker sans sudo, ajout au groupe docker..."
@@ -900,7 +948,7 @@ jobs:
           else
             echo "✅ L'utilisateur peut utiliser Docker"
           fi
-          
+
           # Vérifier/créer le réseau Docker kobecorp-network
           echo "🌐 Vérification du réseau Docker kobecorp-network..."
           if ! docker network ls | grep -q "kobecorp-network"; then
@@ -910,7 +958,7 @@ jobs:
           else
             echo "✅ Réseau kobecorp-network existe déjà"
           fi
-          
+
           # Test final
           echo "🧪 Test final de Docker..."
           if docker ps &> /dev/null; then
@@ -924,12 +972,12 @@ jobs:
             exit 1
           fi
           DOCKER_SETUP
-      
+
       - name: 📦 Prepare deployment files
         run: |
           # Créer un dossier temporaire pour les fichiers de déploiement
           mkdir -p .deploy
-          
+
           # Copier les fichiers nécessaires pour le build Docker
           # Le docker-compose.yml utilise context: . donc tous les fichiers doivent être dans setup-front/
           cp -r setup-front .deploy/
@@ -943,11 +991,11 @@ jobs:
           cp tailwind.config.js .deploy/ 2>/dev/null || echo "tailwind.config.js non trouvé"
           cp postcss.config.js .deploy/ 2>/dev/null || echo "postcss.config.js non trouvé"
           cp eslint.config.js .deploy/ 2>/dev/null || echo "eslint.config.js non trouvé"
-          
+
           # Copier les dossiers essentiels
           cp -r src .deploy/ 2>/dev/null || echo "src/ non trouvé"
           cp -r public .deploy/ 2>/dev/null || echo "public/ non trouvé"
-          
+
           # Copier le fichier .env depuis setup-front/ (important pour le déploiement)
           if [ -f "setup-front/.env" ]; then
             cp setup-front/.env .deploy/setup-front/.env
@@ -955,7 +1003,7 @@ jobs:
           else
             echo "⚠️ Fichier setup-front/.env non trouvé"
           fi
-          
+
           # Vérifier que nginx.conf est bien dans setup-front/
           if [ ! -f ".deploy/setup-front/nginx.conf" ]; then
             echo "❌ Erreur: nginx.conf n'est pas dans .deploy/setup-front/"
@@ -965,7 +1013,7 @@ jobs:
             find .deploy -name "nginx.conf" 2>/dev/null || echo "nginx.conf non trouvé"
             exit 1
           fi
-          
+
           # Vérifier que Dockerfile est bien dans setup-front/
           if [ ! -f ".deploy/setup-front/Dockerfile" ]; then
             echo "❌ Erreur: Dockerfile n'est pas dans .deploy/setup-front/"
@@ -973,11 +1021,11 @@ jobs:
             ls -la .deploy/setup-front/ || echo "Répertoire non trouvé"
             exit 1
           fi
-          
+
           echo "✅ Fichiers de déploiement préparés"
           echo "✅ nginx.conf vérifié dans .deploy/setup-front/"
           echo "✅ Dockerfile vérifié dans .deploy/setup-front/"
-      
+
       - name: 🔧 Configure SSH
         run: |
           # Créer le fichier de config SSH
@@ -990,10 +1038,10 @@ jobs:
             StrictHostKeyChecking no
             UserKnownHostsFile=/dev/null
           EOF
-          
+
           # Ajouter le serveur aux known hosts
           ssh-keyscan -p ${{ secrets.VPS_PORT || 22 }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
-      
+
       - name: 🧹 Clean old deployment files
         run: |
           # Recréer le fichier de config SSH pour cette étape
@@ -1007,7 +1055,7 @@ jobs:
             UserKnownHostsFile=/dev/null
           EOF
           chmod 600 ~/.ssh/config
-          
+
           ssh -F ~/.ssh/config vps-deploy << 'EOF'
             set -e
             
@@ -1032,19 +1080,19 @@ jobs:
             
             echo "✅ Nettoyage terminé"
           EOF
-      
+
       - name: 📤 Copy files to VPS
         run: |
           echo "📤 Copie des fichiers vers le serveur..."
-          
+
           # Créer le répertoire .ssh s'il n'existe pas
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          
+
           # Ajouter le serveur aux known hosts
           ssh-keyscan -p ${{ secrets.VPS_PORT || 22 }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
           chmod 600 ~/.ssh/known_hosts 2>/dev/null || true
-          
+
           # Copier setup-front/ vers le serveur
           # IMPORTANT: Utiliser --include pour s'assurer que nginx.conf et .env sont copiés
           rsync -avz --delete \
@@ -1053,11 +1101,11 @@ jobs:
             -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
             .deploy/setup-front/ \
             ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/setup-front/
-          
+
           # Copier les fichiers nécessaires pour le build Docker à la racine de ~/kobe-corporation/ben-djibril/
           # Le docker-compose.yml utilise context: .. donc le contexte est ~/kobe-corporation/ben-djibril/ (parent de setup-front/)
           echo "📦 Copie des fichiers de build à la racine..."
-          
+
           # Copier package.json (obligatoire)
           if [ -f ".deploy/package.json" ]; then
             rsync -avz \
@@ -1068,7 +1116,7 @@ jobs:
             echo "❌ Erreur: package.json n'existe pas dans .deploy/"
             exit 1
           fi
-          
+
           # Copier package-lock.json si disponible
           if [ -f ".deploy/package-lock.json" ]; then
             rsync -avz \
@@ -1076,7 +1124,7 @@ jobs:
               .deploy/package-lock.json \
               ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/
           fi
-          
+
           # Copier les fichiers de configuration nécessaires
           for file in index.html vite.config.ts tsconfig.json tsconfig.app.json tsconfig.node.json tailwind.config.js postcss.config.js eslint.config.js; do
             if [ -f ".deploy/$file" ]; then
@@ -1086,7 +1134,7 @@ jobs:
                 ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:~/kobe-corporation/ben-djibril/
             fi
           done
-          
+
           # Copier les dossiers src/ et public/ (obligatoires)
           if [ -d ".deploy/src" ]; then
             rsync -avz \
@@ -1097,7 +1145,7 @@ jobs:
             echo "❌ Erreur: src/ n'existe pas dans .deploy/"
             exit 1
           fi
-          
+
           if [ -d ".deploy/public" ]; then
             rsync -avz \
               -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.VPS_PORT || 22 }}" \
@@ -1107,17 +1155,17 @@ jobs:
             echo "❌ Erreur: public/ n'existe pas dans .deploy/"
             exit 1
           fi
-          
+
           echo "✅ Tous les fichiers ont été copiés vers le serveur"
-          
+
           # Vérifier que les fichiers sont bien copiés sur le serveur
           echo "🔍 Vérification des fichiers copiés sur le serveur..."
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT || 22 }} \
             ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'VERIFY_FILES'
           set -e
-          
+
           DEPLOY_PATH="$HOME/kobe-corporation/ben-djibril"
-          
+
           echo "📋 Vérification de $DEPLOY_PATH/package.json:"
           if [ -f "$DEPLOY_PATH/package.json" ]; then
             echo "✅ package.json trouvé"
@@ -1128,7 +1176,7 @@ jobs:
             ls -la "$DEPLOY_PATH" | head -20
             exit 1
           fi
-          
+
           echo "📋 Vérification de $DEPLOY_PATH/src:"
           if [ -d "$DEPLOY_PATH/src" ]; then
             echo "✅ src/ trouvé"
@@ -1137,7 +1185,7 @@ jobs:
             echo "❌ ERREUR: src/ n'est pas présent dans $DEPLOY_PATH"
             exit 1
           fi
-          
+
           echo "📋 Vérification de $DEPLOY_PATH/public:"
           if [ -d "$DEPLOY_PATH/public" ]; then
             echo "✅ public/ trouvé"
@@ -1146,10 +1194,10 @@ jobs:
             echo "❌ ERREUR: public/ n'est pas présent dans $DEPLOY_PATH"
             exit 1
           fi
-          
+
           echo "✅ Tous les fichiers nécessaires sont présents sur le serveur"
           VERIFY_FILES
-      
+
       - name: 🐳 Deploy Docker Containers
         run: |
           # Recréer le fichier de config SSH pour cette étape
@@ -1163,10 +1211,10 @@ jobs:
             UserKnownHostsFile=/dev/null
           EOF
           chmod 600 ~/.ssh/config
-          
+
           ssh -F ~/.ssh/config vps-deploy << 'DEPLOY_DOCKER'
           set -e
-          
+
           # Fonction pour déterminer la commande Docker à utiliser
           get_docker_cmd() {
             if docker ps &> /dev/null 2>&1; then
@@ -1175,9 +1223,9 @@ jobs:
               echo "sudo docker"
             fi
           }
-          
+
           DOCKER_CMD=$(get_docker_cmd)
-          
+
           # Fonction pour exécuter docker-compose (utilise sudo si nécessaire)
           get_compose_cmd() {
             if docker ps &> /dev/null 2>&1; then
@@ -1194,18 +1242,18 @@ jobs:
               fi
             fi
           }
-          
+
           COMPOSE_CMD=$(get_compose_cmd)
-          
+
           DEPLOY_PATH="$HOME/kobe-corporation/ben-djibril"
           DOCKER_COMPOSE_PATH="$DEPLOY_PATH/setup-front"
-          
+
           # Vérifier que les fichiers nécessaires sont présents dans le contexte Docker (DEPLOY_PATH)
           echo "🔍 Vérification des fichiers nécessaires pour le build Docker..."
           echo "📁 Contexte Docker: $DEPLOY_PATH"
           echo "📋 Contenu de $DEPLOY_PATH:"
           ls -la "$DEPLOY_PATH" | head -20 || echo "⚠️ Répertoire non trouvé ou vide"
-          
+
           # Vérifier package.json (obligatoire)
           if [ ! -f "$DEPLOY_PATH/package.json" ]; then
             echo "❌ ERREUR: package.json n'est pas présent dans $DEPLOY_PATH"
@@ -1215,7 +1263,7 @@ jobs:
           else
             echo "✅ package.json trouvé dans $DEPLOY_PATH"
           fi
-          
+
           # Vérifier src/ (obligatoire)
           if [ ! -d "$DEPLOY_PATH/src" ]; then
             echo "❌ ERREUR: src/ n'est pas présent dans $DEPLOY_PATH"
@@ -1223,7 +1271,7 @@ jobs:
           else
             echo "✅ src/ trouvé dans $DEPLOY_PATH"
           fi
-          
+
           # Vérifier public/ (obligatoire)
           if [ ! -d "$DEPLOY_PATH/public" ]; then
             echo "❌ ERREUR: public/ n'est pas présent dans $DEPLOY_PATH"
@@ -1231,21 +1279,21 @@ jobs:
           else
             echo "✅ public/ trouvé dans $DEPLOY_PATH"
           fi
-          
+
           cd "$DOCKER_COMPOSE_PATH"
-          
+
           # Vérifier que nginx.conf existe
           if [ ! -f "nginx.conf" ]; then
             echo "❌ Erreur: nginx.conf n'est pas présent dans $DOCKER_COMPOSE_PATH"
             exit 1
           fi
-          
+
           # Vérifier que compose.yaml existe
           if [ ! -f "compose.yaml" ]; then
             echo "❌ Erreur: compose.yaml n'est pas présent dans $DOCKER_COMPOSE_PATH"
             exit 1
           fi
-          
+
           # Vérifier le .dockerignore dans le contexte Docker (DEPLOY_PATH) et s'assurer qu'il n'exclut pas package.json
           echo "📋 Vérification du .dockerignore dans le contexte Docker ($DEPLOY_PATH):"
           if [ -f "$DEPLOY_PATH/.dockerignore" ]; then
@@ -1264,7 +1312,7 @@ jobs:
           else
             echo "⚠️ .dockerignore non trouvé dans $DEPLOY_PATH (ce n'est pas grave, Docker n'utilisera pas de .dockerignore)"
           fi
-          
+
           # Vérifier le .dockerignore dans setup-front/ et s'assurer qu'il n'exclut pas nginx.conf
           echo "📋 Vérification du .dockerignore dans setup-front/:"
           if [ -f ".dockerignore" ]; then
@@ -1283,7 +1331,7 @@ jobs:
           else
             echo "⚠️ .dockerignore non trouvé dans setup-front/ (ce n'est pas grave)"
           fi
-          
+
           # Vérifier que le fichier .env existe dans setup-front/
           echo "📋 Vérification du fichier .env dans setup-front/:"
           if [ ! -f ".env" ]; then
@@ -1306,7 +1354,7 @@ jobs:
               echo "⚠️ Domaine ben-djibril.kobecorporation.com non trouvé dans .env"
             fi
           fi
-          
+
           # Build et démarrer les conteneurs
           echo ""
           echo "🔨 Build et démarrage des conteneurs..."
@@ -1364,7 +1412,7 @@ jobs:
       - name: ✅ Verify deployment
         run: |
           echo "✅ Vérification du déploiement..."
-          
+
           # Recréer le fichier de config SSH pour cette étape
           mkdir -p ~/.ssh
           cat > ~/.ssh/config << EOF
@@ -1376,10 +1424,10 @@ jobs:
             UserKnownHostsFile=/dev/null
           EOF
           chmod 600 ~/.ssh/config
-          
+
           ssh -F ~/.ssh/config vps-deploy << 'VERIFY'
           set -e
-          
+
           # Fonction pour déterminer la commande Docker à utiliser
           get_docker_cmd() {
             if docker ps &> /dev/null 2>&1; then
@@ -1388,9 +1436,9 @@ jobs:
               echo "sudo docker"
             fi
           }
-          
+
           DOCKER_CMD=$(get_docker_cmd)
-          
+
           # Fonction pour exécuter docker-compose (utilise sudo si nécessaire)
           get_compose_cmd() {
             if docker ps &> /dev/null 2>&1; then
@@ -1407,14 +1455,14 @@ jobs:
               fi
             fi
           }
-          
+
           COMPOSE_CMD=$(get_compose_cmd)
-          
+
           DEPLOY_PATH="$HOME/kobe-corporation/ben-djibril"
           DOCKER_COMPOSE_PATH="$DEPLOY_PATH/setup-front"
-          
+
           cd "$DOCKER_COMPOSE_PATH"
-          
+
           # Vérifier que le conteneur est en cours d'exécution
           if $COMPOSE_CMD -f compose.yaml ps | grep -q "Up"; then
             echo "✅ Déploiement réussi! Le conteneur est en cours d'exécution."
@@ -1450,7 +1498,7 @@ jobs:
             exit 1
           fi
           VERIFY
-      
+
       - name: 🎉 Deployment Summary
         if: success()
         run: |
