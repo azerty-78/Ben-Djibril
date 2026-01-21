@@ -29,6 +29,9 @@ function SEO({
   useEffect(() => {
     const lang = i18n.language
     const baseUrl = window.location.origin
+    // URL canonique sans paramètres de requête pour éviter les pages en double
+    const canonicalUrl = `${baseUrl}${location.pathname}`
+    // URL complète avec paramètres pour Open Graph et autres
     const currentUrl = `${baseUrl}${location.pathname}${location.search}`
     
     // Update document title avec variations du nom
@@ -165,8 +168,9 @@ function SEO({
       link.setAttribute('href', href)
     }
 
-    // Canonical URL
-    updateLinkTag('canonical', currentUrl)
+    // Canonical URL - Toujours sans paramètres de requête pour éviter les pages en double
+    // Google utilisera cette URL comme version principale
+    updateLinkTag('canonical', canonicalUrl)
     
     // Sitemap reference
     updateLinkTag('sitemap', `${baseUrl}/sitemap.xml`)
@@ -190,10 +194,18 @@ function SEO({
       }
     })
 
-    // Alternate languages
+    // Alternate languages - Important pour éviter les pages en double
     const alternateLinks = document.querySelectorAll('link[rel="alternate"][hreflang]')
     alternateLinks.forEach(link => link.remove())
     
+    // Ajouter x-default pour indiquer la version par défaut (canonique)
+    const defaultLink = document.createElement('link')
+    defaultLink.setAttribute('rel', 'alternate')
+    defaultLink.setAttribute('hreflang', 'x-default')
+    defaultLink.setAttribute('href', canonicalUrl)
+    document.head.appendChild(defaultLink)
+    
+    // Ajouter les versions linguistiques
     const languages = ['fr', 'en']
     languages.forEach(langCode => {
       const alternateLink = document.createElement('link')
@@ -216,7 +228,7 @@ function SEO({
       alternateName: ['Ben Djibril', 'Benjamin Kone Djibril', 'Djibril Benjamin', 'Ben Djibril Developer', 'Kone Djibril Benjamin Developer'],
       jobTitle: 'DevOps Engineer',
       description: metaDescription,
-      url: currentUrl,
+      url: canonicalUrl,
       image: `${baseUrl}${ogImage}`,
       sameAs: [
         'https://www.facebook.com/share/1apyznqNgf/',
@@ -260,7 +272,7 @@ function SEO({
       identifier: {
         '@type': 'PropertyValue',
         name: 'Portfolio Website',
-        value: currentUrl
+        value: canonicalUrl
       }
     }
     
@@ -331,7 +343,7 @@ function SEO({
           '@type': 'ListItem',
           position: 2,
           name: document.title.split(' - ')[0] || document.title,
-          item: currentUrl
+          item: canonicalUrl
         }] : [])
       ]
     }
@@ -343,7 +355,7 @@ function SEO({
       name: 'Ben Djibril - Services de Développement',
       alternateName: 'Kone Djibril Benjamin - Development Services',
       description: metaDescription,
-      url: currentUrl,
+      url: canonicalUrl,
       provider: {
         '@type': 'Person',
         name: 'Kone Djibril Benjamin',
