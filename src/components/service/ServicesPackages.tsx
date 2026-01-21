@@ -123,7 +123,7 @@ function ServicesPackages() {
   }, [])
 
   return (
-    <section data-section="packages" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-secondary-50 via-white to-primary-50/30 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden">
+    <section id="packages" data-section="packages" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-secondary-50 via-white to-primary-50/30 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5 dark:opacity-10">
         <div className="absolute top-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-primary-400 rounded-full blur-3xl" />
@@ -167,6 +167,7 @@ function ServicesPackages() {
 
         {/* SaaS category */}
         <motion.div
+          id="saas"
           data-subsection="saas"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -410,6 +411,7 @@ function ServicesPackages() {
 
         {/* Full Control category */}
         <motion.div
+          id="fullControl"
           data-subsection="fullControl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

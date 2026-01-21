@@ -612,6 +612,7 @@ function ServicesList() {
 
   return (
     <section
+      id="services"
       data-section="services"
       className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-secondary-50 via-white to-primary-50/30 dark:from-secondary-900 dark:via-secondary-800 dark:to-secondary-900 relative overflow-hidden"
     >

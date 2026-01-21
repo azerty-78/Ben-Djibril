@@ -72,7 +72,7 @@ function HomeServices() {
   ]
 
   return (
-    <section data-section="home-services" className="py-16 md:py-20 bg-secondary-50/50 dark:bg-secondary-900/30">
+    <section id="home-services" data-section="home-services" className="py-16 md:py-20 bg-secondary-50/50 dark:bg-secondary-900/30">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
