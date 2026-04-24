@@ -240,7 +240,7 @@ function About() {
                   >
                     <GlobeAltIcon className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 mx-auto mb-1 text-success-600 dark:text-success-400" />
                     <div className="text-[11px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium leading-tight">
-                      {t('home.about.identity.languageNative')}
+                      Français (Natif)
                     </div>
                   </motion.div>
                   <motion.div
@@ -249,7 +249,7 @@ function About() {
                   >
                     <GlobeAltIcon className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 mx-auto mb-1 text-primary-600 dark:text-primary-400" />
                     <div className="text-[11px] sm:text-xs md:text-sm text-secondary-600 dark:text-secondary-400 font-medium leading-tight">
-                      {t('home.about.identity.languageIntermediate')}
+                      Anglais (B1)
                     </div>
                   </motion.div>
                 </div>
