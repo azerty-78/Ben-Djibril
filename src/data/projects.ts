@@ -99,7 +99,7 @@ export const projects: Project[] = [
       official: 'https://blogpress-app.com'
     },
     images: [
-      'https://logo.clearbit.com/blogpress-app.com',
+      '/blogpress-preview.png',
       'https://image.thum.io/get/width/1200/crop/800/noanimate/https://blogpress-app.com'
     ],
     translations: {
