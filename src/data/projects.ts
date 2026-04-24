@@ -189,6 +189,42 @@ export const projects: Project[] = [
         impact: 'Mise en place d\'une base scalable et maintenable alignée avec WCAG 2.1 et Core Web Vitals, réduisant les risques de livraison pour un portail institutionnel complexe.'
       }
     }
+  },
+  {
+    id: '4',
+    type: 'payroll',
+    visibility: 'confidential',
+    stack: ['React.js', 'TypeScript', 'Spring Boot', 'Kotlin', 'MongoDB', 'Docker', 'Ansible', 'GitHub Actions', 'Nginx'],
+    client: {
+      name: 'Université de Yaoundé II',
+      type: 'government',
+      translations: {
+        en: {
+          description: 'Institutional HR and payroll management system (2025 - present) for about 1,000 staff, deployed on-premise with restricted access.'
+        },
+        fr: {
+          description: 'Solution institutionnelle RH & paie (2025 - présent) pour environ 1 000 agents, déployée on-premise avec accès restreint.'
+        }
+      }
+    },
+    links: {},
+    images: [],
+    translations: {
+      en: {
+        name: 'RH-SYSTEM - University HR & Payroll Management (2025 - Present)',
+        description: 'An institutional platform for HR management and payroll automation serving around 1,000 agents.',
+        problem: 'The university needed a reliable system to centralize HR operations and automate payroll while staying compliant with local regulations and ensuring controlled infrastructure access.',
+        solution: 'Built a payroll calculation engine aligned with Cameroonian regulations (CNPS, IRPFbis), added an HR analytics dashboard with PDF/Excel exports, and deployed a containerized stack on VPS with Nginx reverse proxy and SSL hardening.',
+        impact: 'Improved payroll reliability and processing consistency at institutional scale, while providing better HR visibility and secure operational deployment for restricted environments.'
+      },
+      fr: {
+        name: 'RH-SYSTEM - Gestion RH & Paie Universitaire (2025 - présent)',
+        description: 'Solution institutionnelle de gestion RH et d\'automatisation de la paie pour environ 1 000 agents.',
+        problem: 'L\'université avait besoin d\'une solution fiable pour centraliser les processus RH et automatiser la paie, tout en respectant la réglementation locale et un cadre d\'accès restreint.',
+        solution: 'Mise en place d\'un moteur de calcul de paie conforme à la législation camerounaise (CNPS, IRPFbis), d\'un tableau de bord analytique RH avec exports PDF/Excel, et d\'un déploiement containerisé sur VPS avec Nginx reverse proxy et SSL.',
+        impact: 'Renforcement de la fiabilité du processus de paie et de la traçabilité RH à l\'échelle institutionnelle, avec une exploitation sécurisée adaptée aux environnements on-premise.'
+      }
+    }
   }
 ]
 
