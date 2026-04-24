@@ -147,7 +147,7 @@ function AboutSection() {
                     className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 rounded-xl text-sm font-semibold shadow-sm"
                   >
                     <span className="text-lg">🇬🇧</span>
-                    <span>Anglais (Intermédiaire)</span>
+                    <span>Anglais (B1)</span>
                   </motion.span>
                 </div>
               </div>
@@ -355,7 +355,7 @@ function AboutSection() {
               </motion.div>
               <h3 className="text-xl font-semibold mb-2 text-secondary-900 dark:text-white">{t('home.about.languages')}</h3>
               <p className="text-secondary-600 dark:text-secondary-300 text-sm">
-                Français (Natif), Anglais (Intermédiaire)
+                Français (Natif), Anglais (B1)
               </p>
             </motion.div>
           </div>
