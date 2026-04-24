@@ -184,7 +184,7 @@ function ProjectCard({
                   {name.charAt(0)}
                 </motion.div>
               </div>
-              <div className="absolute left-4 bottom-4 z-30 px-3 py-1.5 rounded-lg bg-black/60 backdrop-blur-md">
+              <div className="absolute left-1/2 -translate-x-1/2 bottom-16 z-30 px-3 py-1.5 rounded-lg bg-black/60 backdrop-blur-md whitespace-nowrap">
                 <span className="text-xs font-semibold text-white">
                   {t('projects.imagesSoon', { defaultValue: 'Images bientôt disponibles' })}
                 </span>

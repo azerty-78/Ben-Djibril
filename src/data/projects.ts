@@ -153,6 +153,42 @@ export const projects: Project[] = [
         impact: 'Accélération de la transformation digitale des clients grâce à des plateformes prêtes pour la production, une direction technique plus claire et des architectures full-stack maintenables alignées sur les besoins métier.'
       }
     }
+  },
+  {
+    id: '3',
+    type: 'web-dev',
+    visibility: 'private',
+    stack: ['Next.js 14', 'Strapi v4', 'PostgreSQL 15', 'Docker', 'Nginx', 'GitHub Actions'],
+    client: {
+      name: 'GIZ-TRIDOM',
+      type: 'ngo',
+      translations: {
+        en: {
+          description: 'Multisite institutional portal bid response in progress (Jan - X 2026): bilingual FR/EN platform for multiple entities.'
+        },
+        fr: {
+          description: 'Offre technique multisite en cours (Janv. - X 2026) : portail institutionnel bilingue FR/EN multi-entités.'
+        }
+      }
+    },
+    links: {},
+    images: [],
+    translations: {
+      en: {
+        name: 'GIZ-TRIDOM Multisite Portal (Technical Offer in Progress, Jan - X 2026)',
+        description: 'Bid response for a bilingual FR/EN institutional multisite portal for multiple entities.',
+        problem: 'The project requires a robust multisite architecture with strict quality constraints, including accessibility compliance and high performance standards across multiple environments and stakeholders.',
+        solution: 'Designed a decoupled architecture using Strapi v4 as headless CMS, Next.js 14 frontend, and PostgreSQL 15. Planned multi-environment deployment workflows with Docker, Nginx, and GitHub Actions CI/CD.',
+        impact: 'Provides a scalable and maintainable foundation aligned with WCAG 2.1 and Core Web Vitals requirements, reducing delivery risk for a complex institutional portal.'
+      },
+      fr: {
+        name: 'Portail Multisite GIZ-TRIDOM (Offre Technique en cours, Janv. - X 2026)',
+        description: 'Réponse à appel d\'offres GIZ pour un portail institutionnel bilingue FR/EN multi-entités.',
+        problem: 'Le projet nécessite une architecture multisite robuste avec des contraintes qualité élevées, notamment la conformité accessibilité et des exigences fortes de performance sur plusieurs environnements.',
+        solution: 'Conception d\'une architecture découplée avec Strapi v4 (CMS headless), Next.js 14 et PostgreSQL 15. Préparation des déploiements multi-environnements avec Docker, Nginx et pipelines GitHub Actions.',
+        impact: 'Mise en place d\'une base scalable et maintenable alignée avec WCAG 2.1 et Core Web Vitals, réduisant les risques de livraison pour un portail institutionnel complexe.'
+      }
+    }
   }
 ]
 
