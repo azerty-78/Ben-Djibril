@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import {
   ComputerDesktopIcon,
   PresentationChartBarIcon,
@@ -13,6 +14,7 @@ import officialImage from '../../assets/ben-djibirl/ben-djibril-official-with-gl
 
 function AboutGallery() {
   const { t } = useTranslation()
+  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null)
 
   const galleryItems = [
     {
@@ -52,6 +54,17 @@ function AboutGallery() {
       <rect width="100%" height="100%" fill={`url(#pattern-${color})`} />
     </svg>
   )
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setSelectedImage(null)
+      }
+    }
+
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [])
 
   return (
     <section className="py-16 md:py-20 bg-secondary-50 dark:bg-secondary-800/50">
@@ -95,12 +108,24 @@ function AboutGallery() {
                 >
                   <div className="relative aspect-video bg-gradient-to-br from-secondary-100 to-secondary-200 dark:from-secondary-800 dark:to-secondary-900">
                     {item.image ? (
-                      <img
-                        src={item.image}
-                        alt={t(`home.about.gallery.${item.key}`)}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setSelectedImage({
+                            src: item.image,
+                            alt: t(`home.about.gallery.${item.key}`)
+                          })
+                        }
+                        className="w-full h-full group/image"
+                        aria-label={`Agrandir: ${t(`home.about.gallery.${item.key}`)}`}
+                      >
+                        <img
+                          src={item.image}
+                          alt={t(`home.about.gallery.${item.key}`)}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-105"
+                          loading="lazy"
+                        />
+                      </button>
                     ) : (
                       <>
                         <PatternSVG color={color} />
@@ -133,6 +158,41 @@ function AboutGallery() {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 12 }}
+              transition={{ duration: 0.2 }}
+              className="relative max-w-6xl max-h-[90vh] w-full"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setSelectedImage(null)}
+                className="absolute -top-3 -right-3 md:top-3 md:right-3 w-10 h-10 rounded-full bg-black/70 text-white text-xl font-semibold hover:bg-black/90 transition-colors"
+                aria-label="Fermer l'image"
+              >
+                ×
+              </button>
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="w-full h-full max-h-[90vh] object-contain rounded-xl"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

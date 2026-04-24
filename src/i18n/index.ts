@@ -115,7 +115,7 @@ export const resources = {
             availability: 'Availability',
             availabilityValue: 'Monday - Friday, 9am - 6pm',
             languageNative: 'Native',
-            languageIntermediate: 'Intermediate'
+            languageIntermediate: 'B1'
           },
           values: {
             title: 'My Values',
@@ -871,7 +871,7 @@ export const resources = {
             availability: 'Disponibilité',
             availabilityValue: 'Lundi - Vendredi, 9h - 18h',
             languageNative: 'Natif',
-            languageIntermediate: 'Intermédiaire'
+            languageIntermediate: 'B1'
           },
           values: {
             title: 'Mes Valeurs',
