@@ -98,10 +98,7 @@ export const projects: Project[] = [
     links: {
       official: 'https://blogpress-app.com'
     },
-    images: [
-      '/blogpress-preview.png',
-      'https://image.thum.io/get/width/1200/crop/800/noanimate/https://blogpress-app.com'
-    ],
+    images: [],
     translations: {
       en: {
         name: 'BlogPress - Blogging & Social Platform (Sep-Dec 2025)',
@@ -121,44 +118,39 @@ export const projects: Project[] = [
   },
   {
     id: '2',
-    type: 'web-app',
+    type: 'consulting',
     visibility: 'public',
-    stack: ['React', 'D3.js', 'Node.js', 'MongoDB', 'Express'],
+    stack: ['React', 'Spring Boot', 'Kotlin', 'Docker', 'PostgreSQL', 'Strapi'],
     client: {
-      name: 'TechStart Analytics',
-      type: 'startup',
+      name: 'KOBE Corporation',
+      type: 'company',
       translations: {
         en: {
-          description: 'A fast-growing B2B SaaS startup providing analytics solutions for small and medium businesses, helping them make data-driven decisions.'
+          description: 'Yaoundé, Cameroon - Client contracts. Custom web development, technical consulting, and integrations for SMEs and institutions.'
         },
         fr: {
-          description: 'Une startup SaaS B2B en pleine croissance fournissant des solutions d\'analyse pour les petites et moyennes entreprises, les aidant à prendre des décisions basées sur les données.'
+          description: 'Yaoundé, Cameroun - Contrats clients. Développement web sur mesure, conseil technique et intégrations pour PME et institutions.'
         }
       }
     },
     links: {
-      official: 'https://techstart-analytics.example.com',
-      github: 'https://github.com/example/techstart-dashboard'
+      official: 'https://kobecorporation.com'
     },
-    images: [
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop'
-    ],
+    images: [],
     translations: {
       en: {
-        name: 'Analytics Dashboard SaaS',
-        description: 'An interactive analytics dashboard for a B2B SaaS company, providing real-time data visualization, custom reports, and actionable insights to help businesses understand their performance metrics.',
-        problem: 'Users needed better insights into their data but the existing dashboard was cluttered, slow, and didn\'t provide real-time updates. The interface was confusing for non-technical users, leading to low adoption rates.',
-        solution: 'Created an interactive dashboard with real-time data updates using WebSockets, implemented D3.js for beautiful data visualizations, designed an intuitive UI with customizable widgets, and added export functionality for reports. Built a responsive design that works seamlessly on all devices.',
-        impact: '40% increase in user engagement, 60% reduction in support tickets related to dashboard usage, 25% increase in premium subscriptions, and 90% user satisfaction rate. The dashboard is now the primary tool for 85% of active users.'
+        name: 'KOBE Corporation - Full-Stack Client Projects (Dec 2025 - Present)',
+        description: 'Custom full-stack web development, technical consulting, and integrations for SMEs and institutions.',
+        problem: 'Many local organizations needed reliable digital products and architecture guidance but lacked end-to-end delivery capabilities across product scoping, engineering, and operations.',
+        solution: 'Delivered full project cycles from requirements to maintenance: specifications, development, testing, deployment, and post-delivery support. Built and shipped client-ready web applications and integrations using Next.js, Spring Boot, Kotlin, Docker, PostgreSQL, and Strapi.',
+        impact: 'Enabled clients to accelerate digital transformation with production-ready platforms, clearer technical direction, and maintainable full-stack architectures aligned with business needs.'
       },
       fr: {
-        name: 'Tableau de Bord Analytics SaaS',
-        description: 'Un tableau de bord analytique interactif pour une entreprise SaaS B2B, offrant une visualisation de données en temps réel, des rapports personnalisés et des insights actionnables pour aider les entreprises à comprendre leurs métriques de performance.',
-        problem: 'Les utilisateurs avaient besoin de meilleures informations sur leurs données, mais le tableau de bord existant était encombré, lent et ne fournissait pas de mises à jour en temps réel. L\'interface était confuse pour les utilisateurs non techniques, entraînant de faibles taux d\'adoption.',
-        solution: 'Création d\'un tableau de bord interactif avec des mises à jour de données en temps réel utilisant WebSockets, implémentation de D3.js pour de belles visualisations de données, conception d\'une interface intuitive avec des widgets personnalisables, et ajout d\'une fonctionnalité d\'export pour les rapports. Création d\'un design responsive qui fonctionne parfaitement sur tous les appareils.',
-        impact: '40% d\'augmentation de l\'engagement des utilisateurs, 60% de réduction des tickets de support liés à l\'utilisation du tableau de bord, 25% d\'augmentation des abonnements premium, et 90% de taux de satisfaction des utilisateurs. Le tableau de bord est maintenant l\'outil principal pour 85% des utilisateurs actifs.'
+        name: 'KOBE Corporation - Projets Clients Full-Stack (Déc 2025 - présent)',
+        description: 'Développement web full-stack sur mesure, conseil technique et intégrations pour PME et institutions.',
+        problem: 'De nombreuses structures locales avaient besoin de solutions digitales fiables et d\'un accompagnement architectural, sans disposer d\'une capacité de livraison complète de bout en bout.',
+        solution: 'Réalisation du cycle complet projet : cahier des charges, développement, recette, déploiement, livraison et maintenance. Conception et mise en production d\'applications web et d\'intégrations clients avec Next.js, Spring Boot, Kotlin, Docker, PostgreSQL et Strapi.',
+        impact: 'Accélération de la transformation digitale des clients grâce à des plateformes prêtes pour la production, une direction technique plus claire et des architectures full-stack maintenables alignées sur les besoins métier.'
       }
     }
   }

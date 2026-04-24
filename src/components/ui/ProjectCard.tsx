@@ -105,13 +105,15 @@ function ProjectCard({
   visibility,
   images,
 }: ProjectCardProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const currentLang: 'en' | 'fr' = i18n.language.startsWith('fr') ? 'fr' : 'en'
   
   // Memoize expensive computations
   const ClientIcon = useMemo(() => clientTypeIcons[client.type], [client.type])
   const typeColor = useMemo(() => typeColors[type] || defaultColor, [type])
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
+  const hasImages = images && images.length > 0
 
   const handleImageClick = useCallback((index: number) => {
     setLightboxIndex(index)
@@ -134,20 +136,20 @@ function ProjectCard({
       >
         {/* Image/Header Section */}
         <div 
-          className={`relative h-56 sm:h-64 bg-gradient-to-br ${typeColor.gradient} overflow-hidden cursor-pointer`} 
-          onClick={() => handleImageClick(0)}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
+          className={`relative h-56 sm:h-64 bg-gradient-to-br ${typeColor.gradient} overflow-hidden ${hasImages ? 'cursor-pointer' : 'cursor-default'}`} 
+          onClick={hasImages ? () => handleImageClick(0) : undefined}
+          role={hasImages ? 'button' : undefined}
+          tabIndex={hasImages ? 0 : undefined}
+          onKeyDown={hasImages ? (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault()
               handleImageClick(0)
             }
-          }}
-          aria-label={`${t('projects.viewImages')} ${name}`}
+          } : undefined}
+          aria-label={hasImages ? `${t('projects.viewImages')} ${name}` : undefined}
         >
           {/* Actual Image or Placeholder */}
-          {images && images.length > 0 ? (
+          {hasImages ? (
             <>
               <img
                 src={images[0]}
@@ -181,6 +183,11 @@ function ProjectCard({
                 >
                   {name.charAt(0)}
                 </motion.div>
+              </div>
+              <div className="absolute left-4 bottom-4 z-30 px-3 py-1.5 rounded-lg bg-black/60 backdrop-blur-md">
+                <span className="text-xs font-semibold text-white">
+                  {t('projects.imagesSoon', { defaultValue: 'Images bientôt disponibles' })}
+                </span>
               </div>
             </>
           )}
@@ -256,7 +263,7 @@ function ProjectCard({
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-300 leading-relaxed">
-                  {client.translations[t('projects.lang') as 'en' | 'fr']?.description || client.translations.en.description}
+                  {client.translations[currentLang]?.description || client.translations.en.description}
                 </p>
               </div>
             </div>
