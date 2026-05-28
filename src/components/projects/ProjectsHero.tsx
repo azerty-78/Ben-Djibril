@@ -37,7 +37,7 @@ function ProjectsHero() {
         ease: easeInOut,
       },
     },
-  }), [])
+  }), [easeInOut])
 
   const iconVariants = useMemo(() => ({
     hidden: { opacity: 0, scale: 0.9, rotate: -180 },
@@ -50,7 +50,7 @@ function ProjectsHero() {
         ease: easeInOut,
       },
     },
-  }), [])
+  }), [easeInOut])
 
   // Memoize stats to prevent re-creation
   const stats = useMemo(() => [

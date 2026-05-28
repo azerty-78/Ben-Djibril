@@ -10,6 +10,8 @@ export function useHoverPrefetch() {
   type PrefetchAnchor = HTMLAnchorElement & { __prefetchListenerAdded?: boolean }
 
   useEffect(() => {
+    const linkTimeouts = linkTimeoutsRef.current
+
     const prefetchRoute = (path: string) => {
       // Éviter les doublons
       if (prefetchedOnHover.current.has(path)) {
@@ -47,7 +49,7 @@ export function useHoverPrefetch() {
       
       if (href && href.startsWith('/') && !href.includes('#')) {
         // Annuler tout timeout précédent pour ce lien
-        const existingTimeout = linkTimeoutsRef.current.get(target)
+        const existingTimeout = linkTimeouts.get(target)
         if (existingTimeout) {
           clearTimeout(existingTimeout)
         }
@@ -55,20 +57,20 @@ export function useHoverPrefetch() {
         // Précharger après un court délai (100ms) pour éviter les préchargements inutiles
         const timeoutId = setTimeout(() => {
           prefetchRoute(href)
-          linkTimeoutsRef.current.delete(target)
+          linkTimeouts.delete(target)
         }, 100)
 
-        linkTimeoutsRef.current.set(target, timeoutId)
+        linkTimeouts.set(target, timeoutId)
       }
     }
 
     // Fonction pour gérer le mouseleave
     const handleLinkLeave = (e: Event) => {
       const target = e.currentTarget as Element
-      const timeoutId = linkTimeoutsRef.current.get(target)
+      const timeoutId = linkTimeouts.get(target)
       if (timeoutId) {
         clearTimeout(timeoutId)
-        linkTimeoutsRef.current.delete(target)
+        linkTimeouts.delete(target)
       }
     }
 
@@ -111,8 +113,8 @@ export function useHoverPrefetch() {
         anchor.__prefetchListenerAdded = false
       })
       // Nettoyer tous les timeouts
-      linkTimeoutsRef.current.forEach((timeout) => clearTimeout(timeout))
-      linkTimeoutsRef.current.clear()
+      linkTimeouts.forEach((timeout) => clearTimeout(timeout))
+      linkTimeouts.clear()
     }
   }, [])
 }
